@@ -121,9 +121,9 @@ Formatter = {
     var args = Array.from(arguments).slice(1),
         prev = '',
         buffer = '',
-        result, idx, ch;
+        result, idx, len = template.length, ch;
 
-    for (idx = 0; idx < template.length; idx += 1) {
+    for (idx = 0; idx < len; idx += 1) {
       ch = template[idx];
 
       if (prev === '}') {
@@ -149,9 +149,9 @@ Formatter = {
   },
 
   parseField: function (template, args) {
-    var fieldspec = '', result = null, idx = 0, ch;
+    var fieldspec = '', result = null, idx = 0, ch, len;
 
-    for (; idx < template.length; idx += 1) {
+    for (; idx < len; idx += 1) {
       ch = template[idx];
       if (ch === '{') {
         if (fieldspec.length === 0) {

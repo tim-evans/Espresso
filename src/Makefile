@@ -28,6 +28,6 @@ clean-doc:
 	rm -rf $(DOCDIR)
 
 clean:
-	rm -rf ../bin
+	rm -rf ../bin/*
 	rm -f *~
 	rm -f mixins/*~

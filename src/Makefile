@@ -25,7 +25,8 @@ seed:	Makefile $(SRC)
 	cat $(SRC) > ../bin/$@.js
 
 clean-doc:
-	rm -rf $(DOCDIR)
+	rm -f $(DOCDIR)index.html $(DOCDIR)files.html
+	rm -rf $(DOCDIR)symbols
 
 clean:
 	rm -rf ../bin/*

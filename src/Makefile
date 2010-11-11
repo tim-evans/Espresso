@@ -19,10 +19,10 @@ $(DOCDIR)/index.html: Makefile $(SRC)
 	$(JAVA) -jar $(JSDOCDIR)/jsrun.jar $(JSDOCDIR)/app/run.js --allfunctions --private -a -t=$(TEMPLATE) -d=$(DOCDIR) $(SRC)
 
 minify:
-	java -jar ../frameworks/yuicompressor/yuicompressor.jar ../bin/seed.js -o ../bin/seed.min.js
+	java -jar ../frameworks/yuicompressor/yuicompressor.jar ../seed.js -o ../seed.min.js
 
 seed:	Makefile $(SRC)
-	cat $(SRC) > ../bin/$@.js
+	cat $(SRC) > ../$@.js
 
 clean-doc:
 	rm -f $(DOCDIR)index.html $(DOCDIR)files.html

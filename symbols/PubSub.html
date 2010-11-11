@@ -1,0 +1,553 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - PubSub</title>
+
+    <script type="text/javascript" src="../../bin/seed.js"></script>
+		<style type="text/css">
+			/* default.css */
+body {
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#header {
+	clear: both;
+  font-size: 1.5em;
+}
+
+.title {
+  border-bottom: 1px solid #bbb;
+}
+
+hr {
+	border: none 0;
+	border-top: 1px solid #bbb;
+	height: 1px;
+}
+
+code {
+	display: block;
+	padding: 8px;
+  background-color: rgba(0, 0, 0, .8);
+  color: white;
+	border: 1px solid #000;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.code {
+  position: relative;
+}
+
+.play {
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+}
+
+.single-line-comment {
+  color: #ddd;
+}
+
+.comment {
+  color: #89D30;
+}
+
+.keyword {
+  color: #61EAFD;
+}
+
+.string {
+  color: #89DB30;
+}
+
+.value {
+  color: #C15BC6;
+}
+
+#index {
+	margin-top: 24px;
+	float: left;
+	width: 190px;
+	position: absolute;
+	left: 8px;
+	background-color: #F3F3F3;
+	padding: 8px;
+}
+
+#content {
+	padding-top: 10px;
+}
+
+table.class-definitions {
+  border-spacing: 0px 0px;
+  border: 1px solid #999;
+  border-bottom: none;
+  margin-bottom: 2em;
+  min-width: 600px;
+}
+
+td.label {
+  font-weight: bold;
+  padding-right: 4px;
+  text-align: right;
+  width: 100px;
+  margin: 0;
+}
+
+table.class-definitions td {
+  border-bottom: 1px solid #999;
+  padding: 0.5em;
+  border-collapse: collapse;
+}
+
+table.class-definitions .even {
+  background-color: #eef;
+}
+
+.classList {
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.src {
+  margin-left: 10px;
+  padding: 5px;
+  background-color: #fff;
+  border: 1px solid #bbb;
+}
+
+.summaryTable { width: 100%; }
+
+caption, div.sectionTitle
+{
+	color: #;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+a {
+  color: blue;
+}
+
+a:visited {
+  color: rgb(85, 26, 139);
+}
+
+h2 a {
+  text-decoration: none;
+  padding: 2px;
+}
+
+h2 a:hover {
+  background-color: blue;
+  color: white;
+}
+
+h2 a:visited:hover {
+  background-color: rgb(85, 26, 139);
+  color: white;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #002EBE;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+	font-size: 13px;
+}
+
+.nameDescription {
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited {
+	color: #777;
+/*	font-style: italic; */
+}
+
+.fineprint
+{
+	text-align: left;
+	font-size: 10px;
+  padding-bottom: 10px;
+}
+
+		</style>
+	</head>
+
+	<body>
+		<div id="content">
+<!-- ============================== class title ============================ -->     <div id="header">
+			<h1>
+				
+				Namespace PubSub
+			</h1>
+      </div>
+
+<!-- ============================== class summary ========================== -->
+      <table class="class-definitions">
+				
+    		
+	  			<tr class="even">
+            <td class="label">Defined in:</td>
+            <td><a href="../symbols/src/mixins_pubsub.js.html">pubsub.js</a></td>
+          </tr>
+  			
+      </table>
+      <h1 class="title">Overview</h1>
+			<p class="description">
+				<p>PubSub Publish-Subscribe mixin that provides the basics of eventing.</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;sailor&nbsp;=&nbsp;mix(PubSub,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">""</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;ahoy:&nbsp;<span class="keyword">function</span>&nbsp;(action,&nbsp;sailor)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"{0.name}:&nbsp;Ahoy,&nbsp;{1.name}!"</span>.fmt(<span class="keyword">this</span>,&nbsp;sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}).into({});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(PubSub,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}).into({});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>&nbsp;&nbsp;ship.add(ahab);<br/>&nbsp;&nbsp;ship.add(daveyJones);<br/>&nbsp;&nbsp;ship.add(flapjack);</code><button class="play" onclick="atomDemo24()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo24() {
+    var sailor = mix(PubSub, {
+    name: "",
+    ahoy: function (action, sailor) {
+      alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
+    }
+  }).into({});
+
+  var ship = mix(PubSub, {
+    sailors: [],
+
+    add: function (sailor) {
+      this.sailors.push(sailor);
+      this.publish("add", sailor);
+      this.subscribe("add", sailor.ahoy.bind(sailor));
+    }
+  }).into({});
+
+  var ahab = mix(sailor, { name: "Captain Ahab" }).into({}),
+      daveyJones = mix(sailor, { name: "Davey Jones" }).into({}),
+      flapjack = mix(sailor, { name: "Flapjack" }).into({});
+
+  ship.add(ahab);
+  ship.add(daveyJones);
+  ship.add(flapjack);
+}
+</script>
+			</p>
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class PubSub.">
+				<caption>Namespace Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/PubSub.html#constructor">PubSub</a></b>
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+				
+        <h1 class="title">Field Summary</h1>
+					
+						<span class="attributes">&lt;private&gt; &nbsp;</span>
+							<span class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/PubSub.html#_subscriptions">_subscriptions</a></b>
+								</div>
+								<div class="description"></div>
+							</span>
+					
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h2>
+					
+						<div>
+							<span class="nameDescription">
+								<div class="fixedFont">
+                + 
+                
+                <b><a href="../symbols/PubSub.html#publish">publish</a></b>(event)
+								</div>
+							</span>
+						</div>
+					
+						<div>
+							<span class="nameDescription">
+								<div class="fixedFont">
+                + 
+                
+                <b><a href="../symbols/PubSub.html#subscribe">subscribe</a></b>(event, handler)
+								</div>
+							</span>
+						</div>
+					
+						<div>
+							<span class="nameDescription">
+								<div class="fixedFont">
+                + 
+                
+                <b><a href="../symbols/PubSub.html#unsubscribe">unsubscribe</a></b>(event, handler)
+								</div>
+							</span>
+						</div>
+					
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<h1 class="title">Field Detail</h1>
+				
+					<a name="_subscriptions"> </a>
+					<div class="fixedFont">&lt;private&gt; 
+					
+					
+					<b>_subscriptions</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name="publish"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>publish</b>(event)
+          </div>
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>event</b>
+									
+								</dt>
+								<dd>The event to publish.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+					
+					<div class="description">
+				    <p>Publish an event, passing all arguments along to the subscribed functions. This is done asynchronously, with each callback being deferred.</p>
+						
+						
+					</div>
+					
+					
+					
+					<hr />
+				
+					<a name="subscribe"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>subscribe</b>(event, handler)
+          </div>
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>event</b>
+									
+								</dt>
+								<dd>The event to subscribe to.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>handler</b>
+									
+								</dt>
+								<dd>The handler to call when the event is published.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+					
+					<div class="description">
+				    <p>Subscribe to an event.</p>
+						
+						
+					</div>
+					
+					
+					
+					<hr />
+				
+					<a name="unsubscribe"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>unsubscribe</b>(event, handler)
+          </div>
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>event</b>
+									
+								</dt>
+								<dd>The event to subscribe to.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>handler</b>
+									
+								</dt>
+								<dd>The handler to call when the event is published.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+					
+					<div class="description">
+				    <p>Unsubscribe from an event.</p>
+						
+						
+					</div>
+					
+					
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Wed Nov 10 2010 22:19:12 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

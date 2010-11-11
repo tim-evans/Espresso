@@ -2,7 +2,7 @@ SRC =	license.js core.js function.js mixins/enumerable.js mixins/pubsub.js	\
 	array.js seed.js string.js formatter.js number.js globals.js \
 	date.js object.js boolean.js hash.js
 
-DOCDIR = ../docs
+DOCDIR = ../
 
 JSDOCDIR = ../frameworks/jsdoc-toolkit
 TEMPLATE = $(JSDOCDIR)/templates/seed

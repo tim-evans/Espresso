@@ -149,7 +149,7 @@ Formatter = {
   },
 
   parseField: function (template, args) {
-    var fieldspec = '', result = null, idx = 0, ch, len;
+    var fieldspec = '', result = null, idx = 0, ch, len = template.length;
 
     for (; idx < len; idx += 1) {
       ch = template[idx];

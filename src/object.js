@@ -7,7 +7,7 @@ mix(/** @lends Object# */{
     for (key in this) {
       value = this[key];
       if (this.hasOwnProperty(key)) {
-        if (!Function.isFunction(value)) {
+        if (!(value instanceof Function)) {
           json.push("{}:{}".fmt(key.json(), value.json()));
         }
       }

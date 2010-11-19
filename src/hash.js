@@ -1,11 +1,12 @@
 /**
  * @class
- * @extends Enumerable
- * @extends Seed
+ * @extends Seed.Enumerable
+ * @extends Seed.KVO
+ * @extends Root
  */
-/*globals Hash Seed Enumerable */
+/*globals Seed Root */
 
-Hash = Seed.extend(Enumerable, /** @lends Hash# */{
+Seed.Hash = Root.extend(Seed.Enumerable, Seed.KVO, /** @lends Seed.Hash# */{
 
   /**
    * Iterator
@@ -14,7 +15,7 @@ Hash = Seed.extend(Enumerable, /** @lends Hash# */{
     var k, v;
     for (k in this) {
       v = this.get(k);
-      if (k[0] !== '_' && !Function.isFunction(v)) {
+      if (k[0] !== '_' && !(v instanceof Function)) {
         lambda.apply(self, [v, k, this]);
       }
     }

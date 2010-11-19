@@ -14,20 +14,20 @@
  * list. This means that:
  *
  * {{{
- *   Formatter.fmt("Hello, {name}!", { name: "world" });
+ *   Seed.String.Formatter.fmt("Hello, {name}!", { name: "world" });
  * }}}
  *
  * is equivalent to:
  *
  * {{{
- *   Formatter.fmt("Hello, {0.name}!", { name: "world" });
+ *   Seed.String.Formatter.fmt("Hello, {0.name}!", { name: "world" });
  * }}}
  *
  * For more than one argument you must mention the position of your
  * argument.
  *
  * {{{
- *   Formatter.fmt("{0.name} says {1}!", { name: "Domo" }, "hello");
+ *   Seed.String.Formatter.fmt("{0.name} says {1}!", { name: "Domo" }, "hello");
  * }}}
  *
  * If your arguments and formatter are "as is"- that is, in order,
@@ -35,7 +35,7 @@
  * template string like so:
  *
  * {{{
- *   Formatter.fmt("{} says {}!", "Domo", "hello");
+ *   Seed.String.Formatter.fmt("{} says {}!", "Domo", "hello");
  * }}}
  *
  * Check out the examples given for some ideas on how to use it.
@@ -50,7 +50,7 @@
  * Consider the following example:
  *
  * {{{
- *   Localizer = Seed.extend({
+ *   Localizer = Root.extend({
  *     __fmt__: function (spec) {
  *       return this[spec];
  *     }
@@ -62,52 +62,52 @@
  *     jp: 'konnichiwa'
  *   });
  *
- *   Formatter.fmt("{:en}", _hello);
+ *   Seed.String.Formatter.fmt("{:en}", _hello);
  *   // -> "hello"
  *
- *   Formatter.fmt("{:fr}", _hello);
+ *   Seed.String.Formatter.fmt("{:fr}", _hello);
  *   // -> "bonjour"
  *
- *   Formatter.fmt("{:jp}", _hello);
+ *   Seed.String.Formatter.fmt("{:jp}", _hello);
  *   // -> "konnichiwa"
  * }}}
  *
  * Try these examples to get a hang of how string formatting works!
  *
  * {{{
- *   Formatter.fmt("Arguments: {1}; {0}; {2}", 0, 1, 2);
+ *   Seed.String.Formatter.fmt("Arguments: {1}; {0}; {2}", 0, 1, 2);
  *   // -> "Arguments 1; 0; 2"
  * }}}
  *
  * {{{
- *   Formatter.fmt("{} is my name.", "Domo");
+ *   Seed.String.Formatter.fmt("{} is my name.", "Domo");
  *   // -> "Domo is my name."
  * }}}
  *
  * {{{
- *   Formatter.fmt("Hello, {name}!", { name: "world" });
+ *   Seed.String.Formatter.fmt("Hello, {name}!", { name: "world" });
  *   // -> "Hello, world!"
  * }}}
  *
  * {{{
- *   Formatter.fmt("{lang} uses the {{variable}} format too!", {
+ *   Seed.String.Formatter.fmt("{lang} uses the {{variable}} format too!", {
  *      lang: "Python", variable: "(not used)"
  *   });
  *   // -> "Python uses the {{variable}} format too!"
  * }}}
  *
  * {{{
- *   Formatter.fmt("Today is {:A}.", new Date());
+ *   Seed.String.Formatter.fmt("Today is {:A}.", new Date());
  * }}}
  *
  * {{{
- *   Formatter.fmt("Which one comes first? -> {:-^{}}", 3, 4);
+ *   Seed.String.Formatter.fmt("Which one comes first? -> {:-^{}}", 3, 4);
  *   // -> "Which one comes first? -> -4-"
  * }}}
  */
-/*globals Formatter _G */
+/*globals Seed _G */
 
-Formatter = {
+Seed.String.Formatter = {
 
   SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/,
 

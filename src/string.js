@@ -1,10 +1,11 @@
-/*globals mix Enumerable Formatter */
+/*globals mix Seed */
 
 /**
- * @namespace String
+ * @class Seed.String
  * Add-ons to Strings to make them easier to deal with.
+ * @extends Seed.Enumerable
  */
-mix(Enumerable, /** @lends String# */{
+Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
 
   /**
    * Iterator for Strings.
@@ -206,7 +207,7 @@ mix(Enumerable, /** @lends String# */{
   fmt: function () {
     var args = Array.from(arguments);
     args.unshift(this.toString());
-    return Formatter.fmt.apply(Formatter, args);
+    return Seed.String.Formatter.fmt.apply(Seed.String.Formatter, args);
   },
 
   /**
@@ -216,7 +217,7 @@ mix(Enumerable, /** @lends String# */{
    * [[fill]align][minimumwidth]
    */
   __fmt__: function (spec) {
-    var match = spec.match(Formatter.SPECIFIER),
+    var match = spec.match(Seed.String.Formatter.SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
         minWidth = match[6] || 0, len, before, after;
@@ -246,4 +247,6 @@ mix(Enumerable, /** @lends String# */{
     return '"' + this + '"';
   }
 
-}).into(String.prototype);
+}).into({});
+
+mix(Seed.String, /** @lends String.prototype */{}).into(String.prototype);

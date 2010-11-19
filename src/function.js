@@ -1,9 +1,5 @@
 /*globals mix _G */
 
-Function.isFunction = function (o) {
-  return o instanceof Function;
-};
-
 mix(/** @lends Function */{
 
   /**
@@ -53,7 +49,7 @@ mix(/** @lends Function.prototype */{
     /** @ignore */
     this._.around = function (template, value, key) {
       var base = template[key] || Function.empty;
-      if (!base) {
+      if (!(base instanceof Function)) {
         return value;
       }
 
@@ -71,18 +67,19 @@ mix(/** @lends Function.prototype */{
 
     /** @ignore */
     this._.pubsub = function (template, value, key) {
-      var i = 0, len = pubsub.length, path, property, iProperty;
-      if (template.subscribe && template.publish) {
-        for (i = 0; i < len; i += 1) {
-          path = pubsub[i];
-          if (path.indexOf('.') !== -1) {
-            iProperty = path.lastIndexOf('.');
-            property = path.slice(iProperty + 1);
-            path = path.slice(0, iProperty);
-            _G.getObjectFor(path).subscribe(property, value.bind(template));
-          } else {
-            template.subscribe(pubsub[i], value.bind(template));
-          }
+      var i = 0, len = pubsub.length, object, property, iProperty;
+      for (i = 0; i < len; i += 1) {
+        property = pubsub[i];
+        object = template;
+
+        if (property.indexOf('.') !== -1) {
+          iProperty = property.lastIndexOf('.');
+          object = _G.getObjectFor(property.slice(0, iProperty));
+          property = property.slice(iProperty + 1);
+        }
+
+        if (object && object.subscribe && object.publish) {
+          object.subscribe(property, value.bind(object), true);
         }
       }
       return value;
@@ -95,13 +92,13 @@ mix(/** @lends Function.prototype */{
    * You may now use the function for get() and set().
    * This is inferior, but compatible with SproutCore's property decorator.
    * {{{
-   *   var Person = Seed.extend({
+   *   var Person = Root.extend({
    *     firstName: '',
    *     lastName: '',
    * 
    *     fullName: function (k, v) {
    *       return [this.get('firstName'), this.get('lastName')].join(' ');
-   *     }.property()
+   *     }.property('firstName', 'lastName')
    *   });
    *
    *   alert(Person.extend({ firstName: "Douglas", lastName: "Crockford" }).get('fullName'));
@@ -109,8 +106,68 @@ mix(/** @lends Function.prototype */{
    * @returns {Function} The reciever.
    */
   property: function () {
+    this._ = this._ || {};
+
     this.isProperty = true;
+    this.dependentKeys = Array.prototype.slice.apply(arguments);
+
+    /** @ignore */
+    this._.property = function (template, value, key) {
+      var i = 0, len = value.dependentKeys.length, object, property, iProperty;
+      for (i = 0; i < len; i += 1) {
+        property = value.dependentKeys[i];
+        object = template;
+
+        if (property.indexOf('.') !== -1) {
+          iProperty = property.lastIndexOf('.');
+          object = _G.getObjectFor(property.slice(0, iProperty));
+          property = property.slice(iProperty + 1);
+        }
+
+        if (object && object.subscribe && object.publish) {
+          object.subscribe(property, value.bind(object), true);
+        }
+      }
+      return value;
+    };
+
     return this;
+  }.inferior(),
+
+  /**
+   * Marks the computed property as cacheable.
+   * This is inferior, but compatible with SproutCore's cacheable decorator.
+   * {{{
+   *   var Person = Root.extend({
+   *     name: function (k, v) {
+   *       alert("Setting my name to {}".fmt(v));
+   *       return v;
+   *     }.cacheable()
+   *   });
+   *
+   *   var person = Person.extend().set('name', 'Marvin');
+   *   // Getting the name multiple times does nothing!
+   *   person.get('name');
+   *   person.get('name');
+   *   person.get('name');
+   * }}}
+   * @returns {Function} The reciever.
+   */
+  cacheable: function () {
+    this._ = this._ || {};
+
+    var cache = {}, self = this;
+
+    /** @ignore */
+    var lambda = function (k, v) {
+      if (arguments.length > 1) {
+        cache[k] = self.apply(this, arguments);
+      }
+      return cache[k];
+    };
+    lambda.isProperty = true;
+    lambda.dependentKeys = this.dependentKeys || [];
+    return lambda;
   }.inferior()
 
 }).into(Function.prototype);
@@ -122,7 +179,7 @@ mix(/** @lends Function.prototype */{
    * before hand.
    *
    * {{{
-   *   var Person = Seed.extend({
+   *   var Person = Root.extend({
    *     name: 'nil',
    *     greet: function (greeting) {
    *       alert(greeting.fmt(this.name));

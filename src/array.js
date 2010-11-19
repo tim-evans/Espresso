@@ -16,7 +16,7 @@ mix(/** @scope Array */{
 
 }).into(Array);
 
-mix(Enumerable, /** @scope Array.prototype */{
+mix(Seed.Enumerable, Seed.KVO, /** @scope Array.prototype */{
 
   /**
    * Iterator over the Array.
@@ -37,7 +37,7 @@ mix(Enumerable, /** @scope Array.prototype */{
   forEach: function (func, self) {
     var i = 0, len = this.length;
     for (; i < len; i += 1) {
-      func.apply(self, [this[i], i, this]);
+      func.apply(self, [this.get('i'), i, this]);
     }
   }.inferior(),
 
@@ -47,7 +47,7 @@ mix(Enumerable, /** @scope Array.prototype */{
     i = fromIndex >= 0 ? fromIndex:
                          i.max(len - Math.abs(fromIndex));
     for (; i < len; i += 1) {
-      if (o in this && o === this[i]) {
+      if (o in this && o === this.get('i')) {
         return i;
       }
     }
@@ -67,16 +67,38 @@ mix(Enumerable, /** @scope Array.prototype */{
     i = fromIndex >= 0 ? len.min(fromIndex + 1):
                          len - Math.abs(fromIndex) + 1;
     while (i--) {
-      if (o in this && o === this[i]) {
+      if (o in this && o === this.get('i')) {
         return i;
       }
     }
     return -1;
   }.inferior(),
 
+  compact: function () {
+    return this.without(null);
+  },
+
+  flatten: function () {
+    var ret = [];
+    this.forEach(function (v) {
+      if (v instanceof Array) {
+        ret.concat(v.flatten());
+      } else {
+        ret.push(v);
+      }
+    });
+    return ret;
+  },
+
+  remove: function (from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from: from;
+    return this.push.apply(this, rest);
+  },
+
   unique: function () {
-    var o = {};
-    this.forEach(function (v, k) {
+    var o = [];
+    this.forEach(function (v) {
       o[v] = v;
     });
     return o.values();

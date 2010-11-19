@@ -1,9 +1,11 @@
 /**
  * Enumerable mixin.
  * @requires forEach
- * @class Enumerable
+ * @class Seed.Enumerable
  */
-Enumerable = /** @lends Enumerable# */{
+/*globals Seed */
+
+Seed.Enumerable = /** @lends Seed.Enumerable# */{
 
   /**
    * Returns an array where each value on the enumerable
@@ -29,7 +31,7 @@ Enumerable = /** @lends Enumerable# */{
   /**
    * Reduce the content of an enumerable down to a single value.
    * {{{
-   *   var range = mix(Enumerable, {
+   *   var range = mix(Seed.Enumerable, {
    *     begin: 0,
    *     end: 0,
    *
@@ -74,7 +76,7 @@ Enumerable = /** @lends Enumerable# */{
   /**
    * Converts an enumerable into an Array.
    * {{{
-   *   var range = mix(Enumerable, {
+   *   var range = mix(Seed.Enumerable, {
    *     begin: 0,
    *     end: 0,
    *
@@ -100,9 +102,9 @@ Enumerable = /** @lends Enumerable# */{
   },
 
   /**
-   * Returns the size of the Enumerable.
+   * Returns the size of the Seed.Enumerable.
    * {{{
-   *   var range = mix(Enumerable, {
+   *   var range = mix(Seed.Enumerable, {
    *     begin: 0,
    *     end: 0,
    *
@@ -160,28 +162,27 @@ Enumerable = /** @lends Enumerable# */{
   },
 
   extract: function (keys) {
-    var arr = [], self = this;
+    var arr = [];
     if (!(keys instanceof Array)) {
       keys = [keys];
     }
     keys.forEach(function (v, k) {
-      if (self.get) {
-        arr.push(self.get(k));
+      if (this.get) {
+        arr.push(this.get(k));
       } else {
-        arr.push(self[k]);
+        arr.push(this[k]);
       }
-    });
+    }, this);
     return arr;
   },
 
   contains: function (val) {
-    var self = this,
-        args = Array.from(arguments);
+    var args = Array.from(arguments);
 
     if (args.length > 1) {
       return args.every(function (v, k) {
-        return self.contains(v);
-      });
+        return this.contains(v);
+      }, this);
     } else {
       return this.reduce(function (contained, v, k) {
         return contained || v === val;
@@ -191,7 +192,7 @@ Enumerable = /** @lends Enumerable# */{
 
   zip: function () {
     var iter = Function.echo, args = Array.from(arguments), collections;
-    if (Function.isFunction(args.slice(-1)[0])) {
+    if (args.slice(-1)[0] instanceof Function) {
       iter = args.pop();
     }
 

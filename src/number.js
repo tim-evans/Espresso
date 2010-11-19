@@ -1,4 +1,4 @@
-/*globals mix Formatter */
+/*globals mix Seed */
 
 mix(/** @lends Number# */{
   json: function () {
@@ -11,7 +11,7 @@ mix(/** @lends Number# */{
       return this;
     }
 
-    var match = spec.match(Formatter.SPECIFIER),
+    var match = spec.match(Seed.String.Formatter.SPECIFIER),
         align = match[1],
         fill = match[2],
         sign = match[3] || '-',

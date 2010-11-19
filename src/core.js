@@ -1,4 +1,13 @@
 /**
+ * @namespace
+ * @version 0.2.0
+ */
+/*global Seed */
+Seed = {
+  VERSION: '0.2.0'
+};
+
+/**
  * Mix in functionality to a pre-existing object.
  * This is the function that makes everything work- where all of the
  * function decorators are made into reality. To see examples of
@@ -35,7 +44,7 @@
  *           ingredient, amount;
  *       for (var ingredient in this) {
  *         amount = this[ingredient];
- *         if (this.hasOwnProperty(ingredient) && !Function.isFunction(amount) &&
+ *         if (this.hasOwnProperty(ingredient) && !(amount instanceof Function) &&
  *             ingredient !== 'name') {
  *           list.push(amount.fmt(ingredient));
  *         }
@@ -75,7 +84,7 @@ var mix = function () {
 
             _ = mixin && mixin._;
 
-            if (Function.isFunction(mixin)) {
+            if (mixin instanceof Function) {
               for (transformer in _) {
                 if (_.hasOwnProperty(transformer)) {
                   mixin = _[transformer](seed, mixin, name);
@@ -84,15 +93,13 @@ var mix = function () {
             }
 
             seed[name] = mixin;
+          }
 
-            // Take care of IE clobbering toString and valueOf
-            if (name === "toString" &&
-                seed.toString === Object.prototype.toString) {
-              seed.toString = mixin;
-            } else if (name === "valueOf" &&
-                seed.valueOf === Object.prototype.valueOf) {
-              seed.valueOf = mixin;
-            }
+          // Take care of IE clobbering toString and valueOf
+          if (o && o.toString !== Object.prototype.toString) {
+            seed.toString = o.toString;
+          } else if (o && o.valueOf !== Object.prototype.valueOf) {
+            seed.valueOf = o.valueOf;
           }
 
           // Delete aliases- they're redundant information.

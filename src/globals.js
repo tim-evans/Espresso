@@ -1,8 +1,8 @@
-/*globals mix _G */
+/*globals mix */
 
 // Lua-like global variable so you don't have to guess what
 // the global variable is.
-_G = mix(/** @lends _global_ */{
+var _G = mix(/** @lends _global_ */{
 
   /**
    * Lookup a variable's value given its Object notation.
@@ -25,7 +25,7 @@ _G = mix(/** @lends _global_ */{
    * {{{
    *   // Properties on the global scope need to be there-
    *   // local scoped variables will not be found!
-   *   window.Hydrogen = Seed.extend({
+   *   window.Hydrogen = Root.extend({
    *     symbol: 'H'
    *   });
    *
@@ -87,7 +87,7 @@ _G = mix(/** @lends _global_ */{
       object = (arguments.length === 1) ? _G: object;
 
       // Nothing to look up on undefined or null objects.
-      if (!isDefined(object)) {
+      if (!_G.hasValue(object)) {
         return object;
       }
 
@@ -121,7 +121,7 @@ _G = mix(/** @lends _global_ */{
         }
 
         // Recurse.
-        return getObjectFor(key, object);
+        return _G.getObjectFor(key, object);
       } else if ((iattr < iarr || iarr === -1) && iattr > -1) {
         object = getProperty(key.split('.', 1), object);
 
@@ -129,7 +129,7 @@ _G = mix(/** @lends _global_ */{
         key = key.slice(key.indexOf('.') + 1);
 
         // Recurse
-      return getObjectFor(key, object);
+        return _G.getObjectFor(key, object);
 
         // Done!
       } else if (key === '') {
@@ -145,17 +145,17 @@ _G = mix(/** @lends _global_ */{
    * Checks whether the variable is defined *and* not null.
    * {{{
    *   var foo;
-   *   alert(isDefined(null));
+   *   alert(hasValue(null));
    *   // -> false
    *
    *   undefined = 'all your base are belong to us';
-   *   alert(isDefined(foo));
+   *   alert(hasValue(foo));
    *   // -> false
    * }}}
    * @param {Object} o The object to test if it's defined or not.
    * @returns {Boolean} True if the value is not null and not undefined.
    */
-  isDefined: function (o) {
+  hasValue: function (o) {
     return (typeof o !== "undefined" && o !== null);
   }
 

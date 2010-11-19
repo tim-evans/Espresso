@@ -8,7 +8,6 @@
 		<title>JsDoc Reference - Seed</title>
 		<meta name="generator" content="JsDoc Toolkit" />
 
-    <script type="text/javascript" src="../seed.js"></script>
 		<style type="text/css">
 		/* default.css */
 body {
@@ -16,6 +15,8 @@ body {
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 10px;
+  color: #222;
 }
 
 #header {
@@ -27,6 +28,12 @@ body {
   border-bottom: 1px solid #bbb;
 }
 
+.play {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 hr {
 	border: none 0;
 	border-top: 1px solid #bbb;
@@ -36,22 +43,19 @@ hr {
 code {
 	display: block;
 	padding: 8px;
-  background-color: rgba(0, 0, 0, .8);
+  background-color: #222;
   color: white;
 	border: 1px solid #000;
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-.code {
-  position: relative;
+.right {
+  text-align: right;
 }
 
-.play {
-  font-weight: bold;
-  position: absolute;
-  right: 10px;
-  top: 5px;
+.code {
+  position: relative;
 }
 
 .single-line-comment {
@@ -74,18 +78,30 @@ code {
   color: #C15BC6;
 }
 
+.caption {
+  font-size: 100%;
+  position: relative;
+  top: -25px;
+  left: 15px;
+  margin: 0px;
+}
+
 #index {
-	margin-top: 24px;
 	float: left;
 	width: 190px;
 	position: absolute;
-	left: 8px;
-	background-color: #F3F3F3;
+	left: 20px;
+  background-color: #eef;
+  border: 1px solid #999;
 	padding: 8px;
 }
 
 #content {
 	padding-top: 10px;
+}
+
+#content-body {
+  margin-left: 230px;
 }
 
 table.class-definitions {
@@ -155,17 +171,17 @@ a:visited {
   color: rgb(85, 26, 139);
 }
 
-h2 a {
+h2 a, a#back {
   text-decoration: none;
   padding: 2px;
 }
 
-h2 a:hover {
+h2 a:hover, a#back:hover {
   background-color: blue;
   color: white;
 }
 
-h2 a:visited:hover {
+h2 a:visited:hover, a#back:hover {
   background-color: rgb(85, 26, 139);
   color: white;
 }
@@ -189,12 +205,20 @@ div.sectionTitle { margin-bottom: 8px; }
 	text-align: right;
 }
 
-td.attributes, .fixedFont
+.fixedFont {
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+td.attributes
 {
 	line-height: 15px;
-	color: #002EBE;
 	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 	font-size: 13px;
+}
+
+.signature { 
+  font-size: 12px;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 }
 
 .nameDescription {
@@ -218,10 +242,9 @@ ul.inheritsList
 }
 
 .detailList {
-	margin-left: 20px; 
 	line-height: 15px;
 }
-.detailList dt { margin-left: 20px; }
+.detailList dt { margin-left: 10px; }
 
 .detailList .heading
 {
@@ -237,7 +260,7 @@ ul.inheritsList
 
 .fineprint
 {
-	text-align: left;
+	text-align: right;
 	font-size: 10px;
   padding-bottom: 10px;
 }
@@ -246,15 +269,15 @@ ul.inheritsList
 	</head>
 	
 	<body>
-		<div id="header">
+		<span id="header">
   <h1>Seed</h1>
-</div>
+  <h4 class="caption">A JavaScript Library used to grow your own JavaScript Libraries.</h4>
+</span>
 
-    A JavaScript Library used to grow your own JavaScript Libraries.
 		<div id="content">
 			
 			<div>
-				<h2><a href="symbols/global.html">_global_</a></h2>
+				<h2><a href="symbols/_global_.html">_global_</a></h2>
 				
 			</div>
 			<hr/>
@@ -278,25 +301,7 @@ ul.inheritsList
 			<hr/>
 			
 			<div>
-				<h2><a href="symbols/Enumerable.html">Enumerable</a></h2>
-				Enumerable
-			</div>
-			<hr/>
-			
-			<div>
-				<h2><a href="symbols/Formatter.html">Formatter</a></h2>
-				Advanced String Formatting borrowed from the eponymous Python PEP.
-			</div>
-			<hr/>
-			
-			<div>
 				<h2><a href="symbols/Function.html">Function</a></h2>
-				
-			</div>
-			<hr/>
-			
-			<div>
-				<h2><a href="symbols/Hash.html">Hash</a></h2>
 				
 			</div>
 			<hr/>
@@ -314,21 +319,51 @@ ul.inheritsList
 			<hr/>
 			
 			<div>
-				<h2><a href="symbols/PubSub.html">PubSub</a></h2>
-				PubSub
-Publish-Subscribe mixin that provides the basics of eventing.
+				<h2><a href="symbols/Root.html">Root</a></h2>
+				The root of all other objects stem from.
 			</div>
 			<hr/>
 			
 			<div>
 				<h2><a href="symbols/Seed.html">Seed</a></h2>
-				The seed that all other objects grow from.
+				
 			</div>
 			<hr/>
 			
 			<div>
-				<h2><a href="symbols/String.html">String</a></h2>
+				<h2><a href="symbols/Seed.Enumerable.html">Seed.Enumerable</a></h2>
+				Seed.Enumerable
+			</div>
+			<hr/>
+			
+			<div>
+				<h2><a href="symbols/Seed.Hash.html">Seed.Hash</a></h2>
 				
+			</div>
+			<hr/>
+			
+			<div>
+				<h2><a href="symbols/Seed.KVO.html">Seed.KVO</a></h2>
+				Seed.KVO
+			</div>
+			<hr/>
+			
+			<div>
+				<h2><a href="symbols/Seed.PubSub.html">Seed.PubSub</a></h2>
+				Publish-Subscribe mixin that provides the basics of eventing.
+			</div>
+			<hr/>
+			
+			<div>
+				<h2><a href="symbols/Seed.String.html">Seed.String</a></h2>
+				Seed.String
+Add-ons to Strings to make them easier to deal with.
+			</div>
+			<hr/>
+			
+			<div>
+				<h2><a href="symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></h2>
+				Advanced String Formatting borrowed from the eponymous Python PEP.
 			</div>
 			<hr/>
 			
@@ -336,7 +371,7 @@ Publish-Subscribe mixin that provides the basics of eventing.
 		</div>
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blankt">JsDoc Toolkit</a> 2.3.2 on Wed Nov 10 2010 22:47:25 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blankt">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:13 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

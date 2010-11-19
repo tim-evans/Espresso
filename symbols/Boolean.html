@@ -8,7 +8,7 @@
 		
 		<title>JsDoc Reference - Boolean</title>
 
-    <script type="text/javascript" src="../seed.js"></script>
+    <script type="text/javascript" src="../bin/seed.js"></script>
 		<style type="text/css">
 			/* default.css */
 body {
@@ -16,6 +16,8 @@ body {
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 10px;
+  color: #222;
 }
 
 #header {
@@ -27,6 +29,12 @@ body {
   border-bottom: 1px solid #bbb;
 }
 
+.play {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 hr {
 	border: none 0;
 	border-top: 1px solid #bbb;
@@ -36,22 +44,19 @@ hr {
 code {
 	display: block;
 	padding: 8px;
-  background-color: rgba(0, 0, 0, .8);
+  background-color: #222;
   color: white;
 	border: 1px solid #000;
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-.code {
-  position: relative;
+.right {
+  text-align: right;
 }
 
-.play {
-  font-weight: bold;
-  position: absolute;
-  right: 10px;
-  top: 5px;
+.code {
+  position: relative;
 }
 
 .single-line-comment {
@@ -74,18 +79,30 @@ code {
   color: #C15BC6;
 }
 
+.caption {
+  font-size: 100%;
+  position: relative;
+  top: -25px;
+  left: 15px;
+  margin: 0px;
+}
+
 #index {
-	margin-top: 24px;
 	float: left;
 	width: 190px;
 	position: absolute;
-	left: 8px;
-	background-color: #F3F3F3;
+	left: 20px;
+  background-color: #eef;
+  border: 1px solid #999;
 	padding: 8px;
 }
 
 #content {
 	padding-top: 10px;
+}
+
+#content-body {
+  margin-left: 230px;
 }
 
 table.class-definitions {
@@ -155,17 +172,17 @@ a:visited {
   color: rgb(85, 26, 139);
 }
 
-h2 a {
+h2 a, a#back {
   text-decoration: none;
   padding: 2px;
 }
 
-h2 a:hover {
+h2 a:hover, a#back:hover {
   background-color: blue;
   color: white;
 }
 
-h2 a:visited:hover {
+h2 a:visited:hover, a#back:hover {
   background-color: rgb(85, 26, 139);
   color: white;
 }
@@ -189,12 +206,20 @@ div.sectionTitle { margin-bottom: 8px; }
 	text-align: right;
 }
 
-td.attributes, .fixedFont
+.fixedFont {
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+td.attributes
 {
 	line-height: 15px;
-	color: #002EBE;
 	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 	font-size: 13px;
+}
+
+.signature { 
+  font-size: 12px;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 }
 
 .nameDescription {
@@ -218,10 +243,9 @@ ul.inheritsList
 }
 
 .detailList {
-	margin-left: 20px; 
 	line-height: 15px;
 }
-.detailList dt { margin-left: 20px; }
+.detailList dt { margin-left: 10px; }
 
 .detailList .heading
 {
@@ -237,7 +261,7 @@ ul.inheritsList
 
 .fineprint
 {
-	text-align: left;
+	text-align: right;
 	font-size: 10px;
   padding-bottom: 10px;
 }
@@ -246,23 +270,69 @@ ul.inheritsList
 	</head>
 
 	<body>
-		<div id="content">
 <!-- ============================== class title ============================ -->     <div id="header">
 			<h1>
 				
 				Built-In Namespace Boolean
 			</h1>
       </div>
-
-<!-- ============================== class summary ========================== -->
       <table class="class-definitions">
 				
     		
       </table>
+
+  	<div id="content-body">
+		<div id="index">
+			<a href="../">All Classes</a>
+<hr/>
+<ul class="classList">
+	
+	<li><a href="../symbols/_global_.html">_global_</a></li>
+	
+	<li><a href="../symbols/Array.html">Array</a></li>
+	
+	<li><a href="../symbols/Boolean.html">Boolean</a></li>
+	
+	<li><a href="../symbols/Date.html">Date</a></li>
+	
+	<li><a href="../symbols/Function.html">Function</a></li>
+	
+	<li><a href="../symbols/Number.html">Number</a></li>
+	
+	<li><a href="../symbols/Object.html">Object</a></li>
+	
+	<li><a href="../symbols/Root.html">Root</a></li>
+	
+	<li><a href="../symbols/Seed.html">Seed</a></li>
+	
+	<li><a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a></li>
+	
+	<li><a href="../symbols/Seed.Hash.html">Seed.Hash</a></li>
+	
+	<li><a href="../symbols/Seed.KVO.html">Seed.KVO</a></li>
+	
+	<li><a href="../symbols/Seed.PubSub.html">Seed.PubSub</a></li>
+	
+	<li><a href="../symbols/Seed.String.html">Seed.String</a></li>
+	
+	<li><a href="../symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></li>
+	
+</ul>
+
+		</div>
+
+<!-- ============================== class summary ========================== -->
       <h1 class="title">Overview</h1>
 			<p class="description">
 				
 			</p>
+			
+      
+			
+			
+			
+
+
 
 <!-- ============================== constructor summary ====================
 			-->
@@ -275,17 +345,14 @@ ul.inheritsList
 				
 				
         <h1 class="title">Method Summary</h2>
+          <table>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                <span class="light">(<a href="../symbols/String.html">String</a>)</span>
-                <b><a href="../symbols/Boolean.html#json">json</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(String)</span>
+              <b><a href="../symbols/Boolean.html#json">json</a></b>()</td>
+            </tr>
 					
+          </table>
 				
 				
 				
@@ -301,11 +368,14 @@ ul.inheritsList
 				<h1 class="title">Method Detail</h1>
 				
 					<a name="json"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">(<a href="../symbols/String.html">String</a>)</span>
-					<b>json</b>()
-          </div>
+          <div>
+             <a name="json"> </a>
+             <h3>json()</h3>
+
+             <div class="signature">
+               + <span class="light">(String)</span> <b>json</b>()
+             </div><br/>
+
 						
 						
 						
@@ -314,15 +384,13 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The boolean as a JSON string</dd>
+								<dt><span class="light fixedFont">(String)</span> </dt>
 							
 							</dl>
 						
 						
-						
-					
-					<div class="description">
-				    <p>Converts a Boolean to valid JSON.</p>
+             <div class="description">
+				     
 
 <p class="code"><code>&nbsp;&nbsp;alert(<span class="keyword">true</span>.json());<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"true"</span></code><button class="play" onclick="atomDemo4()">Run it!</button></p>
 <script type="text/javascript">
@@ -331,14 +399,18 @@ function atomDemo4() {
   // -> "true"
 }
 </script>
+						 
+             </div>
+
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/boolean.js.html">boolean.js</a>.
-						
-						
+					
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/boolean.js.html">boolean.js</a>.
+				 
 					
 					
 				
@@ -354,7 +426,7 @@ function atomDemo4() {
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Wed Nov 10 2010 22:47:25 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

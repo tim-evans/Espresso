@@ -8,7 +8,7 @@
 		
 		<title>JsDoc Reference - Array</title>
 
-    <script type="text/javascript" src="../seed.js"></script>
+    <script type="text/javascript" src="../bin/seed.js"></script>
 		<style type="text/css">
 			/* default.css */
 body {
@@ -16,6 +16,8 @@ body {
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 10px;
+  color: #222;
 }
 
 #header {
@@ -27,6 +29,12 @@ body {
   border-bottom: 1px solid #bbb;
 }
 
+.play {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 hr {
 	border: none 0;
 	border-top: 1px solid #bbb;
@@ -36,22 +44,19 @@ hr {
 code {
 	display: block;
 	padding: 8px;
-  background-color: rgba(0, 0, 0, .8);
+  background-color: #222;
   color: white;
 	border: 1px solid #000;
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-.code {
-  position: relative;
+.right {
+  text-align: right;
 }
 
-.play {
-  font-weight: bold;
-  position: absolute;
-  right: 10px;
-  top: 5px;
+.code {
+  position: relative;
 }
 
 .single-line-comment {
@@ -74,18 +79,30 @@ code {
   color: #C15BC6;
 }
 
+.caption {
+  font-size: 100%;
+  position: relative;
+  top: -25px;
+  left: 15px;
+  margin: 0px;
+}
+
 #index {
-	margin-top: 24px;
 	float: left;
 	width: 190px;
 	position: absolute;
-	left: 8px;
-	background-color: #F3F3F3;
+	left: 20px;
+  background-color: #eef;
+  border: 1px solid #999;
 	padding: 8px;
 }
 
 #content {
 	padding-top: 10px;
+}
+
+#content-body {
+  margin-left: 230px;
 }
 
 table.class-definitions {
@@ -155,17 +172,17 @@ a:visited {
   color: rgb(85, 26, 139);
 }
 
-h2 a {
+h2 a, a#back {
   text-decoration: none;
   padding: 2px;
 }
 
-h2 a:hover {
+h2 a:hover, a#back:hover {
   background-color: blue;
   color: white;
 }
 
-h2 a:visited:hover {
+h2 a:visited:hover, a#back:hover {
   background-color: rgb(85, 26, 139);
   color: white;
 }
@@ -189,12 +206,20 @@ div.sectionTitle { margin-bottom: 8px; }
 	text-align: right;
 }
 
-td.attributes, .fixedFont
+.fixedFont {
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+td.attributes
 {
 	line-height: 15px;
-	color: #002EBE;
 	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 	font-size: 13px;
+}
+
+.signature { 
+  font-size: 12px;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 }
 
 .nameDescription {
@@ -218,10 +243,9 @@ ul.inheritsList
 }
 
 .detailList {
-	margin-left: 20px; 
 	line-height: 15px;
 }
-.detailList dt { margin-left: 20px; }
+.detailList dt { margin-left: 10px; }
 
 .detailList .heading
 {
@@ -237,7 +261,7 @@ ul.inheritsList
 
 .fineprint
 {
-	text-align: left;
+	text-align: right;
 	font-size: 10px;
   padding-bottom: 10px;
 }
@@ -246,23 +270,69 @@ ul.inheritsList
 	</head>
 
 	<body>
-		<div id="content">
 <!-- ============================== class title ============================ -->     <div id="header">
 			<h1>
 				
 				Built-In Namespace Array
 			</h1>
       </div>
-
-<!-- ============================== class summary ========================== -->
       <table class="class-definitions">
 				
     		
       </table>
+
+  	<div id="content-body">
+		<div id="index">
+			<a href="../">All Classes</a>
+<hr/>
+<ul class="classList">
+	
+	<li><a href="../symbols/_global_.html">_global_</a></li>
+	
+	<li><a href="../symbols/Array.html">Array</a></li>
+	
+	<li><a href="../symbols/Boolean.html">Boolean</a></li>
+	
+	<li><a href="../symbols/Date.html">Date</a></li>
+	
+	<li><a href="../symbols/Function.html">Function</a></li>
+	
+	<li><a href="../symbols/Number.html">Number</a></li>
+	
+	<li><a href="../symbols/Object.html">Object</a></li>
+	
+	<li><a href="../symbols/Root.html">Root</a></li>
+	
+	<li><a href="../symbols/Seed.html">Seed</a></li>
+	
+	<li><a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a></li>
+	
+	<li><a href="../symbols/Seed.Hash.html">Seed.Hash</a></li>
+	
+	<li><a href="../symbols/Seed.KVO.html">Seed.KVO</a></li>
+	
+	<li><a href="../symbols/Seed.PubSub.html">Seed.PubSub</a></li>
+	
+	<li><a href="../symbols/Seed.String.html">Seed.String</a></li>
+	
+	<li><a href="../symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></li>
+	
+</ul>
+
+		</div>
+
+<!-- ============================== class summary ========================== -->
       <h1 class="title">Overview</h1>
 			<p class="description">
 				
 			</p>
+			
+      
+			
+			
+			
+
+
 
 <!-- ============================== constructor summary ====================
 			-->
@@ -272,15 +342,15 @@ ul.inheritsList
 				
 				
         <h1 class="title">Field Summary</h1>
+          <table>
 					
-						<span class="attributes">&lt;static&gt; &nbsp;</span>
-							<span class="nameDescription">
-								<div class="fixedFont">
-								Array.<b><a href="../symbols/Array.html#.from">from</a></b>
-								</div>
-								<div class="description">Convert an iterable object into an Array.</div>
-							</span>
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                Array.<b><a href="../symbols/Array.html#.from">from</a></b></td>
+            </tr>
 					
+          </table>
 				
 				
 				
@@ -291,67 +361,54 @@ ul.inheritsList
 				
 				
         <h1 class="title">Method Summary</h2>
+          <table>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                <span class="light">(void)</span>
-                <b><a href="../symbols/Array.html#forEach">forEach</a></b>(callback, self)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#compact">compact</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Array.html#indexOf">indexOf</a></b>(o, fromIndex)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#flatten">flatten</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Array.html#json">json</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(void)</span>
+              <b><a href="../symbols/Array.html#forEach">forEach</a></b>(callback, self)</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Array.html#lastIndexOf">lastIndexOf</a></b>(o, fromIndex)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#indexOf">indexOf</a></b>(o, fromIndex)</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Array.html#unique">unique</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#json">json</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Array.html#without">without</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#lastIndexOf">lastIndexOf</a></b>(o, fromIndex)</td>
+            </tr>
 					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#remove">remove</a></b>(from, to)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#unique">unique</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Array.html#without">without</a></b>()</td>
+            </tr>
+					
+          </table>
 				
 				
 				
@@ -363,21 +420,13 @@ ul.inheritsList
 			
 				<h1 class="title">Field Detail</h1>
 				
-					<a name=".from"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{<a href="../symbols/Array.html">Array</a>}</span>
-					<span class="light">Array.</span><b>from</b>
-					
+          <div>
+             <a name=".from"> </a>
+             <h3><span class="light">Array.</span>from</h3>
 					</div>
 					<div class="description">
-						Convert an iterable object into an Array.
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
-					</div>
+					</div><br/>
 					
 					
 
@@ -385,6 +434,17 @@ ul.inheritsList
 						
 						
 						
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <span class="light">Array.</span><b>from</b></h3>
+             </div>
+
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+						
+						
+
 
 					
 				
@@ -394,12 +454,79 @@ ul.inheritsList
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="forEach"> </a>
-					<div class="fixedFont">
+					<a name="compact"> </a>
+          <div>
+             <a name="compact"> </a>
+             <h3>compact()</h3>
+
+             <div class="signature">
+               +  <b>compact</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					<span class="light">(void)</span>
-					<b>forEach</b>(callback, self)
-          </div>
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="flatten"> </a>
+          <div>
+             <a name="flatten"> </a>
+             <h3>flatten()</h3>
+
+             <div class="signature">
+               +  <b>flatten</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="forEach"> </a>
+          <div>
+             <a name="forEach"> </a>
+             <h3>forEach(callback, self)</h3>
+
+             <div class="signature">
+               + <span class="light">(void)</span> <b>forEach</b>(callback, self)
+             </div><br/>
+
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
@@ -408,13 +535,13 @@ ul.inheritsList
 									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>callback</b>
 									
 								</dt>
-								<dd>The callback to call for each element.</dd>
+								<dd></dd>
 							
 								<dt>
 									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>self</b>
 									
 								</dt>
-								<dd>The Object to use as this when executing the callback.</dd>
+								<dd></dd>
 							
 							</dl>
 						
@@ -425,15 +552,14 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">(void)</span> </dd>
+								<dt><span class="light fixedFont">(void)</span> </dt>
 							
 							</dl>
 						
 						
-						
-					
-					<div class="description">
-				    <p>Iterator over the Array. Implemented to be in conformance with ECMA-262 Edition 5, so you will use the native forEach where it exists.</p>
+             <div class="description">
+				     
+<p>Implemented to be in conformance with ECMA-262 Edition 5, so you will use the native forEach where it exists.</p>
 
 <p class="code"><code>&nbsp;&nbsp;[<span class="string">1</span>,&nbsp;<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">5</span>].forEach(alert);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;1</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;1</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;2</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;3</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;5</span></code><button class="play" onclick="atomDemo3()">Run it!</button></p>
 <script type="text/javascript">
@@ -446,23 +572,30 @@ function atomDemo3() {
   // -> 5
 }
 </script>
+						 
+             </div>
+
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
+					
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="indexOf"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>indexOf</b>(o, fromIndex)
-          </div>
+          <div>
+             <a name="indexOf"> </a>
+             <h3>indexOf(o, fromIndex)</h3>
+
+             <div class="signature">
+               +  <b>indexOf</b>(o, fromIndex)
+             </div><br/>
+
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
@@ -486,54 +619,64 @@ function atomDemo3() {
 						
 						
 						
+             <div class="description">
+				     
+						 
+             </div>
+
 						
 					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="json"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="json"> </a>
+             <h3>json()</h3>
+
+             <div class="signature">
+               +  <b>json</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>json</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="lastIndexOf"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>lastIndexOf</b>(o, fromIndex)
-          </div>
+          <div>
+             <a name="lastIndexOf"> </a>
+             <h3>lastIndexOf(o, fromIndex)</h3>
+
+             <div class="signature">
+               +  <b>lastIndexOf</b>(o, fromIndex)
+             </div><br/>
+
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
@@ -542,13 +685,13 @@ function atomDemo3() {
 									<b>o</b>
 									
 								</dt>
-								<dd>The item to look for.</dd>
+								<dd></dd>
 							
 								<dt>
 									<b>fromIndex</b>
 									<i>Optional</i>
 								</dt>
-								<dd>The index to begin searching from.</dd>
+								<dd></dd>
 							
 							</dl>
 						
@@ -559,77 +702,138 @@ function atomDemo3() {
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd>The last index of an item.</dd>
+								<dt></dt>
+							
+							</dl>
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="remove"> </a>
+          <div>
+             <a name="remove"> </a>
+             <h3>remove(from, to)</h3>
+
+             <div class="signature">
+               +  <b>remove</b>(from, to)
+             </div><br/>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>from</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>to</b>
+									
+								</dt>
+								<dd></dd>
 							
 							</dl>
 						
 						
 						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="unique"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="unique"> </a>
+             <h3>unique()</h3>
+
+             <div class="signature">
+               +  <b>unique</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>unique</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="without"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="without"> </a>
+             <h3>without()</h3>
+
+             <div class="signature">
+               +  <b>without</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>without</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+				 
 					
 					
 				
@@ -645,7 +849,7 @@ function atomDemo3() {
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Wed Nov 10 2010 22:47:25 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

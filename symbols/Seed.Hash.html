@@ -6,7 +6,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Number</title>
+		<title>JsDoc Reference - Seed.Hash</title>
 
     <script type="text/javascript" src="../bin/seed.js"></script>
 		<style type="text/css">
@@ -273,12 +273,21 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->     <div id="header">
 			<h1>
 				
-				Built-In Namespace Number
+				Class Seed.Hash
 			</h1>
       </div>
       <table class="class-definitions">
 				
+        <tr class="even">
+          <td class="label">Extends:</td><td>
+					<a href="../symbols/Root.html">Root</a>, <a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a>, <a href="../symbols/Seed.KVO.html">Seed.KVO</a></td></tr>
+				
     		
+	  			<tr class="odd">
+            <td class="label">Defined in:</td>
+            <td><a href="../symbols/src/hash.js.html">hash.js</a></td>
+          </tr>
+  			
       </table>
 
   	<div id="content-body">
@@ -335,9 +344,39 @@ ul.inheritsList
 
 
 <!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Seed.Hash.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Seed.Hash.html#constructor">Seed.Hash</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			-->
 
 <!-- ============================== properties summary ===================== -->
+			
+				
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/Seed.PubSub.html">Seed.PubSub</a>: </dt><dd><a href="../symbols/Seed.PubSub.html#_subscriptions">_subscriptions</a></dd>
+				</dl>
+				
 			
 
 <!-- ============================== methods summary ======================== -->
@@ -349,17 +388,31 @@ ul.inheritsList
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Number.html#__fmt__">__fmt__</a></b>(spec)</td>
+              <b><a href="../symbols/Seed.Hash.html#forEach">forEach</a></b>(lambda, self)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Number.html#json">json</a></b>()</td>
+              <b><a href="../symbols/Seed.Hash.html#keys">keys</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(<a href="../symbols/Array.html">Array</a>[])</span>
+              <b><a href="../symbols/Seed.Hash.html#toArray">toArray</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Seed.Hash.html#values">values</a></b>()</td>
             </tr>
 					
           </table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a>: </dt><dd><a href="../symbols/Seed.Enumerable.html#contains">contains</a>, <a href="../symbols/Seed.Enumerable.html#every">every</a>, <a href="../symbols/Seed.Enumerable.html#extract">extract</a>, <a href="../symbols/Seed.Enumerable.html#filter">filter</a>, <a href="../symbols/Seed.Enumerable.html#map">map</a>, <a href="../symbols/Seed.Enumerable.html#pluck">pluck</a>, <a href="../symbols/Seed.Enumerable.html#reduce">reduce</a>, <a href="../symbols/Seed.Enumerable.html#size">size</a>, <a href="../symbols/Seed.Enumerable.html#some">some</a>, <a href="../symbols/Seed.Enumerable.html#zip">zip</a></dd><dt>Methods borrowed from class <a href="../symbols/Seed.KVO.html">Seed.KVO</a>: </dt><dd><a href="../symbols/Seed.KVO.html#get">get</a>, <a href="../symbols/Seed.KVO.html#set">set</a>, <a href="../symbols/Seed.KVO.html#unknownProperty">unknownProperty</a></dd><dt>Methods borrowed from class <a href="../symbols/Root.html">Root</a>: </dt><dd><a href="../symbols/Root.html#extend">extend</a>, <a href="../symbols/Root.html#init">init</a>, <a href="../symbols/Root.html#json">json</a></dd><dt>Methods borrowed from class <a href="../symbols/Seed.PubSub.html">Seed.PubSub</a>: </dt><dd><a href="../symbols/Seed.PubSub.html#publish">publish</a>, <a href="../symbols/Seed.PubSub.html#subscribe">subscribe</a>, <a href="../symbols/Seed.PubSub.html#unsubscribe">unsubscribe</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -372,13 +425,13 @@ ul.inheritsList
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__fmt__"> </a>
+					<a name="forEach"> </a>
           <div>
-             <a name="__fmt__"> </a>
-             <h3>__fmt__(spec)</h3>
+             <a name="forEach"> </a>
+             <h3>forEach(lambda, self)</h3>
 
              <div class="signature">
-               +  <b>__fmt__</b>(spec)
+               +  <b>forEach</b>(lambda, self)
              </div><br/>
 
 						
@@ -386,7 +439,13 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>spec</b>
+									<b>lambda</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>self</b>
 									
 								</dt>
 								<dd></dd>
@@ -409,19 +468,16 @@ ul.inheritsList
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/number.js.html">number.js</a>.
-				 
 					
 					<hr />
 				
-					<a name="json"> </a>
+					<a name="keys"> </a>
           <div>
-             <a name="json"> </a>
-             <h3>json()</h3>
+             <a name="keys"> </a>
+             <h3>keys()</h3>
 
              <div class="signature">
-               +  <b>json</b>()
+               +  <b>keys</b>()
              </div><br/>
 
 						
@@ -441,8 +497,70 @@ ul.inheritsList
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/number.js.html">number.js</a>.
+					
+					<hr />
+				
+					<a name="toArray"> </a>
+          <div>
+             <a name="toArray"> </a>
+             <h3>toArray()</h3>
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Array.html">Array</a>[])</span> <b>toArray</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>[])</span> </dt>
+							
+							</dl>
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="values"> </a>
+          <div>
+             <a name="values"> </a>
+             <h3>values()</h3>
+
+             <div class="signature">
+               +  <b>values</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
 				 
 					
 					
@@ -459,7 +577,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:13 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

@@ -6,7 +6,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Number</title>
+		<title>JsDoc Reference - Seed.PubSub</title>
 
     <script type="text/javascript" src="../bin/seed.js"></script>
 		<style type="text/css">
@@ -273,12 +273,17 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->     <div id="header">
 			<h1>
 				
-				Built-In Namespace Number
+				Class Seed.PubSub
 			</h1>
       </div>
       <table class="class-definitions">
 				
     		
+	  			<tr class="even">
+            <td class="label">Defined in:</td>
+            <td><a href="../symbols/src/mixins_pubsub.js.html">pubsub.js</a></td>
+          </tr>
+  			
       </table>
 
   	<div id="content-body">
@@ -325,6 +330,38 @@ ul.inheritsList
       <h1 class="title">Overview</h1>
 			<p class="description">
 				
+
+
+<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;sailor&nbsp;=&nbsp;mix(Seed.PubSub,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">""</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;ahoy:&nbsp;<span class="keyword">function</span>&nbsp;(action,&nbsp;sailor)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"{0.name}:&nbsp;Ahoy,&nbsp;{1.name}!"</span>.fmt(<span class="keyword">this</span>,&nbsp;sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}).into({});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(Seed.PubSub,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor,&nbsp;sync)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Added&nbsp;{name}"</span>.fmt(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor),&nbsp;sync);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}).into({});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>&nbsp;&nbsp;ship.add(ahab,&nbsp;<span class="keyword">true</span>);<br/>&nbsp;&nbsp;ship.add(daveyJones);<br/>&nbsp;&nbsp;ship.add(flapjack);</code><button class="play" onclick="atomDemo21()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo21() {
+    var sailor = mix(Seed.PubSub, {
+    name: "",
+    ahoy: function (action, sailor) {
+      alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
+    }
+  }).into({});
+
+  var ship = mix(Seed.PubSub, {
+    sailors: [],
+
+    add: function (sailor, sync) {
+      this.sailors.push(sailor);
+      alert("Added {name}".fmt(sailor));
+      this.publish("add", sailor);
+      this.subscribe("add", sailor.ahoy.bind(sailor), sync);
+    }
+  }).into({});
+
+  var ahab = mix(sailor, { name: "Captain Ahab" }).into({}),
+      daveyJones = mix(sailor, { name: "Davey Jones" }).into({}),
+      flapjack = mix(sailor, { name: "Flapjack" }).into({});
+
+  ship.add(ahab, true);
+  ship.add(daveyJones);
+  ship.add(flapjack);
+}
+</script>
 			</p>
 			
       
@@ -335,9 +372,46 @@ ul.inheritsList
 
 
 <!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Seed.PubSub.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Seed.PubSub.html#constructor">Seed.PubSub</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			-->
 
 <!-- ============================== properties summary ===================== -->
+			
+				
+				
+        <h1 class="title">Field Summary</h1>
+          <table>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <b><a href="../symbols/Seed.PubSub.html#_subscriptions">_subscriptions</a></b></td>
+            </tr>
+					
+          </table>
+				
+				
+				
 			
 
 <!-- ============================== methods summary ======================== -->
@@ -349,12 +423,17 @@ ul.inheritsList
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Number.html#__fmt__">__fmt__</a></b>(spec)</td>
+              <b><a href="../symbols/Seed.PubSub.html#publish">publish</a></b>(event)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Number.html#json">json</a></b>()</td>
+              <b><a href="../symbols/Seed.PubSub.html#subscribe">subscribe</a></b>(event, handler, synchronous)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Seed.PubSub.html#unsubscribe">unsubscribe</a></b>(event, handler)</td>
             </tr>
 					
           </table>
@@ -367,18 +446,46 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
+				<h1 class="title">Field Detail</h1>
+				
+          <div>
+             <a name="_subscriptions"> </a>
+             <h3>_subscriptions</h3>
+					</div>
+					<div class="description">
+						
+					</div><br/>
+					
+					
+
+						
+						
+						
+						
+
+             <div class="signature">
+               +  <b>_subscriptions</b></h3>
+             </div>
+
+						
+						
+
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__fmt__"> </a>
+					<a name="publish"> </a>
           <div>
-             <a name="__fmt__"> </a>
-             <h3>__fmt__(spec)</h3>
+             <a name="publish"> </a>
+             <h3>publish(event)</h3>
 
              <div class="signature">
-               +  <b>__fmt__</b>(spec)
+               +  <b>publish</b>(event)
              </div><br/>
 
 						
@@ -386,7 +493,7 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>spec</b>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>event</b>
 									
 								</dt>
 								<dd></dd>
@@ -409,21 +516,41 @@ ul.inheritsList
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/number.js.html">number.js</a>.
-				 
 					
 					<hr />
 				
-					<a name="json"> </a>
+					<a name="subscribe"> </a>
           <div>
-             <a name="json"> </a>
-             <h3>json()</h3>
+             <a name="subscribe"> </a>
+             <h3>subscribe(event, handler, synchronous)</h3>
 
              <div class="signature">
-               +  <b>json</b>()
+               +  <b>subscribe</b>(event, handler, synchronous)
              </div><br/>
 
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>handler</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> <b>synchronous</b>
+									<i>Optional</i>
+								</dt>
+								<dd><p> Defaults to asynchronous calls.</p></dd>
+							
+							</dl>
 						
 						
 						
@@ -441,8 +568,51 @@ ul.inheritsList
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/number.js.html">number.js</a>.
+					
+					<hr />
+				
+					<a name="unsubscribe"> </a>
+          <div>
+             <a name="unsubscribe"> </a>
+             <h3>unsubscribe(event, handler)</h3>
+
+             <div class="signature">
+               +  <b>unsubscribe</b>(event, handler)
+             </div><br/>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>event</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>handler</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
 				 
 					
 					
@@ -459,7 +629,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:13 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

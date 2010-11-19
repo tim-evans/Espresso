@@ -8,7 +8,7 @@
 		
 		<title>JsDoc Reference - Function</title>
 
-    <script type="text/javascript" src="../seed.js"></script>
+    <script type="text/javascript" src="../bin/seed.js"></script>
 		<style type="text/css">
 			/* default.css */
 body {
@@ -16,6 +16,8 @@ body {
   margin: 0;
   padding-left: 20px;
   padding-right: 20px;
+  padding-bottom: 10px;
+  color: #222;
 }
 
 #header {
@@ -27,6 +29,12 @@ body {
   border-bottom: 1px solid #bbb;
 }
 
+.play {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 hr {
 	border: none 0;
 	border-top: 1px solid #bbb;
@@ -36,22 +44,19 @@ hr {
 code {
 	display: block;
 	padding: 8px;
-  background-color: rgba(0, 0, 0, .8);
+  background-color: #222;
   color: white;
 	border: 1px solid #000;
   padding-top: 16px;
   padding-bottom: 16px;
 }
 
-.code {
-  position: relative;
+.right {
+  text-align: right;
 }
 
-.play {
-  font-weight: bold;
-  position: absolute;
-  right: 10px;
-  top: 5px;
+.code {
+  position: relative;
 }
 
 .single-line-comment {
@@ -74,18 +79,30 @@ code {
   color: #C15BC6;
 }
 
+.caption {
+  font-size: 100%;
+  position: relative;
+  top: -25px;
+  left: 15px;
+  margin: 0px;
+}
+
 #index {
-	margin-top: 24px;
 	float: left;
 	width: 190px;
 	position: absolute;
-	left: 8px;
-	background-color: #F3F3F3;
+	left: 20px;
+  background-color: #eef;
+  border: 1px solid #999;
 	padding: 8px;
 }
 
 #content {
 	padding-top: 10px;
+}
+
+#content-body {
+  margin-left: 230px;
 }
 
 table.class-definitions {
@@ -155,17 +172,17 @@ a:visited {
   color: rgb(85, 26, 139);
 }
 
-h2 a {
+h2 a, a#back {
   text-decoration: none;
   padding: 2px;
 }
 
-h2 a:hover {
+h2 a:hover, a#back:hover {
   background-color: blue;
   color: white;
 }
 
-h2 a:visited:hover {
+h2 a:visited:hover, a#back:hover {
   background-color: rgb(85, 26, 139);
   color: white;
 }
@@ -189,12 +206,20 @@ div.sectionTitle { margin-bottom: 8px; }
 	text-align: right;
 }
 
-td.attributes, .fixedFont
+.fixedFont {
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+td.attributes
 {
 	line-height: 15px;
-	color: #002EBE;
 	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 	font-size: 13px;
+}
+
+.signature { 
+  font-size: 12px;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
 }
 
 .nameDescription {
@@ -218,10 +243,9 @@ ul.inheritsList
 }
 
 .detailList {
-	margin-left: 20px; 
 	line-height: 15px;
 }
-.detailList dt { margin-left: 20px; }
+.detailList dt { margin-left: 10px; }
 
 .detailList .heading
 {
@@ -237,7 +261,7 @@ ul.inheritsList
 
 .fineprint
 {
-	text-align: left;
+	text-align: right;
 	font-size: 10px;
   padding-bottom: 10px;
 }
@@ -246,23 +270,69 @@ ul.inheritsList
 	</head>
 
 	<body>
-		<div id="content">
 <!-- ============================== class title ============================ -->     <div id="header">
 			<h1>
 				
 				Built-In Namespace Function
 			</h1>
       </div>
-
-<!-- ============================== class summary ========================== -->
       <table class="class-definitions">
 				
     		
       </table>
+
+  	<div id="content-body">
+		<div id="index">
+			<a href="../">All Classes</a>
+<hr/>
+<ul class="classList">
+	
+	<li><a href="../symbols/_global_.html">_global_</a></li>
+	
+	<li><a href="../symbols/Array.html">Array</a></li>
+	
+	<li><a href="../symbols/Boolean.html">Boolean</a></li>
+	
+	<li><a href="../symbols/Date.html">Date</a></li>
+	
+	<li><a href="../symbols/Function.html">Function</a></li>
+	
+	<li><a href="../symbols/Number.html">Number</a></li>
+	
+	<li><a href="../symbols/Object.html">Object</a></li>
+	
+	<li><a href="../symbols/Root.html">Root</a></li>
+	
+	<li><a href="../symbols/Seed.html">Seed</a></li>
+	
+	<li><a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a></li>
+	
+	<li><a href="../symbols/Seed.Hash.html">Seed.Hash</a></li>
+	
+	<li><a href="../symbols/Seed.KVO.html">Seed.KVO</a></li>
+	
+	<li><a href="../symbols/Seed.PubSub.html">Seed.PubSub</a></li>
+	
+	<li><a href="../symbols/Seed.String.html">Seed.String</a></li>
+	
+	<li><a href="../symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></li>
+	
+</ul>
+
+		</div>
+
+<!-- ============================== class summary ========================== -->
       <h1 class="title">Overview</h1>
 			<p class="description">
 				
 			</p>
+			
+      
+			
+			
+			
+
+
 
 <!-- ============================== constructor summary ====================
 			-->
@@ -275,117 +345,64 @@ ul.inheritsList
 				
 				
         <h1 class="title">Method Summary</h2>
+          <table>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Function.html#alias">alias</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Function.html#alias">alias</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Function.html#around">around</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Function.html#around">around</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                <span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
-                <b><a href="../symbols/Function.html#bind">bind</a></b>(that)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
+              <b><a href="../symbols/Function.html#bind">bind</a></b>(that)</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Function.html#curry">curry</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
+              <b><a href="../symbols/Function.html#cacheable">cacheable</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Function.html#defer">defer</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Function.html#curry">curry</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Function.html#delay">delay</a></b>(timeout)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Function.html#defer">defer</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                - 
-                <span class="light">(<a href="../symbols/Object.html">Object</a>)</span>
-                <b><a href="../symbols/Function.html#.echo">echo</a></b>(echo)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Function.html#delay">delay</a></b>(timeout)</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                <span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
-                <b><a href="../symbols/Function.html#inferior">inferior</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(<a href="../symbols/Object.html">Object</a>)</span>
+              <b><a href="../symbols/Function.html#.echo">echo</a></b>(echo)</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                - 
-                
-                <b><a href="../symbols/Function.html#.isFunction">isFunction</a></b>(o)
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
+              <b><a href="../symbols/Function.html#inferior">inferior</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                
-                <b><a href="../symbols/Function.html#on">on</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Function.html#on">on</a></b>()</td>
+            </tr>
 					
-						<div>
-							<span class="nameDescription">
-								<div class="fixedFont">
-                + 
-                <span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
-                <b><a href="../symbols/Function.html#property">property</a></b>()
-								</div>
-							</span>
-						</div>
+						<tr class="nameDescription">
+              <td><span class="fixedFont"><span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
+              <b><a href="../symbols/Function.html#property">property</a></b>()</td>
+            </tr>
 					
+          </table>
 				
 				
 				
@@ -401,65 +418,78 @@ ul.inheritsList
 				<h1 class="title">Method Detail</h1>
 				
 					<a name="alias"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="alias"> </a>
+             <h3>alias()</h3>
+
+             <div class="signature">
+               +  <b>alias</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>alias</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="around"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="around"> </a>
+             <h3>around()</h3>
+
+             <div class="signature">
+               +  <b>around</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>around</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="bind"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
-					<b>bind</b>(that)
-          </div>
+          <div>
+             <a name="bind"> </a>
+             <h3>bind(that)</h3>
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>bind</b>(that)
+             </div><br/>
+
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
@@ -479,21 +509,19 @@ ul.inheritsList
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The function passed in, wrapped to ensure `this` is the correct scope.</dd>
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> </dt>
 							
 							</dl>
 						
 						
-						
-					
-					<div class="description">
-				    <p>Bind the value of `this` on a function before hand.</p>
+             <div class="description">
+				     
 
 
-<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;Seed.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'nil'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;greet:&nbsp;<span class="keyword">function</span>&nbsp;(greeting)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(greeting.fmt(<span class="keyword">this</span>.name));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;wash&nbsp;=&nbsp;Person.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'Hoban&nbsp;Washburne'</span><br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;mal&nbsp;=&nbsp;Person.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'Malcolm&nbsp;Reynolds'</span><br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;mal.greet(<span class="string">"Hello,&nbsp;{}!"</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Hello,&nbsp;Malcolm&nbsp;Reynolds!"</span><br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;greet&nbsp;=&nbsp;mal.greet.bind(wash);<br/>&nbsp;&nbsp;greet(<span class="string">"Howdy,&nbsp;{}!"</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Howdy,&nbsp;Hoban&nbsp;Washburne!"</span></code><button class="play" onclick="atomDemo20()">Run it!</button></p>
+<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;Root.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'nil'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;greet:&nbsp;<span class="keyword">function</span>&nbsp;(greeting)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(greeting.fmt(<span class="keyword">this</span>.name));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;wash&nbsp;=&nbsp;Person.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'Hoban&nbsp;Washburne'</span><br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;mal&nbsp;=&nbsp;Person.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'Malcolm&nbsp;Reynolds'</span><br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;mal.greet(<span class="string">"Hello,&nbsp;{}!"</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Hello,&nbsp;Malcolm&nbsp;Reynolds!"</span><br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;greet&nbsp;=&nbsp;mal.greet.bind(wash);<br/>&nbsp;&nbsp;greet(<span class="string">"Howdy,&nbsp;{}!"</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Howdy,&nbsp;Hoban&nbsp;Washburne!"</span></code><button class="play" onclick="atomDemo7()">Run it!</button></p>
 <script type="text/javascript">
-function atomDemo20() {
-    var Person = Seed.extend({
+function atomDemo7() {
+    var Person = Root.extend({
     name: 'nil',
     greet: function (greeting) {
       alert(greeting.fmt(this.name));
@@ -516,77 +544,152 @@ function atomDemo20() {
   // -> "Howdy, Hoban Washburne!"
 }
 </script>
+						 
+             </div>
+
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+					
+
 					</div>
 					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
+					<hr />
+				
+					<a name="cacheable"> </a>
+          <div>
+             <a name="cacheable"> </a>
+             <h3>cacheable()</h3>
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>cacheable</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> </dt>
+							
+							</dl>
+						
+						
+             <div class="description">
+				     
+<p>This is inferior, but compatible with SproutCore's cacheable decorator.</p>
+
+<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;Root.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="keyword">function</span>&nbsp;(k,&nbsp;v)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Setting&nbsp;my&nbsp;name&nbsp;to&nbsp;{}"</span>.fmt(v));<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;v;<br/>&nbsp;&nbsp;&nbsp;&nbsp;}.cacheable()<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;person&nbsp;=&nbsp;Person.extend().set(<span class="string">'name'</span>,&nbsp;<span class="string">'Marvin'</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;Getting&nbsp;the&nbsp;name&nbsp;multiple&nbsp;times&nbsp;does&nbsp;nothing!</span><br/>&nbsp;&nbsp;person.get(<span class="string">'name'</span>);<br/>&nbsp;&nbsp;person.get(<span class="string">'name'</span>);<br/>&nbsp;&nbsp;person.get(<span class="string">'name'</span>);</code><button class="play" onclick="atomDemo8()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo8() {
+    var Person = Root.extend({
+    name: function (k, v) {
+      alert("Setting my name to {}".fmt(v));
+      return v;
+    }.cacheable()
+  });
+
+  var person = Person.extend().set('name', 'Marvin');
+  // Getting the name multiple times does nothing!
+  person.get('name');
+  person.get('name');
+  person.get('name');
+}
+</script>
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="curry"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="curry"> </a>
+             <h3>curry()</h3>
+
+             <div class="signature">
+               +  <b>curry</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>curry</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="defer"> </a>
-					<div class="fixedFont">
+          <div>
+             <a name="defer"> </a>
+             <h3>defer()</h3>
+
+             <div class="signature">
+               +  <b>defer</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
 					
-					
-					<b>defer</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
 					<a name="delay"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>delay</b>(timeout)
-          </div>
+          <div>
+             <a name="delay"> </a>
+             <h3>delay(timeout)</h3>
+
+             <div class="signature">
+               +  <b>delay</b>(timeout)
+             </div><br/>
+
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
@@ -604,130 +707,38 @@ function atomDemo20() {
 						
 						
 						
+             <div class="description">
+				     
+						 
+             </div>
+
 						
 					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
 					<a name=".echo"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">(<a href="../symbols/Object.html">Object</a>)</span>
-					<span class="light">Function.</span><b>echo</b>(echo)
-          </div>
+          <div>
+             <a name=".echo"> </a>
+             <h3><span class="light">Function.</span>echo(echo)</h3>
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <span class="light">Function.</span><b>echo</b>(echo)
+             </div><br/>
+
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
 									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>echo</b>
-									
-								</dt>
-								<dd>The object to return.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The first argument passed in.</dd>
-							
-							</dl>
-						
-						
-						
-					
-					<div class="description">
-				    <p>Echoes the first argument back.</p>
-
-
-<p class="code"><code>&nbsp;&nbsp;alert(Function.echo(<span class="string">"Echo"</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Echo"</span></code><button class="play" onclick="atomDemo21()">Run it!</button></p>
-<script type="text/javascript">
-function atomDemo21() {
-    alert(Function.echo("Echo"));
-  // -> "Echo"
-}
-</script>
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
-					</div>
-					
-					
-					
-					<hr />
-				
-					<a name="inferior"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
-					<b>inferior</b>()
-          </div>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dd>
-							
-							</dl>
-						
-						
-						
-					
-					<div class="description">
-				    <p>Marks the function as inferior. If there's another attribute on the Object you're mixing in to, the inferior function will not be mixed in.</p>
-
-<p>A common use of this is for feature detection. Implement the API as described, and fall back to your own custom function.</p>
-
-<p class="code"><code></code><button class="play" onclick="atomDemo22()">Run it!</button></p>
-<script type="text/javascript">
-function atomDemo22() {
-  
-}
-</script>
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
-					</div>
-					
-					
-					
-					<hr />
-				
-					<a name=".isFunction"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">Function.</span><b>isFunction</b>(o)
-          </div>
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>o</b>
 									
 								</dt>
 								<dd></dd>
@@ -738,55 +749,49 @@ function atomDemo22() {
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> </dt>
+							
+							</dl>
 						
+						
+             <div class="description">
+				     
+
+
+<p class="code"><code>&nbsp;&nbsp;alert(Function.echo(<span class="string">"Echo"</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Echo"</span></code><button class="play" onclick="atomDemo9()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo9() {
+    alert(Function.echo("Echo"));
+  // -> "Echo"
+}
+</script>
+						 
+             </div>
+
 						
 					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					<hr />
 				
-					<a name="on"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>on</b>()
-          </div>
-						
-						
-						
-						
-						
-						
-						
-					
-					<div class="description">
-				    
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
-					</div>
-					
-					
-					
-					<hr />
-				
-					<a name="property"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">(<a href="../symbols/Function.html">Function</a>)</span>
-					<b>property</b>()
-          </div>
+					<a name="inferior"> </a>
+          <div>
+             <a name="inferior"> </a>
+             <h3>inferior()</h3>
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>inferior</b>()
+             </div><br/>
+
 						
 						
 						
@@ -795,39 +800,123 @@ function atomDemo22() {
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dd>
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> </dt>
 							
 							</dl>
 						
 						
+             <div class="description">
+				     
+<p>If there's another attribute on the Object you're mixing in to, the inferior function will not be mixed in.</p>
+
+<p>A common use of this is for feature detection. Implement the API as described, and fall back to your own custom function.</p>
+
+<p class="code"><code></code><button class="play" onclick="atomDemo10()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo10() {
+  
+}
+</script>
+						 
+             </div>
+
 						
 					
-					<div class="description">
-				    <p>Marks the function as a computed property. You may now use the function for get() and set(). This is inferior, but compatible with SproutCore's property decorator.</p>
 
-<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;Seed.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;firstName:&nbsp;<span class="string">''</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;lastName:&nbsp;<span class="string">''</span>,<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;fullName:&nbsp;<span class="keyword">function</span>&nbsp;(k,&nbsp;v)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;[<span class="keyword">this</span>.get(<span class="string">'firstName'</span>),&nbsp;<span class="keyword">this</span>.get(<span class="string">'lastName'</span>)].join(<span class="string">'&nbsp;'</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}.property()<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;alert(Person.extend({&nbsp;firstName:&nbsp;<span class="string">"Douglas"</span>,&nbsp;lastName:&nbsp;<span class="string">"Crockford"</span>&nbsp;}).get(<span class="string">'fullName'</span>));</code><button class="play" onclick="atomDemo23()">Run it!</button></p>
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="on"> </a>
+          <div>
+             <a name="on"> </a>
+             <h3>on()</h3>
+
+             <div class="signature">
+               +  <b>on</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="property"> </a>
+          <div>
+             <a name="property"> </a>
+             <h3>property()</h3>
+
+             <div class="signature">
+               + <span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>property</b>()
+             </div><br/>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> </dt>
+							
+							</dl>
+						
+						
+             <div class="description">
+				     
+<p>You may now use the function for get() and set(). This is inferior, but compatible with SproutCore's property decorator.</p>
+
+<p class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;Root.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;firstName:&nbsp;<span class="string">''</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;lastName:&nbsp;<span class="string">''</span>,<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;fullName:&nbsp;<span class="keyword">function</span>&nbsp;(k,&nbsp;v)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;[<span class="keyword">this</span>.get(<span class="string">'firstName'</span>),&nbsp;<span class="keyword">this</span>.get(<span class="string">'lastName'</span>)].join(<span class="string">'&nbsp;'</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}.property(<span class="string">'firstName'</span>,&nbsp;<span class="string">'lastName'</span>)<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;alert(Person.extend({&nbsp;firstName:&nbsp;<span class="string">"Douglas"</span>,&nbsp;lastName:&nbsp;<span class="string">"Crockford"</span>&nbsp;}).get(<span class="string">'fullName'</span>));</code><button class="play" onclick="atomDemo11()">Run it!</button></p>
 <script type="text/javascript">
-function atomDemo23() {
-    var Person = Seed.extend({
+function atomDemo11() {
+    var Person = Root.extend({
     firstName: '',
     lastName: '',
 
     fullName: function (k, v) {
       return [this.get('firstName'), this.get('lastName')].join(' ');
-    }.property()
+    }.property('firstName', 'lastName')
   });
 
   alert(Person.extend({ firstName: "Douglas", lastName: "Crockford" }).get('fullName'));
 }
 </script>
+						 
+             </div>
+
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-						
-						
+					
+
 					</div>
 					
-					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
 					
 					
 				
@@ -843,7 +932,7 @@ function atomDemo23() {
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Wed Nov 10 2010 22:47:25 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

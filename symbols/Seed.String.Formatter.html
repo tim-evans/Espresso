@@ -1,0 +1,692 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - Seed.String.Formatter</title>
+
+    <script type="text/javascript" src="../bin/seed.js"></script>
+		<style type="text/css">
+			/* default.css */
+body {
+	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  color: #222;
+}
+
+#header {
+	clear: both;
+  font-size: 1.5em;
+}
+
+.title {
+  border-bottom: 1px solid #bbb;
+}
+
+.play {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+hr {
+	border: none 0;
+	border-top: 1px solid #bbb;
+	height: 1px;
+}
+
+code {
+	display: block;
+	padding: 8px;
+  background-color: #222;
+  color: white;
+	border: 1px solid #000;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.right {
+  text-align: right;
+}
+
+.code {
+  position: relative;
+}
+
+.single-line-comment {
+  color: #ddd;
+}
+
+.comment {
+  color: #89D30;
+}
+
+.keyword {
+  color: #61EAFD;
+}
+
+.string {
+  color: #89DB30;
+}
+
+.value {
+  color: #C15BC6;
+}
+
+.caption {
+  font-size: 100%;
+  position: relative;
+  top: -25px;
+  left: 15px;
+  margin: 0px;
+}
+
+#index {
+	float: left;
+	width: 190px;
+	position: absolute;
+	left: 20px;
+  background-color: #eef;
+  border: 1px solid #999;
+	padding: 8px;
+}
+
+#content {
+	padding-top: 10px;
+}
+
+#content-body {
+  margin-left: 230px;
+}
+
+table.class-definitions {
+  border-spacing: 0px 0px;
+  border: 1px solid #999;
+  border-bottom: none;
+  margin-bottom: 2em;
+  min-width: 600px;
+}
+
+td.label {
+  font-weight: bold;
+  padding-right: 4px;
+  text-align: right;
+  width: 100px;
+  margin: 0;
+}
+
+table.class-definitions td {
+  border-bottom: 1px solid #999;
+  padding: 0.5em;
+  border-collapse: collapse;
+}
+
+table.class-definitions .even {
+  background-color: #eef;
+}
+
+.classList {
+	list-style-type: none;
+	padding: 0;
+	margin: 0 0 0 8px;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 0;
+	margin: 0 0 8px 0;
+}
+
+.src {
+  margin-left: 10px;
+  padding: 5px;
+  background-color: #fff;
+  border: 1px solid #bbb;
+}
+
+.summaryTable { width: 100%; }
+
+caption, div.sectionTitle
+{
+	color: #;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #7F8FB1 solid;
+}
+
+a {
+  color: blue;
+}
+
+a:visited {
+  color: rgb(85, 26, 139);
+}
+
+h2 a, a#back {
+  text-decoration: none;
+  padding: 2px;
+}
+
+h2 a:hover, a#back:hover {
+  background-color: blue;
+  color: white;
+}
+
+h2 a:visited:hover, a#back:hover {
+  background-color: rgb(85, 26, 139);
+  color: white;
+}
+
+div.sectionTitle { margin-bottom: 8px; }
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #7F8FB1 solid;
+	border-right: 1px #7F8FB1 solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #7F8FB1 solid;
+	width: 140px;
+	text-align: right;
+}
+
+.fixedFont {
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+td.attributes
+{
+	line-height: 15px;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+	font-size: 13px;
+}
+
+.signature { 
+  font-size: 12px;
+	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+.nameDescription {
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	line-height: 15px;
+}
+.detailList dt { margin-left: 10px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited {
+	color: #777;
+/*	font-style: italic; */
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+  padding-bottom: 10px;
+}
+
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== class title ============================ -->     <div id="header">
+			<h1>
+				
+				Class Seed.String.Formatter
+			</h1>
+      </div>
+      <table class="class-definitions">
+				
+    		
+	  			<tr class="even">
+            <td class="label">Defined in:</td>
+            <td><a href="../symbols/src/formatter.js.html">formatter.js</a></td>
+          </tr>
+  			
+      </table>
+
+  	<div id="content-body">
+		<div id="index">
+			<a href="../">All Classes</a>
+<hr/>
+<ul class="classList">
+	
+	<li><a href="../symbols/_global_.html">_global_</a></li>
+	
+	<li><a href="../symbols/Array.html">Array</a></li>
+	
+	<li><a href="../symbols/Boolean.html">Boolean</a></li>
+	
+	<li><a href="../symbols/Date.html">Date</a></li>
+	
+	<li><a href="../symbols/Function.html">Function</a></li>
+	
+	<li><a href="../symbols/Number.html">Number</a></li>
+	
+	<li><a href="../symbols/Object.html">Object</a></li>
+	
+	<li><a href="../symbols/Root.html">Root</a></li>
+	
+	<li><a href="../symbols/Seed.html">Seed</a></li>
+	
+	<li><a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a></li>
+	
+	<li><a href="../symbols/Seed.Hash.html">Seed.Hash</a></li>
+	
+	<li><a href="../symbols/Seed.KVO.html">Seed.KVO</a></li>
+	
+	<li><a href="../symbols/Seed.PubSub.html">Seed.PubSub</a></li>
+	
+	<li><a href="../symbols/Seed.String.html">Seed.String</a></li>
+	
+	<li><a href="../symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></li>
+	
+</ul>
+
+		</div>
+
+<!-- ============================== class summary ========================== -->
+      <h1 class="title">Overview</h1>
+			<p class="description">
+				
+<p>It provides a flexible and powerful string formatting utility that allows the your string templates to have meaning!</p>
+
+<p>The formatter follows the rules of the Python <a href="http://www.python.org/dev/peps/pep-3101/" title="Advanced String Formatting">PEP 3101</a> strictly, but takes into account differences between JavaScript and Python.</p>
+
+<p>To use literal object notation, just pass in one argument for the formatter. This is optional however, as you can always absolutely name the arguments via the number in the argument list. This means that:</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"Hello,&nbsp;{name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;});</code><button class="play" onclick="atomDemo33()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo33() {
+    Seed.String.Formatter.fmt("Hello, {name}!", { name: "world" });
+}
+</script>
+
+<p>is equivalent to:</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"Hello,&nbsp;{0.name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;});</code><button class="play" onclick="atomDemo34()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo34() {
+    Seed.String.Formatter.fmt("Hello, {0.name}!", { name: "world" });
+}
+</script>
+
+<p>For more than one argument you must mention the position of your argument.</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{0.name}&nbsp;says&nbsp;{1}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Domo"</span>&nbsp;},&nbsp;<span class="string">"hello"</span>);</code><button class="play" onclick="atomDemo35()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo35() {
+    Seed.String.Formatter.fmt("{0.name} says {1}!", { name: "Domo" }, "hello");
+}
+</script>
+
+<p>If your arguments and formatter are "as is"- that is, in order, and flat objects as you intend them to be, you can write your template string like so:</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{}&nbsp;says&nbsp;{}!"</span>,&nbsp;<span class="string">"Domo"</span>,&nbsp;<span class="string">"hello"</span>);</code><button class="play" onclick="atomDemo36()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo36() {
+    Seed.String.Formatter.fmt("{} says {}!", "Domo", "hello");
+}
+</script>
+
+<p>Check out the examples given for some ideas on how to use it.</p>
+
+<p>For developers wishing to have their own custom handler for the formatting specifiers, you should write your own  __fmt__ function that takes the specifier in as an argument and returns the formatted object as a string. All formatters are implemented using this pattern, with a fallback to Object's __fmt__, which turns the said object into a string, then calls __fmt__ on a string.</p>
+
+<p>Consider the following example:</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;Localizer&nbsp;=&nbsp;Root.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;__fmt__:&nbsp;<span class="keyword">function</span>&nbsp;(spec)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>[spec];<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;_hello&nbsp;=&nbsp;Localizer.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;en:&nbsp;<span class="string">'hello'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;fr:&nbsp;<span class="string">'bonjour'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;jp:&nbsp;<span class="string">'konnichiwa'</span><br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{:en}"</span>,&nbsp;_hello);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"hello"</span><br/><br/>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{:fr}"</span>,&nbsp;_hello);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"bonjour"</span><br/><br/>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{:jp}"</span>,&nbsp;_hello);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"konnichiwa"</span></code><button class="play" onclick="atomDemo37()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo37() {
+    Localizer = Root.extend({
+    __fmt__: function (spec) {
+      return this[spec];
+    }
+  });
+
+  _hello = Localizer.extend({
+    en: 'hello',
+    fr: 'bonjour',
+    jp: 'konnichiwa'
+  });
+
+  Seed.String.Formatter.fmt("{:en}", _hello);
+  // -> "hello"
+
+  Seed.String.Formatter.fmt("{:fr}", _hello);
+  // -> "bonjour"
+
+  Seed.String.Formatter.fmt("{:jp}", _hello);
+  // -> "konnichiwa"
+}
+</script>
+
+<p>Try these examples to get a hang of how string formatting works!</p>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"Arguments:&nbsp;{1};&nbsp;{0};&nbsp;{2}"</span>,&nbsp;<span class="string">0</span>,&nbsp;<span class="string">1</span>,&nbsp;<span class="string">2</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Arguments&nbsp;1;&nbsp;0;&nbsp;2"</span></code><button class="play" onclick="atomDemo38()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo38() {
+    Seed.String.Formatter.fmt("Arguments: {1}; {0}; {2}", 0, 1, 2);
+  // -> "Arguments 1; 0; 2"
+}
+</script>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{}&nbsp;is&nbsp;my&nbsp;name."</span>,&nbsp;<span class="string">"Domo"</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Domo&nbsp;is&nbsp;my&nbsp;name."</span></code><button class="play" onclick="atomDemo39()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo39() {
+    Seed.String.Formatter.fmt("{} is my name.", "Domo");
+  // -> "Domo is my name."
+}
+</script>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"Hello,&nbsp;{name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;});<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Hello,&nbsp;world!"</span></code><button class="play" onclick="atomDemo40()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo40() {
+    Seed.String.Formatter.fmt("Hello, {name}!", { name: "world" });
+  // -> "Hello, world!"
+}
+</script>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"{lang}&nbsp;uses&nbsp;the&nbsp;{{variable}}&nbsp;format&nbsp;too!"</span>,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lang:&nbsp;<span class="string">"Python"</span>,&nbsp;variable:&nbsp;<span class="string">"(not&nbsp;used)"</span><br/>&nbsp;&nbsp;});<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Python&nbsp;uses&nbsp;the&nbsp;{{variable}}&nbsp;format&nbsp;too!"</span></code><button class="play" onclick="atomDemo41()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo41() {
+    Seed.String.Formatter.fmt("{lang} uses the {{variable}} format too!", {
+     lang: "Python", variable: "(not used)"
+  });
+  // -> "Python uses the {{variable}} format too!"
+}
+</script>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"Today&nbsp;is&nbsp;{:A}."</span>,&nbsp;<span class="keyword">new</span>&nbsp;Date());</code><button class="play" onclick="atomDemo42()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo42() {
+    Seed.String.Formatter.fmt("Today is {:A}.", new Date());
+}
+</script>
+
+
+<p class="code"><code>&nbsp;&nbsp;Seed.String.Formatter.fmt(<span class="string">"Which&nbsp;one&nbsp;comes&nbsp;first?&nbsp;-&gt;&nbsp;{:-^{}}"</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">4</span>);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;"Which&nbsp;one&nbsp;comes&nbsp;first?&nbsp;-&gt;&nbsp;-4-"</span></code><button class="play" onclick="atomDemo43()">Run it!</button></p>
+<script type="text/javascript">
+function atomDemo43() {
+    Seed.String.Formatter.fmt("Which one comes first? -> {:-^{}}", 3, 4);
+  // -> "Which one comes first? -> -4-"
+}
+</script>
+			</p>
+			
+      
+			
+			
+			
+
+
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Seed.String.Formatter.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Seed.String.Formatter.html#constructor">Seed.String.Formatter</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h2>
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Seed.String.Formatter.html#.fmt">fmt</a></b>(template, args)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Seed.String.Formatter.html#.formatField">formatField</a></b>(value, args)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              <b><a href="../symbols/Seed.String.Formatter.html#.parseField">parseField</a></b>(template, args)</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name=".fmt"> </a>
+          <div>
+             <a name=".fmt"> </a>
+             <h3><span class="light">Seed.String.Formatter.</span>fmt(template, args)</h3>
+
+             <div class="signature">
+               +  <span class="light">Seed.String.Formatter.</span><b>fmt</b>(template, args)
+             </div><br/>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(String)</span> <b>template</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>args</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name=".formatField"> </a>
+          <div>
+             <a name=".formatField"> </a>
+             <h3><span class="light">Seed.String.Formatter.</span>formatField(value, args)</h3>
+
+             <div class="signature">
+               +  <span class="light">Seed.String.Formatter.</span><b>formatField</b>(value, args)
+             </div><br/>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>value</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>args</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name=".parseField"> </a>
+          <div>
+             <a name=".parseField"> </a>
+             <h3><span class="light">Seed.String.Formatter.</span>parseField(template, args)</h3>
+
+             <div class="signature">
+               +  <span class="light">Seed.String.Formatter.</span><b>parseField</b>(template, args)
+             </div><br/>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>template</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>args</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+             <div class="description">
+				     
+						 
+             </div>
+
+						
+					
+
+					</div>
+					
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:13 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

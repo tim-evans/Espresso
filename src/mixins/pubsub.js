@@ -1,16 +1,16 @@
 /**
- * @class
+ * @namespace
  * Publish-Subscribe mixin that provides the basics of eventing.
  *
  * {{{
- *   var sailor = mix(Seed.PubSub, {
+ *   var sailor = mix(Espresso.PubSub, {
  *     name: "",
  *     ahoy: function (action, sailor) {
  *       alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
  *     }
  *   }).into({});
  *
- *   var ship = mix(Seed.PubSub, {
+ *   var ship = mix(Espresso.PubSub, {
  *     sailors: [],
  *
  *     add: function (sailor, sync) {
@@ -30,7 +30,9 @@
  *   ship.add(flapjack);
  * }}}
  */
-Seed.PubSub = /** @lends Seed.PubSub# */{
+/*global mix Espresso */
+
+Espresso.PubSub = /** @lends Espresso.PubSub# */{
 
   /** @private */
   _subscriptions: null,
@@ -40,15 +42,22 @@ Seed.PubSub = /** @lends Seed.PubSub# */{
    *
    * @param {Object} event The event to subscribe to.
    * @param {Function} handler The handler to call when the event is published.
-   * @param {Boolean} [synchronous] Whether the handler should be called synchronously or not. Defaults to asynchronous calls.
+   * @param {Object} [options] Optional parameters.
+   *   @param {Boolean} [options.synchronous] Whether the handler should be called synchronously or not. Defaults to asynchronous calls.
+   * @returns {Object} The reciever.
    */
-  subscribe: function (event, handler, synchronous) {
+  subscribe: function (event, handler, options) {
+    if (!Espresso.isCallable(handler)) {
+      throw new TypeError("{} is not callable.".fmt(handler));
+    }
+
     var subscriptions = this._subscriptions || {};
     if (!subscriptions[event]) {
       subscriptions[event] = [];
     }
-    subscriptions[event].push({ subscriber: handler,
-                                synchronous: !!synchronous});
+    subscriptions[event].push(mix(options, {
+      subscriber: handler
+    }).into({}));
     this._subscriptions = subscriptions;
     return this;
   },
@@ -58,6 +67,7 @@ Seed.PubSub = /** @lends Seed.PubSub# */{
    *
    * @param {Object} event The event to subscribe to.
    * @param {Function} handler The handler to call when the event is published.
+   * @returns {Object} The reciever.
    */
   unsubscribe: function (event, handler) {
     var subscriptions = this._subscriptions, handlers, i, len;
@@ -77,19 +87,22 @@ Seed.PubSub = /** @lends Seed.PubSub# */{
    * Publish an event, passing all arguments along to the subscribed functions.
    *
    * @param {Object} event The event to publish.
+   * @returns {Object} The reciever.
    */
   publish: function (event) {
     var subscriptions = this._subscriptions,
-        args = Array.from(arguments), subscriber;
+        args = arguments, subscriber;
     if (subscriptions && subscriptions[event]) {
       subscriptions[event].forEach(function (subscription) {
         subscriber = subscription.subscriber;
         if (subscription.synchronous) {
-          subscriber.apply(subscriber, args);
+          subscriber.apply(this, args);
         } else {
-          subscriber.defer.apply(subscriber, args);          
+          var A = [this];
+          A.concat(args);
+          subscriber.defer.apply(subscriber, A);
         }
-      }.bind(this));
+      }, this);
     }
     return this;
   }

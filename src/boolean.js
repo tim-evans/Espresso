@@ -1,17 +1,19 @@
 /*globals mix */
+/**
+ * @name Boolean
+ * @namespace
+ *
+ * Shim for the native Boolean object.
+ */
 
 mix(/** @lends Boolean# */{
 
   /**
-   * Converts a Boolean to valid JSON.
-   * {{{
-   *   alert(true.json());
-   *   // -> "true"
-   * }}}
-   * @returns {String} The boolean as a JSON string
+   * Returns the data to be serialized into JSON.
+   * @returns {Boolean} The value of the object.
    */
-  json: function () {
-    return String(this);
-  }
+  toJSON: function (key) {
+    return this.valueOf();
+  }.inferior()
 
 }).into(Boolean.prototype);

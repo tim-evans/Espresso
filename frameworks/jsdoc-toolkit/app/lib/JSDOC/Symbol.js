@@ -9,11 +9,7 @@ JSDOC.Symbol = function() {
 	if (arguments.length) this.populate.apply(this, arguments);
 }
 
-JSDOC.Symbol.count = 0;
-
 JSDOC.Symbol.prototype.init = function() {
-	this._name = "";
-	this._params = [];
 	this.$args = [];
 	this.addOn = "";
 	this.alias = "";
@@ -24,22 +20,24 @@ JSDOC.Symbol.prototype.init = function() {
 	this.defaultValue = undefined;
 	this.deprecated = "";
 	this.desc = "";
+	this.fires = [];
 	this.example = [];
 	this.exceptions = [];
-	this.fires = [];
-	this.id = JSDOC.Symbol.count++;
 	this.inherits = [];
 	this.inheritsFrom = [];
 	this.isa = "OBJECT";
-	this.isConstant = false;
 	this.isEvent = false;
+	this.isConstant = false;
 	this.isIgnored = false;
 	this.isInner = false;
+	this.isEvent = false;
 	this.isNamespace = false;
 	this.isPrivate = false;
 	this.isStatic = false;
 	this.memberOf = "";
 	this.methods = [];
+	this._name = "";
+	this._params = [];
 	this.properties = [];
 	this.requires = [];
 	this.returns = [];

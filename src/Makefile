@@ -1,27 +1,24 @@
-SRC =	license.js core.js function.js mixins/enumerable.js mixins/pubsub.js	\
-	mixins/kvo.js array.js root.js string.js formatter.js number.js globals.js \
-	date.js object.js boolean.js hash.js
+SRC =	license.js core.js mix.js function.js mixins/enumerable.js mixins/pubsub.js	\
+	mixins/kvo.js array.js template.js class.js string.js formatter.js number.js globals.js \
+	date.js object.js boolean.js hash.js lang/json.js math.js
 
 DOCDIR = ../docs
 
 JSDOCDIR = ../frameworks/jsdoc-toolkit
-TEMPLATE = $(JSDOCDIR)/templates/seed
+TEMPLATE = $(JSDOCDIR)/templates/espresso
 
 JAVA =	java
 
 all:	src doc
 
-src:	seed minify
+src:	espresso
 
 doc:	$(DOCDIR)/index.html
 
 $(DOCDIR)/index.html: Makefile $(SRC)
 	$(JAVA) -jar $(JSDOCDIR)/jsrun.jar $(JSDOCDIR)/app/run.js --allfunctions --private -a -t=$(TEMPLATE) -d=$(DOCDIR) $(SRC)
 
-minify:
-	java -jar ../frameworks/yuicompressor/yuicompressor.jar ../bin/seed.js -o ../bin/seed.min.js
-
-seed:	Makefile $(SRC)
+espresso:	Makefile $(SRC)
 	cat $(SRC) > ../bin/$@.js
 
 clean-doc:

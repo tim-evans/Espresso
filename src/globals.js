@@ -1,53 +1,49 @@
-/*globals mix */
+/*globals mix Espresso */
 
-// Lua-like global variable so you don't have to guess what
-// the global variable is.
-var _G = mix(/** @lends _global_ */{
+mix(/** @lends Espresso */{
 
   /**
-   * Lookup a variable's value given its Object notation.
-   * This requires absolute queries to the Object.
+   * The global variable.
    *
-   * The most effort that is performed on behalf of the
-   * lookup when it fails is when:
-   *  If it's an array.
-   *    AND
-   *  It's the only element in the array,
-   *    THEN
-   *  unpack the element and make that the argument.
+   * @type Object
+   */
+  global: this,
+
+  /**
+   * <p>Lookup a variable's value given its Object notation.
+   * This requires absolute queries to the Object.</p>
    *
-   * This does not mean that absolute notation does not
-   * work in these cases; it just means that it's optional.
+   * <p>The most effort that is performed on behalf of the
+   * lookup when it fails is when it's an array AND it's the
+   * only element in the array, THEN it will unpack the element
+   * and make that the argument.</p>
    *
-   * This prevents unnecessary indexing by the user,
-   * expecially in the case of the arguments Array.
+   * <p>This does not mean that absolute notation does not
+   * work in these cases; it just means that it's optional.</p>
    *
-   * {{{
+   * <p>This prevents unnecessary indexing by the user,
+   * expecially in the case of the arguments Array.</p>
+   *
+   * @example
    *   // Properties on the global scope need to be there-
    *   // local scoped variables will not be found!
-   *   window.Hydrogen = Root.extend({
-   *     symbol: 'H'
+   *   window.arthur = Espresso.Template.extend({
+   *     name: 'Arthur Dent',
+   *     species: 'Human',
+   *     description: 'Mostly Harmless'
    *   });
    *
-   *   alert(getObjectFor("Hydrogen.symbol"));
-   *   // -> 'H'
+   *   alert(Espresso.getObjectFor("arthur.name"));
+   *   // -> 'Arthur Dent'
    *
-   *   alert(getObjectFor("name", { name: "Ein" }));
-   *   // -> "Ein"
-   *   alert(getObjectFor("name", [{ name: "Ein" }]));  // Unpacked for you!
-   *   // -> "Ein"
-   *
-   *   alert(getObjectFor("0", ["hello", "world"])); // BEWARE!
-   *   // -> ["hello", "world"]
-   *
-   *   alert(getObjectFor("lang.jp._hello", {
+   * @example
+   *   alert(Espresso.getObjectFor("lang.pr._coffee", {
    *     lang: {
-   *       en: { _hello: "hello", _goodbye: "goodbye" },
-   *       jp: { _hello: "konnichiwa", _goodbye: "sayonara" }
+   *       en: { _coffee: "coffee" },
+   *       pr: { _coffee: "cafe" }
    *     }
    *   }));
-   *   // -> "konnichiwa"
-   * }}}
+   *   // -> "cafe"
    * 
    * @function
    * @param {String} key The key to get on the target.
@@ -65,7 +61,7 @@ var _G = mix(/** @lends _global_ */{
         //  2) The object is an Array
         //  3) The Array has only one element in it.
         // Unpack the element and try the lookup again.
-        if (obj instanceof Array && obj.length === 1) {
+        if (Array.isArray(obj) && obj.length === 1) {
           obj = obj[0];
         }
         if (property in obj) {
@@ -84,10 +80,10 @@ var _G = mix(/** @lends _global_ */{
           iattr = key.indexOf('.');
 
       // Use global scope as default
-      object = (arguments.length === 1) ? _G: object;
+      object = (arguments.length === 1) ? this.global: object;
 
       // Nothing to look up on undefined or null objects.
-      if (!_G.hasValue(object)) {
+      if (!Espresso.hasValue(object)) {
         return object;
       }
 
@@ -116,12 +112,12 @@ var _G = mix(/** @lends _global_ */{
         }
 
         // Eat up the dot.
-        if (key.length && key[0] === '.') {
+        if (key.length && key.get(0) === '.') {
           key = key.slice(1);
         }
 
         // Recurse.
-        return _G.getObjectFor(key, object);
+        return Espresso.getObjectFor(key, object);
       } else if ((iattr < iarr || iarr === -1) && iattr > -1) {
         object = getProperty(key.split('.', 1), object);
 
@@ -129,7 +125,7 @@ var _G = mix(/** @lends _global_ */{
         key = key.slice(key.indexOf('.') + 1);
 
         // Recurse
-        return _G.getObjectFor(key, object);
+        return Espresso.getObjectFor(key, object);
 
         // Done!
       } else if (key === '') {
@@ -142,21 +138,51 @@ var _G = mix(/** @lends _global_ */{
   }()),
 
   /**
-   * Checks whether the variable is defined *and* not null.
-   * {{{
-   *   var foo;
-   *   alert(hasValue(null));
-   *   // -> false
+   * Checks whether the variable is defined <b>and</b> is not null.
    *
-   *   undefined = 'all your base are belong to us';
-   *   alert(hasValue(foo));
-   *   // -> false
-   * }}}
    * @param {Object} o The object to test if it's defined or not.
    * @returns {Boolean} True if the value is not null and not undefined.
+   *
+   * @example
+   *   var unbound; // This variable is very lonely (and very much undefined)
+   *   undefined = 'all your base belong to us'; // Yes, you can rename undefined, but...
+   *   alert(Espresso.hasValue(unbound));
+   *   // -> false
+   *
+   *   alert(Espresso.hasValue(undefined));
+   *   // -> true
    */
   hasValue: function (o) {
     return (typeof o !== "undefined" && o !== null);
-  }
+  },
 
-}).into(this);
+  /**
+   * <p>ECMAScript compliant isCallable.</p>
+   *
+   * <p>The abstract operation IsCallback determines if its argument,
+   * which must be an ECMAScript language value, is a callable function
+   * Object if it's an Object that hass a function called 'call'.</p>
+   *
+   * <p>This allows overriding 'call' on an object, effectively making it
+   * a callable object.</p>
+   *
+   * <p>The one addition is ensuring that the method is also applicable,
+   * (having the 'apply' being callable too).</p>
+   *
+   * @function
+   * @param {Object} obj The Object to check whether it is callable or not.
+   * @returns {Boolean} True if the Object is callable, otherwise false.
+   */
+  isCallable: (function () {
+    var callable = /[Function|Object]/,
+        toString = Object.prototype.toString;
+    return function (obj) {
+      return !!(obj && callable.test(toString.call(obj)) &&
+                Espresso.hasValue(obj.call) &&
+                callable.test(toString.call(obj.call)) &&
+                Espresso.hasValue(obj.apply) &&
+                callable.test(toString.call(obj.apply)));
+    };
+  }())
+
+}).into(Espresso);

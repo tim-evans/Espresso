@@ -1,33 +1,35 @@
 /**
  * @class
- * Advanced String Formatting borrowed from the eponymous Python PEP.
+ *
+ * <p>Advanced String Formatting borrowed from the eponymous Python PEP.
  * It provides a flexible and powerful string formatting utility
- * that allows the your string templates to have meaning!
+ * that allows the your string templates to have meaning!</p>
  *
- * The formatter follows the rules of the Python
- * "PEP 3101(Advanced String Formatting)":http://www.python.org/dev/peps/pep-3101/ strictly,
- * but takes into account differences between JavaScript and Python.
+ * <p>The formatter follows the rules of Python
+ * <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101</a>
+ * (Advanced String Formatting) strictly, but takes into account
+ * differences between JavaScript and Python.</p>
  *
- * To use literal object notation, just pass in one argument for
+ * <p>To use literal object notation, just pass in one argument for
  * the formatter. This is optional however, as you can always
  * absolutely name the arguments via the number in the argument
- * list. This means that:
+ * list. This means that:</p>
  *
  * {{{
- *   Seed.String.Formatter.fmt("Hello, {name}!", { name: "world" });
+ *   alert(Espresso.Formatter.fmt("Hello, {name}!", { name: "world" }));
  * }}}
  *
  * is equivalent to:
  *
  * {{{
- *   Seed.String.Formatter.fmt("Hello, {0.name}!", { name: "world" });
+ *   alert(Espresso.Formatter.fmt("Hello, {0.name}!", { name: "world" }));
  * }}}
  *
  * For more than one argument you must mention the position of your
  * argument.
  *
  * {{{
- *   Seed.String.Formatter.fmt("{0.name} says {1}!", { name: "Domo" }, "hello");
+ *   alert(Espresso.Formatter.fmt("{0.name} says {1}!", { name: "Domo" }, "hello"));
  * }}}
  *
  * If your arguments and formatter are "as is"- that is, in order,
@@ -35,24 +37,24 @@
  * template string like so:
  *
  * {{{
- *   Seed.String.Formatter.fmt("{} says {}!", "Domo", "hello");
+ *   alert(Espresso.Formatter.fmt("{} says {}!", "Domo", "hello"));
  * }}}
  *
- * Check out the examples given for some ideas on how to use it.
+ * <p>Check out the examples given for some ideas on how to use it.</p>
  *
- * For developers wishing to have their own custom handler for the
+ * <p>For developers wishing to have their own custom handler for the
  * formatting specifiers, you should write your own  __fmt__ function
  * that takes the specifier in as an argument and returns the formatted
  * object as a string. All formatters are implemented using this pattern,
- * with a fallback to Object's __fmt__, which turns the said object into
- * a string, then calls __fmt__ on a string.
+ * with a fallback to Object's __fmt__, which turns said object into
+ * a string, then calls __fmt__ on a string.</p>
  *
- * Consider the following example:
+ * <p>Consider the following example:</p>
  *
- * {{{
- *   Localizer = Root.extend({
+ * @example
+ *   Localizer = Espresso.Template.extend({
  *     __fmt__: function (spec) {
- *       return this[spec];
+ *       return this.get(spec);
  *     }
  *   });
  *
@@ -62,75 +64,92 @@
  *     jp: 'konnichiwa'
  *   });
  *
- *   Seed.String.Formatter.fmt("{:en}", _hello);
+ *   alert(Espresso.Formatter.fmt("{:en}", _hello));
  *   // -> "hello"
  *
- *   Seed.String.Formatter.fmt("{:fr}", _hello);
+ *   alert(Espresso.Formatter.fmt("{:fr}", _hello));
  *   // -> "bonjour"
  *
- *   Seed.String.Formatter.fmt("{:jp}", _hello);
+ *   alert(Espresso.Formatter.fmt("{:jp}", _hello));
  *   // -> "konnichiwa"
- * }}}
  *
- * Try these examples to get a hang of how string formatting works!
+ * @example
+ *   alert(Espresso.Formatter.fmt("You once were a ve-{0}, but now you will be{0}.", "gone"));
+ *   // -> "You once were a ve-gone, but now you will begone."
  *
- * {{{
- *   Seed.String.Formatter.fmt("Arguments: {1}; {0}; {2}", 0, 1, 2);
- *   // -> "Arguments 1; 0; 2"
- * }}}
+ * @example
+ *   alert(Espresso.Formatter.fmt("Is {} vegan?", "chicken parmesan"));
+ *   // -> "Is chicken parmesan vegan?"
  *
- * {{{
- *   Seed.String.Formatter.fmt("{} is my name.", "Domo");
- *   // -> "Domo is my name."
- * }}}
- *
- * {{{
- *   Seed.String.Formatter.fmt("Hello, {name}!", { name: "world" });
+ * @example
+ *   alert(Espresso.Formatter.fmt("Hello, {name}!", { name: "world" }));
  *   // -> "Hello, world!"
- * }}}
  *
- * {{{
- *   Seed.String.Formatter.fmt("{lang} uses the {{variable}} format too!", {
+ * @example
+ *   alert(Espresso.Formatter.fmt("{lang} uses the {{variable}} format too!", {
  *      lang: "Python", variable: "(not used)"
- *   });
+ *   }));
  *   // -> "Python uses the {{variable}} format too!"
- * }}}
  *
- * {{{
- *   Seed.String.Formatter.fmt("Today is {:A}.", new Date());
- * }}}
+ * @example
+ *   alert(Espresso.Formatter.fmt("Today is {:A}.", new Date()));
  *
- * {{{
- *   Seed.String.Formatter.fmt("Which one comes first? -> {:-^{}}", 3, 4);
+ * @example
+ *   alert(Espresso.Formatter.fmt("Which one comes first? -> {:-^{}}", 3, 4));
  *   // -> "Which one comes first? -> -4-"
- * }}}
  */
-/*globals Seed _G */
+/*globals Espresso */
 
-Seed.String.Formatter = {
+Espresso.Formatter = {
 
+  /**
+   * The specifier regular expression.
+   * The groups are:
+   *
+   *   `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
+   *
+   * The brackets (`[]`) indicates an optional element.
+   *
+   * The `fill` is the character to fill the rest of the minimum width
+   * of the string.
+   *
+   * The `align` is one of:
+   *   * `^` Forces the field to be centered within the available space.
+   *   * `<` Forces the field to be left-aligned within the available space. This is the default.
+   *   * `>` Forces the field to be right-aligned within the available space.
+   *   * `=` Forces the padding to be placed after the sign (if any) but before the digits. This alignment option is only valid for numeric types.
+   * Unless the minimum field width is defined, the field width
+   * will always be the same size as the data to fill it, so that
+   * the alignment option has no meaning in this case.
+   *
+   * The `sign` is only valid for numeric types, and can be one of the following:
+   *   * `+` Indicates that a sign shoulb be used for both positive as well as negative numbers.
+   *   * `-` Indicates that a sign shoulb be used only for as negative numbers. This is the default.
+   *   * ` ` Indicates that a leading space should be used on positive numbers.
+   * @type RegExp
+   */
   SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/,
 
   /**
    * Format a template string with provided arguments.
    *
    * @param {String} template The template string to format the arguments with.
-   * @param {...} args A variable length of arguments to format the template with.
+   * @returns {String} The template formatted with the given leftover arguments.
    */
   fmt: function (template) {
     var args = Array.from(arguments).slice(1),
         prev = '',
-        buffer = '',
+        buffer = [],
         result, idx, len = template.length, ch;
 
     for (idx = 0; idx < len; idx += 1) {
-      ch = template[idx];
+      ch = template.get(idx);
 
       if (prev === '}') {
         if (ch !== '}') {
           throw new Error("Unmatched closing brace.");
         } else {
-          buffer += '}';
+          buffer[buffer.length] = '}';
           prev = '';
           continue;
         }
@@ -138,21 +157,21 @@ Seed.String.Formatter = {
 
       if (ch === '{') {
         result = this.parseField(template.slice(idx + 1), args);
-        buffer += result[1];
+        buffer[buffer.length] = result[1];
         idx += result[0];
       } else if (ch !== '}') {
-        buffer += ch;
+        buffer[buffer.length] = ch;
       }
       prev = ch;
     }
-    return buffer;
+    return buffer.join('');
   },
 
   parseField: function (template, args) {
-    var fieldspec = '', result = null, idx = 0, ch, len = template.length;
+    var fieldspec = [], result = null, idx = 0, ch, len = template.length;
 
     for (; idx < len; idx += 1) {
-      ch = template[idx];
+      ch = template.get(idx);
       if (ch === '{') {
         if (fieldspec.length === 0) {
           return [1, '{'];
@@ -163,15 +182,15 @@ Seed.String.Formatter = {
           return [idx, '{'];
         } else {
           idx += result[0];
-          fieldspec += result[1];
+          fieldspec[fieldspec.length] = result[1];
         }
       } else if (ch === '}') {
-        return [idx + 1, this.formatField(fieldspec, args)];
+        return [idx + 1, this.formatField(fieldspec.join(''), args)];
       } else {
-        fieldspec += ch;
+        fieldspec[fieldspec.length] = ch;
       }
     }
-    return [template.length, fieldspec];
+    return [template.length, fieldspec.join('')];
   },
 
   formatField: function (value, args) {
@@ -182,7 +201,7 @@ Seed.String.Formatter = {
     value = value.slice(0, iSpec);
 
     if (value !== '') {
-      value = _G.getObjectFor(value, args);
+      value = Espresso.getObjectFor(value, args);
     } else {
       value = args.shift();
     }
@@ -191,7 +210,7 @@ Seed.String.Formatter = {
       return value;
     }
 
-    return value ? value.__fmt__(spec) : value;
+    return value.__fmt__ ? value.__fmt__(spec) : value;
   }
   
 };

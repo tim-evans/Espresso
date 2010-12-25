@@ -1,11 +1,21 @@
 /**
- * Enumerable mixin.
+ * @namespace
+ * The Enumerable mixin provides common operations on enumerations of objects.
+ *
  * @requires forEach
- * @class Seed.Enumerable
  */
-/*globals Seed */
+/*globals Espresso mix */
 
-Seed.Enumerable = /** @lends Seed.Enumerable# */{
+Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
+
+  /**
+   * @function
+   * @returns {void}
+   */
+  forEach: function () {
+    throw new Error("You MUST override Espresso.Enumerable.forEach to be able " +
+                    "to use the Enumerable mixin.");
+  }.inferior(),
 
   /**
    * Returns an array where each value on the enumerable
@@ -21,24 +31,32 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
    */
   map: function (lambda, self) {
     var arr = [];
-    lambda = lambda || Function.echo;
-    this.forEach(function () {
-      arr.push(lambda.apply(self, arguments));
-    });
+
+    // 4. If IsCallable(lambda) is false, throw a TypeError exception
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
+    lambda = lambda || function (v) {
+      return v;
+    };
+    this.forEach(function (k, v) {
+      arr.set(arr.length, lambda.call(self, k, v, this));
+    }, this);
     return arr;
   }.inferior(),
 
   /**
    * Reduce the content of an enumerable down to a single value.
    * {{{
-   *   var range = mix(Seed.Enumerable, {
+   *   var range = mix(Espresso.Enumerable, {
    *     begin: 0,
    *     end: 0,
    *
    *     forEach: function (lambda, self) {
    *       var i = 0;
    *       for (var v = this.begin; v <= this.end; v++) {
-   *         lambda.apply(self, [v, i++, this]);
+   *         lambda.call(self, v, i++, this);
    *       }
    *     },
    *
@@ -60,8 +78,14 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
    * @returns {Object} The reduced output.
    */
   reduce: function (lambda, seed) {
-    var shouldSeed = (typeof seed === "undefined"),
+    var shouldSeed = (arguments.length === 1),
         self = this;
+
+    // 4. If IsCallable(lambda) is false, throw a TypeError exception
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
     this.forEach(function (v, k) {
       if (shouldSeed) {
         seed = v;
@@ -70,20 +94,25 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
         seed = lambda(seed, v, k, self);
       }
     });
+
+    // 5. If len is 0 and seed is not present, throw a TypeError exception.
+    if (shouldSeed) {
+      throw new TypeError("There was nothing to reduce!");
+    }
     return seed;
   }.inferior(),
 
   /**
    * Converts an enumerable into an Array.
    * {{{
-   *   var range = mix(Seed.Enumerable, {
+   *   var range = mix(Espresso.Enumerable, {
    *     begin: 0,
    *     end: 0,
    *
    *     forEach: function (lambda, self) {
    *       var i = 0;
    *       for (var v = this.begin; v <= this.end; v++) {
-   *         lambda.apply(self, [v, i++, this]);
+   *         lambda.call(self, v, i++, this);
    *       }
    *     },
    *
@@ -98,20 +127,22 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
    * @returns {Array}
    */
   toArray: function () {
-    return this.map();
-  },
+    return this.map(function (v) {
+      return v;
+    });
+  }.inferior(),
 
   /**
-   * Returns the size of the Seed.Enumerable.
+   * Returns the size of the Espresso.Enumerable.
    * {{{
-   *   var range = mix(Seed.Enumerable, {
+   *   var range = mix(Espresso.Enumerable, {
    *     begin: 0,
    *     end: 0,
    *
    *     forEach: function (lambda, self) {
    *       var i = 0;
    *       for (var v = this.begin; v <= this.end; v++) {
-   *         lambda.apply(self, [v, i++, this]);
+   *         lambda.call(self, v, i++, this);
    *       }
    *     },
    *
@@ -132,22 +163,34 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
   },
 
   filter: function (lambda, self) {
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
     return this.reduce(function (seive, v, k, t) {
-      if (lambda.apply(self, [v, k, t])) {
-        seive.push(v);
+      if (lambda.call(self, v, k, t)) {
+        seive.set(seive.length, v);
       }
     }, []);
   }.inferior(),
 
   every: function (lambda, self) {
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
     return this.reduce(function (every, v, k, t) {
-      return every && lambda.apply(self, [v, k, t]);
+      return every && lambda.call(self, v, k, t);
     }, true);
   }.inferior(),
 
   some: function (lambda, self) {
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
     return this.reduce(function (every, v, k, t) {
-      return every || lambda(self, [v, k, t]);
+      return every || lambda(self, v, k, t);
     }, false);
   }.inferior(),
 
@@ -163,15 +206,12 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
 
   extract: function (keys) {
     var arr = [];
-    if (!(keys instanceof Array)) {
+    if (!Array.isArray(keys)) {
       keys = [keys];
     }
+
     keys.forEach(function (v, k) {
-      if (this.get) {
-        arr.push(this.get(k));
-      } else {
-        arr.push(this[k]);
-      }
+      arr.set(arr.length, this.get(k));
     }, this);
     return arr;
   },
@@ -188,18 +228,5 @@ Seed.Enumerable = /** @lends Seed.Enumerable# */{
         return contained || v === val;
       }, false);
     }
-  },
-
-  zip: function () {
-    var iter = Function.echo, args = Array.from(arguments), collections;
-    if (args.slice(-1)[0] instanceof Function) {
-      iter = args.pop();
-    }
-
-    collections = [this].concat(args).map(Array.from);
-    return this.map(function (v, k) {
-      return iter(collections.pluck(k));
-    });
   }
-
 };

@@ -1,57 +1,76 @@
-/*globals mix Seed */
+/*globals mix Espresso */
 
 /**
- * @class Seed.String
- * Add-ons to Strings to make them easier to deal with.
- * @extends Seed.Enumerable
+ * @name String
+ * @namespace
+ * Provides
+ * @extends Espresso.Enumerable
  */
-Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
+mix(Espresso.Enumerable, /** @scope String.prototype */{
 
   /**
-   * Iterator for Strings.
-   * {{{
+   * Iterates over every character in a string.
+   * Required by {@link Espresso.Enumerable}.
+   *
+   * @param {Function} callback The callback to call for each element.
+   * @param {Object} that The Object to use as this when executing the callback.
+   *
+   * @returns {void}
+   * @example
    *   "boom".forEach(alert);
    *   // -> 'b'
    *   // -> 'o'
    *   // -> 'o'
    *   // -> 'm'
-   * }}}
-   * @param {Function} callback The callback to call for each element.
-   * @param {Object} self The Object to use as this when executing the callback.
-   * @returns {void}
    */
-  forEach: function (lambda, self) {
+  forEach: function (lambda, that) {
     var i = 0, len = this.length;
-    for (; i < len; i += 1) {
-      lambda.apply(self, [this.charAt(i), i, this]);
+
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
     }
-  }.inferior(),
+    for (; i < len; i += 1) {
+      lambda.call(that, this.charAt(i), i, this);
+    }
+  },
+
+  /**
+   * Returns the character at the given index.
+   * Provides a more unified interface for dealing with indexing,
+   * and is more cross-browser than [].
+   *
+   * @param {Number} idx The index of the string to get.
+   * @returns {String} The character at index idx.
+   */
+  get: function (idx) {
+    return this.charAt(idx);
+  },
 
   /**
    * Capitalize a string.
    *
-   * {{{
-   *   alert("hydrogen".capitalize());
-   *   // -> "Hydrogen"
-   * }}}
    * @returns {String} The string, capitalized.
+   * @example
+   *   ['toast', 'cheese', 'wine'].forEach(function (food) {
+   *     alert(food.capitalize());
+   *   });
+   *   // -> "Toast"
+   *   // -> "Cheese"
+   *   // -> "Wine"
    */
   capitalize: function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
+    return this.get(0).toUpperCase() + this.slice(1);
   },
 
   /**
    * Camelize a string.
    *
-   * {{{
-   *   alert("domo arigatou".camelize());
-   *   // -> domoArigatou
-   * }}}
    * @function
    * @returns {String} The string, camelized.
+   * @example
    */
   camelize: (function () {
-    var camelizer = /([\2-+_\s]+)(.)/g;
+    var camelizer = /([\2\-+_\s]+)(.)/g;
     return function () {
       return this.replace(camelizer, function (junk, seperator, chr) {
         return chr.toUpperCase();
@@ -74,36 +93,47 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
   }()),
 
   /**
-   * Returns the string repeated the specified
-   * number of times.
-   *
-   * {{{
-   *   alert("bacon".times(5));
-   *   // -> "baconbaconbaconbaconbacon"
-   * }}}
+   * Returns the string repeated the specified number of times.
    *
    * @param {Number} n The number of times to repeat this string.
-   * @returns The string repeated n times.
+   * @param {String} [separator] The separator to put between each iteration of the string.
+   * @returns {String} The string repeated n times.
+   * @example
+   *   alert("bacon".times(5));
+   *   // -> "baconbaconbaconbacon"
+   *
+   * @example
+   *   alert("crunchy".times(2, " bacon is "));
+   *   // -> "crunchy bacon is crunchy"
    */
-  times: function (n) {
-    return (new Array(n + 1)).join(this);
+  times: function (n, sep) {
+    sep = sep || '';
+    return n < 1 ? '': (new Array(n)).join(this + sep) + this;
   },
 
   /**
    * Trim leading and trailing whitespace.
-   * "Faster JavaScript Trim":http://blog.stevenlevithan.com/archives/faster-trim-javascript
+   * @function
+   * @see <a href="http://blog.stevenlevithan.com/archives/faster-trim-javascript">Faster JavaScript Trim</a>
    */
-  trim: function () {
-    return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
-  }.inferior(),
+  trim: (function () {
+    var left = /^\s\s*/, right = /\s\s*$/;
+    return function () {
+      return this.replace(left, '').replace(right, '');
+    };
+  }()).inferior(),
 
-  unescape: (function () {
+  /**
+   * @function
+   */
+  unescapeHTML: (function () {
     // The entity table. It maps entity names to characters.
     var entity = {
       quot: '"',
       lt:   '<',
       gt:   '>',
-      amp:  '&'
+      amp:  '&',
+      apos: "'"
     }, re = /&([^&;]+);/g;
 
     // Replaces entity characters with their
@@ -117,21 +147,25 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
         }
       );
     };
-  }()),
+  }()).inferior(),
 
-  escape: (function () {
+  /**
+   * @function
+   */
+  escapeHTML: (function () {
     var character = {
       '<': '&lt;',
       '>': '&gt;',
       '&': '&amp;',
-      '"': '&quot'
-    }, re = /[<>&"]/g;
+      '"': '&quot;',
+      "'": '&apos;'
+    }, re = /[<>&"']/g;
     return function () {
       return this.replace(re, function (c) {
         return character[c];
       });
     };
-  }()),
+  }()).inferior(),
 
   /**
    * Returns true if the string is contained
@@ -139,45 +173,58 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
    *
    * Overrides the Enumerable contains to be something
    * more intuitive.
-   * {{{
-   *   alert("seedling".contains('seed'));
-   *   // -> 'true'
-   * }}}
+   *
    * @returns {Boolean} true if contained in the other string.
+   * @example
+   *   alert('restraurant'.contains('aura'));
+   *   // -> true
    */
   contains: function (str) {
     return this.indexOf(str) !== -1;
   },
 
   /**
-   * Format formats a string in the vein of Python's format,
-   * Ruby fmt, and .NET String.Format.
+   * <p>Format formats a string in the vein of Python's format,
+   * Ruby #{templates}, and .NET String.Format.</p>
    *
-   * To write { or } in your Strings, just double them, and
-   * you'll end up with a single one.
+   * <p>To write { or } in your Strings, just double them, and
+   * you'll end up with a single one.</p>
    *
-   * If you have more than one argument, then you can reference
-   * by the argument number (which is optional on a single argument).
+   * <p>If you have more than one argument, then you can reference
+   * by the argument number (which is optional on a single argument).</p>
    *
-   * If you want to tie into this, and want to specify your own
+   * <p>If you want to tie into this, and want to specify your own
    * format specifier, override __fmt__ on your object, and it will
    * pass you in the specifier (after the colon). You return the
-   * string it should look like, and that's it!
+   * string it should look like, and that's it!</p>
    *
-   * For an example of an formatting extension, look at the Date mix.
-   * It implements the Ruby/Python formatting specification for Dates.
+   * <p>For an example of an formatting extension, look at the Date mix.
+   * It implements the Ruby/Python formatting specification for Dates.</p>
    *
-   * {{{
-   *   alert("Hello, {name}!".fmt({ name: 'Domo' }));
-   *   // -> "Hello, Domo!"
-   * }}}
+   * @returns {String} The formatted string.
+   * @example
+   *   alert("{0} + {0} = {1}".fmt(1, 2));
+   *   // -> "1 + 1 = 2"
    *
-   * {{{
+   * @example
+   *   var kitty = Espresso.Template.extend({
+   *     name: "Mister Mittens",
+   *     weapons: ["lazzors", "shuriken", "rainbows"],
+   *
+   *     fight: function (whom) {
+   *       return "fightin' the {} with his {}.".fmt(
+   *         whom, this.weapons[Math.rand(this.weapons.length)]);
+   *     }
+   *   });
+   *
+   *   alert("{0.name} is {1}".fmt(kitty, kitty.fight('zombies')));
+   *   // -> "Mister Mittens is fightin' the zombies with ..."
+   *
+   * @example
    *   alert("I love {pi:.2}".fmt({ pi: 22 / 7 }));
    *   // -> "I love 3.14"
-   * }}}
    *
-   * {{{
+   * @example
    *   alert("The {confection.type} is {confection.descriptor}.".fmt({
    *     confection: {
    *       type: 'cake',
@@ -185,29 +232,15 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
    *     }
    *   }));
    *   // -> "The cake is a lie."
-   * }}}
    *
-   * {{{
+   * @example
    *   alert(":-{{".fmt());  // Double {{ or }} to escape it.
    *   // -> ":-{"
-   * }}}
-   *
-   * {{{
-   *   alert("{0.name} likes {1.name}.".fmt({ name: "Domo" }, { name: "yakitori" }));
-   *   // -> "Domo likes yakitori."
-   * }}}
-   *
-   * {{{
-   *   // BEWARE!! 
-   *   alert("{:*<{}}".fmt(3, 4));
-   *   // -> "**4"
-   * }}}
-   * @returns {String} A formatted string.
    */
   fmt: function () {
     var args = Array.from(arguments);
     args.unshift(this.toString());
-    return Seed.String.Formatter.fmt.apply(Seed.String.Formatter, args);
+    return Espresso.Formatter.fmt.apply(Espresso.Formatter, args);
   },
 
   /**
@@ -217,7 +250,7 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
    * [[fill]align][minimumwidth]
    */
   __fmt__: function (spec) {
-    var match = spec.match(Seed.String.Formatter.SPECIFIER),
+    var match = spec.match(Espresso.Formatter.SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
         minWidth = match[6] || 0, len, before, after;
@@ -231,7 +264,7 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
     after = 0;
 
     switch (align) {
-    case '>':
+    case '<':
       after = before;
       before = 0;
       break;
@@ -243,10 +276,8 @@ Seed.String = mix(Seed.Enumerable, /** @lends Seed.String# */{
     return fill.times(before) + this + fill.times(after);
   },
 
-  json: function () {
-    return '"' + this + '"';
-  }
+  toJSON: function (key) {
+    return this.valueOf();
+  }.inferior()
 
-}).into({});
-
-mix(Seed.String, /** @lends String.prototype */{}).into(String.prototype);
+}).into(String.prototype);

@@ -1,9 +1,10 @@
-/*globals mix Seed */
+/*globals mix Espresso */
 
 mix(/** @lends Number# */{
-  json: function () {
-    return isFinite(this) ? String(this) : "null";
-  },
+
+  toJSON: function (key) {
+    return this.valueOf();
+  }.inferior(),
 
   __fmt__: function (spec) {
     // Don't want Infinity, -Infinity and NaN in here!
@@ -11,7 +12,7 @@ mix(/** @lends Number# */{
       return this;
     }
 
-    var match = spec.match(Seed.String.Formatter.SPECIFIER),
+    var match = spec.match(Espresso.Formatter.SPECIFIER),
         align = match[1],
         fill = match[2],
         sign = match[3] || '-',

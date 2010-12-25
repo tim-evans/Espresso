@@ -1,11 +1,20 @@
-/*globals _G Seed */
+/*globals Espresso */
 /**
- * @class Seed.KVO
+ * @namespace
+ * Key-Value Observing (KVO) is a design pattern build on top of the
+ * Publish-Subscribe pattern. It's designed to have notifications
+ * delivered to functions when a value changes and allows calculated
+ * properties as well as dependant properties.
+ *
+ * To take advantage of KVO, simply use get() and set() when you want
+ * to access or set a value.
+ *
+ * @see <a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Key-Value Observing</a>
  */
-Seed.KVO = /** @lends Seed.KVO# */{
+Espresso.KVO = /** @lends Espresso.KVO# */{
 
   /**
-   * Key Value Observing support. Get a value on an object.
+   * Get a value on an object.
    * Use this instead of subscript ([]) or dot notation
    * for public variables. Otherwise, you won't reap benefits
    * of being notified when they are set, or if the property
@@ -15,15 +24,15 @@ Seed.KVO = /** @lends Seed.KVO# */{
    * don't exist- it will return undefined in that case.
    *
    * {{{
-   *   var Oxygen = mix(Seed.KVO).into({
+   *   var Oxygen = mix(Espresso.KVO).into({
    *     symbol: 'O'
    *   });
    *
-   *   var Hydrogen = mix(Seed.KVO).into({
+   *   var Hydrogen = mix(Espresso.KVO).into({
    *     symbol: 'H'
    *   });
    *
-   *   var water = mix(Seed.KVO).into({
+   *   var water = mix(Espresso.KVO).into({
    *     structure: [Hydrogen, Oxygen, Hydrogen],
    *     symbol: function () {
    *       return this.get('structure').pluck('symbol').join('=');
@@ -44,20 +53,27 @@ Seed.KVO = /** @lends Seed.KVO# */{
    * @returns {Object} The value of the key.
    */
   get: function (key) {
+    key = key.toString();
     var value, idx = key.lastIndexOf('.'), object;
     if (idx === -1) {
       object = this;
     } else {
-      object = _G.getObjectFor(key.slice(0, idx), this);
+      object = Espresso.getObjectFor(key.slice(0, idx), this);
       key = key.slice(idx + 1);
     }
 
     if (object) {
       value = object[key];
       if (typeof value === "undefined") {
-        value = object.unknownProperty.apply(object, [key]);
+        value = object.unknownProperty.call(object, key);
       } else if (value && value.isProperty) {
-        value = value.apply(object, [key]);
+        if (value.isCacheable) {
+          if (!value.hasOwnProperty('__cache__')) {
+            value.__cache__ = value.call(object, key);
+          }
+          return value.__cache__;
+        }
+        value = value.call(object, key);
       }
       return value;
     }
@@ -65,7 +81,7 @@ Seed.KVO = /** @lends Seed.KVO# */{
   },
 
   /**
-   * Key Value Observing support. Set a value on an object.
+   * Set a value on an object.
    * Use this instead of subscript ([]) or dot notation
    * for public variables. Otherwise, you won't reap benefits
    * of being notified when they are set, or if the property
@@ -79,7 +95,7 @@ Seed.KVO = /** @lends Seed.KVO# */{
    * immediately when you set the value.
    *
    * {{{
-   *   var person = Root.extend({
+   *   var person = Espresso.Template.extend({
    *     name: '',
    *
    *     _firstTime: true,
@@ -104,11 +120,13 @@ Seed.KVO = /** @lends Seed.KVO# */{
    * @returns {Object} The reciever.
    */
   set: function (key, value) {
-    var property, idx = key.lastIndexOf('.'), object;
+    key = key.toString();
+
+    var property, idx = key.lastIndexOf('.'), object, result;
     if (idx === -1) {
       object = this;
     } else {
-      object = _G.getObjectFor(key.slice(0, idx), this);
+      object = Espresso.getObjectFor(key.slice(0, idx), this);
       key = key.slice(idx + 1);
     }
 
@@ -116,9 +134,12 @@ Seed.KVO = /** @lends Seed.KVO# */{
       property = object[key];
 
       if (property && property.isProperty) {
-        property.apply(object, [key, value]);
+        result = property.call(object, key, value);
+        if (property.isCacheable) {
+          property.__cache__ = result;
+        }
       } else if (typeof property === "undefined") {
-        object.unknownProperty.apply(object, arguments);
+        object.unknownProperty.call(object, key, value);
       } else {
         object[key] = value;
       }
@@ -133,20 +154,11 @@ Seed.KVO = /** @lends Seed.KVO# */{
   },
 
   /**
+   * @function
    * Called whenever you try to get or set an undefined property.
    *
    * This is a generic property that you can override to intercept
    * general gets and sets, making use out of them.
-   * {{{
-   *   var trickster = Root.extend({
-   *     unknownProperty: function (key, value) {
-   *       alert("You're trying to set {} to {}? Well, too bad!".fmt(key, value));
-   *     }
-   *   });
-   *
-   *   trickster.set('red', 'rgb(255, 0, 0)');
-   * }}}
-   * @function
    * @param {String} key The unknown key that was looked up.
    * @param {Object} [value] The value to set the key to.
    */
@@ -156,5 +168,4 @@ Seed.KVO = /** @lends Seed.KVO# */{
     }
     return value;
   }.property()
-
 };

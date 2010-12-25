@@ -1,7 +1,7 @@
 /*!*
- * Seed
- * ====
- *  A small JavaScript Library used to grow your own JavaScript libraries.
+ * Espresso
+ * ========
+ *  A pick-me-up for JavaScript Library authors.
  *
  * Contributors
  *   Tim Evans <tim.evans@junctionnetworks.com>

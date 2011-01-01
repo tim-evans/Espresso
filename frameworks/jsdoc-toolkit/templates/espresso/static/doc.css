@@ -219,7 +219,6 @@ body.doc {
   font-size: 1.3em;
   font-weight: normal;
 }
-
 .doc .fineprint {
   position: absolute;
   bottom: 0;
@@ -245,72 +244,58 @@ body.doc {
 }
 
 .doc .code {
-  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-  word-wrap: normal;
-  background-color: #333;
-  background-color: rgba(20, 20, 20, 0.85);
-  -webkit-box-shadow: inset rgba(0, 0, 0, 0.4) 1px 1px 8px,
-                      inset rgba(0, 0, 0, 0.4) -1px -1px 8px;
-  -moz-box-shadow: inset rgba(0, 0, 0, 0.4) 1px 1px 8px,
-                   inset rgba(0, 0, 0, 0.4) -1px -1px 8px;
-  box-shadow: inset rgba(0, 0, 0, 0.4) 1px 1px 8px,
-              inset rgba(0, 0, 0, 0.4) -1px -1px 8px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-
-  border: 1px solid #333;
-  color: white;
-	padding: 8px;
+	display: block;
+  position: relative;
+  margin-top: 16px;
+  margin-bottom: 16px;
   margin-left: 20px;
   margin-right: 20px;
-  line-height: 130%;
-  border: 1px solid #888;
-  color: white;
+  border-left: 4px solid #888;
 }
 
 .doc code {
 	display: block;
+	padding: 8px;
   padding-top: 16px;
   padding-bottom: 16px;
-  position: relative;
-}
 
-.doc code a {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-
-  -webkit-box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 8px;
-  -moz-box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 8px;
-  box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 8px;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-
-  background-color: rgba(0, 0, 0, .8);
-  border: 1px solid #888;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+  word-wrap: normal;
+  background-color: #222;
 
   color: white;
-  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.7),
-               0px 1px 0px rgba(255, 255, 255, 0.3);
-
-  -webkit-transition: opacity 0.25 linear;
-  -moz-transition: opacity 0.25 linear;
+  line-height: 130%;
 }
 
-.doc code a:active {
-  -webkit-box-shadow: rgba(255, 255, 255, 0.4) 1px 1px 8px;
-  -moz-box-shadow: rgba(255, 255, 255, 0.4) 1px 1px 8px;
-  box-shadow: rgba(255, 255, 255, 0.4) 1px 1px 8px;
+.doc .status-bar {
+  padding: 5px;
+
+  background-color: #CCC;
+  background: -webkit-gradient(
+    linear, left bottom, left top, color-stop(0, #BBB), color-stop(0.7, #DDD)
+  );
+  background: -moz-linear-gradient(
+    center bottom, #BBB 0%, #DDD 70%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DDDDDD', endColorstr='#BBBBBB');
+  border-bottom: 1px solid #888;
+
+  text-shadow: #EEE 0px 1px 0px;  
 }
 
-.doc code.inactive a {
-  opacity: 0;
+.doc .console {
+	padding: 8px;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+  word-wrap: normal;
+  background-color: #222;
+  color: white;
+  line-height: 130%;
 }
 
-.doc code.active a {
-  opacity: 1;
+#content .status-bar a {
+  display: block;
+  padding-left: 3px;
+  text-decoration: none;
 }
 
 .doc .string {

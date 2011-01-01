@@ -20,7 +20,7 @@ var toReplace = [{
 }, {
   regexp: new RegExp('//.*$', 'gm'),
   css: 'single-line-comment'
-}], guid = 0;
+}];
 
 /** highlight an example code block, formatting it properly */
 function highlightBlock(block) {
@@ -82,10 +82,7 @@ function highlightBlock(block) {
   }
   res.push(block.slice(idx));
 
-  return res.join('').replace(/\n/gm, '<br/>') +
-        '<a href="#" onclick="demo' + guid + '()" class="inactive">&#9654;</a>\n' +
-        '<script type="text/javascript">\n' +
-        'function demo' + (guid++) + '() {\n' + raw + '\n}\n</script>';
+  return res.join('').replace(/\n/gm, '<br/>');
 }
 
 /** Called automatically by JsDoc Toolkit. */

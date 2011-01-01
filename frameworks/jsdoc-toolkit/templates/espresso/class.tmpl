@@ -12,10 +12,12 @@
     return highlightBlock(block);
   };
 
-  function makeCodeBlock(block) {
-	  return "<code onmouseover=\"this.setAttribute('class', 'active')\" " +
-                 "onmouseout=\"this.setAttribute('class', 'inactive')\">" +
-              highlight(block) + "</code>"
+  var guid = 0;
+  function codeBlock(block) {
+    var script = '<script type="text/javascript">\n' +
+        'function demo' + guid + '() {\n document.getElementById("console-' + guid + '").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-' + guid + '"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };' + block + '\n}\n</script>',
+        statusBar = '<div class="status-bar"><a href="#" onclick="demo' + guid + '()">&#9654;</a></div><div class="console hidden" id="console-' + (guid++) + '"></div>';
+	  return '<div class="code"><code>' + highlight(block) + "</code>" + statusBar + script + "</div>";
   }
 
 !}
@@ -110,7 +112,7 @@
 			</if>
 			<if test="data.example.length">
 			<for each="example" in="data.example">
-			<p class="code">{+makeCodeBlock(example)+}</p>
+		  {+codeBlock(example)+}
 			</for>
 			</if>
 			<if test="data.version.length">
@@ -304,7 +306,7 @@
 					
 					<if test="member.example.length">
 					<for each="example" in="member.example">
-          <p class="code">{+makeCodeBlock(example)+}</p>
+          {+codeBlock(example)+}
 					</for>
 					</if>
 
@@ -436,7 +438,7 @@
 					</div>
 					<if test="member.example.length">
 					<for each="example" in="member.example">
-					<p class="code">{+makeCodeBlock(example)+}</p>
+					{+codeBlock(example)+}
 					</for>
 					</if>
 				 <if test="member.srcFile != data.srcFile">
@@ -529,7 +531,7 @@
 					</div>
 					<if test="member.example.length">
 					<for each="example" in="member.example">
-					<p class="code">{+makeCodeBlock(example)+}</p>
+					{+codeBlock(example)+}
 					</for>
 					</if>
 				 <if test="member.srcFile != data.srcFile">

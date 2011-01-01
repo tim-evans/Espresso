@@ -51,49 +51,6 @@ context("String",
     })
   ),
 
-  should("have an instance function named 'camelize'", function () {
-    assert.kindOf('function', "".camelize);
-  }),
-
-  context("camelize",
-    should("remove spaces and turn them into camelCase", function () {
-      assert.equal("a   b".camelize(), 'aB');
-    }),
-
-    should("replace underscores with camelCase", function () {
-      assert.equal("a_b".camelize(), 'aB');
-      assert.equal("a____b".camelize(), 'aB');
-      assert.equal("a  _b".camelize(), 'aB');
-    }),
-
-    should("replace dashes with camelCase", function () {
-      assert.equal("a_b-cdef".camelize(), 'aBCdef');
-      assert.equal("a_b-----cdef".camelize(), 'aBCdef');
-      assert.equal("a  __bC".camelize(), 'aBC');
-    })
-  ),
-
-  should("have an instance function named 'dasherize'", function () {
-    assert.kindOf('function', "".dasherize);
-  }),
-
-  context("dasherize",
-    should("remove spaces with dashes", function () {
-      assert.equal("a   b".dasherize(), 'a-b');
-    }),
-
-    should("replace underscores with dashes", function () {
-      assert.equal("a_b".dasherize(), 'a-b');
-      assert.equal("a____b".dasherize(), 'a-b');
-      assert.equal("a  _b".dasherize(), 'a-b');
-    }),
-
-    should("replace camelCase with dashes", function () {
-      assert.equal("a_bCdef".dasherize(), 'a-b-cdef');
-      assert.equal("a  _bC".dasherize(), 'a-b-c');
-    })
-  ),
-
   should("have an instance function named 'times'", function () {
     assert.kindOf('function', "".times);
   }),

@@ -13,7 +13,6 @@ mix(/** @lends Function.prototype */{
     this.isInferior = true;
     return this;
   }
-
 }).into(Function.prototype);
 
 mix(/** @lends Function.prototype */{
@@ -78,7 +77,7 @@ mix(/** @lends Function.prototype */{
    *
    * @returns {Function} The reciever.
    */
-  notifyOn: function () {
+  on: function () {
     this._ = this._ || {};
 
     var pubsub = Array.from(arguments);
@@ -92,7 +91,7 @@ mix(/** @lends Function.prototype */{
 
         if (property.indexOf('.') !== -1) {
           iProperty = property.lastIndexOf('.');
-          object = _G.getObjectFor(property.slice(0, iProperty));
+          object = Espresso.getObjectFor(property.slice(0, iProperty));
           property = property.slice(iProperty + 1);
         }
 
@@ -274,5 +273,4 @@ mix(/** @lends Function.prototype */{
     args.unshift(0);
     return this.delay.apply(args);
   }
-
 }).into(Function.prototype);

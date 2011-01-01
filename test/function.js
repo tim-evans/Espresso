@@ -137,8 +137,8 @@ context("Function",
     )
   ),
 
-  should("have a function named 'notifyOn'", function () {
-    assert.kindOf("function", Function.prototype.notifyOn);
+  should("have a function named 'on'", function () {
+    assert.kindOf("function", Function.prototype.on);
   }),
 
   should("have a function named 'property'", function () {

@@ -68,8 +68,9 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
         value = object.unknownProperty.call(object, key);
       } else if (value && value.isProperty) {
         if (value.isCacheable) {
-          if (!value.hasOwnProperty('__cache__')) {
-            value.__cache__ = value.call(object, key);
+          object.__cache__ = object.__cache__ || {};
+          if (!object.__cache__.hasOwnProperty(key)) {
+            object.__cache__[key] = value.call(object, key);
           }
           return value.__cache__;
         }
@@ -136,7 +137,8 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
       if (property && property.isProperty) {
         result = property.call(object, key, value);
         if (property.isCacheable) {
-          property.__cache__ = result;
+          object.__cache__ = object.__cache__ || {};
+          object.__cache__[key] = result;
         }
       } else if (typeof property === "undefined") {
         object.unknownProperty.call(object, key, value);

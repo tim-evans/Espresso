@@ -167,6 +167,14 @@ Espresso.Formatter = {
     return buffer.join('');
   },
 
+  /**
+   * Parses the template with the arguments provided,
+   * parsing any nested templates.
+   *
+   * @param {String} template The template string to format.
+   * @param {Array} args The arguments to parse the template string.
+   * @returns {String} The formatted template.
+   */
   parseField: function (template, args) {
     var fieldspec = [], result = null, idx = 0, ch, len = template.length;
 
@@ -193,6 +201,14 @@ Espresso.Formatter = {
     return [template.length, fieldspec.join('')];
   },
 
+  /**
+   * Returns the value of the template string formatted with the
+   * given arguments.
+   *
+   * @param {String} value The template string and format specifier.
+   * @param {Array} args An Array of arguments to use to format the template string.
+   * @returns {String} The formatted template.
+   */
   formatField: function (value, args) {
     var iSpec = value.indexOf(':'),
         spec;
@@ -211,6 +227,5 @@ Espresso.Formatter = {
     }
 
     return value.__fmt__ ? value.__fmt__(spec) : value;
-  }
-  
+  }  
 };

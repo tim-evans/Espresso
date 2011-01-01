@@ -1,6 +1,6 @@
 SRC =	license.js core.js mix.js function.js mixins/enumerable.js mixins/pubsub.js	\
 	mixins/kvo.js array.js template.js class.js string.js formatter.js number.js globals.js \
-	date.js object.js boolean.js hash.js lang/json.js math.js
+	date.js object.js boolean.js hash.js lang/json.js
 
 DOCDIR = ../docs
 

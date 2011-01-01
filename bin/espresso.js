@@ -130,7 +130,6 @@ mix(/** @lends Function.prototype */{
     this.isInferior = true;
     return this;
   }
-
 }).into(Function.prototype);
 
 mix(/** @lends Function.prototype */{
@@ -195,7 +194,7 @@ mix(/** @lends Function.prototype */{
    *
    * @returns {Function} The reciever.
    */
-  notifyOn: function () {
+  on: function () {
     this._ = this._ || {};
 
     var pubsub = Array.from(arguments);
@@ -209,7 +208,7 @@ mix(/** @lends Function.prototype */{
 
         if (property.indexOf('.') !== -1) {
           iProperty = property.lastIndexOf('.');
-          object = _G.getObjectFor(property.slice(0, iProperty));
+          object = Espresso.getObjectFor(property.slice(0, iProperty));
           property = property.slice(iProperty + 1);
         }
 
@@ -381,6 +380,7 @@ mix(/** @lends Function.prototype */{
   delay: function (timeout, that) {
     var args = Array.from(arguments).slice(2),
         method = this;
+    that = that || this;
     setTimeout(function () {
       return method.apply(that, args);
     }, timeout);
@@ -389,7 +389,7 @@ mix(/** @lends Function.prototype */{
   defer: function (that) {
     var args = Array.from(arguments);
     args.unshift(0);
-    return this.delay.apply(args);
+    return this.delay.apply(this, args);
   }
 
 }).into(Function.prototype);
@@ -629,7 +629,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
  * @namespace
  * Publish-Subscribe mixin that provides the basics of eventing.
  *
- * {{{
+ * @example
  *   var sailor = mix(Espresso.PubSub, {
  *     name: "",
  *     ahoy: function (action, sailor) {
@@ -644,7 +644,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
  *       this.sailors.push(sailor);
  *       alert("Added {name}".fmt(sailor));
  *       this.publish("add", sailor);
- *       this.subscribe("add", sailor.ahoy.bind(sailor), sync);
+ *       this.subscribe("add", sailor.ahoy.bind(sailor), { synchronous: !!sync });
  *     }
  *   }).into({});
  *
@@ -655,7 +655,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
  *   ship.add(ahab, true);
  *   ship.add(daveyJones);
  *   ship.add(flapjack);
- * }}}
  */
 /*global mix Espresso */
 
@@ -726,12 +725,19 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
           subscriber.apply(this, args);
         } else {
           var A = [this];
-          A.concat(args);
+          A = A.concat(Array.from(args));
+          console.log(A);
           subscriber.defer.apply(subscriber, A);
         }
       }, this);
     }
     return this;
+  }
+};
+
+Espresso.Scheduler = {
+  setTimeout: function (lambda, time) {
+    setTimeout(lambda, time);
   }
 };
 /*globals Espresso */
@@ -804,8 +810,9 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
         value = object.unknownProperty.call(object, key);
       } else if (value && value.isProperty) {
         if (value.isCacheable) {
-          if (!value.hasOwnProperty('__cache__')) {
-            value.__cache__ = value.call(object, key);
+          object.__cache__ = object.__cache__ || {};
+          if (!object.__cache__.hasOwnProperty(key)) {
+            object.__cache__[key] = value.call(object, key);
           }
           return value.__cache__;
         }
@@ -872,7 +879,8 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
       if (property && property.isProperty) {
         result = property.call(object, key, value);
         if (property.isCacheable) {
-          property.__cache__ = result;
+          object.__cache__ = object.__cache__ || {};
+          object.__cache__[key] = result;
         }
       } else if (typeof property === "undefined") {
         object.unknownProperty.call(object, key, value);
@@ -921,7 +929,10 @@ mix(/** @scope Array */{
   /**
    * @function
    * Convert an iterable object into an Array.
-   * This is used mostly for the arguments variable in functions.
+   *
+   * This is used mostly for the arguments variable
+   * in functions.
+   *
    * @param {Object} iterable An iterable object with a length and indexing.
    * @returns {Array} The object passed in as an Array.
    */
@@ -933,7 +944,10 @@ mix(/** @scope Array */{
   }()),
 
   /**
-   * R
+   * Returns whether the object passed in is an Array or not.
+   *
+   * @param {Object} obj The Object to test if it's an Array.
+   * @returns {Boolean} True if the obj is an array.
    */
   isArray: function (obj) {
     return (/array/i).test(Object.prototype.toString.call(obj));
@@ -948,14 +962,20 @@ mix(/** @scope Array */{
  */
 mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
+  /**
+   * The size of the Array.
+   * @returns {Number} The length of the Array.
+   */
   size: function () {
     return this.length;
   }.property(),
 
   /**
    * Iterator over the Array.
+   *
    * Implemented to be in conformance with ECMA-262 Edition 5,
    * so you will use the native forEach where it exists.
+   *
    * @param {Function} lambda The callback to call for each element.
    * @param {Object} [self] The Object to use as this when executing the callback.
    * @returns {void}
@@ -1019,6 +1039,8 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
   /**
    * KVO compliant reverse().
+   *
+   * @function
    * @see ECMA-262 15.4.4.8 Array.prototype.reverse()
    */
   reverse: function () {
@@ -1076,8 +1098,9 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-   * @function
+   * Returns the last index that the object is found at.
    *
+   * @function
    * @param searchElement The item to look for.
    * @param [fromIndex] The index to begin searching from.
    * @returns The last index of an item.
@@ -1145,6 +1168,11 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     return this.push.apply(this, rest);
   },
 
+  /**
+   * Returns all unique values on the array.
+   *
+   * @returns {Array}
+   */
   unique: function () {
     var o = [];
     this.forEach(function (v) {
@@ -1162,7 +1190,6 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
       return complement;
     }, []);
   }
-
 }).into(Array.prototype);
 /**
  * @class
@@ -1268,12 +1295,14 @@ Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Templ
 /*global mix Espresso*/
 
 /**
+ * <p>Object-Oriented for those of you who need
+ * type checking and proper inheritance in your
+ * applications.</p>
+ *
+ * <p>Based off of John Resig's
+ * <a href="http://ejohn.org/blog/simple-javascript-inheritance/">simple inheritance</a>.</p>
+ *
  * @class
- * Object-Oriented for those of you who need type checking
- * and proper inheritance in your applications.
- *
- * Based off of John Resig's simple inheritance.
- *
  * @extends Espresso.PubSub
  * @extends Espresso.KVO
  */
@@ -1283,7 +1312,8 @@ mix(/** @scope Espresso.Class */{
 
   /**
    * Extend the class with the given properties.
-   * Multiple inheritance is not allowed.
+   * Multiple inheritance is not doable without
+   * breaking the inheritance chain.
    *
    * @returns {Espresso.Class} The extended Class.
    */
@@ -1311,7 +1341,9 @@ mix(/** @scope Espresso.Class */{
 mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
 
   /**
-   * Filters out private variables and functions.
+   * Filters out private variables and functions
+   * when serializing the JSON to a String.
+   *
    * @returns {Object} The object hash to use when converting to JSON.
    */
   toJSON: function (key) {
@@ -1324,7 +1356,6 @@ mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
     }
     return json;
   }
-
 }).into(Espresso.Class.prototype);
 /*globals mix Espresso */
 
@@ -1391,36 +1422,6 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   },
 
   /**
-   * Camelize a string.
-   *
-   * @function
-   * @returns {String} The string, camelized.
-   * @example
-   */
-  camelize: (function () {
-    var camelizer = /([\2\-+_\s]+)(.)/g;
-    return function () {
-      return this.replace(camelizer, function (junk, seperator, chr) {
-        return chr.toUpperCase();
-      });
-    };
-  }()),
-
-  /**
-   * @function
-   */
-  dasherize: (function () {
-    var decamelizer = /([a-z])([A-Z])/g,
-        dasherizer = /([_+\s]+)/g;
-    return function () {
-      var res = this.replace(decamelizer, function (junk, a, b) {
-        return a + '-' + b.toLowerCase();
-      });
-      return res.toLowerCase().replace(dasherizer, '-');
-    };
-  }()),
-
-  /**
    * Returns the string repeated the specified number of times.
    *
    * @param {Number} n The number of times to repeat this string.
@@ -1441,7 +1442,9 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
 
   /**
    * Trim leading and trailing whitespace.
+   *
    * @function
+   * @returns {String} The string with leading and trailing whitespace removed.
    * @see <a href="http://blog.stevenlevithan.com/archives/faster-trim-javascript">Faster JavaScript Trim</a>
    */
   trim: (function () {
@@ -1452,7 +1455,11 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   }()).inferior(),
 
   /**
+   * Unescapes any escaped HTML strings into their readable
+   * forms.
+   *
    * @function
+   * @returns {String} The unescaped string.
    */
   unescapeHTML: (function () {
     // The entity table. It maps entity names to characters.
@@ -1478,7 +1485,11 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   }()).inferior(),
 
   /**
+   * Replaces any reserved HTML characters into their
+   * escaped form.
+   *
    * @function
+   * @returns {String} The escaped string.
    */
   escapeHTML: (function () {
     var character = {
@@ -1531,8 +1542,8 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
    *
    * @returns {String} The formatted string.
    * @example
-   *   alert("{0} + {0} = {1}".fmt(1, 2));
-   *   // -> "1 + 1 = 2"
+   *   alert("b{0}{0}a".fmt('an'));
+   *   // -> "banana"
    *
    * @example
    *   var kitty = Espresso.Template.extend({
@@ -1541,7 +1552,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
    *
    *     fight: function (whom) {
    *       return "fightin' the {} with his {}.".fmt(
-   *         whom, this.weapons[Math.rand(this.weapons.length)]);
+   *         whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
    *     }
    *   });
    *
@@ -1576,6 +1587,9 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
    * This is a function called by Formatter, 
    * A valid specifier can have:
    * [[fill]align][minimumwidth]
+   *
+   * @param {String} spec The specifier string.
+   * @returns {String} The string formatted using the format specifier.
    */
   __fmt__: function (spec) {
     var match = spec.match(Espresso.Formatter.SPECIFIER),
@@ -1604,6 +1618,9 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
     return fill.times(before) + this + fill.times(after);
   },
 
+  /**
+   * @function
+   */
   toJSON: function (key) {
     return this.valueOf();
   }.inferior()
@@ -1778,6 +1795,14 @@ Espresso.Formatter = {
     return buffer.join('');
   },
 
+  /**
+   * Parses the template with the arguments provided,
+   * parsing any nested templates.
+   *
+   * @param {String} template The template string to format.
+   * @param {Array} args The arguments to parse the template string.
+   * @returns {String} The formatted template.
+   */
   parseField: function (template, args) {
     var fieldspec = [], result = null, idx = 0, ch, len = template.length;
 
@@ -1804,6 +1829,14 @@ Espresso.Formatter = {
     return [template.length, fieldspec.join('')];
   },
 
+  /**
+   * Returns the value of the template string formatted with the
+   * given arguments.
+   *
+   * @param {String} value The template string and format specifier.
+   * @param {Array} args An Array of arguments to use to format the template string.
+   * @returns {String} The formatted template.
+   */
   formatField: function (value, args) {
     var iSpec = value.indexOf(':'),
         spec;
@@ -1822,8 +1855,7 @@ Espresso.Formatter = {
     }
 
     return value.__fmt__ ? value.__fmt__(spec) : value;
-  }
-  
+  }  
 };
 /*globals mix Espresso */
 
@@ -2134,7 +2166,6 @@ mix(/** @lends Espresso */{
                 callable.test(toString.call(obj.apply)));
     };
   }())
-
 }).into(Espresso);
 /*globals mix */
 
@@ -2371,11 +2402,11 @@ mix(/** @lends Boolean# */{
   toJSON: function (key) {
     return this.valueOf();
   }.inferior()
-
 }).into(Boolean.prototype);
 /**
  * @class
  * A KVO compliant Object Hash class.
+ *
  * @extends Espresso.Enumerable
  * @extends Espresso.KVO
  * @extends Espresso.Template
@@ -2453,7 +2484,6 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
       return [k, v];
     });
   }
-
 });
 /*global JSON mix */
 
@@ -2790,10 +2820,4 @@ mix(/** @lends JSON# */{
       return result;
     };
   }()).inferior()
-
 }).into(JSON);
-mix({
-  rand: function (n) {
-    return Math.floor(Math.random() * n);
-  }
-}).into(Math);

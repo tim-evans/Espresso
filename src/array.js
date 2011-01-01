@@ -14,7 +14,10 @@ mix(/** @scope Array */{
   /**
    * @function
    * Convert an iterable object into an Array.
-   * This is used mostly for the arguments variable in functions.
+   *
+   * This is used mostly for the arguments variable
+   * in functions.
+   *
    * @param {Object} iterable An iterable object with a length and indexing.
    * @returns {Array} The object passed in as an Array.
    */
@@ -26,7 +29,10 @@ mix(/** @scope Array */{
   }()),
 
   /**
-   * R
+   * Returns whether the object passed in is an Array or not.
+   *
+   * @param {Object} obj The Object to test if it's an Array.
+   * @returns {Boolean} True if the obj is an array.
    */
   isArray: function (obj) {
     return (/array/i).test(Object.prototype.toString.call(obj));
@@ -41,14 +47,20 @@ mix(/** @scope Array */{
  */
 mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
+  /**
+   * The size of the Array.
+   * @returns {Number} The length of the Array.
+   */
   size: function () {
     return this.length;
   }.property(),
 
   /**
    * Iterator over the Array.
+   *
    * Implemented to be in conformance with ECMA-262 Edition 5,
    * so you will use the native forEach where it exists.
+   *
    * @param {Function} lambda The callback to call for each element.
    * @param {Object} [self] The Object to use as this when executing the callback.
    * @returns {void}
@@ -112,6 +124,8 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
   /**
    * KVO compliant reverse().
+   *
+   * @function
    * @see ECMA-262 15.4.4.8 Array.prototype.reverse()
    */
   reverse: function () {
@@ -169,8 +183,9 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-   * @function
+   * Returns the last index that the object is found at.
    *
+   * @function
    * @param searchElement The item to look for.
    * @param [fromIndex] The index to begin searching from.
    * @returns The last index of an item.
@@ -238,6 +253,11 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     return this.push.apply(this, rest);
   },
 
+  /**
+   * Returns all unique values on the array.
+   *
+   * @returns {Array}
+   */
   unique: function () {
     var o = [];
     this.forEach(function (v) {
@@ -255,5 +275,4 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
       return complement;
     }, []);
   }
-
 }).into(Array.prototype);

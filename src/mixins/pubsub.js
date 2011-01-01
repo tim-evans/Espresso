@@ -2,7 +2,7 @@
  * @namespace
  * Publish-Subscribe mixin that provides the basics of eventing.
  *
- * {{{
+ * @example
  *   var sailor = mix(Espresso.PubSub, {
  *     name: "",
  *     ahoy: function (action, sailor) {
@@ -17,7 +17,7 @@
  *       this.sailors.push(sailor);
  *       alert("Added {name}".fmt(sailor));
  *       this.publish("add", sailor);
- *       this.subscribe("add", sailor.ahoy.bind(sailor), sync);
+ *       this.subscribe("add", sailor.ahoy.bind(sailor), { synchronous: !!sync });
  *     }
  *   }).into({});
  *
@@ -28,7 +28,6 @@
  *   ship.add(ahab, true);
  *   ship.add(daveyJones);
  *   ship.add(flapjack);
- * }}}
  */
 /*global mix Espresso */
 
@@ -99,11 +98,18 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
           subscriber.apply(this, args);
         } else {
           var A = [this];
-          A.concat(args);
+          A = A.concat(Array.from(args));
+          console.log(A);
           subscriber.defer.apply(subscriber, A);
         }
       }, this);
     }
     return this;
+  }
+};
+
+Espresso.Scheduler = {
+  setTimeout: function (lambda, time) {
+    setTimeout(lambda, time);
   }
 };

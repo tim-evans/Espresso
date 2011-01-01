@@ -1,6 +1,7 @@
 /**
  * @class
  * A KVO compliant Object Hash class.
+ *
  * @extends Espresso.Enumerable
  * @extends Espresso.KVO
  * @extends Espresso.Template
@@ -78,5 +79,4 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
       return [k, v];
     });
   }
-
 });

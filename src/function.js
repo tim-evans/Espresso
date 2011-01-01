@@ -263,6 +263,7 @@ mix(/** @lends Function.prototype */{
   delay: function (timeout, that) {
     var args = Array.from(arguments).slice(2),
         method = this;
+    that = that || this;
     setTimeout(function () {
       return method.apply(that, args);
     }, timeout);
@@ -271,6 +272,7 @@ mix(/** @lends Function.prototype */{
   defer: function (that) {
     var args = Array.from(arguments);
     args.unshift(0);
-    return this.delay.apply(args);
+    return this.delay.apply(this, args);
   }
+
 }).into(Function.prototype);

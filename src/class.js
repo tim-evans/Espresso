@@ -1,12 +1,14 @@
 /*global mix Espresso*/
 
 /**
+ * <p>Object-Oriented for those of you who need
+ * type checking and proper inheritance in your
+ * applications.</p>
+ *
+ * <p>Based off of John Resig's
+ * <a href="http://ejohn.org/blog/simple-javascript-inheritance/">simple inheritance</a>.</p>
+ *
  * @class
- * Object-Oriented for those of you who need type checking
- * and proper inheritance in your applications.
- *
- * Based off of John Resig's simple inheritance.
- *
  * @extends Espresso.PubSub
  * @extends Espresso.KVO
  */
@@ -16,7 +18,8 @@ mix(/** @scope Espresso.Class */{
 
   /**
    * Extend the class with the given properties.
-   * Multiple inheritance is not allowed.
+   * Multiple inheritance is not doable without
+   * breaking the inheritance chain.
    *
    * @returns {Espresso.Class} The extended Class.
    */
@@ -44,7 +47,9 @@ mix(/** @scope Espresso.Class */{
 mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
 
   /**
-   * Filters out private variables and functions.
+   * Filters out private variables and functions
+   * when serializing the JSON to a String.
+   *
    * @returns {Object} The object hash to use when converting to JSON.
    */
   toJSON: function (key) {
@@ -57,5 +62,4 @@ mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
     }
     return json;
   }
-
 }).into(Espresso.Class.prototype);

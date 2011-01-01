@@ -63,36 +63,6 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   },
 
   /**
-   * Camelize a string.
-   *
-   * @function
-   * @returns {String} The string, camelized.
-   * @example
-   */
-  camelize: (function () {
-    var camelizer = /([\2\-+_\s]+)(.)/g;
-    return function () {
-      return this.replace(camelizer, function (junk, seperator, chr) {
-        return chr.toUpperCase();
-      });
-    };
-  }()),
-
-  /**
-   * @function
-   */
-  dasherize: (function () {
-    var decamelizer = /([a-z])([A-Z])/g,
-        dasherizer = /([_+\s]+)/g;
-    return function () {
-      var res = this.replace(decamelizer, function (junk, a, b) {
-        return a + '-' + b.toLowerCase();
-      });
-      return res.toLowerCase().replace(dasherizer, '-');
-    };
-  }()),
-
-  /**
    * Returns the string repeated the specified number of times.
    *
    * @param {Number} n The number of times to repeat this string.
@@ -113,7 +83,9 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
 
   /**
    * Trim leading and trailing whitespace.
+   *
    * @function
+   * @returns {String} The string with leading and trailing whitespace removed.
    * @see <a href="http://blog.stevenlevithan.com/archives/faster-trim-javascript">Faster JavaScript Trim</a>
    */
   trim: (function () {
@@ -124,7 +96,11 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   }()).inferior(),
 
   /**
+   * Unescapes any escaped HTML strings into their readable
+   * forms.
+   *
    * @function
+   * @returns {String} The unescaped string.
    */
   unescapeHTML: (function () {
     // The entity table. It maps entity names to characters.
@@ -150,7 +126,11 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   }()).inferior(),
 
   /**
+   * Replaces any reserved HTML characters into their
+   * escaped form.
+   *
    * @function
+   * @returns {String} The escaped string.
    */
   escapeHTML: (function () {
     var character = {
@@ -203,8 +183,8 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
    *
    * @returns {String} The formatted string.
    * @example
-   *   alert("{0} + {0} = {1}".fmt(1, 2));
-   *   // -> "1 + 1 = 2"
+   *   alert("b{0}{0}a".fmt('an'));
+   *   // -> "banana"
    *
    * @example
    *   var kitty = Espresso.Template.extend({
@@ -213,7 +193,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
    *
    *     fight: function (whom) {
    *       return "fightin' the {} with his {}.".fmt(
-   *         whom, this.weapons[Math.rand(this.weapons.length)]);
+   *         whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
    *     }
    *   });
    *
@@ -248,6 +228,9 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
    * This is a function called by Formatter, 
    * A valid specifier can have:
    * [[fill]align][minimumwidth]
+   *
+   * @param {String} spec The specifier string.
+   * @returns {String} The string formatted using the format specifier.
    */
   __fmt__: function (spec) {
     var match = spec.match(Espresso.Formatter.SPECIFIER),
@@ -276,6 +259,9 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
     return fill.times(before) + this + fill.times(after);
   },
 
+  /**
+   * @function
+   */
   toJSON: function (key) {
     return this.valueOf();
   }.inferior()

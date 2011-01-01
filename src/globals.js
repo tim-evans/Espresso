@@ -184,5 +184,4 @@ mix(/** @lends Espresso */{
                 callable.test(toString.call(obj.apply)));
     };
   }())
-
 }).into(Espresso);

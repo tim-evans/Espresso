@@ -15,5 +15,4 @@ mix(/** @lends Boolean# */{
   toJSON: function (key) {
     return this.valueOf();
   }.inferior()
-
 }).into(Boolean.prototype);

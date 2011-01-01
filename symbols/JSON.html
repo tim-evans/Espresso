@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="generator" content="JsDoc Toolkit" />
 
-	<title>JsDoc Reference - Object</title>
+	<title>JsDoc Reference - JSON</title>
 	
   <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
   <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
@@ -42,8 +42,10 @@
   <div id="module">
 		<h1>
 				
-		  Built-In Namespace Object
+		  Namespace JSON
     </h1>
+    
+      <span class="src"><a href="../symbols/src/lang_json.html">json.js</a></span>
     
   </div>
 	<div id="index">
@@ -85,6 +87,27 @@ function endResize(e) {
 
 
 <!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class JSON.">
+				<caption>Namespace Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/JSON.html">JSON</a></b>
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			-->
 
 <!-- ============================== properties summary ===================== -->
@@ -101,12 +124,12 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Object.html#__fmt__">__fmt__</a></b>(spec)</td>
+              + <b><a href="../symbols/JSON.html#parse">parse</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Object.html#.keys">keys</a></b>(O)</td>
+              + <b><a href="../symbols/JSON.html#stringify">stringify</a></b>(value, replacer, space)</td>
             </tr>
 					
           </table>
@@ -124,41 +147,20 @@ function endResize(e) {
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__fmt__"> </a>
+					<a name="parse"> </a>
           <div>
-             <a name="__fmt__"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
+             <a name="parse"> </a>
+             <h3> <b>parse</b>()</h3>
 
              <div class="description">
-               
-  				       <dt>Formats an Object by coercing the Object to a String and calling
-__fmt__ on the string with the spec passed in.</dd><br/>
                
 						   
              </div>
 
 						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
-									
-								</dt>
-								<dd>The string specification to format the object.</dd>
-							
-							</dl>
 						
 						
 						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The object as a formatted string according to the specification.</dt>
-							
-							</dl>
 						
 						
 
@@ -167,21 +169,19 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/object.html">object.js</a>.
 				 
 					
 					<hr />
 				
-					<a name=".keys"> </a>
+					<a name="stringify"> </a>
           <div>
-             <a name=".keys"> </a>
-             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Object.<b>keys</b>(O)</h3>
+             <a name="stringify"> </a>
+             <h3> <b>stringify</b>(value, replacer, space)</h3>
 
              <div class="description">
                
-  				       <dt>Returns all iterable keys on the passed Object.</dd><br/>
+  				       <dt>The `stringify` function returns a String in JSON
+format representing an ECMAScript value.</dd><br/>
                
 						   
              </div>
@@ -191,33 +191,28 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>O</b>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>value</b>
 									
 								</dt>
-								<dd>The object to return the keys of.</dd>
-							
-							</dl>
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Throws:</dt>
+								<dd>An ECMAScript value.</dd>
 							
 								<dt>
-									<span class="light fixedFont">{TypeError}</span>  <b></b>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>|<a href="../symbols/Array.html">Array</a>)</span> <b>replacer</b>
+									<i>Optional</i>
 								</dt>
-								<dd>When `O` is not an object.</dd>
+								<dd>uhh..</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>|<a href="../symbols/Number.html">Number</a>)</span> <b>space</b>
+									<i>Optional</i>
+								</dt>
+								<dd>A String</dd>
 							
 							</dl>
 						
 						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A list of all keys on the object passed in.</dt>
-							
-							</dl>
+						
+						
 						
 						
 
@@ -226,9 +221,6 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/object.html">object.js</a>.
 				 
 					
 					

@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="generator" content="JsDoc Toolkit" />
 
-	<title>JsDoc Reference - Object</title>
+	<title>JsDoc Reference - Espresso.KVO</title>
 	
   <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
   <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
@@ -42,8 +42,10 @@
   <div id="module">
 		<h1>
 				
-		  Built-In Namespace Object
+		  Namespace Espresso.KVO
     </h1>
+    
+      <span class="src"><a href="../symbols/src/mixins_kvo.html">kvo.js</a></span>
     
   </div>
 	<div id="index">
@@ -82,9 +84,56 @@ function endResize(e) {
 
 <!-- ============================== class summary ========================== -->
     
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				Key-Value Observing (KVO) is a design pattern build on top of the
+Publish-Subscribe pattern. It's designed to have notifications
+delivered to functions when a value changes and allows calculated
+properties as well as dependant properties.
+
+To take advantage of KVO, simply use get() and set() when you want
+to access or set a value.
+			</p>
+      
+      
+			
+				<dl class="detailList">
+				<dt class="heading">See:</dt>
+				
+				<dt><a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Key-Value Observing</a></dt>
+				
+				</dl>
+			
+      
+			
+			
+			
+    
 
 
 <!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.KVO.">
+				<caption>Namespace Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></b>
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			-->
 
 <!-- ============================== properties summary ===================== -->
@@ -101,12 +150,17 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Object.html#__fmt__">__fmt__</a></b>(spec)</td>
+              + <b><a href="../symbols/Espresso.KVO.html#get">get</a></b>(key)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Object.html#.keys">keys</a></b>(O)</td>
+              + <b><a href="../symbols/Espresso.KVO.html#set">set</a></b>(key, value)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></b>(key, value)</td>
             </tr>
 					
           </table>
@@ -124,15 +178,47 @@ function endResize(e) {
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__fmt__"> </a>
+					<a name="get"> </a>
           <div>
-             <a name="__fmt__"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
+             <a name="get"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>get</b>(key)</h3>
 
              <div class="description">
                
-  				       <dt>Formats an Object by coercing the Object to a String and calling
-__fmt__ on the string with the spec passed in.</dd><br/>
+  				       <dt>Get a value on an object.
+Use this instead of subscript ([]) or dot notation
+for public variables. Otherwise, you won't reap benefits
+of being notified when they are set, or if the property
+is computed.
+
+Get is tolerant of when trying to access objects that
+don't exist- it will return undefined in that case.
+
+{{{
+  var Oxygen = mix(Espresso.KVO).into({
+    symbol: 'O'
+  });
+
+  var Hydrogen = mix(Espresso.KVO).into({
+    symbol: 'H'
+  });
+
+  var water = mix(Espresso.KVO).into({
+    structure: [Hydrogen, Oxygen, Hydrogen],
+    symbol: function () {
+      return this.get('structure').pluck('symbol').join('=');
+    }.property()
+  });
+
+  alert(Oxygen.get('symbol'));
+  // -> 'O'
+
+  alert(water.get('structure[0].symbol'));
+  // -> 'H'
+
+  alert(water.get('symbol'));
+  // -> 'H=O=H'
+}}}</dd><br/>
                
 						   
              </div>
@@ -142,10 +228,10 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>key</b>
 									
 								</dt>
-								<dd>The string specification to format the object.</dd>
+								<dd>The key to lookup on the object.</dd>
 							
 							</dl>
 						
@@ -156,7 +242,7 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The object as a formatted string according to the specification.</dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The value of the key.</dt>
 							
 							</dl>
 						
@@ -167,21 +253,51 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/object.html">object.js</a>.
 				 
 					
 					<hr />
 				
-					<a name=".keys"> </a>
+					<a name="set"> </a>
           <div>
-             <a name=".keys"> </a>
-             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Object.<b>keys</b>(O)</h3>
+             <a name="set"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>set</b>(key, value)</h3>
 
              <div class="description">
                
-  				       <dt>Returns all iterable keys on the passed Object.</dd><br/>
+  				       <dt>Set a value on an object.
+Use this instead of subscript ([]) or dot notation
+for public variables. Otherwise, you won't reap benefits
+of being notified when they are set, or if the property
+is computed.
+
+Set is tolerant of when trying to access objects that
+don't exist- it will ignore your attempt in that case.
+
+Keep in mind that events are lazy- they get processed after
+the processor has nothing to do. So don't expect to get notified
+immediately when you set the value.
+
+{{{
+  var person = Espresso.Template.extend({
+    name: '',
+
+    _firstTime: true,
+    nameDidChange: function (key, value) {
+      if (this._firstTime) {
+        this._firstTime = false;
+        alert("Hi, my name's {}".fmt(value));
+      } else {
+        alert("No wait, it's {}".fmt(value));
+      }
+    }.on('name')
+  });
+
+  person.set('name', 'Ian Donald Calvin Euclid Zappa');
+  // -> "Hi, my name's Ian Donald Calvin Euclid Zappa"
+
+  person.set('name', 'Dweezil Zappa');
+  // -> "No wait, it's Dweezil Zappa"
+}}}</dd><br/>
                
 						   
              </div>
@@ -191,31 +307,27 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>O</b>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>key</b>
 									
 								</dt>
-								<dd>The object to return the keys of.</dd>
-							
-							</dl>
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Throws:</dt>
+								<dd>The key to lookup on the object.</dd>
 							
 								<dt>
-									<span class="light fixedFont">{TypeError}</span>  <b></b>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>value</b>
+									
 								</dt>
-								<dd>When `O` is not an object.</dd>
+								<dd>The value to set the object at the key's path to.</dd>
 							
 							</dl>
+						
+						
+						
 						
 						
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A list of all keys on the object passed in.</dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The reciever.</dt>
 							
 							</dl>
 						
@@ -227,8 +339,48 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/object.html">object.js</a>.
+					
+					<hr />
+				
+					<a name="unknownProperty"> </a>
+          <div>
+             <a name="unknownProperty"> </a>
+             <h3> <b>unknownProperty</b>(key, value)</h3>
+
+             <div class="description">
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>key</b>
+									
+								</dt>
+								<dd>The unknown key that was looked up.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>value</b>
+									<i>Optional</i>
+								</dt>
+								<dd>The value to set the key to.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+
+						
+					
+
+					</div>
+					
 				 
 					
 					

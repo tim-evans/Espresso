@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Espresso.Template</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
+
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
+
+  <div id="module">
+		<h1>
+				
+		  Class Espresso.Template
+    </h1>
+    
+      <span class="src"><a href="../symbols/src/template.html">template.js</a></span>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				Templates provide inheritance without any classes.
+			</p>
+      
+      
+				<dl class="detailList">
+				<dt class="heading">Extends:</dt>
+				
+				<dt><a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a></dt>
+				
+				<dt><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></dt>
+				
+				</dl>
+      
+			
+      
+			
+			
+			
+    
+
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Template.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.Template.html">Espresso.Template</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#_subscriptions">_subscriptions</a></dd>
+				</dl>
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Template.html#extend">extend</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Template.html#init">init</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Template.html#toJSON">toJSON</a></b>(key)</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#publish">publish</a>, <a href="../symbols/Espresso.PubSub.html#subscribe">subscribe</a>, <a href="../symbols/Espresso.PubSub.html#unsubscribe">unsubscribe</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.KVO.html">Espresso.KVO</a>: </dt><dd><a href="../symbols/Espresso.KVO.html#get">get</a>, <a href="../symbols/Espresso.KVO.html#set">set</a>, <a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></dd>
+				</dl>
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name="extend"> </a>
+          <div>
+             <a name="extend"> </a>
+             <h3><span class="light">(<a href="../symbols/Espresso.Template.html">Espresso.Template</a>)</span> <b>extend</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>Extend a Template with a collection of objects.
+
+If you use around to get the super argument of the
+base object's function, the function will be augmented
+in such a way that you don't have to set the scope in
+which the function should be called in. Just call the
+function normally, assuming that it is "special" and
+will have `this` reference the current context you're in.
+If you want to, you certainly have the option to apply
+the scope if you want.</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Espresso.Template.html">Espresso.Template</a>)</span> The extended template.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+					
+					<div class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Animal&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;move:&nbsp;<span class="keyword">function</span>&nbsp;(meters)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"{}&nbsp;moved&nbsp;{}&nbsp;m."</span>.fmt(<span class="keyword">this</span>.name,&nbsp;meters);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Snake&nbsp;=&nbsp;Animal.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;move:&nbsp;<span class="keyword">function</span>&nbsp;($super)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"Slithering...&nbsp;{}"</span>.fmt($super(<span class="string">5</span>));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}.around()<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;Horse&nbsp;=&nbsp;Animal.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;move:&nbsp;<span class="keyword">function</span>&nbsp;($super)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"Galloping...&nbsp;{}"</span>.fmt($super(<span class="string">45</span>));<br/>&nbsp;&nbsp;&nbsp;&nbsp;}.around()<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;sam&nbsp;=&nbsp;Snake.extend({&nbsp;name:&nbsp;<span class="string">"Sammy&nbsp;the&nbsp;Python"</span>&nbsp;});<br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;tom&nbsp;=&nbsp;Horse.extend({&nbsp;name:&nbsp;<span class="string">"Tommy&nbsp;the&nbsp;Palomino"</span>&nbsp;});<br/><br/>&nbsp;&nbsp;alert(sam.move());<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Slithering...&nbsp;Sammy&nbsp;the&nbsp;Python&nbsp;moved&nbsp;5&nbsp;m."<br/>&nbsp;&nbsp;alert(tom.move());<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Galloping...&nbsp;Tommy&nbsp;the&nbsp;Palomino&nbsp;moved&nbsp;45&nbsp;m."</code><div class="status-bar"><a href="#" onclick="demo0()">&#9654;</a></div><div class="console hidden" id="console-0"></div><script type="text/javascript">
+function demo0() {
+ document.getElementById("console-0").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-0"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  var Animal = Espresso.Template.extend({
+    move: function (meters) {
+      return "{} moved {} m.".fmt(this.name, meters);
+    }
+  });
+
+  var Snake = Animal.extend({
+    move: function ($super) {
+      return "Slithering... {}".fmt($super(5));
+    }.around()
+  });
+
+  var Horse = Animal.extend({
+    move: function ($super) {
+      return "Galloping... {}".fmt($super(45));
+    }.around()
+  });
+
+  var sam = Snake.extend({ name: "Sammy the Python" });
+  var tom = Horse.extend({ name: "Tommy the Palomino" });
+
+  alert(sam.move());
+  // -> "Slithering... Sammy the Python moved 5 m."
+  alert(tom.move());
+  // -> "Galloping... Tommy the Palomino moved 45 m."
+}
+</script></div>
+					
+					
+				 
+					
+					<hr />
+				
+					<a name="init"> </a>
+          <div>
+             <a name="init"> </a>
+             <h3><span class="light">(void)</span> <b>init</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>Override this to act like a constructor.
+
+These constructors will take no arguments,
+and are called after the extending is finished.
+For stacked Espresso.Templates, use `around()` to get super
+passed in as the first argument. You can then
+whenever you please.</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(void)</span> </dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+					
+					<div class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;shotgun&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;init:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"bang!"</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});</code><div class="status-bar"><a href="#" onclick="demo1()">&#9654;</a></div><div class="console hidden" id="console-1"></div><script type="text/javascript">
+function demo1() {
+ document.getElementById("console-1").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-1"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  var shotgun = Espresso.Template.extend({
+    init: function () {
+      alert("bang!");
+    }
+  });
+}
+</script></div>
+					
+					
+				 
+					
+					<hr />
+				
+					<a name="toJSON"> </a>
+          <div>
+             <a name="toJSON"> </a>
+             <h3> <b>toJSON</b>(key)</h3>
+
+             <div class="description">
+               
+  				       <dt>Filters out private variables and functions.</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

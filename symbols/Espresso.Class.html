@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="generator" content="JsDoc Toolkit" />
 
-	<title>JsDoc Reference - Object</title>
+	<title>JsDoc Reference - Espresso.Class</title>
 	
   <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
   <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
@@ -42,8 +42,10 @@
   <div id="module">
 		<h1>
 				
-		  Built-In Namespace Object
+		  Class Espresso.Class
     </h1>
+    
+      <span class="src"><a href="../symbols/src/class.html">class.js</a></span>
     
   </div>
 	<div id="index">
@@ -82,12 +84,65 @@ function endResize(e) {
 
 <!-- ============================== class summary ========================== -->
     
+      <h1 class="title">Overview</h1>
+      
+      
+				<dl class="detailList">
+				<dt class="heading">Extends:</dt>
+				
+				<dt><a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a></dt>
+				
+				<dt><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></dt>
+				
+				</dl>
+      
+			
+      
+			
+			
+			
+    
 
 
 <!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Class.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.Class.html">Espresso.Class</a></b>()
+							</div>
+							<div class="description"><p>Object-Oriented for those of you who need
+type checking and proper inheritance in your
+applications.</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			-->
 
 <!-- ============================== properties summary ===================== -->
+			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#_subscriptions">_subscriptions</a></dd>
+				</dl>
+				
 			
 
 <!-- ============================== methods summary ======================== -->
@@ -101,17 +156,21 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Object.html#__fmt__">__fmt__</a></b>(spec)</td>
+              + <b><a href="../symbols/Espresso.Class.html#.extend">extend</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Object.html#.keys">keys</a></b>(O)</td>
+              + <b><a href="../symbols/Espresso.Class.html#toJSON">toJSON</a></b>(key)</td>
             </tr>
 					
           </table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#publish">publish</a>, <a href="../symbols/Espresso.PubSub.html#subscribe">subscribe</a>, <a href="../symbols/Espresso.PubSub.html#unsubscribe">unsubscribe</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.KVO.html">Espresso.KVO</a>: </dt><dd><a href="../symbols/Espresso.KVO.html#get">get</a>, <a href="../symbols/Espresso.KVO.html#set">set</a>, <a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -124,30 +183,20 @@ function endResize(e) {
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__fmt__"> </a>
+					<a name=".extend"> </a>
           <div>
-             <a name="__fmt__"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
+             <a name=".extend"> </a>
+             <h3><span class="light">(<a href="../symbols/Espresso.Class.html">Espresso.Class</a>)</span> Espresso.Class.<b>extend</b>()</h3>
 
              <div class="description">
                
-  				       <dt>Formats an Object by coercing the Object to a String and calling
-__fmt__ on the string with the spec passed in.</dd><br/>
+  				       <dt>Extend the class with the given properties.
+Multiple inheritance is not doable without
+breaking the inheritance chain.</dd><br/>
                
 						   
              </div>
 
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
-									
-								</dt>
-								<dd>The string specification to format the object.</dd>
-							
-							</dl>
 						
 						
 						
@@ -156,7 +205,7 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The object as a formatted string according to the specification.</dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Espresso.Class.html">Espresso.Class</a>)</span> The extended Class.</dt>
 							
 							</dl>
 						
@@ -167,21 +216,19 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/object.html">object.js</a>.
 				 
 					
 					<hr />
 				
-					<a name=".keys"> </a>
+					<a name="toJSON"> </a>
           <div>
-             <a name=".keys"> </a>
-             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Object.<b>keys</b>(O)</h3>
+             <a name="toJSON"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>toJSON</b>(key)</h3>
 
              <div class="description">
                
-  				       <dt>Returns all iterable keys on the passed Object.</dd><br/>
+  				       <dt>Filters out private variables and functions
+when serializing the JSON to a String.</dd><br/>
                
 						   
              </div>
@@ -191,31 +238,21 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>O</b>
+									<b>key</b>
 									
 								</dt>
-								<dd>The object to return the keys of.</dd>
+								<dd></dd>
 							
 							</dl>
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Throws:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{TypeError}</span>  <b></b>
-								</dt>
-								<dd>When `O` is not an object.</dd>
-							
-							</dl>
 						
 						
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A list of all keys on the object passed in.</dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The object hash to use when converting to JSON.</dt>
 							
 							</dl>
 						
@@ -226,9 +263,6 @@ __fmt__ on the string with the spec passed in.</dd><br/>
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/object.html">object.js</a>.
 				 
 					
 					

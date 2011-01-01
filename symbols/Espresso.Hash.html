@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Espresso.Hash</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
+
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
+
+  <div id="module">
+		<h1>
+				
+		  Class Espresso.Hash
+    </h1>
+    
+      <span class="src"><a href="../symbols/src/hash.html">hash.js</a></span>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				A KVO compliant Object Hash class.
+			</p>
+      
+      
+				<dl class="detailList">
+				<dt class="heading">Extends:</dt>
+				
+				<dt><a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a></dt>
+				
+				<dt><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></dt>
+				
+				<dt><a href="../symbols/Espresso.Template.html">Espresso.Template</a></dt>
+				
+				</dl>
+      
+			
+      
+			
+			
+			
+		  <div class="code"><code></code><div class="status-bar"><a href="#" onclick="demo0()">&#9654;</a></div><div class="console hidden" id="console-0"></div><script type="text/javascript">
+function demo0() {
+ document.getElementById("console-0").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-0"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };
+}
+</script></div>
+			
+			
+			
+    
+
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Hash.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.Hash.html">Espresso.Hash</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#_subscriptions">_subscriptions</a></dd>
+				</dl>
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Hash.html#forEach">forEach</a></b>(lambda, self)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Hash.html#keys">keys</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Hash.html#toArray">toArray</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Hash.html#values">values</a></b>()</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>: </dt><dd><a href="../symbols/Espresso.Enumerable.html#contains">contains</a>, <a href="../symbols/Espresso.Enumerable.html#every">every</a>, <a href="../symbols/Espresso.Enumerable.html#extract">extract</a>, <a href="../symbols/Espresso.Enumerable.html#filter">filter</a>, <a href="../symbols/Espresso.Enumerable.html#map">map</a>, <a href="../symbols/Espresso.Enumerable.html#pluck">pluck</a>, <a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a>, <a href="../symbols/Espresso.Enumerable.html#size">size</a>, <a href="../symbols/Espresso.Enumerable.html#some">some</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.KVO.html">Espresso.KVO</a>: </dt><dd><a href="../symbols/Espresso.KVO.html#get">get</a>, <a href="../symbols/Espresso.KVO.html#set">set</a>, <a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.Template.html">Espresso.Template</a>: </dt><dd><a href="../symbols/Espresso.Template.html#extend">extend</a>, <a href="../symbols/Espresso.Template.html#init">init</a>, <a href="../symbols/Espresso.Template.html#toJSON">toJSON</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#publish">publish</a>, <a href="../symbols/Espresso.PubSub.html#subscribe">subscribe</a>, <a href="../symbols/Espresso.PubSub.html#unsubscribe">unsubscribe</a></dd>
+				</dl>
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name="forEach"> </a>
+          <div>
+             <a name="forEach"> </a>
+             <h3> <b>forEach</b>(lambda, self)</h3>
+
+             <div class="description">
+               
+  				       <dt>Iterator</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>lambda</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>self</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="keys"> </a>
+          <div>
+             <a name="keys"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>keys</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>Return all of the iterable keys on the hash.
+
+{{{
+  var alphabet = Espresso.Hash.extend({
+    a: 00, b: 01, c: 02, d: 03, e: 04, f: 05,
+    g: 06, h: 07, i: 08, j: 09, k: 10, j: 11,
+    k: 12, l: 13, m: 14, n: 15, o: 16, p: 17,
+    q: 18, r: 19, s: 20, t: 21, u: 22, v: 23,
+    w: 24, x: 25, y: 26, z: 27
+  });
+
+  alert(alphabet.keys());
+}}}</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A list of all of the iterable keys on the hash.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="toArray"> </a>
+          <div>
+             <a name="toArray"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>[])</span> <b>toArray</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>Convert the Hash into an Array of tuples.</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>[])</span> An array of tuples.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="values"> </a>
+          <div>
+             <a name="values"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>values</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>Return all iterable values on the hash.
+
+{{{
+  var days = Espresso.Hash.extend({
+    1: 'Sunday',
+    2: 'Monday',
+    3: 'Tuesday',
+    4: 'Wednesday',
+    5: 'Thursday',
+    6: 'Friday',
+    7: 'Saturday'
+  });
+
+  alert(days.values());
+}}}</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A list of all iterable values on the hash.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

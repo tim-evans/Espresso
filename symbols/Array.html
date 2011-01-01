@@ -1,337 +1,109 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="generator" content="JsDoc Toolkit" />
-		
-		<title>JsDoc Reference - Array</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
 
-    <script type="text/javascript" src="../bin/seed.js"></script>
-		<style type="text/css">
-			/* default.css */
-body {
-	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  color: #222;
-}
+	<title>JsDoc Reference - Array</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
 
-#header {
-	clear: both;
-  font-size: 1.5em;
-}
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
 
-.title {
-  border-bottom: 1px solid #bbb;
-}
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
 
-.play {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-hr {
-	border: none 0;
-	border-top: 1px solid #bbb;
-	height: 1px;
-}
-
-code {
-	display: block;
-	padding: 8px;
-  background-color: #222;
-  color: white;
-	border: 1px solid #000;
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
-
-.right {
-  text-align: right;
-}
-
-.code {
-  position: relative;
-}
-
-.single-line-comment {
-  color: #ddd;
-}
-
-.comment {
-  color: #89D30;
-}
-
-.keyword {
-  color: #61EAFD;
-}
-
-.string {
-  color: #89DB30;
-}
-
-.value {
-  color: #C15BC6;
-}
-
-.caption {
-  font-size: 100%;
-  position: relative;
-  top: -25px;
-  left: 15px;
-  margin: 0px;
-}
-
-#index {
-	float: left;
-	width: 190px;
-	position: absolute;
-	left: 20px;
-  background-color: #eef;
-  border: 1px solid #999;
-	padding: 8px;
-}
-
-#content {
-	padding-top: 10px;
-}
-
-#content-body {
-  margin-left: 230px;
-}
-
-table.class-definitions {
-  border-spacing: 0px 0px;
-  border: 1px solid #999;
-  border-bottom: none;
-  margin-bottom: 2em;
-  min-width: 600px;
-}
-
-td.label {
-  font-weight: bold;
-  padding-right: 4px;
-  text-align: right;
-  width: 100px;
-  margin: 0;
-}
-
-table.class-definitions td {
-  border-bottom: 1px solid #999;
-  padding: 0.5em;
-  border-collapse: collapse;
-}
-
-table.class-definitions .even {
-  background-color: #eef;
-}
-
-.classList {
-	list-style-type: none;
-	padding: 0;
-	margin: 0 0 0 8px;
-	font-family: arial, sans-serif;
-	font-size: 1em;
-	overflow: auto;
-}
-
-.classList li
-{
-	padding: 0;
-	margin: 0 0 8px 0;
-}
-
-.src {
-  margin-left: 10px;
-  padding: 5px;
-  background-color: #fff;
-  border: 1px solid #bbb;
-}
-
-.summaryTable { width: 100%; }
-
-caption, div.sectionTitle
-{
-	color: #;
-	font-size:130%;
-	text-align: left;
-	padding: 2px 6px 2px 6px;
-	border: 1px #7F8FB1 solid;
-}
-
-a {
-  color: blue;
-}
-
-a:visited {
-  color: rgb(85, 26, 139);
-}
-
-h2 a, a#back {
-  text-decoration: none;
-  padding: 2px;
-}
-
-h2 a:hover, a#back:hover {
-  background-color: blue;
-  color: white;
-}
-
-h2 a:visited:hover, a#back:hover {
-  background-color: rgb(85, 26, 139);
-  color: white;
-}
-
-div.sectionTitle { margin-bottom: 8px; }
-.summaryTable thead { display: none; }
-
-.summaryTable td
-{
-	vertical-align: top;
-	padding: 4px;
-	border-bottom: 1px #7F8FB1 solid;
-	border-right: 1px #7F8FB1 solid;
-}
-
-/*col#summaryAttributes {}*/
-.summaryTable td.attributes
-{
-	border-left: 1px #7F8FB1 solid;
-	width: 140px;
-	text-align: right;
-}
-
-.fixedFont {
-	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-}
-
-td.attributes
-{
-	line-height: 15px;
-	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-	font-size: 13px;
-}
-
-.signature { 
-  font-size: 12px;
-	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-}
-
-.nameDescription {
-	line-height: 15px;
-}
-
-.summaryTable td.nameDescription
-{
-	line-height: 15px;
-	padding: 4px;
-	padding-left: 4px;
-}
-
-.summaryTable { margin-bottom: 8px; }
-
-ul.inheritsList
-{
-	list-style: square;
-	margin-left: 20px;
-	padding-left: 0;
-}
-
-.detailList {
-	line-height: 15px;
-}
-.detailList dt { margin-left: 10px; }
-
-.detailList .heading
-{
-	font-weight: bold;
-	padding-bottom: 6px;
-	margin-left: 0;
-}
-
-.light, td.attributes, .light a:link, .light a:visited {
-	color: #777;
-/*	font-style: italic; */
-}
-
-.fineprint
-{
-	text-align: right;
-	font-size: 10px;
-  padding-bottom: 10px;
-}
-
-		</style>
-	</head>
-
-	<body>
-<!-- ============================== class title ============================ -->     <div id="header">
-			<h1>
+  <div id="module">
+		<h1>
 				
-				Built-In Namespace Array
-			</h1>
-      </div>
-      <table class="class-definitions">
-				
-    		
-      </table>
+		  Built-In Namespace Array
+    </h1>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
 
-  	<div id="content-body">
-		<div id="index">
-			<a href="../">All Classes</a>
-<hr/>
-<ul class="classList">
-	
-	<li><a href="../symbols/_global_.html">_global_</a></li>
-	
-	<li><a href="../symbols/Array.html">Array</a></li>
-	
-	<li><a href="../symbols/Boolean.html">Boolean</a></li>
-	
-	<li><a href="../symbols/Date.html">Date</a></li>
-	
-	<li><a href="../symbols/Function.html">Function</a></li>
-	
-	<li><a href="../symbols/Number.html">Number</a></li>
-	
-	<li><a href="../symbols/Object.html">Object</a></li>
-	
-	<li><a href="../symbols/Root.html">Root</a></li>
-	
-	<li><a href="../symbols/Seed.html">Seed</a></li>
-	
-	<li><a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a></li>
-	
-	<li><a href="../symbols/Seed.Hash.html">Seed.Hash</a></li>
-	
-	<li><a href="../symbols/Seed.KVO.html">Seed.KVO</a></li>
-	
-	<li><a href="../symbols/Seed.PubSub.html">Seed.PubSub</a></li>
-	
-	<li><a href="../symbols/Seed.String.html">Seed.String</a></li>
-	
-	<li><a href="../symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></li>
-	
-</ul>
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
 
-		</div>
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
 
 <!-- ============================== class summary ========================== -->
+    
       <h1 class="title">Overview</h1>
+      
 			<p class="description">
-				
+				Shim for the native Array object.
 			</p>
+      
+      
+				<dl class="detailList">
+				<dt class="heading">Extends:</dt>
+				
+				<dt><a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a></dt>
+				
+				<dt><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></dt>
+				
+				</dl>
+      
 			
       
 			
 			
 			
-
+    
 
 
 <!-- ============================== constructor summary ====================
@@ -339,78 +111,78 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-        <h1 class="title">Field Summary</h1>
-          <table>
-					
-						<tr class="nameDescription">
-              <td class="fixedFont right">+</td>
-              <td class="fixedFont">
-                Array.<b><a href="../symbols/Array.html#.from">from</a></b></td>
-            </tr>
-					
-          </table>
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-        <h1 class="title">Method Summary</h2>
+        <h1 class="title">Method Summary</h1>
+        
+				
           <table>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#compact">compact</a></b>()</td>
+              + <b><a href="../symbols/Array.html#flatten">flatten</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#flatten">flatten</a></b>()</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont"><span class="light">(void)</span>
-              <b><a href="../symbols/Array.html#forEach">forEach</a></b>(callback, self)</td>
+              + <b><a href="../symbols/Array.html#forEach">forEach</a></b>(lambda, self)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#indexOf">indexOf</a></b>(o, fromIndex)</td>
+              + <b><a href="../symbols/Array.html#.from">from</a></b>(iterable)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#json">json</a></b>()</td>
+              + <b><a href="../symbols/Array.html#indexOf">indexOf</a></b>(o, fromIndex)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#lastIndexOf">lastIndexOf</a></b>(o, fromIndex)</td>
+              + <b><a href="../symbols/Array.html#.isArray">isArray</a></b>(obj)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#remove">remove</a></b>(from, to)</td>
+              + <b><a href="../symbols/Array.html#lastIndexOf">lastIndexOf</a></b>(searchElement, fromIndex)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#unique">unique</a></b>()</td>
+              + <b><a href="../symbols/Array.html#remove">remove</a></b>(from, to)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Array.html#without">without</a></b>()</td>
+              + <b><a href="../symbols/Array.html#reverse">reverse</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Array.html#size">size</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Array.html#unique">unique</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Array.html#without">without</a></b>()</td>
             </tr>
 					
           </table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>: </dt><dd><a href="../symbols/Espresso.Enumerable.html#contains">contains</a>, <a href="../symbols/Espresso.Enumerable.html#every">every</a>, <a href="../symbols/Espresso.Enumerable.html#extract">extract</a>, <a href="../symbols/Espresso.Enumerable.html#filter">filter</a>, <a href="../symbols/Espresso.Enumerable.html#map">map</a>, <a href="../symbols/Espresso.Enumerable.html#pluck">pluck</a>, <a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a>, <a href="../symbols/Espresso.Enumerable.html#some">some</a>, <a href="../symbols/Espresso.Enumerable.html#toArray">toArray</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.KVO.html">Espresso.KVO</a>: </dt><dd><a href="../symbols/Espresso.KVO.html#get">get</a>, <a href="../symbols/Espresso.KVO.html#set">set</a>, <a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -418,102 +190,33 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-				<h1 class="title">Field Detail</h1>
-				
-          <div>
-             <a name=".from"> </a>
-             <h3><span class="light">Array.</span>from</h3>
-					</div>
-					<div class="description">
-						
-					</div><br/>
-					
-					
-
-						
-						
-						
-						
-
-             <div class="signature">
-               + <span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <span class="light">Array.</span><b>from</b></h3>
-             </div>
-
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-						
-						
-
-
-					
-				
-			
 
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="compact"> </a>
-          <div>
-             <a name="compact"> </a>
-             <h3>compact()</h3>
-
-             <div class="signature">
-               +  <b>compact</b>()
-             </div><br/>
-
-						
-						
-						
-						
-						
-						
-             <div class="description">
-				     
-						 
-             </div>
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-				 
-					
-					<hr />
-				
 					<a name="flatten"> </a>
           <div>
              <a name="flatten"> </a>
-             <h3>flatten()</h3>
+             <h3> <b>flatten</b>()</h3>
 
-             <div class="signature">
-               +  <b>flatten</b>()
-             </div><br/>
-
-						
-						
-						
-						
-						
-						
              <div class="description">
-				     
-						 
+               
+						   
              </div>
+
+						
+						
+						
+						
+						
+						
 
 						
 					
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
 				 
 					
 					<hr />
@@ -521,27 +224,33 @@ ul.inheritsList
 					<a name="forEach"> </a>
           <div>
              <a name="forEach"> </a>
-             <h3>forEach(callback, self)</h3>
+             <h3><span class="light">(void)</span> <b>forEach</b>(lambda, self)</h3>
 
-             <div class="signature">
-               + <span class="light">(void)</span> <b>forEach</b>(callback, self)
-             </div><br/>
+             <div class="description">
+               
+  				       <dt>Iterator over the Array.
+
+Implemented to be in conformance with ECMA-262 Edition 5,
+so you will use the native forEach where it exists.</dd><br/>
+               
+						   
+             </div>
 
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>callback</b>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The callback to call for each element.</dd>
 							
 								<dt>
 									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>self</b>
-									
+									<i>Optional</i>
 								</dt>
-								<dd></dd>
+								<dd>The Object to use as this when executing the callback.</dd>
 							
 							</dl>
 						
@@ -557,141 +266,48 @@ ul.inheritsList
 							</dl>
 						
 						
-             <div class="description">
-				     
-<p>Implemented to be in conformance with ECMA-262 Edition 5, so you will use the native forEach where it exists.</p>
 
-<p class="code"><code>&nbsp;&nbsp;[<span class="string">1</span>,&nbsp;<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">5</span>].forEach(alert);<br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;1</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;1</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;2</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;3</span><br/>&nbsp;&nbsp;<span class="single-line-comment">//&nbsp;-&gt;&nbsp;5</span></code><button class="play" onclick="atomDemo3()">Run it!</button></p>
-<script type="text/javascript">
-function atomDemo3() {
-    [1, 1, 2, 3, 5].forEach(alert);
+						
+					
+
+					</div>
+					
+					
+					<div class="code"><code>&nbsp;&nbsp;[<span class="string">1</span>,&nbsp;<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">5</span>].forEach(alert);<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;1<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;1<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;2<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;3<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;5</code><div class="status-bar"><a href="#" onclick="demo0()">&#9654;</a></div><div class="console hidden" id="console-0"></div><script type="text/javascript">
+function demo0() {
+ document.getElementById("console-0").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-0"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  [1, 1, 2, 3, 5].forEach(alert);
   // -> 1
   // -> 1
   // -> 2
   // -> 3
   // -> 5
 }
-</script>
-						 
-             </div>
-
-						
+</script></div>
 					
-
-					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
 				 
 					
 					<hr />
 				
-					<a name="indexOf"> </a>
+					<a name=".from"> </a>
           <div>
-             <a name="indexOf"> </a>
-             <h3>indexOf(o, fromIndex)</h3>
+             <a name=".from"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Array.<b>from</b>(iterable)</h3>
 
-             <div class="signature">
-               +  <b>indexOf</b>(o, fromIndex)
-             </div><br/>
+             <div class="description">
+               
+						   
+             </div>
 
 						
 							<dl class="detailList">
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>o</b>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>iterable</b>
 									
 								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>fromIndex</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-             <div class="description">
-				     
-						 
-             </div>
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="json"> </a>
-          <div>
-             <a name="json"> </a>
-             <h3>json()</h3>
-
-             <div class="signature">
-               +  <b>json</b>()
-             </div><br/>
-
-						
-						
-						
-						
-						
-						
-             <div class="description">
-				     
-						 
-             </div>
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="lastIndexOf"> </a>
-          <div>
-             <a name="lastIndexOf"> </a>
-             <h3>lastIndexOf(o, fromIndex)</h3>
-
-             <div class="signature">
-               +  <b>lastIndexOf</b>(o, fromIndex)
-             </div><br/>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>o</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>fromIndex</b>
-									<i>Optional</i>
-								</dt>
-								<dd></dd>
+								<dd>An iterable object with a length and indexing.</dd>
 							
 							</dl>
 						
@@ -702,15 +318,11 @@ function atomDemo3() {
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt></dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The object passed in as an Array.</dt>
 							
 							</dl>
 						
 						
-             <div class="description">
-				     
-						 
-             </div>
 
 						
 					
@@ -718,8 +330,153 @@ function atomDemo3() {
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+					
+					<hr />
+				
+					<a name="indexOf"> </a>
+          <div>
+             <a name="indexOf"> </a>
+             <h3> <b>indexOf</b>(o, fromIndex)</h3>
+
+             <div class="description">
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>o</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>fromIndex</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name=".isArray"> </a>
+          <div>
+             <a name=".isArray"> </a>
+             <h3><span class="light">(<a href="../symbols/Boolean.html">Boolean</a>)</span> Array.<b>isArray</b>(obj)</h3>
+
+             <div class="description">
+               
+  				       <dt>Returns whether the object passed in is an Array or not.</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>obj</b>
+									
+								</dt>
+								<dd>The Object to test if it's an Array.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> True if the obj is an array.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="lastIndexOf"> </a>
+          <div>
+             <a name="lastIndexOf"> </a>
+             <h3> <b>lastIndexOf</b>(searchElement, fromIndex)</h3>
+
+             <div class="description">
+               
+  				       <dt>Returns the last index that the object is found at.</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>searchElement</b>
+									
+								</dt>
+								<dd>The item to look for.</dd>
+							
+								<dt>
+									<b>fromIndex</b>
+									<i>Optional</i>
+								</dt>
+								<dd>The index to begin searching from.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt>The last index of an item.</dt>
+							
+							</dl>
+						
+						
+
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dt>ECMA-262 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex ])</dt>
+							
+							</dl>
+						
+					
+
+					</div>
+					
 				 
 					
 					<hr />
@@ -727,11 +484,12 @@ function atomDemo3() {
 					<a name="remove"> </a>
           <div>
              <a name="remove"> </a>
-             <h3>remove(from, to)</h3>
+             <h3> <b>remove</b>(from, to)</h3>
 
-             <div class="signature">
-               +  <b>remove</b>(from, to)
-             </div><br/>
+             <div class="description">
+               
+						   
+             </div>
 
 						
 							<dl class="detailList">
@@ -756,10 +514,6 @@ function atomDemo3() {
 						
 						
 						
-             <div class="description">
-				     
-						 
-             </div>
 
 						
 					
@@ -767,8 +521,75 @@ function atomDemo3() {
 					</div>
 					
 				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
+					
+					<hr />
+				
+					<a name="reverse"> </a>
+          <div>
+             <a name="reverse"> </a>
+             <h3> <b>reverse</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>KVO compliant reverse().</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+						
+
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dt>ECMA-262 15.4.4.8 Array.prototype.reverse()</dt>
+							
+							</dl>
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="size"> </a>
+          <div>
+             <a name="size"> </a>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> <b>size</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt>The size of the Array.</dd><br/>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The length of the Array.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
 				 
 					
 					<hr />
@@ -776,31 +597,34 @@ function atomDemo3() {
 					<a name="unique"> </a>
           <div>
              <a name="unique"> </a>
-             <h3>unique()</h3>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>unique</b>()</h3>
 
-             <div class="signature">
-               +  <b>unique</b>()
-             </div><br/>
-
-						
-						
-						
-						
-						
-						
              <div class="description">
-				     
-						 
+               
+  				       <dt>Returns all unique values on the array.</dd><br/>
+               
+						   
              </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> </dt>
+							
+							</dl>
+						
+						
 
 						
 					
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
 				 
 					
 					<hr />
@@ -808,31 +632,25 @@ function atomDemo3() {
 					<a name="without"> </a>
           <div>
              <a name="without"> </a>
-             <h3>without()</h3>
+             <h3> <b>without</b>()</h3>
 
-             <div class="signature">
-               +  <b>without</b>()
-             </div><br/>
-
-						
-						
-						
-						
-						
-						
              <div class="description">
-				     
-						 
+               
+						   
              </div>
+
+						
+						
+						
+						
+						
+						
 
 						
 					
 
 					</div>
 					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/array.js.html">array.js</a>.
 				 
 					
 					
@@ -849,7 +667,7 @@ function atomDemo3() {
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:52 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

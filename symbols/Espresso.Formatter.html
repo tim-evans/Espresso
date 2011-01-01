@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Espresso.Formatter</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
+
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
+
+  <div id="module">
+		<h1>
+				
+		  Class Espresso.Formatter
+    </h1>
+    
+      <span class="src"><a href="../symbols/src/formatter.html">formatter.js</a></span>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				<p>Advanced String Formatting borrowed from the eponymous Python PEP.
+It provides a flexible and powerful string formatting utility
+that allows the your string templates to have meaning!</p>
+
+<p>The formatter follows the rules of Python
+<a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101</a>
+(Advanced String Formatting) strictly, but takes into account
+differences between JavaScript and Python.</p>
+
+<p>To use literal object notation, just pass in one argument for
+the formatter. This is optional however, as you can always
+absolutely name the arguments via the number in the argument
+list. This means that:</p>
+
+{{{
+  alert(Espresso.Formatter.fmt("Hello, {name}!", { name: "world" }));
+}}}
+
+is equivalent to:
+
+{{{
+  alert(Espresso.Formatter.fmt("Hello, {0.name}!", { name: "world" }));
+}}}
+
+For more than one argument you must mention the position of your
+argument.
+
+{{{
+  alert(Espresso.Formatter.fmt("{0.name} says {1}!", { name: "Domo" }, "hello"));
+}}}
+
+If your arguments and formatter are "as is"- that is, in order,
+and flat objects as you intend them to be, you can write your
+template string like so:
+
+{{{
+  alert(Espresso.Formatter.fmt("{} says {}!", "Domo", "hello"));
+}}}
+
+<p>Check out the examples given for some ideas on how to use it.</p>
+
+<p>For developers wishing to have their own custom handler for the
+formatting specifiers, you should write your own  __fmt__ function
+that takes the specifier in as an argument and returns the formatted
+object as a string. All formatters are implemented using this pattern,
+with a fallback to Object's __fmt__, which turns said object into
+a string, then calls __fmt__ on a string.</p>
+
+<p>Consider the following example:</p>
+			</p>
+      
+      
+			
+      
+			
+			
+			
+		  <div class="code"><code>&nbsp;&nbsp;Localizer&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;__fmt__:&nbsp;<span class="keyword">function</span>&nbsp;(spec)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>.get(spec);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;_hello&nbsp;=&nbsp;Localizer.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;en:&nbsp;<span class="string">'hello'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;fr:&nbsp;<span class="string">'bonjour'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;jp:&nbsp;<span class="string">'konnichiwa'</span><br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"{:en}"</span>,&nbsp;_hello));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"hello"<br/><br/>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"{:fr}"</span>,&nbsp;_hello));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"bonjour"<br/><br/>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"{:jp}"</span>,&nbsp;_hello));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"konnichiwa"</code><div class="status-bar"><a href="#" onclick="demo0()">&#9654;</a></div><div class="console hidden" id="console-0"></div><script type="text/javascript">
+function demo0() {
+ document.getElementById("console-0").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-0"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  Localizer = Espresso.Template.extend({
+    __fmt__: function (spec) {
+      return this.get(spec);
+    }
+  });
+
+  _hello = Localizer.extend({
+    en: 'hello',
+    fr: 'bonjour',
+    jp: 'konnichiwa'
+  });
+
+  alert(Espresso.Formatter.fmt("{:en}", _hello));
+  // -> "hello"
+
+  alert(Espresso.Formatter.fmt("{:fr}", _hello));
+  // -> "bonjour"
+
+  alert(Espresso.Formatter.fmt("{:jp}", _hello));
+  // -> "konnichiwa"
+}
+</script></div>
+			
+		  <div class="code"><code>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"You&nbsp;once&nbsp;were&nbsp;a&nbsp;ve-{0},&nbsp;but&nbsp;now&nbsp;you&nbsp;will&nbsp;be{0}."</span>,&nbsp;<span class="string">"gone"</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"You&nbsp;once&nbsp;were&nbsp;a&nbsp;ve-gone,&nbsp;but&nbsp;now&nbsp;you&nbsp;will&nbsp;begone."</code><div class="status-bar"><a href="#" onclick="demo1()">&#9654;</a></div><div class="console hidden" id="console-1"></div><script type="text/javascript">
+function demo1() {
+ document.getElementById("console-1").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-1"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(Espresso.Formatter.fmt("You once were a ve-{0}, but now you will be{0}.", "gone"));
+  // -> "You once were a ve-gone, but now you will begone."
+}
+</script></div>
+			
+		  <div class="code"><code>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"Is&nbsp;{}&nbsp;vegan?"</span>,&nbsp;<span class="string">"chicken&nbsp;parmesan"</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Is&nbsp;chicken&nbsp;parmesan&nbsp;vegan?"</code><div class="status-bar"><a href="#" onclick="demo2()">&#9654;</a></div><div class="console hidden" id="console-2"></div><script type="text/javascript">
+function demo2() {
+ document.getElementById("console-2").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-2"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(Espresso.Formatter.fmt("Is {} vegan?", "chicken parmesan"));
+  // -> "Is chicken parmesan vegan?"
+}
+</script></div>
+			
+		  <div class="code"><code>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"Hello,&nbsp;{name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;}));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Hello,&nbsp;world!"</code><div class="status-bar"><a href="#" onclick="demo3()">&#9654;</a></div><div class="console hidden" id="console-3"></div><script type="text/javascript">
+function demo3() {
+ document.getElementById("console-3").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-3"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(Espresso.Formatter.fmt("Hello, {name}!", { name: "world" }));
+  // -> "Hello, world!"
+}
+</script></div>
+			
+		  <div class="code"><code>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"{lang}&nbsp;uses&nbsp;the&nbsp;{{variable}}&nbsp;format&nbsp;too!"</span>,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lang:&nbsp;<span class="string">"Python"</span>,&nbsp;variable:&nbsp;<span class="string">"(not&nbsp;used)"</span><br/>&nbsp;&nbsp;}));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Python&nbsp;uses&nbsp;the&nbsp;{{variable}}&nbsp;format&nbsp;too!"</code><div class="status-bar"><a href="#" onclick="demo4()">&#9654;</a></div><div class="console hidden" id="console-4"></div><script type="text/javascript">
+function demo4() {
+ document.getElementById("console-4").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-4"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(Espresso.Formatter.fmt("{lang} uses the {{variable}} format too!", {
+     lang: "Python", variable: "(not used)"
+  }));
+  // -> "Python uses the {{variable}} format too!"
+}
+</script></div>
+			
+		  <div class="code"><code>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"Today&nbsp;is&nbsp;{:A}."</span>,&nbsp;<span class="keyword">new</span>&nbsp;Date()));</code><div class="status-bar"><a href="#" onclick="demo5()">&#9654;</a></div><div class="console hidden" id="console-5"></div><script type="text/javascript">
+function demo5() {
+ document.getElementById("console-5").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-5"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(Espresso.Formatter.fmt("Today is {:A}.", new Date()));
+}
+</script></div>
+			
+		  <div class="code"><code>&nbsp;&nbsp;alert(Espresso.Formatter.fmt(<span class="string">"Which&nbsp;one&nbsp;comes&nbsp;first?&nbsp;-&gt;&nbsp;{:-^{}}"</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">4</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Which&nbsp;one&nbsp;comes&nbsp;first?&nbsp;-&gt;&nbsp;-4-"</code><div class="status-bar"><a href="#" onclick="demo6()">&#9654;</a></div><div class="console hidden" id="console-6"></div><script type="text/javascript">
+function demo6() {
+ document.getElementById("console-6").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-6"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(Espresso.Formatter.fmt("Which one comes first? -> {:-^{}}", 3, 4));
+  // -> "Which one comes first? -> -4-"
+}
+</script></div>
+			
+			
+			
+    
+
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Formatter.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.Formatter.html">Espresso.Formatter</a></b>()
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Formatter.html#.SPECIFIER">SPECIFIER</a>
+              </td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Formatter.html#.fmt">fmt</a></b>(template)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Formatter.html#.formatField">formatField</a></b>(value, args)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Formatter.html#.parseField">parseField</a></b>(template, args)</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<h1 class="title">Field Detail</h1>
+				
+          <div>
+             <a name=".SPECIFIER"> </a>
+             <h3><span class="light">(RegExp)</span> Espresso.Formatter.<b>SPECIFIER</b></h3>
+					</div>
+					<div class="description">
+						The specifier regular expression.
+The groups are:
+
+  `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
+
+The brackets (`[]`) indicates an optional element.
+
+The `fill` is the character to fill the rest of the minimum width
+of the string.
+
+The `align` is one of:
+  * `^` Forces the field to be centered within the available space.
+  * `<` Forces the field to be left-aligned within the available space. This is the default.
+  * `>` Forces the field to be right-aligned within the available space.
+  * `=` Forces the padding to be placed after the sign (if any) but before the digits. This alignment option is only valid for numeric types.
+Unless the minimum field width is defined, the field width
+will always be the same size as the data to fill it, so that
+the alignment option has no meaning in this case.
+
+The `sign` is only valid for numeric types, and can be one of the following:
+  * `+` Indicates that a sign shoulb be used for both positive as well as negative numbers.
+  * `-` Indicates that a sign shoulb be used only for as negative numbers. This is the default.
+  * ` ` Indicates that a leading space should be used on positive numbers.
+					</div><br/>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name=".fmt"> </a>
+          <div>
+             <a name=".fmt"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.Formatter.<b>fmt</b>(template)</h3>
+
+             <div class="description">
+               
+  				       <dt>Format a template string with provided arguments.</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>template</b>
+									
+								</dt>
+								<dd>The template string to format the arguments with.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The template formatted with the given leftover arguments.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name=".formatField"> </a>
+          <div>
+             <a name=".formatField"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.Formatter.<b>formatField</b>(value, args)</h3>
+
+             <div class="description">
+               
+  				       <dt>Returns the value of the template string formatted with the
+given arguments.</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>value</b>
+									
+								</dt>
+								<dd>The template string and format specifier.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> <b>args</b>
+									
+								</dt>
+								<dd>An Array of arguments to use to format the template string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The formatted template.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name=".parseField"> </a>
+          <div>
+             <a name=".parseField"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.Formatter.<b>parseField</b>(template, args)</h3>
+
+             <div class="description">
+               
+  				       <dt>Parses the template with the arguments provided,
+parsing any nested templates.</dd><br/>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>template</b>
+									
+								</dt>
+								<dd>The template string to format.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> <b>args</b>
+									
+								</dt>
+								<dd>The arguments to parse the template string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The formatted template.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

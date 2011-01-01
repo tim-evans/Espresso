@@ -1,337 +1,87 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="generator" content="JsDoc Toolkit" />
-		
-		<title>JsDoc Reference - Number</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
 
-    <script type="text/javascript" src="../bin/seed.js"></script>
-		<style type="text/css">
-			/* default.css */
-body {
-	font: 12px "Lucida Grande", Tahoma, Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  color: #222;
-}
+	<title>JsDoc Reference - Number</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
 
-#header {
-	clear: both;
-  font-size: 1.5em;
-}
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
 
-.title {
-  border-bottom: 1px solid #bbb;
-}
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
 
-.play {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-hr {
-	border: none 0;
-	border-top: 1px solid #bbb;
-	height: 1px;
-}
-
-code {
-	display: block;
-	padding: 8px;
-  background-color: #222;
-  color: white;
-	border: 1px solid #000;
-  padding-top: 16px;
-  padding-bottom: 16px;
-}
-
-.right {
-  text-align: right;
-}
-
-.code {
-  position: relative;
-}
-
-.single-line-comment {
-  color: #ddd;
-}
-
-.comment {
-  color: #89D30;
-}
-
-.keyword {
-  color: #61EAFD;
-}
-
-.string {
-  color: #89DB30;
-}
-
-.value {
-  color: #C15BC6;
-}
-
-.caption {
-  font-size: 100%;
-  position: relative;
-  top: -25px;
-  left: 15px;
-  margin: 0px;
-}
-
-#index {
-	float: left;
-	width: 190px;
-	position: absolute;
-	left: 20px;
-  background-color: #eef;
-  border: 1px solid #999;
-	padding: 8px;
-}
-
-#content {
-	padding-top: 10px;
-}
-
-#content-body {
-  margin-left: 230px;
-}
-
-table.class-definitions {
-  border-spacing: 0px 0px;
-  border: 1px solid #999;
-  border-bottom: none;
-  margin-bottom: 2em;
-  min-width: 600px;
-}
-
-td.label {
-  font-weight: bold;
-  padding-right: 4px;
-  text-align: right;
-  width: 100px;
-  margin: 0;
-}
-
-table.class-definitions td {
-  border-bottom: 1px solid #999;
-  padding: 0.5em;
-  border-collapse: collapse;
-}
-
-table.class-definitions .even {
-  background-color: #eef;
-}
-
-.classList {
-	list-style-type: none;
-	padding: 0;
-	margin: 0 0 0 8px;
-	font-family: arial, sans-serif;
-	font-size: 1em;
-	overflow: auto;
-}
-
-.classList li
-{
-	padding: 0;
-	margin: 0 0 8px 0;
-}
-
-.src {
-  margin-left: 10px;
-  padding: 5px;
-  background-color: #fff;
-  border: 1px solid #bbb;
-}
-
-.summaryTable { width: 100%; }
-
-caption, div.sectionTitle
-{
-	color: #;
-	font-size:130%;
-	text-align: left;
-	padding: 2px 6px 2px 6px;
-	border: 1px #7F8FB1 solid;
-}
-
-a {
-  color: blue;
-}
-
-a:visited {
-  color: rgb(85, 26, 139);
-}
-
-h2 a, a#back {
-  text-decoration: none;
-  padding: 2px;
-}
-
-h2 a:hover, a#back:hover {
-  background-color: blue;
-  color: white;
-}
-
-h2 a:visited:hover, a#back:hover {
-  background-color: rgb(85, 26, 139);
-  color: white;
-}
-
-div.sectionTitle { margin-bottom: 8px; }
-.summaryTable thead { display: none; }
-
-.summaryTable td
-{
-	vertical-align: top;
-	padding: 4px;
-	border-bottom: 1px #7F8FB1 solid;
-	border-right: 1px #7F8FB1 solid;
-}
-
-/*col#summaryAttributes {}*/
-.summaryTable td.attributes
-{
-	border-left: 1px #7F8FB1 solid;
-	width: 140px;
-	text-align: right;
-}
-
-.fixedFont {
-	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-}
-
-td.attributes
-{
-	line-height: 15px;
-	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-	font-size: 13px;
-}
-
-.signature { 
-  font-size: 12px;
-	font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
-}
-
-.nameDescription {
-	line-height: 15px;
-}
-
-.summaryTable td.nameDescription
-{
-	line-height: 15px;
-	padding: 4px;
-	padding-left: 4px;
-}
-
-.summaryTable { margin-bottom: 8px; }
-
-ul.inheritsList
-{
-	list-style: square;
-	margin-left: 20px;
-	padding-left: 0;
-}
-
-.detailList {
-	line-height: 15px;
-}
-.detailList dt { margin-left: 10px; }
-
-.detailList .heading
-{
-	font-weight: bold;
-	padding-bottom: 6px;
-	margin-left: 0;
-}
-
-.light, td.attributes, .light a:link, .light a:visited {
-	color: #777;
-/*	font-style: italic; */
-}
-
-.fineprint
-{
-	text-align: right;
-	font-size: 10px;
-  padding-bottom: 10px;
-}
-
-		</style>
-	</head>
-
-	<body>
-<!-- ============================== class title ============================ -->     <div id="header">
-			<h1>
+  <div id="module">
+		<h1>
 				
-				Built-In Namespace Number
-			</h1>
-      </div>
-      <table class="class-definitions">
-				
-    		
-      </table>
+		  Built-In Namespace Number
+    </h1>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
 
-  	<div id="content-body">
-		<div id="index">
-			<a href="../">All Classes</a>
-<hr/>
-<ul class="classList">
-	
-	<li><a href="../symbols/_global_.html">_global_</a></li>
-	
-	<li><a href="../symbols/Array.html">Array</a></li>
-	
-	<li><a href="../symbols/Boolean.html">Boolean</a></li>
-	
-	<li><a href="../symbols/Date.html">Date</a></li>
-	
-	<li><a href="../symbols/Function.html">Function</a></li>
-	
-	<li><a href="../symbols/Number.html">Number</a></li>
-	
-	<li><a href="../symbols/Object.html">Object</a></li>
-	
-	<li><a href="../symbols/Root.html">Root</a></li>
-	
-	<li><a href="../symbols/Seed.html">Seed</a></li>
-	
-	<li><a href="../symbols/Seed.Enumerable.html">Seed.Enumerable</a></li>
-	
-	<li><a href="../symbols/Seed.Hash.html">Seed.Hash</a></li>
-	
-	<li><a href="../symbols/Seed.KVO.html">Seed.KVO</a></li>
-	
-	<li><a href="../symbols/Seed.PubSub.html">Seed.PubSub</a></li>
-	
-	<li><a href="../symbols/Seed.String.html">Seed.String</a></li>
-	
-	<li><a href="../symbols/Seed.String.Formatter.html">Seed.String.Formatter</a></li>
-	
-</ul>
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
 
-		</div>
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
 
 <!-- ============================== class summary ========================== -->
-      <h1 class="title">Overview</h1>
-			<p class="description">
-				
-			</p>
-			
-      
-			
-			
-			
-
+    
 
 
 <!-- ============================== constructor summary ====================
@@ -344,17 +94,19 @@ ul.inheritsList
 			
 				
 				
-        <h1 class="title">Method Summary</h2>
+        <h1 class="title">Method Summary</h1>
+        
+				
           <table>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Number.html#__fmt__">__fmt__</a></b>(spec)</td>
+              + <b><a href="../symbols/Number.html#__fmt__">__fmt__</a></b>(spec)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              <b><a href="../symbols/Number.html#json">json</a></b>()</td>
+              + <b><a href="../symbols/Number.html#toJSON">toJSON</a></b>(key)</td>
             </tr>
 					
           </table>
@@ -375,11 +127,12 @@ ul.inheritsList
 					<a name="__fmt__"> </a>
           <div>
              <a name="__fmt__"> </a>
-             <h3>__fmt__(spec)</h3>
+             <h3> <b>__fmt__</b>(spec)</h3>
 
-             <div class="signature">
-               +  <b>__fmt__</b>(spec)
-             </div><br/>
+             <div class="description">
+               
+						   
+             </div>
 
 						
 							<dl class="detailList">
@@ -398,10 +151,6 @@ ul.inheritsList
 						
 						
 						
-             <div class="description">
-				     
-						 
-             </div>
 
 						
 					
@@ -410,30 +159,38 @@ ul.inheritsList
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/number.js.html">number.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/number.html">number.js</a>.
 				 
 					
 					<hr />
 				
-					<a name="json"> </a>
+					<a name="toJSON"> </a>
           <div>
-             <a name="json"> </a>
-             <h3>json()</h3>
+             <a name="toJSON"> </a>
+             <h3> <b>toJSON</b>(key)</h3>
 
-             <div class="signature">
-               +  <b>json</b>()
-             </div><br/>
-
-						
-						
-						
-						
-						
-						
              <div class="description">
-				     
-						 
+               
+						   
              </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>key</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
 
 						
 					
@@ -442,7 +199,7 @@ ul.inheritsList
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/number.js.html">number.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/number.html">number.js</a>.
 				 
 					
 					
@@ -459,7 +216,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Thu Nov 18 2010 23:33:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

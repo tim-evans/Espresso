@@ -70,6 +70,16 @@ context("Espresso.Class",
       assert.isTrue(new Cappucino() instanceof Espresso.Class);
     }),
 
+    should("not call init() on extend()", function () {
+      var called = false;
+      var Cappucino = Espresso.Class.extend({
+        init: function () {
+          called = true;
+        }
+      });
+      assert.isFalse(called);
+    }),
+
     should("mixin arguments passed into extend()", function () {
       var Cappucino = Espresso.Class.extend({
         sugar: 'Just a teaspoon'

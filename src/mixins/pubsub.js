@@ -54,9 +54,11 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
     if (!subscriptions[event]) {
       subscriptions[event] = [];
     }
+
     subscriptions[event].push(mix(options, {
       subscriber: handler
     }).into({}));
+
     this._subscriptions = subscriptions;
     return this;
   },
@@ -83,6 +85,14 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
   },
 
   /**
+   * Gets called when an event has no subscribers to it.
+   * Override to handle the case when nothing is published.
+   *
+   * @param {Object} event The event that was ignored.
+   */
+  unpublishedEvent: function (event) {},
+
+  /**
    * Publish an event, passing all arguments along to the subscribed functions.
    *
    * @param {Object} event The event to publish.
@@ -90,26 +100,30 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
    */
   publish: function (event) {
     var subscriptions = this._subscriptions,
-        args = arguments, subscriber;
+        args = arguments, subscriber, published = false;
     if (subscriptions && subscriptions[event]) {
       subscriptions[event].forEach(function (subscription) {
         subscriber = subscription.subscriber;
         if (subscription.synchronous) {
           subscriber.apply(this, args);
         } else {
-          var A = [this];
-          A = A.concat(Array.from(args));
-          console.log(A);
-          subscriber.defer.apply(subscriber, A);
+          Espresso.Scheduler.defer(subscriber, args, this);
         }
+        published = true;
       }, this);
+    }
+    if (!published) {
+      this.unpublishedEvent.apply(this, arguments);
     }
     return this;
   }
 };
 
 Espresso.Scheduler = {
-  setTimeout: function (lambda, time) {
-    setTimeout(lambda, time);
+  defer: function (lambda, args, that) {
+    that = that || lambda;
+    setTimeout(function () {
+      lambda.apply(that, args);
+    }, 0);
   }
 };

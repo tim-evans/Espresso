@@ -19,6 +19,7 @@ $(DOCDIR)/index.html: Makefile $(SRC)
 	$(JAVA) -jar $(JSDOCDIR)/jsrun.jar $(JSDOCDIR)/app/run.js --allfunctions --private -a -t=$(TEMPLATE) -d=$(DOCDIR) $(SRC)
 
 espresso:	Makefile $(SRC)
+	mkdir -p ../bin
 	cat $(SRC) > ../bin/$@.js
 
 clean-doc:

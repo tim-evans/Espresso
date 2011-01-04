@@ -1,11 +1,10 @@
-/**
- * @class
- * A KVO compliant Object Hash class.
- *
- * @extends Espresso.Enumerable
- * @extends Espresso.KVO
- * @extends Espresso.Template
- * @example
+/** @class
+
+  A KVO compliant Object Hash class.
+ 
+  @extends Espresso.Enumerable
+  @extends Espresso.KVO
+  @extends Espresso.Template
  */
 /*globals Espresso */
 

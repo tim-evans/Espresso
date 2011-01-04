@@ -1,26 +1,28 @@
-/**
- * @namespace
- * <p>A pick-me-up for JavaScript Library authors.</p>
- *
- * <p>Espresso acts as a partial shim to ECMAScript 5, falling back
- * to native browser support when available.</p>
- *
- * <p>Espresso's goal is to provide a small library that provides
- * the basics that provide the power to developers to produce
- * sophisticated JavaScript libraries that have clear, concise,
- * and readable code, as well as a powerful consumer-facing API.</p>
- *
- * <p>This library provides the Publish-Subscribe pattern,
- * Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
- *
- * @version 0.4.1
- */
 /*global Espresso */
+
+/** @namespace
+
+  Espresso is a JavaScript library to be used as a
+  foundation library to create JavaScript libraries.
+  It also acts as a partial shim to ECMAScript 5,
+  falling back to native browser support when available.
+
+  Espresso's goal is to provide a small library that
+  provides the basics that provide the power to
+  developers to produce sophisticated JavaScript libraries
+  that have clear, concise, and readable code, as well as
+  powerful consumer-facing APIs.
+
+  What does this mean? Less code and better results simply!
+
+  This library provides the Publish-Subscribe pattern,
+  Key-Value Observing (a la Cocoa), and Ruby-like mixins.
+ */
 Espresso = {
 
   /**
-   * The version string.
-   * @type String
+    The version string.
+    @type String
    */
   VERSION: '0.4.1'
 };

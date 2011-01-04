@@ -1,25 +1,25 @@
 /*globals mix Enumerable Espresso */
 
-/**
- * @name Array
- * @namespace
- *
- * Shim for the native Array object.
- *
- * @extends Espresso.Enumerable
- * @extends Espresso.KVO
+/** @name Array
+  @namespace
+
+  Shim for the native Array object.
+
+  @extends Espresso.Enumerable
+  @extends Espresso.KVO
+
  */
 mix(/** @scope Array */{
 
-  /**
-   * @function
-   * Convert an iterable object into an Array.
-   *
-   * This is used mostly for the arguments variable
-   * in functions.
-   *
-   * @param {Object} iterable An iterable object with a length and indexing.
-   * @returns {Array} The object passed in as an Array.
+  /** @function
+
+    Convert an iterable object into an Array.
+
+    This is used mostly for the arguments variable
+    in functions.
+
+    @param {Object} iterable An iterable object with a length and indexing.
+    @returns {Array} The object passed in as an Array.
    */
   from: (function () {
     var slice = Array.prototype.slice;
@@ -29,10 +29,10 @@ mix(/** @scope Array */{
   }()),
 
   /**
-   * Returns whether the object passed in is an Array or not.
-   *
-   * @param {Object} obj The Object to test if it's an Array.
-   * @returns {Boolean} True if the obj is an array.
+    Returns whether the object passed in is an Array or not.
+
+    @param {Object} obj The Object to test if it's an Array.
+    @returns {Boolean} True if the obj is an array.
    */
   isArray: function (obj) {
     return (/array/i).test(Object.prototype.toString.call(obj));
@@ -40,11 +40,8 @@ mix(/** @scope Array */{
 
 }).into(Array);
 
-/**
- * @name Array.prototype
- * @namespace
-
- */
+/** @name Array.prototype
+   @namespace */
 mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
   /**
@@ -254,9 +251,9 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   },
 
   /**
-   * Returns all unique values on the array.
-   *
-   * @returns {Array}
+    Returns all unique values on the array.
+
+    @returns {Array}
    */
   unique: function () {
     var o = [];

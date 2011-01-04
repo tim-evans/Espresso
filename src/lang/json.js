@@ -1,4 +1,4 @@
-/*global JSON mix */
+/*global JSON mix Espresso*/
 
 /**
  * @namespace
@@ -7,13 +7,14 @@ JSON = JSON || {};
 
 mix(/** @lends JSON# */{
 
-  /**
-   * The `stringify` function returns a String in JSON
-   * format representing an ECMAScript value.
-   * @function
-   * @param {Object} value An ECMAScript value.
-   * @param {Function|Array} [replacer] uhh..
-   * @param {String|Number} [space] A String
+  /** @function
+
+    The `stringify` function returns a String in JSON
+    format representing an ECMAScript value.
+
+    @param {Object} value An ECMAScript value.
+    @param {Function|Array} [replacer] uhh..
+    @param {String|Number} [space] A String
    */
   stringify: (function () {
     var escapable, abbrev, stack, indent, gap, space,
@@ -322,8 +323,8 @@ mix(/** @lends JSON# */{
     };
   }()).inferior(),
 
-  /**
-   * @function
+  /** @function
+   
    */
   parse: (function () {
     var evaluate = function (text) {

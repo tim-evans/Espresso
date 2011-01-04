@@ -3,11 +3,11 @@
 mix(/** @scope Object.prototype */{
 
   /**
-   * Formats an Object by coercing the Object to a String and calling
-   * __fmt__ on the string with the spec passed in.
-   *
-   * @param {String} spec The string specification to format the object.
-   * @returns {String} The object as a formatted string according to the specification.
+    Formats an Object by coercing the Object to a String and calling
+    __fmt__ on the string with the spec passed in.
+
+    @param {String} spec The string specification to format the object.
+    @returns {String} The object as a formatted string according to the specification.
    */
   __fmt__: function (spec) {
     return String(this).__fmt__(spec);
@@ -18,11 +18,11 @@ mix(/** @scope Object.prototype */{
 mix(/** @scope Object */{
 
   /**
-   * Returns all iterable keys on the passed Object.
-   *
-   * @param {Object} O The object to return the keys of.
-   * @returns {Array} A list of all keys on the object passed in.
-   * @throws {TypeError} When `O` is not an object.
+    Returns all iterable keys on the passed Object.
+
+    @param {Object} O The object to return the keys of.
+    @returns {Array} A list of all keys on the object passed in.
+    @throws {TypeError} When `O` is not an object.
    */
   keys: function (O) {
     var array = [], key;

@@ -1,56 +1,102 @@
 /*global mix Espresso*/
 
-/**
- * <p>Object-Oriented for those of you who need
- * type checking and proper inheritance in your
- * applications.</p>
- *
- * <p>Based off of John Resig's
- * <a href="http://ejohn.org/blog/simple-javascript-inheritance/">simple inheritance</a>.</p>
- *
- * @class
- * @extends Espresso.PubSub
- * @extends Espresso.KVO
+/** @class
+
+  Class provides a manner to perform classical inheritance
+  with the ability to mixin modules and extend current classes.
+
+  Class is {@link Espresso.Template}'s sister, which provides
+  a root class for all other classes to inherit from.
+
+  This means that the following will work:
+
+      var Person = Espresso.Class.extend({
+        init: function (isDancing) {
+          this.dancing = isDancing;
+        },
+
+        isDancing: function () {
+          return this.get('dancing');
+        }.property('dancing')
+      });
+
+      var Ninja = Person.extend({
+        init: function ($super) {
+          $super(false);
+        }.around(),
+
+        hasShuriken: function () {
+          return true; // of course!
+        }.property()
+      });
+
+      var p = new Person(true);
+      alert(p.get('isDancing'));
+      // => true
+
+      var n = new Ninja();
+      alert(n.get('isDancing'));
+      // => false
+      alert(n.get('hasShuriken'));
+      // => true
+
+      alert(p instanceof Person && p instanceof Espresso.Class &&
+            n instanceof Ninja && n instanceof Person && n instanceof Espresso.Class);
+      // => true
+
+  Based off of John Resig's [simple inheritance][resig].
+
+    [resig]: http://ejohn.org/blog/simple-javascript-inheritance/
+
+  @extends Espresso.PubSub
+  @extends Espresso.KVO
  */
 Espresso.Class = function () {};
 
 mix(/** @scope Espresso.Class */{
 
   /**
-   * Extend the class with the given properties.
-   * Multiple inheritance is not doable without
-   * breaking the inheritance chain.
-   *
-   * @returns {Espresso.Class} The extended Class.
+    Extend the class with the given properties.
+    Multiple inheritance is not doable without
+    breaking the inheritance chain.
+
+    @returns {Espresso.Class} The extended Class.
    */
-  extend: function () {
-    var prototype = new this(), i, len = arguments.length;
+  extend: (function () {
+    var initializing = false;
 
-    for (i = 0; i < len; i += 1) {
-      mix.apply(null, [arguments[i]]).into(prototype);
-    }
+    return function () {
+      // Prevent initialization when creating the Class.
+      initializing = true;
+      var prototype = new this(), i, len = arguments.length;
+      initializing = false;
 
-    function Class() {
-      if (Espresso.isCallable(this.init)) {
-        this.init.apply(this, arguments);
+      for (i = 0; i < len; i += 1) {
+        mix.apply(null, [arguments[i]]).into(prototype);
       }
-    }
 
-    Class.prototype = prototype;
-    Class.constructor = Class;
+      function Class() {
+        if (!initializing && Espresso.isCallable(this.init)) {
+          this.init.apply(this, arguments);
+        }
+      }
 
-    Class.extend = arguments.callee;
-    return Class;
-  }
+      Class.prototype = prototype;
+      Class.constructor = Class;
+
+      Class.extend = arguments.callee;
+      return Class;
+    };
+  }())
 }).into(Espresso.Class);
 
 mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
 
   /**
-   * Filters out private variables and functions
-   * when serializing the JSON to a String.
-   *
-   * @returns {Object} The object hash to use when converting to JSON.
+    Filters out private variables and functions
+    when serializing the JSON to a String.
+
+    @returns {Object} The object hash to use when converting to JSON.
    */
   toJSON: function (key) {
     var k, v, json = {};

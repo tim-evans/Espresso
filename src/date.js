@@ -1,5 +1,4 @@
 /*globals mix */
-
 mix(/** @lends Date# */{
 
   useUTC: false,
@@ -48,43 +47,42 @@ mix(/** @lends Date# */{
     return isFinite(this.valueOf()) ? this.toISOString(): null;
   }.inferior(),
 
-  /**
-   * Date Formatting support.
-   * The following flags are acceptable in a format string:
-   * Format meaning:
-   * 
-   *  * `a` The abbreviated weekday name ("Sun")
-   *  * `A` The full weekday name ("Sunday")
-   *  * `b` The abbreviated month name ("Jan")
-   *  * `B` The full month name ("January")
-   *  * `c` The preferred local date and time representation
-   *  * `d` Day of the month (01..31)
-   *  * `H` Hour of the day, 24-hour clock (00..23)
-   *  * `I` Hour of the day, 12-hour clock (01..12)
-   *  * `j` Day of the year (001..366)
-   *  * `m` Month of the year (01..12)
-   *  * `M` Minute of the hour (00..59)
-   *  * `p` Meridian indicator ("AM" or "PM")
-   *  * `S` Second of the minute (00..60)
-   *  * `U` Week number of the current year, starting with the first Sunday as the first day of the first week (00..53)
-   *  * `W` Week number of the current year, starting with the first Monday as the first day of the first week (00..53)
-   *  * `w` Day of the week (Sunday is 0, 0..6)
-   *  * `x` Preferred representation for the date alone, no time
-   *  * `X` Preferred representation for the time alone, no date
-   *  * `y` Year without a century (00..99)
-   *  * `Y` Year with century
-   *  * `Z` Time zone name
-   *
-   * For example:
-   * {{{
-   *   alert("Today is {:A, B d, Y}.".fmt(new Date()));
-   * }}}
-   * {{{
-   *   alert("The time is: {:c}.".fmt(new Date()));
-   * }}}
-   * @function
-   * @param {String} spec The specifier to transform the date to a formatted string.
-   * @returns {String} The Date transformed into a string as specified.
+  /** @function
+   @desc
+    Date Formatting support.
+    The following flags are acceptable in a format string:
+    Format meaning:
+
+     - `a` The abbreviated weekday name ("Sun")
+     - `A` The full weekday name ("Sunday")
+     - `b` The abbreviated month name ("Jan")
+     - `B` The full month name ("January")
+     - `c` The preferred local date and time representation
+     - `d` Day of the month (01..31)
+     - `H` Hour of the day, 24-hour clock (00..23)
+     - `I` Hour of the day, 12-hour clock (01..12)
+     - `j` Day of the year (001..366)
+     - `m` Month of the year (01..12)
+     - `M` Minute of the hour (00..59)
+     - `p` Meridian indicator ("AM" or "PM")
+     - `S` Second of the minute (00..60)
+     - `U` Week number of the current year, starting with the first Sunday as the first day of the first week (00..53)
+     - `W` Week number of the current year, starting with the first Monday as the first day of the first week (00..53)
+     - `w` Day of the week (Sunday is 0, 0..6)
+     - `x` Preferred representation for the date alone, no time
+     - `X` Preferred representation for the time alone, no date
+     - `y` Year without a century (00..99)
+     - `Y` Year with century
+     - `Z` Time zone name
+
+    For example:
+
+        alert("Today is {:A, B d, Y}.".fmt(new Date()));
+
+        alert("The time is: {:c}.".fmt(new Date()));
+
+    @param {String} spec The specifier to transform the date to a formatted string.
+    @returns {String} The Date transformed into a string as specified.
    */
   __fmt__: (function () {
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -109,10 +107,13 @@ mix(/** @lends Date# */{
           result[result.length] = months[this.get('month')];
           break;
         case 'c':
-          result[result.length] = "{:A, B H:M:S Y}".fmt(this);
+          result[result.length] = "{:a b e H:M:S Y}".fmt(this);
           break;
         case 'd':
           result[result.length] = "{:02}".fmt(this.get('date'));
+          break;
+        case 'e':
+          result[result.length] = "{: 2}".fmt(this.get('date'));
           break;
         case 'f':
           result[result.length] = "{:03}".fmt(this.get('milliseconds'));

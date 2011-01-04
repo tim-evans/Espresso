@@ -2,26 +2,35 @@
 mix(/** @lends Function.prototype */{
 
   /**
-   * Marks the function as inferior.
-   * If there's another attribute on the Object
-   * you're mixing in to, the inferior function will
-   * not be mixed in.
-   *
-   * @returns {Function} The reciever.
+    If the attribute being mixed in exists on the
+    Object being mixed in, the function marked as
+    inferior will **not** be mixed in.
+
+    @returns {Function} The reciever.
    */
   inferior: function () {
-    this.isInferior = true;
-    return this;
-  }
-}).into(Function.prototype);
+    this._ = this._ || {};
 
-mix(/** @lends Function.prototype */{
+    /** @ignore */
+    this._.inferior = function (template, value, key) {
+      return template[key] || value;
+    };
+
+    return this;
+  },
 
   /**
-   * Provides a mechanism to alias a function with
-   * other names on the object.
-   *
-   * @returns {Function} The reciever.
+    Provides a mechanism to alias a function with
+    other names on the object.
+
+    Any arguments passed in will be used as aliases
+    for the function. Each of these aliases will be
+    references to the original, meaning that all of
+    them will be indistinguishable and if one is
+    altered in place, then all will be.
+
+    @param {...} aliases The aliases this function has.
+    @returns {Function} The reciever.
    */
   alias: function () {
     this._ = this._ || {};
@@ -31,7 +40,7 @@ mix(/** @lends Function.prototype */{
 
     /** @ignore */
     this._.alias = function (template, value, key) {
-      delete value._.alias;
+      delete value._.alias; // Remove this to prevent recursion.
       while (idx--) {
         mixin = {};
         mixin[aliases[idx]] = value;
@@ -44,13 +53,25 @@ mix(/** @lends Function.prototype */{
   },
 
   /**
-   * Around provides `super` functionality to a function.
-   * When the decorated function is called, it will have it's
-   * first argument bound to the function this one will override.
-   * If this function will not override anything, then the first
-   * argument will be an empty function that returns nothing.
-   *
-   * @returns {Function} The reciever.
+    Around provides `super` functionality to a function.
+    When the decorated function is called, it will have it's
+    first argument bound to the function this one will override.
+
+    If this function will not override anything, then the first
+    argument will be an empty function that returns nothing.
+
+    The `super` function will always be in the current scope of
+    the function being called at the moment. Since the scope is
+    maintained for you, you **must** make sure that scope that the
+    first in the chain is what you want all down the chain. This
+    is the typical behaviour of `super` in other languages;
+    therefore it is done for you, and forces you into that
+    situation.
+
+    NOTE: If you try to rebind the property using
+          {@link Function#bind}, it will _not_ work.
+
+    @returns {Function} The reciever.
    */
   around: function () {
     this._ = this._ || {};
@@ -72,10 +93,23 @@ mix(/** @lends Function.prototype */{
   },
 
   /**
-   * Notifies the function when a property did change.
-   * The notification will be delivered synchronously to the function.
-   *
-   * @returns {Function} The reciever.
+    Notifies the function when a property did change.
+    The notification will be delivered asynchronously
+    to the function.
+
+    `on` is intended to emphasize the publish/subscribe
+    pattern, where messages are delivered asynchronously
+    to the method, with the intention that the method
+    is foreign code that absolutely cannot disturb the
+    execution of the library.
+
+    All `on` does is subscribes the function to the
+    property paths given using asynchronous delivery.
+
+    @param {...} subscriptions The events to be
+      notified when anything gets published to them.
+    @returns {Function} The reciever.
+    @see Function#observe
    */
   on: function () {
     this._ = this._ || {};
@@ -83,7 +117,81 @@ mix(/** @lends Function.prototype */{
     var pubsub = Array.from(arguments);
 
     /** @ignore */
-    this._.pubsub = function (template, value, key) {
+    this._.on = function (template, value, key) {
+      var i = 0, len = pubsub.length, object, property, iProperty;
+      for (i = 0; i < len; i += 1) {
+        property = pubsub[i];
+        object = template;
+
+        if (property.indexOf('.') !== -1) {
+          iProperty = property.lastIndexOf('.');
+          object = Espresso.getObjectFor(property.slice(0, iProperty));
+          property = property.slice(iProperty + 1);
+        }
+
+        if (object && object.subscribe && object.publish) {
+          object.subscribe(property, value);
+        }
+      }
+      return value;
+    };
+    return this;
+  },
+
+  /**
+    Notifies the function when a property did change.
+    The notification will be delivered synchronously
+    to the function.
+
+    `observe` is intended to emphasize the observer
+    pattern, where messages are delivered synchronously
+    to the method. This is extremely useful for taking
+    action when an internal event needs to be propagated
+    to many internal sources.
+
+    Try not to expose `observe` as a public API method,
+    as it will potentially crash the library's code if
+    _any_ error is thrown.
+
+    All `observe` does is subscribes the function to the
+    property paths given using synchronous delivery.
+
+    Here's a simple clock using observers to propagate
+    changes from appropriate levels outward.
+
+        var Clock = Espresso.Class.extend({
+          time: null,
+          timer: null,
+
+          init: function () {
+            this.set('timer', setInterval(this.tick.bind(this), 1000));
+            this.tick();
+          },
+
+          tick: function () {
+            this.set('time', new Date(Date.now()));
+          },
+
+          timeDidChange: function () {
+            alert("{:c}".fmt(this.get('time')));
+          }.observe('time')
+        });
+
+        var clock = new Clock();
+        setTimeout(clearInterval.curry(clock.get('timer')), 5000);
+
+    @param {...} observers The property paths to be
+      notified when anything gets published to them.
+    @returns {Function} The reciever.
+    @see Function#on
+   */
+  observe: function () {
+    this._ = this._ || {};
+
+    var pubsub = Array.from(arguments);
+
+    /** @ignore */
+    this._.observe = function (template, value, key) {
       var i = 0, len = pubsub.length, object, property, iProperty;
       for (i = 0; i < len; i += 1) {
         property = pubsub[i];
@@ -105,10 +213,12 @@ mix(/** @lends Function.prototype */{
   },
 
   /**
-   * Marks the function as a computed property.
-   * You may now use the function for get() and set().
-   *
-   * @returns {Function} The reciever.
+    Marks the function as a computed property.
+    You may now use the function for get() and set().
+
+    @param {...} dependentKeys The property paths to be
+      notified when anything gets published to them.
+    @returns {Function} The reciever.
    */
   property: function () {
     this._ = this._ || {};
@@ -130,7 +240,7 @@ mix(/** @lends Function.prototype */{
 
         if (property.indexOf('.') !== -1) {
           iProperty = property.lastIndexOf('.');
-          object = _G.getObjectFor(property.slice(0, iProperty));
+          object = Espresso.getObjectFor(property.slice(0, iProperty));
           property = property.slice(iProperty + 1);
         }
 
@@ -143,56 +253,58 @@ mix(/** @lends Function.prototype */{
     };
 
     return this;
-  }.inferior(),
+  },
 
   /**
-   * Marks the computed property as cacheable.
-   *
-   * @returns {Function} The reciever.
+    Marks the computed property as cacheable.
+
+    Using {@link KVO.get} on the function multiple
+    times will cache the response until it has been
+    set again.
+
+    @returns {Function} The reciever.
    */
   cacheable: function () {
-    this._ = this._ || {};
     this.isCacheable = true;
     this.isProperty = true;
 
     return this;
-  }.inferior()
+  }
 
 }).into(Function.prototype);
 
 mix(/** @lends Function.prototype */{
 
   /**
-   * Bind the value of `this` on a function before hand,
-   * with any extra arguments being passed in as initial arguments.
-   *
-   * This implementation conforms to the ECMAScript 5 standard.
-   * {{{
-   *   var Person = Espresso.Template.extend({
-   *     name: 'nil',
-   *     greet: function (greeting) {
-   *       alert(greeting.fmt(this.name));
-   *     }
-   *   });
-   *
-   *   var wash = Person.extend({
-   *     name: 'Hoban Washburne'
-   *   });
-   *
-   *   var mal = Person.extend({
-   *     name: 'Malcolm Reynolds'
-   *   });
-   *
-   *   mal.greet("Hello, {}!");
-   *   // -> "Hello, Malcolm Reynolds!"
-   *
-   *   var greet = mal.greet.bind(wash);
-   *   greet("Howdy, {}!");
-   *   // -> "Howdy, Hoban Washburne!"
-   * }}}
-   *
-   * @param {Object} thisArg The value to bind `this` to on the function.
-   * @returns {Function} The function passed in, wrapped to ensure `this` is the correct scope.
+    Bind the value of `this` on a function before hand,
+    with any extra arguments being passed in as initial arguments.
+
+    This implementation conforms to the ECMAScript 5 standard.
+
+        var Person = Espresso.Template.extend({
+          name: 'nil',
+          greet: function (greeting) {
+            alert(greeting.fmt(this.name));
+          }
+        });
+
+        var wash = Person.extend({
+          name: 'Hoban Washburne'
+        });
+
+        var mal = Person.extend({
+          name: 'Malcolm Reynolds'
+        });
+
+        mal.greet("Hello, {}!");
+        // -> "Hello, Malcolm Reynolds!"
+
+        var greet = mal.greet.bind(wash);
+        greet("Howdy, {}!");
+        // -> "Howdy, Hoban Washburne!"
+
+    @param {Object} thisArg The value to bind `this` to on the function.
+    @returns {Function} The function passed in, wrapped to ensure `this` is the correct scope.
    */
   bind: function (self) {
     var Target, A;
@@ -235,7 +347,7 @@ mix(/** @lends Function.prototype */{
       }
     };
     return bound;
-  },
+  }.inferior(),
 
   /**
    * Curry will add arguments to a function, returning the function as-is
@@ -258,21 +370,6 @@ mix(/** @lends Function.prototype */{
     return function () {
       return Target.apply(this, A.concat(Array.from(arguments)));
     };
-  },
-
-  delay: function (timeout, that) {
-    var args = Array.from(arguments).slice(2),
-        method = this;
-    that = that || this;
-    setTimeout(function () {
-      return method.apply(that, args);
-    }, timeout);
-  },
-
-  defer: function (that) {
-    var args = Array.from(arguments);
-    args.unshift(0);
-    return this.delay.apply(this, args);
   }
 
 }).into(Function.prototype);

@@ -6,16 +6,18 @@ context("Function",
   }),
 
   context("inferior",
-    should("annotate the function to mark it as 'isInferior'", function () {
-      var lambda = function () {}.inferior();
-      assert.isTrue(lambda.isInferior);
-    }),
-
     should("ignore the function if mixed into another object with the slot filled on mixin time", function () {
       var lambda = function () {}.inferior(),
           o = { k: "Superior" };
       mix({ k: lambda }).into(o);
       assert.equal(o.k, "Superior");
+    }),
+
+    should("mixin the function if the slot is not filled", function () {
+      var lambda = function () {}.inferior(),
+          o = {};
+      mix({ k: lambda }).into(o);
+      assert.equal(o.k, lambda);
     })
   ),
 

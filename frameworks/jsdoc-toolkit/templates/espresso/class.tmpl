@@ -1,25 +1,7 @@
 {!
-  rowClass = 'even';
-  function resetRowClass() { rowClass = 'even'; };
-
-  function nextRowClass() {
-    var ret = rowClass;
-    rowClass = (rowClass == 'even') ? 'odd' : 'even';
-    return ret;
-  };
-
-  function highlight(block) {
-    return highlightBlock(block);
-  };
-
-  var guid = 0;
-  function codeBlock(block) {
-    var script = '<script type="text/javascript">\n' +
-        'function demo' + guid + '() {\n document.getElementById("console-' + guid + '").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-' + guid + '"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };' + block + '\n}\n</script>',
-        statusBar = '<div class="status-bar"><a href="#" onclick="demo' + guid + '()">&#9654;</a></div><div class="console hidden" id="console-' + (guid++) + '"></div>';
-	  return '<div class="code"><code>' + highlight(block) + "</code>" + statusBar + script + "</div>";
+  function htmlize(block) {
+    return markdown(block);
   }
-
 !}
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +53,7 @@
       <h1 class="title">Overview</h1>
       <if test="data.classDesc.length">
 			<p class="description">
-				{+resolveLinks(data.classDesc)+}
+				{+htmlize(resolveLinks(data.classDesc))+}
 			</p>
       </if>
       <if test="data.augments.length">
@@ -106,13 +88,13 @@
 						{+((item.type)?"<span class=\"light fixedFont\">("+(new Link().toSymbol(item.type))+")</span> " : "")+}<b>{+item.name+}</b>
 						<if test="item.isOptional"><i>Optional<if test="item.defaultValue">, Default: {+item.defaultValue+}</if></i></if>
 					</dt>
-					<dd>{+resolveLinks(item.desc)+}</dd>
+					<dd>{+htmlize(resolveLinks(item.desc))+}</dd>
 				</for>
 				</dl>
 			</if>
 			<if test="data.example.length">
 			<for each="example" in="data.example">
-		  {+codeBlock(example)+}
+		  {+code(example)+}
 			</for>
 			</if>
 			<if test="data.version.length">
@@ -301,12 +283,12 @@
              <h3><if test="member.type"><span class="light">({+new Link().toSymbol(member.type)+})</span></if> <if test="member.isStatic && member.memberOf != '_global_'">{+member.memberOf+}.</if><b>{+member.name+}</b></h3>
 					</div>
 					<div class="description">
-						{+resolveLinks(member.desc)+}
+						{+htmlize(resolveLinks(member.desc))+}
 					</div><br/>
 					
 					<if test="member.example.length">
 					<for each="example" in="member.example">
-          {+codeBlock(example)+}
+          {+code(example)+}
 					</for>
 					</if>
 
@@ -363,7 +345,7 @@
 
              <div class="description">
                <if test="member.desc">
-  				       <dt>{+resolveLinks(member.desc)+}</dd><br/>
+  				       <dt>{+htmlize(resolveLinks(member.desc))+}</dd><br/>
                </if>
 						   <if test="member.author"><br/>
                  <i>Author: </i>{+member.author+}.
@@ -438,7 +420,7 @@
 					</div>
 					<if test="member.example.length">
 					<for each="example" in="member.example">
-					{+codeBlock(example)+}
+					{+code(example)+}
 					</for>
 					</if>
 				 <if test="member.srcFile != data.srcFile">
@@ -467,7 +449,7 @@
 									{+((item.type)?"<span class=\"light fixedFont\">("+(new Link().toSymbol(item.type))+")</span> " : "")+}<b>{+item.name+}</b>
 									<if test="item.isOptional"><i>Optional<if test="item.defaultValue">, Default: {+item.defaultValue+}</if></i></if>
 								</dt>
-								<dd>{+resolveLinks(item.desc)+}</dd>
+								<dd>{+htmlize(resolveLinks(item.desc))+}</dd>
 							</for>
 							</dl>
 						</if>
@@ -531,7 +513,7 @@
 					</div>
 					<if test="member.example.length">
 					<for each="example" in="member.example">
-					{+codeBlock(example)+}
+					{+code(example)+}
 					</for>
 					</if>
 				 <if test="member.srcFile != data.srcFile">

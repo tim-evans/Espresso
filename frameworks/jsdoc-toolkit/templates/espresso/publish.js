@@ -44,7 +44,7 @@ function publish(symbolSet) {
     return ($.is("FILE"));
   }
   function isaClass($) {
-    return ($.is("CONSTRUCTOR") || $.isNamespace) && $.alias !== "_global_";
+    return ($.is("CONSTRUCTOR") || $.isNamespace); //&& $.alias !== "_global_";
   }
 	
 	// get an array version of the symbolset, useful for filtering

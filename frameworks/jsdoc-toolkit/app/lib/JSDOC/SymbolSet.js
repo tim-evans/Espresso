@@ -186,7 +186,7 @@ JSDOC.SymbolSet.prototype.resolveAugments = function() {
 	for (var p = this._index.first(); p; p = this._index.next()) {
 		var symbol = p.value;
 		
-		if (symbol.alias == "_global_" || symbol.is("FILE")) continue;
+		if (symbol.is("FILE")) continue;
 		JSDOC.SymbolSet.prototype.walk.apply(this, [symbol]);
 	}
 }

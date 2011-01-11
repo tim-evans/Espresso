@@ -143,11 +143,15 @@ context("Function",
     assert.kindOf("function", Function.prototype.on);
   }),
 
+  should("have a function named 'observe'", function () {
+    assert.kindOf("function", Function.prototype.observe);
+  }),
+
   should("have a function named 'property'", function () {
     assert.kindOf("function", Function.prototype.property);
   }),
 
-  context("cacheable",
+  context("property",
     should("annotate the function to mark it as 'isProperty'", function () {
       var lambda = function () {}.property();
       assert.isTrue(lambda.isProperty);

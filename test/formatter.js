@@ -34,7 +34,8 @@ context("Formatter",
 
     // Syntax errors
     should("throw an error when encountering unmatched braces", function () {
-      assert.raises(Error, fmt, "{answer", { answer: 42 });
+      assert.raises(Error, Espresso.Formatter.fmt.bind(Espresso.Formatter),
+                    "{answer", { answer: 42 });
     }),
 
     // Deferring specification formatting
@@ -46,15 +47,17 @@ context("Formatter",
           assert.equal(spec, s);
         }
       };
-      fmt(template, obj);
+      Espresso.Formatter.fmt(template, obj);
       assert.isTrue(called);
     })
   ),
 
+  // Assume parseField works if fmt works
   should("have a function named parseField", function () {
     assert.kindOf("function", Espresso.Formatter.parseField);
   }),
 
+  // Assume formatField works if fmt works
   should("have a function named formatField", function () {
     assert.kindOf("function", Espresso.Formatter.formatField);
   }),

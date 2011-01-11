@@ -21,5 +21,15 @@ context("Espresso",
       assert.isNumber(version[1]);
       assert.isNumber(version[2]);
     })
+  ),
+
+  should("have a function named getObjectFor", function () {
+    assert.kindOf('function', Espresso.getObjectFor);
+  }),
+
+  context("getObjectFor",
+    should("be able to find global objects (with no reference)", function () {
+      assert.equal();
+    })
   )
 );

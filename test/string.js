@@ -179,7 +179,10 @@ context("String",
     // Test fill
     formatting("'{:@^3}' with '\"_\"' should return '@_@'"),
     formatting("'{:@<3}' with '\"_\"' should return '_@@'"),
-    formatting("'{:@>3}' with '\"_\"' should return '@@_'")
+    formatting("'{:@>3}' with '\"_\"' should return '@@_'"),
+
+    // Test maximum width
+    formatting("'{:.2}' with '\"hello\"' should return 'he'")
   ),
 
   // Tested with Espresso.Formatter

@@ -234,7 +234,8 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
     var match = spec.match(Espresso.Formatter.SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
-        minWidth = match[6] || 0, len, before, after;
+        minWidth = match[6] || 0,
+        maxWidth = match[7] || null, len, before, after, value;
 
     if (align) {
       align = align.slice(-1);
@@ -254,7 +255,16 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
       before = Math.floor(before / 2);
       break;
     }
-    return fill.times(before) + this + fill.times(after);
+
+    value = this;
+    if (Espresso.hasValue(maxWidth)) {
+      maxWidth = +maxWidth.slice(1);
+      if (!isNaN(maxWidth)) {
+        value = value.slice(0, maxWidth);
+      }
+    }
+
+    return fill.times(before) + value + fill.times(after);
   },
 
   /** @function

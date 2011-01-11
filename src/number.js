@@ -17,6 +17,7 @@ mix(/** @lends Number# */{
         fill = match[2],
         sign = match[3] || '-',
         base = !!match[4],
+        minWidth = match[6] || 0,
         precision = match[7],
         type = match[8], value = this;
 
@@ -24,17 +25,18 @@ mix(/** @lends Number# */{
       align = align.slice(-1);
     }
 
+    spec = (fill || '') + (align || '') + (minWidth || '');
     if (!fill && !!match[5]) {
       fill = '0';
-      spec = '0' + spec;
+      spec = '0' + align + minWidth;
       if (!align) {
         align = '=';
-        spec = spec[0] + '=' + spec.slice(1);
+        spec = spec[0] + '=' + minWidth;
       }
     }
 
     if (precision) {
-      precision = precision.slice(1);
+      precision = +precision.slice(1);
     }
 
     switch (sign) {
@@ -51,8 +53,17 @@ mix(/** @lends Number# */{
       sign = "";
     }
 
-    if (precision) {
+    if (precision && !isNaN(precision)) {
+      // Opting to go with a more intuitive approach than Python...
+      //  >>> "{.2}".format(math.pi)
+      //  "3.1"
+      // Which is waaay less intuitive than
+      //  > "{.2}".fmt(Math.PI)
+      //  "3.14"
       value = +value.toFixed(precision);
+      precision++; // make floating point precision work like Python.
+    } else {
+      precision = null;
     }
 
     value = Math.abs(value);
@@ -84,16 +95,18 @@ mix(/** @lends Number# */{
       value = value.toExponential().toUpperCase();
       break;
     case 'f':
-      value = value.toFixed().toLowerCase();
+      // Follow Python's example (using 6 as the default)
+      value = value.toPrecision(precision || 7).toLowerCase();
       break;
     case 'F':
-      value = value.toFixed().toUpperCase();
+      // Follow Python's example (using 6 as the default)
+      value = value.toPrecision(precision || 7).toUpperCase();
       break;
     case 'G':
       value = String(value).toUpperCase();
       break;
     case '%':
-      value = (value.toFixed() * 100) + '%';
+      value = (value.toPrecision(7) * 100) + '%';
       break;
     case 'n':
       value = value.toLocaleString();
@@ -105,7 +118,7 @@ mix(/** @lends Number# */{
       value = String(value).toLowerCase();
       break;
     default:
-      throw new Error('Unrecognized format type: "{0}"'.fmt(spec.type));
+      throw new Error('Unrecognized format type: "{0}"'.fmt(type));
     }
 
     if (align !== '=') {

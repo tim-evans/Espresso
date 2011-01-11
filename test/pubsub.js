@@ -63,6 +63,7 @@ context("Espresso.PubSub",
     })
   ),
 
+  // Publish is tested in tandem with 'subscribe'.
   should("have a function named publish", function () {
     assert.kindOf("function", Espresso.PubSub.publish);
   }),

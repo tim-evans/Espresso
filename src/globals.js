@@ -79,8 +79,7 @@ mix(/** @lends Espresso */{
 
     return function (key, object) {
       // Array / Attribute subscript
-      var iarr = key.indexOf('['),
-          iattr = key.indexOf('.');
+      var iattr = key.indexOf('.');
 
       // Use global scope as default
       object = (arguments.length === 1) ? this.global: object;
@@ -90,38 +89,7 @@ mix(/** @lends Espresso */{
         return object;
       }
 
-      // Access attributes by the array subscript.
-      if ((iarr < iattr || iattr === -1) && iarr > -1) {
-
-        // Found something that looks like: animals[0]
-        // Unpack the first part, then deal with the array subscript.
-        if (key[0] !== '[') {
-          object = getProperty(key.split('[', 1), object);
-        }
-
-        // Eat up the descriptor until the beginning of
-        // the Array subscript is reached.
-        key = key.slice(key.indexOf('[') + 1);
-
-        // Unpack the inside of the array subscript.
-        object = getProperty(key.split(']', 1), object);
-
-        // Eat up the rest of the descriptor, leaving new stuff.
-        key = key.slice(key.indexOf(']') + 1);
-
-        // Someone's referencing something weird...
-        if (!(key === "" || key[0] === '.' || key[0] === '[')) {
-          throw new Error("You need to properly index elements!");
-        }
-
-        // Eat up the dot.
-        if (key.length && key.get(0) === '.') {
-          key = key.slice(1);
-        }
-
-        // Recurse.
-        return Espresso.getObjectFor(key, object);
-      } else if ((iattr < iarr || iarr === -1) && iattr > -1) {
+      if (iattr > -1) {
         object = getProperty(key.split('.', 1), object);
 
         // Eat up the dot.

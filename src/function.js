@@ -1,4 +1,5 @@
 /*globals mix Espresso */
+
 mix(/** @lends Function.prototype */{
 
   /**
@@ -6,14 +7,18 @@ mix(/** @lends Function.prototype */{
     Object being mixed in, the function marked as
     inferior will **not** be mixed in.
 
+    Also, if the base function is inferior, it
+    will be overriden.
+
     @returns {Function} The reciever.
    */
   inferior: function () {
     this._ = this._ || {};
+    this.isInferior = true;
 
     /** @ignore */
     this._.inferior = function (template, value, key) {
-      return template[key] || value;
+      return (!template[key] || template[key].isInferior) ? value: template[key];
     };
 
     return this;
@@ -178,7 +183,9 @@ mix(/** @lends Function.prototype */{
         });
 
         var clock = new Clock();
-        setTimeout(clearInterval.curry(clock.get('timer')), 5000);
+        setTimeout(function () {
+          clearInterval(clock.get('timer'))
+        }, 5000);
 
     @param {...} observers The property paths to be
       notified when anything gets published to them.

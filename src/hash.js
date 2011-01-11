@@ -1,3 +1,5 @@
+/*globals Espresso */
+
 /** @class
 
   A KVO compliant Object Hash class.
@@ -6,8 +8,6 @@
   @extends Espresso.KVO
   @extends Espresso.Template
  */
-/*globals Espresso */
-
 Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** @lends Espresso.Hash# */{
 
   /**

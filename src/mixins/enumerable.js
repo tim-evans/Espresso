@@ -1,16 +1,15 @@
-/**
- * @namespace
- * The Enumerable mixin provides common operations on enumerations of objects.
- *
- * @requires forEach
- */
 /*globals Espresso mix */
 
+/** @namespace
+  The Enumerable mixin provides common operations
+  on enumerations of objects.
+
+  @requires forEach
+ */
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
-  /**
-   * @function
-   * @returns {void}
+  /** @function
+    @returns {void}
    */
   forEach: function () {
     throw new Error("You MUST override Espresso.Enumerable.forEach to be able " +
@@ -18,16 +17,16 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-   * Returns an array where each value on the enumerable
-   * is mutated by the lambda function.
-   * {{{
-   *   var cube = function (n) { return n * n * n };
-   *   alert([1, 2, 3, 4].map(cube));
-   *   // -> [1, 8, 27, 64]
-   * }}}
-   * @param {Function} lambda The lambda that transforms an element in the enumerable.
-   * @param {Object} [self] The value of 'this' inside the lambda.
-   * @returns {Array} The collection of results from the map function.
+    Returns an array where each value on the enumerable
+    is mutated by the lambda function.
+
+        var cube = function (n) { return n * n * n };
+        alert([1, 2, 3, 4].map(cube));
+        // -> [1, 8, 27, 64]
+
+    @param {Function} lambda The lambda that transforms an element in the enumerable.
+    @param {Object} [self] The value of 'this' inside the lambda.
+    @returns {Array} The collection of results from the map function.
    */
   map: function (lambda, self) {
     var arr = [];
@@ -47,35 +46,36 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-   * Reduce the content of an enumerable down to a single value.
-   * {{{
-   *   var range = mix(Espresso.Enumerable, {
-   *     begin: 0,
-   *     end: 0,
-   *
-   *     forEach: function (lambda, self) {
-   *       var i = 0;
-   *       for (var v = this.begin; v <= this.end; v++) {
-   *         lambda.call(self, v, i++, this);
-   *       }
-   *     },
-   *
-   *     create: function (begin, end) {
-   *       return mix(this, { begin: begin, end: end }).into({});
-   *     }
-   *   }).into({});
-   *
-   *   var multiply = function (a, b) { return a * b; };
-   *   var factorial = function (n) {
-   *     return range.create(1, n).reduce(multiply);
-   *   }
-   *
-   *   alert("5! is {}".fmt(factorial(5)));
-   *   alert("120! is {}".fmt(factorial(120)));
-   * }}}
-   * @param {Function} lambda The lambda that performs the reduction.
-   * @param {Object} [seed] The seed value to provide for the first time.
-   * @returns {Object} The reduced output.
+    Reduce the content of an enumerable down to
+    a single value.
+
+        var range = mix(Espresso.Enumerable, {
+          begin: 0,
+          end: 0,
+
+          forEach: function (lambda, self) {
+            var i = 0;
+            for (var v = this.begin; v <= this.end; v++) {
+              lambda.call(self, v, i++, this);
+            }
+          },
+
+          create: function (begin, end) {
+            return mix(this, { begin: begin, end: end }).into({});
+          }
+        }).into({});
+
+        var multiply = function (a, b) { return a * b; };
+        var factorial = function (n) {
+          return range.create(1, n).reduce(multiply);
+        }
+
+        alert("5! is {}".fmt(factorial(5)));
+        alert("120! is {}".fmt(factorial(120)));
+
+    @param {Function} lambda The lambda that performs the reduction.
+    @param {Object} [seed] The seed value to provide for the first time.
+    @returns {Object} The reduced output.
    */
   reduce: function (lambda, seed) {
     var shouldSeed = (arguments.length === 1),
@@ -103,28 +103,28 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-   * Converts an enumerable into an Array.
-   * {{{
-   *   var range = mix(Espresso.Enumerable, {
-   *     begin: 0,
-   *     end: 0,
-   *
-   *     forEach: function (lambda, self) {
-   *       var i = 0;
-   *       for (var v = this.begin; v <= this.end; v++) {
-   *         lambda.call(self, v, i++, this);
-   *       }
-   *     },
-   *
-   *     create: function (begin, end) {
-   *       return mix(this, { begin: begin, end: end }).into({});
-   *     }
-   *   }).into({});
-   * 
-   *   alert(range.create(0, 200).toArray());
-   *   // -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]
-   * }}}
-   * @returns {Array}
+    Converts an enumerable into an Array.
+
+        var range = mix(Espresso.Enumerable, {
+          begin: 0,
+          end: 0,
+
+          forEach: function (lambda, self) {
+            var i = 0;
+            for (var v = this.begin; v <= this.end; v++) {
+              lambda.call(self, v, i++, this);
+            }
+          },
+
+          create: function (begin, end) {
+            return mix(this, { begin: begin, end: end }).into({});
+          }
+        }).into({});
+
+        alert(range.create(0, 200).toArray());
+        // -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]
+
+    @returns {Array}
    */
   toArray: function () {
     return this.map(function (v) {
@@ -133,28 +133,28 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-   * Returns the size of the Espresso.Enumerable.
-   * {{{
-   *   var range = mix(Espresso.Enumerable, {
-   *     begin: 0,
-   *     end: 0,
-   *
-   *     forEach: function (lambda, self) {
-   *       var i = 0;
-   *       for (var v = this.begin; v <= this.end; v++) {
-   *         lambda.call(self, v, i++, this);
-   *       }
-   *     },
-   *
-   *     create: function (begin, end) {
-   *       return mix(this, { begin: begin, end: end }).into({});
-   *     }
-   *   }).into({});
-   *
-   *   alert(range.create(0, 20).size());
-   *   // -> 21
-   * }}}
-   * @returns {Number}
+    Returns the size of the {@link Espresso.Enumerable}.
+
+        var range = mix(Espresso.Enumerable, {
+          begin: 0,
+          end: 0,
+
+          forEach: function (lambda, self) {
+            var i = 0;
+            for (var v = this.begin; v <= this.end; v++) {
+              lambda.call(self, v, i++, this);
+            }
+          },
+
+          create: function (begin, end) {
+            return mix(this, { begin: begin, end: end }).into({});
+          }
+        }).into({});
+
+        alert(range.create(0, 20).size());
+        // -> 21
+
+    @returns {Number}
    */
   size: function () {
     return this.reduce(function (i) {

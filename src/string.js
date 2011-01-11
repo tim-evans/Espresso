@@ -69,7 +69,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
     @returns {String} The string repeated n times.
     @example
       alert("bacon".times(5));
-      // => "baconbaconbaconbacon"
+      // => "baconbaconbaconbaconbacon"
 
     @example
       alert("crunchy".times(2, " bacon is "));

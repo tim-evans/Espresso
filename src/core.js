@@ -13,7 +13,7 @@
   that have clear, concise, and readable code, as well as
   powerful consumer-facing APIs.
 
-  What does this mean? Less code and better results simply!
+  What does this mean? Less code and robust APIs!
 
   This library provides the Publish-Subscribe pattern,
   Key-Value Observing (a la Cocoa), and Ruby-like mixins.
@@ -24,5 +24,5 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.4.1'
+  VERSION: '0.4.2'
 };

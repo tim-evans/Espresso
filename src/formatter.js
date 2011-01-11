@@ -1,3 +1,5 @@
+/*globals Espresso */
+
 /** @class
 
   Advanced String Formatting borrowed from the eponymous Python PEP.
@@ -71,8 +73,6 @@
 
     [pep]: http://www.python.org/dev/peps/pep-3101/
  */
-/*globals Espresso */
-
 Espresso.Formatter = {
 
   /**

@@ -77,7 +77,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     len = this.get('size');
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
-    if (Espresso.isCallable(lambda)) {
+    if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
     }
 

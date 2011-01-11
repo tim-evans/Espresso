@@ -68,7 +68,7 @@ mix(/** @lends Espresso */{
         if (Array.isArray(obj) && obj.length === 1) {
           obj = obj[0];
         }
-        if (property in obj) {
+        if (obj && property in obj) {
           obj = obj[property];
         } else {
           obj = undefined;
@@ -188,4 +188,8 @@ mix(/** @lends Espresso */{
                 callable.test(toString.call(obj.apply)));
     };
   }())
+
 }).into(Espresso);
+
+// Add it to the global scope
+Espresso.global.Espresso = Espresso;

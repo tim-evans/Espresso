@@ -1,33 +1,32 @@
-/**
- * @namespace
- * Publish-Subscribe mixin that provides the basics of eventing.
- *
- * @example
- *   var sailor = mix(Espresso.PubSub, {
- *     name: "",
- *     ahoy: function (action, sailor) {
- *       alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
- *     }
- *   }).into({});
- *
- *   var ship = mix(Espresso.PubSub, {
- *     sailors: [],
- *
- *     add: function (sailor, sync) {
- *       this.sailors.push(sailor);
- *       alert("Added {name}".fmt(sailor));
- *       this.publish("add", sailor);
- *       this.subscribe("add", sailor.ahoy.bind(sailor), { synchronous: !!sync });
- *     }
- *   }).into({});
- *
- *   var ahab = mix(sailor, { name: "Captain Ahab" }).into({}),
- *       daveyJones = mix(sailor, { name: "Davey Jones" }).into({}),
- *       flapjack = mix(sailor, { name: "Flapjack" }).into({});
- *
- *   ship.add(ahab, true);
- *   ship.add(daveyJones);
- *   ship.add(flapjack);
+/** @namespace
+  Publish-Subscribe mixin that provides the basics of eventing.
+
+  @example
+    var sailor = mix(Espresso.PubSub, {
+      name: "",
+      ahoy: function (action, sailor) {
+        alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
+      }
+    }).into({});
+
+    var ship = mix(Espresso.PubSub, {
+      sailors: [],
+
+      add: function (sailor, sync) {
+        this.sailors.push(sailor);
+        alert("Added {name}".fmt(sailor));
+        this.publish("add", sailor);
+       this.subscribe("add", sailor.ahoy.bind(sailor), { synchronous: !!sync });
+      }
+    }).into({});
+
+    var ahab = mix(sailor, { name: "Captain Ahab" }).into({}),
+        daveyJones = mix(sailor, { name: "Davey Jones" }).into({}),
+        flapjack = mix(sailor, { name: "Flapjack" }).into({});
+
+    ship.add(ahab, true);
+    ship.add(daveyJones);
+    ship.add(flapjack);
  */
 /*global mix Espresso */
 
@@ -76,7 +75,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
       handlers = subscriptions[event];
       for (i = 0, len = handlers.length; i < len; i += 1) {
         if (handlers[i].subscriber === handler) {
-          subscriptions.splice(i, 1);
+          subscriptions[event].remove(i);
           break;
         }
       }
@@ -112,7 +111,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
         published = true;
       }, this);
     }
-    if (!published) {
+    if (!published && Espresso.isCallable(this.unpublishedEvent)) {
       this.unpublishedEvent.apply(this, arguments);
     }
     return this;

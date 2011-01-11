@@ -1,31 +1,54 @@
-/** @function
+/*global mix */
 
+/** @function
+  @desc
   Mix in functionality to a pre-existing object.
 
-  This is the function that makes everything work- where all of the
-  function decorators are made into reality. To see examples of
-  the decorators working, visit the {@link Function} documentation.
+  At the base level, `mix` will add the properties
+  given on `mix` to the object passed in on `into`.
 
-  To create your own function decorator, add a unique function to
-  the underscore object on the function (this._ inside your decorator code).
-  This function will take three arguments: the template you're mixing into,
-  the current key being mixed in, and the value associated with that key.
-  You should return the value for the key passed in.
+  Function decorators are told to alter the function
+  on mixin time, rather than at decoration time.
+  Function decorators do things like subscribe to
+  events, tell `mix` to ignore it, ask to be sent
+  the super class from the base object, and so on.
 
-  For more details, take a look at the code for pre-baked decorators like
-  {@link Function#inferior} or {@link Function#around}.
+  Using the decorator interface to inject your own
+  library's custom work in is fairly simple. The
+  guidelines are that decorators **should** propagate
+  through inheritance and mixins. Decorators should
+  also not interfere with other decorator's behaviour.
+
+  If you would like to mixin functionality to
+  preexisting objects, use `mix` to do so, using the
+  Object as the second parameter, like so:
+
+      mix({
+        gsub: function (find, replace) {
+          if (/string/i.test(Object.prototype.toString.call(find))) {
+            find = new RegExp(find, 'g');
+          }
+          return this.replace(find, replace);
+        }
+      }).into(String.prototype);
+
+      var song = "I swiped your cat / And I stole your cathodes"
+      alert(song.gsub('cat', 'banjo'));
+
+      alert(song.gsub(/\bcat\b/, 'banjo'));
+
+  Using `mix`, it's possible to create whatever types
+  of objects you want, without polluting it's namespace.
+  Espresso uses `mix` internally as a shim for ECMAScript 5
+  compatability and creating the base objects
+  {@link Espresso.Template} and {@link Espresso.Class}.
 
   @param {...} mixins Objects to mixin to the template provided on into.
   @returns {Object} An object with "into" field, call into with the template
                     to apply the mixins on. That will return the template
                     with the mixins on it.
-
-  @example
-    var k = mix({
-      
-    }).into({});
  */
-var mix = function () {
+mix = function () {
   var mixins = arguments,
       i = 0, len = mixins ? mixins.length : 0;
 

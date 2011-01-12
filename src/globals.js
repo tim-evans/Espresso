@@ -16,7 +16,8 @@ mix(/** @lends Espresso */{
   /** @function
 
     Lookup a variable's value given its Object notation.
-    This requires absolute queries to the Object.
+    This requires absolute queries to the Object, only using
+    the `.` notation.
 
     The most effort that is performed on behalf of the
     lookup when it fails is when it's an array AND it's the
@@ -32,14 +33,14 @@ mix(/** @lends Espresso */{
     @example
       // Properties on the global scope need to be there-
       // local scoped variables will not be found!
-      window.arthur = Espresso.Template.extend({
+      Espresso.global.arthur = Espresso.Template.extend({
         name: 'Arthur Dent',
         species: 'Human',
         description: 'Mostly Harmless'
       });
 
       alert(Espresso.getObjectFor("arthur.name"));
-      // -> 'Arthur Dent'
+      // => 'Arthur Dent'
 
     @example
       alert(Espresso.getObjectFor("lang.pr._coffee", {
@@ -68,7 +69,7 @@ mix(/** @lends Espresso */{
         if (Array.isArray(obj) && obj.length === 1) {
           obj = obj[0];
         }
-        if (obj && property in obj) {
+        if (obj && property in obj) { // prevent the apocalypse
           obj = obj[property];
         } else {
           obj = undefined;

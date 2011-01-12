@@ -31,7 +31,7 @@ mix(/** @lends Number# */{
       spec = '0' + align + minWidth;
       if (!align) {
         align = '=';
-        spec = spec[0] + '=' + minWidth;
+        spec = spec.get(0) + '=' + minWidth;
       }
     }
 

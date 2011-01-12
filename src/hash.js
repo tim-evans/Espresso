@@ -17,7 +17,7 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
     var k, v;
     for (k in this) {
       v = this.get(k);
-      if (k[0] !== '_' && !Espresso.isCallable(v) && k !== "unknownProperty") {
+      if (k.get(0) !== '_' && !Espresso.isCallable(v) && k !== "unknownProperty") {
         lambda.call(self, v, k, this);
       }
     }

@@ -2,8 +2,9 @@
 
 /**
  * @namespace
+ * @name JSON
  */
-JSON = JSON || {};
+Espresso.global.JSON = Espresso.global.JSON || {};
 
 mix(/** @lends JSON# */{
 

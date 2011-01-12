@@ -7,12 +7,11 @@
 
   @extends Espresso.Enumerable
   @extends Espresso.KVO
-
  */
 mix(/** @scope Array */{
 
   /** @function
-
+    @desc
     Convert an iterable object into an Array.
 
     This is used mostly for the arguments variable
@@ -40,35 +39,26 @@ mix(/** @scope Array */{
 
 }).into(Array);
 
-/** @name Array.prototype
-   @namespace */
 mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
   /**
-   * The size of the Array.
-   * @returns {Number} The length of the Array.
+    The size of the Array.
+
+    @returns {Number} The length of the Array.
    */
   size: function () {
     return this.length;
   }.property(),
 
   /**
-   * Iterator over the Array.
-   *
-   * Implemented to be in conformance with ECMA-262 Edition 5,
-   * so you will use the native forEach where it exists.
-   *
-   * @param {Function} lambda The callback to call for each element.
-   * @param {Object} [self] The Object to use as this when executing the callback.
-   * @returns {void}
-   * 
-   * @example
-   *   [1, 1, 2, 3, 5].forEach(alert);
-   *   // -> 1
-   *   // -> 1
-   *   // -> 2
-   *   // -> 3
-   *   // -> 5
+    Iterator over the Array.
+
+    Implemented to be in conformance with ECMA-262 Edition 5,
+    so you will use the native forEach where it exists.
+
+    @param {Function} lambda The callback to call for each element.
+    @param {Object} [self] The Object to use as this when executing the callback.
+    @returns {void}
    */
   forEach: function (lambda, self) {
     var len, k;
@@ -104,7 +94,12 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-   * @function
+    Shim for Internet Explorer, which provides no indexOf for
+    Array prototypes.
+
+    @param {Object} o The object to test.
+    @param {Number} [fromIndex] The index to start looking at for the element.
+    @returns {Number} The first index of an item.
    */
   indexOf: function (o, fromIndex) {
     var i = 0, len = this.length;
@@ -120,10 +115,17 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-   * KVO compliant reverse().
-   *
-   * @function
-   * @see ECMA-262 15.4.4.8 Array.prototype.reverse()
+    Shim for Internet Explorer, which provides no reverse for
+    Array prototypes. Returns -1 if the item is not found.
+
+    @returns {Array} The array in reverse order.
+
+    @see ECMA-262 15.4.4.8 Array.prototype.reverse()
+
+    @example
+      var racecar = "racecar";
+      alert(racecar.reverse());
+      // => 'racecar'
    */
   reverse: function () {
     var O, len, middle,
@@ -180,13 +182,14 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-   * Returns the last index that the object is found at.
-   *
-   * @function
-   * @param searchElement The item to look for.
-   * @param [fromIndex] The index to begin searching from.
-   * @returns The last index of an item.
-   * @see ECMA-262 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex ])
+    Shim for the last index that the object is found at.
+    Returns -1 if the item is not found.
+
+    @param searchElement The item to look for.
+    @param [fromIndex] The index to begin searching from.
+    @returns {Number} The last index of an item.
+
+    @see ECMA-262 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex ])
    */
   lastIndexOf: function (searchElement, fromIndex) {
     var k = 0, len = this.get('size'), n;
@@ -232,18 +235,64 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     return -1;
   }.inferior(),
 
-  flatten: function () {
-    var ret = [];
+  /**
+    Returns a new array that's a one-dimensional flattening of this
+    array (recursively). That is, for every element that's an array,
+    extract its elements into the new array. If the optional level
+    arguments determines the level of recursion to flatten.
+
+    @param {Number} [level] The maximum level of recursion.
+    @returns {Array} The flattened array.
+    @example
+      var arr = [1, [2, [3, [4, [5]]]]];
+      alert(arr.flatten());
+      // => [1, 2, 3, 4, 5]
+
+      alert(arr.flatten(2));
+      // => [1, 2, 3, [4, [5]]];
+   */
+  flatten: function (level) {
+    var ret = [], hasLevel = arguments.length !== 0;
+    if (hasLevel && level === 0) {
+      return this;
+    }
+
     this.forEach(function (v) {
-      if (v instanceof Array) {
-        ret.concat(v.flatten());
+      if (Array.isArray(v)) {
+        if (hasLevel) {
+          ret = ret.concat(v.flatten(level - 1));
+        } else {
+          ret = ret.concat(v.flatten());
+        }
       } else {
         ret[ret.length] = v;
       }
     });
+
     return ret;
   },
 
+  /**
+    Removes the value from the array.
+
+    @param {Number} from The position to begin removing values from.
+    @param {Number} [to] The position to remove values to.
+    @returns {Number} The length of the array.
+    @example
+      var breakfast = ["banana", "waffles", "bacon", "coffee"];
+      breakfast.remove(0);
+
+      alert(breakfast);
+      // => ["waffles", "bacon", "coffee"]
+
+      breakfast.unshift("sausages", "pancakes")
+      alert(breakfast);
+      // => ["sausages", "pancakes", "waffles", "bacon", "coffee"]
+
+      breakfast.remove(1, 2);
+      alert(breakfast);
+      // => ["sausages", "bacon", "coffee"]
+   */
   remove: function (from, to) {
     var rest = this.slice((to || from) + 1 || this.length);
     this.length = from < 0 ? this.length + from: from;
@@ -251,18 +300,29 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   },
 
   /**
-    Returns all unique values on the array.
+    Returns a new array by removing duplicate values in `this`.
 
-    @returns {Array}
+    @returns {Array} The array with all duplicates removed.
+    @example
+      var magic = 'abracadabra'.split('').unique().join('');
+      alert(magic);
+      // => 'abrcd'
    */
   unique: function () {
-    var o = [];
+    var o = Espresso.Hash.extend();
     this.forEach(function (v) {
       o[v] = v;
     });
     return o.values();
-  }.inferior(),
+  },
 
+  /**
+    Returns a new array by removing all values passed in.
+
+    @param {...} values Removes all values on the array that
+      match the arguments passed in.
+    @returns {Array} The array without the values given.
+   */
   without: function () {
     var without = Array.from(arguments);
     return this.reduce(function (complement, v) {
@@ -271,5 +331,21 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
       }
       return complement;
     }, []);
+  },
+
+  /**
+    Removes all `undefined` or `null` values.
+
+    @returns {Array} The array without any `undefined` or `null` values.
+    @example
+      var nil;
+
+      alert([undefined, null, nil, 'nada'].compact());
+      // => ['nada']
+   */
+  compact: function () {
+    var nil;
+    return this.without(null, nil);
   }
+
 }).into(Array.prototype);

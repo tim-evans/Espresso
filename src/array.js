@@ -54,7 +54,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     Iterator over the Array.
 
     Implemented to be in conformance with ECMA-262 Edition 5,
-    so you will use the native forEach where it exists.
+    so you will use the native `forEach` where it exists.
 
     @param {Function} lambda The callback to call for each element.
     @param {Object} [self] The Object to use as this when executing the callback.
@@ -94,7 +94,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Shim for Internet Explorer, which provides no indexOf for
+    Shim for Internet Explorer, which provides no `indexOf` for
     Array prototypes.
 
     @param {Object} o The object to test.
@@ -123,8 +123,8 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     @see ECMA-262 15.4.4.8 Array.prototype.reverse()
 
     @example
-      var racecar = "racecar";
-      alert(racecar.reverse());
+      var racecar = "racecar".split('');
+      alert(racecar.reverse().join(''));
       // => 'racecar'
    */
   reverse: function () {

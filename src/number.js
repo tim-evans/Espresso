@@ -2,6 +2,11 @@
 
 mix(/** @lends Number# */{
 
+  /**
+    Shim for `toJSON`. Returns the `valueOf` the Number.
+
+    @returns {String} This.
+   */
   toJSON: function (key) {
     return this.valueOf();
   }.inferior(),
@@ -18,25 +23,22 @@ mix(/** @lends Number# */{
         sign = match[3] || '-',
         base = !!match[4],
         minWidth = match[6] || 0,
-        precision = match[7],
-        type = match[8], value = this;
+        maxWidth = match[7],
+        type = match[8], value = this, precision;
 
     if (align) {
       align = align.slice(-1);
     }
 
-    spec = (fill || '') + (align || '') + (minWidth || '');
     if (!fill && !!match[5]) {
       fill = '0';
-      spec = '0' + align + minWidth;
       if (!align) {
         align = '=';
-        spec = spec.get(0) + '=' + minWidth;
       }
     }
 
-    if (precision) {
-      precision = +precision.slice(1);
+    if (maxWidth) {
+      precision = +maxWidth.slice(1);
     }
 
     switch (sign) {
@@ -125,6 +127,7 @@ mix(/** @lends Number# */{
       value = sign + value;      
     }
 
+    spec = (fill || '') + (align || '') + (minWidth || '') + (precision || '') + (type || '');
     value = String(value).__fmt__(spec);
 
     if (align === '=') {

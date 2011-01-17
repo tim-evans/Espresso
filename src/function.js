@@ -86,7 +86,7 @@ mix(/** @lends Function.prototype */{
     /** @ignore */
     this._.around = function (template, value, key) {
       var base = template[key] || empty;
-      if (!(base instanceof Function)) {
+      if (!Espresso.isCallable(base)) {
         return value;
       }
 
@@ -114,7 +114,7 @@ mix(/** @lends Function.prototype */{
     @param {...} subscriptions The events to be
       notified when anything gets published to them.
     @returns {Function} The reciever.
-    @see Function#observe
+    @see Function#observes
    */
   on: function () {
     this._ = this._ || {};
@@ -148,17 +148,17 @@ mix(/** @lends Function.prototype */{
     The notification will be delivered synchronously
     to the function.
 
-    `observe` is intended to emphasize the observer
+    `observes` is intended to emphasize the observer
     pattern, where messages are delivered synchronously
     to the method. This is extremely useful for taking
     action when an internal event needs to be propagated
     to many internal sources.
 
-    Try not to expose `observe` as a public API method,
+    Try not to expose `observes` as a public API method,
     as it will potentially crash the library's code if
     _any_ error is thrown.
 
-    All `observe` does is subscribes the function to the
+    All `observes` does is subscribes the function to the
     property paths given using synchronous delivery.
 
     Here's a simple clock using observers to propagate
@@ -179,7 +179,7 @@ mix(/** @lends Function.prototype */{
 
           timeDidChange: function () {
             alert("{:c}".fmt(this.get('time')));
-          }.observe('time')
+          }.observes('time')
         });
 
         var clock = new Clock();
@@ -192,13 +192,13 @@ mix(/** @lends Function.prototype */{
     @returns {Function} The reciever.
     @see Function#on
    */
-  observe: function () {
+  observes: function () {
     this._ = this._ || {};
 
     var pubsub = Array.from(arguments);
 
     /** @ignore */
-    this._.observe = function (template, value, key) {
+    this._.observes = function (template, value, key) {
       var i = 0, len = pubsub.length, object, property, iProperty;
       for (i = 0; i < len; i += 1) {
         property = pubsub[i];
@@ -221,7 +221,7 @@ mix(/** @lends Function.prototype */{
 
   /**
     Marks the function as a computed property.
-    You may now use the function for get() and set().
+    You may now use the function for `get` and `set`.
 
     @param {...} dependentKeys The property paths to be
       notified when anything gets published to them.
@@ -311,7 +311,8 @@ mix(/** @lends Function.prototype */{
         // -> "Howdy, Hoban Washburne!"
 
     @param {Object} thisArg The value to bind `this` to on the function.
-    @returns {Function} The function passed in, wrapped to ensure `this` is the correct scope.
+    @returns {Function} The function passed in, wrapped to ensure `this`
+      is the correct scope.
    */
   bind: function (self) {
     var Target, A;

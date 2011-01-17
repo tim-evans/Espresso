@@ -3,8 +3,9 @@
 mix(/** @scope Object.prototype */{
 
   /**
-    Formats an Object by coercing the Object to a String and calling
-    __fmt__ on the string with the spec passed in.
+    Formats an Object by coercing the Object to a
+    String and calling `__fmt__` on the string with
+    the format specifier passed in.
 
     @param {String} spec The string specification to format the object.
     @returns {String} The object as a formatted string according to the specification.

@@ -1,3 +1,5 @@
+/*globals Espresso mix*/
+
 /** @class
 
   Templates provide inheritance without any classes.
@@ -43,7 +45,6 @@
   @extends Espresso.PubSub
   @extends Espresso.KVO
  */
-/*globals Espresso mix*/
 Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Template# */{
 
   /**
@@ -111,7 +112,7 @@ Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Templ
     extension = new F();
     mix.apply(null, arguments).into(extension);
 
-    if (extension.init && extension.init instanceof Function) {
+    if (Espresso.isCallable(extension.init)) {
       extension.init();
     }
     return extension;
@@ -119,8 +120,11 @@ Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Templ
 
   /** @function
 
-    Filters out private variables, functions, and {@link KVO#unknownProperty}
-    when parsing to JSON.
+    Filters out private variables, functions, and
+    {@link KVO#unknownProperty} when parsing to JSON.
+
+    It _will_ get any computed properties (via the
+    `property` decorator on an Object.
 
     @returns Object The slots to stringify to JSON.
    */

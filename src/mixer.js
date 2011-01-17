@@ -1,4 +1,4 @@
-/*global mix */
+/*global mix Espresso */
 
 /** @function
   @desc
@@ -63,7 +63,7 @@ mix = function () {
           value = mixin[key];
 
           _ = value && value._;
-          if (value instanceof Function) {
+          if (Espresso.isCallable(value)) {
             for (decorator in _) {
               if (_.hasOwnProperty(decorator)) {
                 value = _[decorator](template, value, key);
@@ -85,3 +85,6 @@ mix = function () {
     }
   };
 };
+
+// Apply it at the global scope
+Espresso.global.mix = mix;

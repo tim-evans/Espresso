@@ -1,5 +1,10 @@
 /*globals mix */
 
+/** @name Boolean
+  @namespace
+
+  Shim for the native Boolean object.
+ */
 mix(/** @lends Boolean# */{
 
   /**

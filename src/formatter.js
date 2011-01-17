@@ -32,7 +32,7 @@
 
       alert(Espresso.Formatter.fmt("{}, {}!", "hello", "world"));
 
-  To use the literals { and }, simply double them, like the following:
+  To use the literals `{` and `}`, simply double them, like the following:
 
       alert(Espresso.Formatter.fmt("{lang} uses the {{variable}} format too!", {
          lang: "Python", variable: "(not used)"
@@ -42,11 +42,11 @@
   Check out the examples given for some ideas on how to use it.
 
   For developers wishing to have their own custom handler for the
-  formatting specifiers, you should write your own  __fmt__ function
+  formatting specifiers, you should write your own  `__fmt__` function
   that takes the specifier in as an argument and returns the formatted
   object as a string. All formatters are implemented using this pattern,
-  with a fallback to Object's __fmt__, which turns said object into
-  a string, then calls __fmt__ on a string.
+  with a fallback to Object's `__fmt__`, which turns said object into
+  a string, then calls `__fmt__` on a string.
 
   Consider the following example:
 
@@ -90,19 +90,85 @@ Espresso.Formatter = {
     The `align` is one of:
 
       - `^` Forces the field to be centered within the available space.
-      - `<` Forces the field to be left-aligned within the available space. This is the default.
+      - `<` Forces the field to be left-aligned within the available
+            space. This is the default.
       - `>` Forces the field to be right-aligned within the available space.
-      - `=` Forces the padding to be placed after the sign (if any) but before the digits. This alignment option is only valid for numeric types.
+      - `=` Forces the padding to be placed after the sign (if any)
+            but before the digits. This alignment option is only valid
+            for numeric types.
 
     Unless the minimum field width is defined, the field width
     will always be the same size as the data to fill it, so that
     the alignment option has no meaning in this case.
 
-    The `sign` is only valid for numeric types, and can be one of the following:
+    The `sign` is only valid for numeric types, and can be one of
+    the following:
 
-      - `+` Indicates that a sign shoulb be used for both positive as well as negative numbers.
-      - `-` Indicates that a sign shoulb be used only for as negative numbers. This is the default.
-      - ` ` Indicates that a leading space should be used on positive numbers.
+      - `+` Indicates that a sign shoulb be used for both positive
+            as well as negative numbers.
+      - `-` Indicates that a sign shoulb be used only for as negative
+            numbers. This is the default.
+      - ` ` Indicates that a leading space should be used on positive
+            numbers.
+
+    If the `#` character is present, integers use the 'alternate form'
+    for formatting. This means that binary, octal, and hexadecimal
+    output will be prefixed with '0b', '0o', and '0x', respectively.
+
+    `width` is a decimal integer defining the minimum field width. If
+    not specified, then the field width will be determined by the
+    content.
+
+    If the width field is preceded by a zero (`0`) character, this enables
+    zero-padding. This is equivalent to an alignment type of `=` and a
+    fill character of `0`.
+
+    The 'precision' is a decimal number indicating how many digits
+    should be displayed after the decimal point in a floating point
+    conversion. For non-numeric types the field indicates the maximum
+    field size- in other words, how many characters will be used from
+    the field content. The precision is ignored for integer conversions.
+
+    Finally, the 'type' determines how the data should be presented.
+
+    The available integer presentation types are:
+
+      - `b` Binary. Outputs the number in base 2.
+      - `c` Character. Converts the integer to the corresponding
+            Unicode character before printing.
+      - `d` Decimal Integer. Outputs the number in base 10.
+      - `o` Octal format. Outputs the number in base 8.
+      - `x` Hex format. Outputs the number in base 16, using lower-
+            case letters for the digits above 9.
+      - `X` Hex format. Outputs the number in base 16, using upper-
+            case letters for the digits above 9.
+      - `n` Number. This is the same as `d`, except that it uses the
+            current locale setting to insert the appropriate
+            number separator characters.
+      - ` ` (None) the same as `d`
+
+    The available floating point presentation types are:
+
+      - `e` Exponent notation. Prints the number in scientific
+            notation using the letter `e` to indicate the exponent.
+      - `E` Exponent notation. Same as `e` except it converts the
+            number to uppercase.
+      - `f` Fixed point. Displays the number as a fixed-point
+            number.
+      - `F` Fixed point. Same as `f` except it converts the number
+            to uppercase.
+      - `g` General format. This prints the number as a fixed-point
+            number, unless the number is too large, in which case
+            it switches to `e` exponent notation.
+      - `G` General format. Same as `g` except switches to `E`
+            if the number gets to large.
+      - `n` Number. This is the same as `g`, except that it uses the
+            current locale setting to insert the appropriate
+            number separator characters.
+      - `%` Percentage. Multiplies the number by 100 and displays
+            in fixed (`f`) format, followed by a percent sign.
+      - ` ` (None) similar to `g`, except that it prints at least one
+            digit after the decimal point.
 
     @type RegExp
    */

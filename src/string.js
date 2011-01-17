@@ -267,8 +267,10 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
     return fill.times(before) + value + fill.times(after);
   },
 
-  /** @function
+  /**
+    Shim for `toJSON`. Returns the `valueOf` the String.
 
+    @returns {String} This.
    */
   toJSON: function (key) {
     return this.valueOf();

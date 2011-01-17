@@ -27,6 +27,11 @@ mix(/** @lends Date# */{
     };
   }()),
 
+  /**
+    Shim for `toISOString`.
+
+    @returns {String} The ISO 6081 formatted UTC date.
+   */
   toISOString: function () {
     var prev = this.useUTC, result;
     this.useUTC = true;
@@ -36,8 +41,7 @@ mix(/** @lends Date# */{
   }.inferior(),
 
   /**
-    Implements the toJSON method as defined in
-    ECMAScript 5th Edition.
+    Shim for `toJSON` for Date.
 
     @param {Object} [key] Optional key argument.
     @returns {String} The date as an ISO Formatted string.
@@ -73,7 +77,7 @@ mix(/** @lends Date# */{
      - `X` Preferred representation for the time alone, no date
      - `y` Year without a century (00..99)
      - `Y` Year with century
-     - `Z` Time zone name
+     - `Z` Timezone name or abbreviation (EST)
 
     For example:
 
@@ -107,7 +111,7 @@ mix(/** @lends Date# */{
           result[result.length] = months[this.get('month')];
           break;
         case 'c':
-          result[result.length] = "{:a b e H:M:S Y}".fmt(this);
+          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.get('date'));
           break;
         case 'd':
           result[result.length] = "{:02}".fmt(this.get('date'));
@@ -125,7 +129,7 @@ mix(/** @lends Date# */{
           result[result.length] = "{:02}".fmt(this.get('hours') % 12);
           break;
         case 'j':
-          result[result.length] = "{:03}".fmt(Math.ciel(this - new Date(this.get('fullYear'), 0, 1) / 86400000));
+          result[result.length] = "{:03}".fmt(Math.ceil((this - new Date(this.get('fullYear'), 0, 1)) / 86400000));
           break;
         case 'm':
           result[result.length] = "{:02}".fmt(this.get('month') + 1);
@@ -139,8 +143,18 @@ mix(/** @lends Date# */{
         case 'S':
           result[result.length] = "{:02}".fmt(this.get('seconds'));
           break;
+        case 'U':
+          // Monday as the first day of the week
+          var day = ((this.get('day') + 6) % 7) + 1;
+          result[result.length] = "{:02}".fmt(
+            Math.ceil((((this - new Date(this.get('fullYear'), 0, 1)) / 86400000) + day) / 7) - 1);
+          break;
         case 'w':
           result[result.length] = this.get('day');
+          break;
+        case 'W':
+          result[result.length] = "{:02}".fmt(
+            Math.ceil((((this - new Date(this.get('fullYear'), 0, 1)) / 86400000) + this.get('day') + 1) / 7) - 1);
           break;
         case 'x':
           result[result.length] = "{:m/d/y}".fmt(this);
@@ -168,6 +182,11 @@ mix(/** @lends Date# */{
 
 mix({
 
+  /**
+    Shim for `now`.
+
+    @returns {Number} The current time.
+   */
   now: function () {
     return new Date().getTime();
   }.inferior()

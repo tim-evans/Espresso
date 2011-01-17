@@ -1,10 +1,11 @@
 /*globals Espresso mix */
 
 /** @namespace
+
   The Enumerable mixin provides common operations
   on enumerations of objects.
 
-  @requires forEach
+  @requires `forEach`- the enumerator over the collection.
  */
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 

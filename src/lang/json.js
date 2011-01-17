@@ -1,21 +1,39 @@
 /*global JSON mix Espresso*/
 
-/**
- * @namespace
- * @name JSON
+/** @namespace
+  Shim for JSON.
+
+  Parts are borrowed from Douglas Crockford's [JSON2][1]. This
+  JSON parser is designed to be safe rather than fast. The
+  parser will fall back on native implementations when possible.
+
+  For more information about the JSON object, see [Mozilla's
+  documentation][2] on it.
+
+    [1]: https://github.com/douglascrockford/JSON-js
+    [2]: https://developer.mozilla.org/En/Using_native_JSON
+
+  @name JSON
  */
 Espresso.global.JSON = Espresso.global.JSON || {};
 
 mix(/** @lends JSON# */{
 
   /** @function
+    @desc
 
     The `stringify` function returns a String in JSON
     format representing an ECMAScript value.
 
     @param {Object} value An ECMAScript value.
-    @param {Function|Array} [replacer] uhh..
-    @param {String|Number} [space] A String
+    @param {Function|Array} [replacer] Either a function that
+      alters the way objects and arrays are stringified or an
+      array of strings and numbers that acts as a white list
+      for selecteing the object properties that will be stringified.
+    @param {String|Number} [space] Allows the result to have
+      white space injected into it to improve human readability.
+
+    @returns {String} The ECMAScript value as a JSON string.
    */
   stringify: (function () {
     var escapable, abbrev, stack, indent, gap, space,
@@ -325,14 +343,275 @@ mix(/** @lends JSON# */{
   }()).inferior(),
 
   /** @function
-   
+    @desc
+
+    The `parse` function parses a JSON text and produces an
+    ECMAScript value.
+
+    @param {String} text The JSON text to parse.
+    @param {Function} [reviver] A function that takes two
+      values (key and value). It can filter and transform the
+      results. It is called with each of the key/value pairs
+      produced by the parse, and its return value is used
+      instead of the original value. If it returns what it
+      recieved, the structure is not modified. If it returns
+      `undefined`, then the property is deleted from the result.
+
+    @returns {Object} The JSON text as an ECMAScript value.
    */
   parse: (function () {
+    /** @ignore */
     var evaluate = function (text) {
-      
+      var at = 0,     // The index of the current character
+          ch = ' ',   // The current character
+          escapee = { '"':  '"',
+                      '\\': '\\',
+                      '/':  '/',
+                      b:    '\b',
+                      f:    '\f',
+                      n:    '\n',
+                      r:    '\r',
+                      t:    '\t' },
+      /** @ignore */
+      next = function (c) {
+        // If a c parameter is provided, verify that it matches the current character.
+        if (c && c !== ch) {
+          throw new SyntaxError("Expected '{}' instead of '{}'".fmt(c, ch));
+        }
+
+        // Get the next character. When there are no more characters,
+        // return the empty string.
+        ch = text.charAt(at);
+        at += 1;
+        return ch;
+      },
+
+      // Parse a number value.
+      /** @ignore */
+      number = function () {
+        var number,
+            string = '';
+
+        if (ch === '-') {
+          string = '-';
+          next('-');
+        }
+        while (ch >= '0' && ch <= '9') {
+          string += ch;
+          next();
+        }
+        if (ch === '.') {
+          string += '.';
+          while (next() && ch >= '0' && ch <= '9') {
+            string += ch;
+          }
+        }
+        if (ch === 'e' || ch === 'E') {
+          string += ch;
+          next();
+          if (ch === '-' || ch === '+') {
+            string += ch;
+            next();
+          }
+          while (ch >= '0' && ch <= '9') {
+            string += ch;
+            next();
+          }
+        }
+        number = +string;
+        if (isNaN(number)) {
+          throw new SyntaxError("'{}' is not a number.".fmt(string));
+        } else {
+          return number;
+        }
+      },
+
+      // Parse a string value.
+      /** @ignore */
+      string = function () {
+        var hex,
+            i,
+            string = '',
+            uffff;
+
+        // When parsing for string values, we must look for " and \ characters.
+        if (ch === '"') {
+          while (next()) {
+            if (ch === '"') {
+              next();
+              return string;
+            } else if (ch === '\\') {
+              next();
+              if (ch === 'u') {
+                uffff = 0;
+                for (i = 0; i < 4; i += 1) {
+                  hex = parseInt(next(), 16);
+                  if (!isFinite(hex)) {
+                    break;
+                  }
+                  uffff = uffff * 16 + hex;
+                }
+                string += String.fromCharCode(uffff);
+              } else if (typeof escapee[ch] === 'string') {
+                string += escapee[ch];
+              } else {
+                break;
+              }
+            } else {
+              string += ch;
+            }
+          }
+        }
+        throw new SyntaxError("Bad string.");
+      },
+
+      // Skip whitespace.
+      /** @ignore */
+      white = function () {
+        while (ch && ch <= ' ') {
+          next();
+        }
+      },
+
+      // true, false, or null.
+      /** @ignore */
+      word = function () {
+        switch (ch) {
+        case 't':
+          next('t');
+          next('r');
+          next('u');
+          next('e');
+          return true;
+        case 'f':
+          next('f');
+          next('a');
+          next('l');
+          next('s');
+          next('e');
+          return false;
+        case 'n':
+          next('n');
+          next('u');
+          next('l');
+          next('l');
+          return null;
+        }
+        throw new SyntaxError("Unexpected character '{}'".fmt(ch));
+      },
+
+      value,  // Place holder for the value function.
+
+      // Parse an array value.
+      /** @ignore */
+      array = function () {
+        var array = [];
+
+        if (ch === '[') {
+          next('[');
+          white();
+          if (ch === ']') {
+            next(']');
+            return array;   // empty array
+          }
+          while (ch) {
+            array.push(value());
+            white();
+            if (ch === ']') {
+              next(']');
+              return array;
+            }
+            next(',');
+            white();
+          }
+        }
+        throw new SyntaxError("Bad Array");
+      },
+
+      // Parse an object value.
+      /** @ignore */
+      object = function () {
+        var key,
+            object = {};
+
+        if (ch === '{') {
+          next('{');
+          white();
+          if (ch === '}') {
+            next('}');
+            return object;   // empty object
+          }
+          while (ch) {
+            key = string();
+            white();
+            next(':');
+            if (Object.hasOwnProperty.call(object, key)) {
+              throw new SyntaxError('Duplicate key "{}"'.fmt(key));
+            }
+            object[key] = value();
+            white();
+            if (ch === '}') {
+              next('}');
+              return object;
+            }
+            next(',');
+            white();
+          }
+        }
+        throw new SyntaxError("Bad Object");
+      };
+
+      // Parse a JSON value. It could be an object, an array, a string, a number,
+      // or a word.
+      /** @ignore */
+      value = function () {
+        white();
+        switch (ch) {
+        case '{':
+          return object();
+        case '[':
+          return array();
+        case '"':
+          return string();
+        case '-':
+          return number();
+        default:
+          return ch >= '0' && ch <= '9' ? number() : word();
+        }
+      };
+
+      var ret = value();
+      white();
+      if (ch) {
+        throw new SyntaxError("Unexpected character '{}'".fmt(ch));
+      }
+      return ret;
     };
+
     return function (text, reviver) {
-      return result;
+      var o = evaluate(text);
+
+      /** @ignore */
+      var Walk = function (holder, key) {
+        var val = holder[key], k, v;
+
+        if (Espresso.hasValue(val)) {
+          for (k in val) {
+            if (val.hasOwnProperty(k)) {
+              v = Walk(val, k);
+              if (typeof v === "undefined") {
+                delete val[k];
+              } else {
+                val[k] = v;
+              }
+            }
+          }
+        }
+        return reviver.call(holder, key, val);
+      };
+
+      return Espresso.isCallable(reviver) ?
+        Walk({ '': o }, ''): o;
     };
   }()).inferior()
 }).into(JSON);

@@ -55,9 +55,11 @@ Espresso.Class = function () {};
 
 mix(/** @scope Espresso.Class */{
 
-  /**
+  /** @function
+    @desc
+
     Extend the class with the given properties.
-    Multiple inheritance is not doable without
+    Multiple inheritance is not allowed without
     breaking the inheritance chain.
 
     @returns {Espresso.Class} The extended Class.

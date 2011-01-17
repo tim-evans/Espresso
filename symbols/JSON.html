@@ -45,12 +45,12 @@
 		  Namespace JSON
     </h1>
     
-      <span class="src"><a href="../symbols/src/lang_json.html">json.js</a></span>
+      <span class="src"><a href="../symbols/src/lang_json.js.html">json.js</a></span>
     
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -83,6 +83,26 @@ function endResize(e) {
   <div id="content">
 
 <!-- ============================== class summary ========================== -->
+    
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				<p>Shim for JSON.</p>
+
+<p>Parts are borrowed from Douglas Crockford's <a href="https://github.com/douglascrockford/JSON-js">JSON2</a>. This
+JSON parser is designed to be safe rather than fast. The
+parser will fall back on native implementations when possible.</p>
+
+<p>For more information about the JSON object, see <a href="https://developer.mozilla.org/En/Using_native_JSON">Mozilla's
+documentation</a> on it.</p>
+			</p>
+      
+      
+			
+      
+			
+			
+			
     
 
 
@@ -124,7 +144,7 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/JSON.html#parse">parse</a></b>()</td>
+              + <b><a href="../symbols/JSON.html#parse">parse</a></b>(text, reviver)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -150,17 +170,50 @@ function endResize(e) {
 					<a name="parse"> </a>
           <div>
              <a name="parse"> </a>
-             <h3> <b>parse</b>()</h3>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>parse</b>(text, reviver)</h3>
 
              <div class="description">
+               
+  				       <dt><p>The <code>parse</code> function parses a JSON text and produces an
+ECMAScript value.</p></dd>
                
 						   
              </div>
 
 						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>text</b>
+									
+								</dt>
+								<dd>The JSON text to parse.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>reviver</b>
+									<i>Optional</i>
+								</dt>
+								<dd>A function that takes two
+      values (key and value). It can filter and transform the
+      results. It is called with each of the key/value pairs
+      produced by the parse, and its return value is used
+      instead of the original value. If it returns what it
+      recieved, the structure is not modified. If it returns
+      `undefined`, then the property is deleted from the result.</dd>
+							
+							</dl>
 						
 						
 						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The JSON text as an ECMAScript value.</dt>
+							
+							</dl>
 						
 						
 
@@ -176,12 +229,12 @@ function endResize(e) {
 					<a name="stringify"> </a>
           <div>
              <a name="stringify"> </a>
-             <h3> <b>stringify</b>(value, replacer, space)</h3>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>stringify</b>(value, replacer, space)</h3>
 
              <div class="description">
                
-  				       <dt>The `stringify` function returns a String in JSON
-format representing an ECMAScript value.</dd><br/>
+  				       <dt><p>The <code>stringify</code> function returns a String in JSON
+format representing an ECMAScript value.</p></dd>
                
 						   
              </div>
@@ -200,19 +253,30 @@ format representing an ECMAScript value.</dd><br/>
 									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>|<a href="../symbols/Array.html">Array</a>)</span> <b>replacer</b>
 									<i>Optional</i>
 								</dt>
-								<dd>uhh..</dd>
+								<dd>Either a function that
+      alters the way objects and arrays are stringified or an
+      array of strings and numbers that acts as a white list
+      for selecteing the object properties that will be stringified.</dd>
 							
 								<dt>
 									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>|<a href="../symbols/Number.html">Number</a>)</span> <b>space</b>
 									<i>Optional</i>
 								</dt>
-								<dd>A String</dd>
+								<dd>Allows the result to have
+      white space injected into it to improve human readability.</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The ECMAScript value as a JSON string.</dt>
+							
+							</dl>
 						
 						
 
@@ -237,7 +301,7 @@ format representing an ECMAScript value.</dd><br/>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:50 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

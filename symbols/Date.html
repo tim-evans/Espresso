@@ -48,7 +48,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -106,6 +106,11 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
+              + <b><a href="../symbols/Date.html#.now">now</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
               + <b><a href="../symbols/Date.html#toISOString">toISOString</a></b>()</td>
             </tr>
 					
@@ -136,39 +141,39 @@ function endResize(e) {
 
              <div class="description">
                
-  				       <dt>Date Formatting support.
-The following flags are acceptable in a format string:
-Format meaning:
+  				       <dt><p>Date Formatting support.</p>
 
- * `a` The abbreviated weekday name ("Sun")
- * `A` The full weekday name ("Sunday")
- * `b` The abbreviated month name ("Jan")
- * `B` The full month name ("January")
- * `c` The preferred local date and time representation
- * `d` Day of the month (01..31)
- * `H` Hour of the day, 24-hour clock (00..23)
- * `I` Hour of the day, 12-hour clock (01..12)
- * `j` Day of the year (001..366)
- * `m` Month of the year (01..12)
- * `M` Minute of the hour (00..59)
- * `p` Meridian indicator ("AM" or "PM")
- * `S` Second of the minute (00..60)
- * `U` Week number of the current year, starting with the first Sunday as the first day of the first week (00..53)
- * `W` Week number of the current year, starting with the first Monday as the first day of the first week (00..53)
- * `w` Day of the week (Sunday is 0, 0..6)
- * `x` Preferred representation for the date alone, no time
- * `X` Preferred representation for the time alone, no date
- * `y` Year without a century (00..99)
- * `Y` Year with century
- * `Z` Time zone name
+<p>The following flags are acceptable in a format string:</p>
 
-For example:
-{{{
-  alert("Today is {:A, B d, Y}.".fmt(new Date()));
-}}}
-{{{
-  alert("The time is: {:c}.".fmt(new Date()));
-}}}</dd><br/>
+<ul>
+<li><code>a</code> The abbreviated weekday name ("Sun")</li>
+<li><code>A</code> The full weekday name ("Sunday")</li>
+<li><code>b</code> The abbreviated month name ("Jan")</li>
+<li><code>B</code> The full month name ("January")</li>
+<li><code>c</code> The preferred local date and time representation</li>
+<li><code>d</code> Day of the month (01..31)</li>
+<li><code>H</code> Hour of the day, 24-hour clock (00..23)</li>
+<li><code>I</code> Hour of the day, 12-hour clock (01..12)</li>
+<li><code>j</code> Day of the year (001..366)</li>
+<li><code>m</code> Month of the year (01..12)</li>
+<li><code>M</code> Minute of the hour (00..59)</li>
+<li><code>p</code> Meridian indicator ("AM" or "PM")</li>
+<li><code>S</code> Second of the minute (00..60)</li>
+<li><code>U</code> Week number of the current year, starting with the first Sunday as the first day of the first week (00..53)</li>
+<li><code>W</code> Week number of the current year, starting with the first Monday as the first day of the first week (00..53)</li>
+<li><code>w</code> Day of the week (Sunday is 0, 0..6)</li>
+<li><code>x</code> Preferred representation for the date alone, no time</li>
+<li><code>X</code> Preferred representation for the time alone, no date</li>
+<li><code>y</code> Year without a century (00..99)</li>
+<li><code>Y</code> Year with century</li>
+<li><code>Z</code> Timezone name or abbreviation (EST)</li>
+</ul>
+
+<p>For example:</p>
+
+<div class="code">
+<code>alert(<span class="string">"Today&nbsp;is&nbsp;{:A,&nbsp;B&nbsp;d,&nbsp;Y}."</span>.fmt(<span class="keyword">new</span>&nbsp;Date()));<br/><br/>alert(<span class="string">"The&nbsp;time&nbsp;is:&nbsp;{:c}."</span>.fmt(<span class="keyword">new</span>&nbsp;Date()));</code>
+</div></dd>
                
 						   
              </div>
@@ -205,17 +210,19 @@ For example:
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/date.html">date.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
 				 
 					
 					<hr />
 				
-					<a name="toISOString"> </a>
+					<a name=".now"> </a>
           <div>
-             <a name="toISOString"> </a>
-             <h3> <b>toISOString</b>()</h3>
+             <a name=".now"> </a>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> Date.<b>now</b>()</h3>
 
              <div class="description">
+               
+  				       <dt><p>Shim for <code>now</code>.</p></dd>
                
 						   
              </div>
@@ -224,6 +231,13 @@ For example:
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The current time.</dt>
+							
+							</dl>
 						
 						
 
@@ -234,7 +248,45 @@ For example:
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/date.html">date.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="toISOString"> </a>
+          <div>
+             <a name="toISOString"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toISOString</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Shim for <code>toISOString</code>.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The ISO 6081 formatted UTC date.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
 				 
 					
 					<hr />
@@ -246,8 +298,7 @@ For example:
 
              <div class="description">
                
-  				       <dt>Implements the toJSON method as defined in
-ECMAScript 5th Edition.</dd><br/>
+  				       <dt><p>Shim for <code>toJSON</code> for Date.</p></dd>
                
 						   
              </div>
@@ -291,7 +342,7 @@ ECMAScript 5th Edition.</dd><br/>
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/date.html">date.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
 				 
 					
 					
@@ -308,7 +359,7 @@ ECMAScript 5th Edition.</dd><br/>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:52 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

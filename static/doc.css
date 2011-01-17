@@ -79,6 +79,10 @@ body.doc {
   bottom: 10px;
 }
 
+.doc p {
+  padding-left: 10px;
+}
+
 .doc #header #status span {
   position: relative;
   display: inline-block;
@@ -243,6 +247,15 @@ body.doc {
   padding-right: 15px;
 }
 
+.doc code {
+  display: inline;
+  font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+  background: ghostWhite;
+  border: 1px solid #DEDEDE;
+  font-size: 12px;
+  padding: 0px 0.2em;
+}
+
 .doc .code {
 	display: block;
   position: relative;
@@ -253,11 +266,10 @@ body.doc {
   border-left: 4px solid #888;
 }
 
-.doc code {
+.doc .code code {
 	display: block;
-	padding: 8px;
-  padding-top: 16px;
-  padding-bottom: 16px;
+	padding: 16px;
+  border: 0;
 
   font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
   word-wrap: normal;
@@ -292,7 +304,7 @@ body.doc {
   line-height: 130%;
 }
 
-#content .status-bar a {
+.doc #content .status-bar a {
   display: block;
   padding-left: 3px;
   text-decoration: none;

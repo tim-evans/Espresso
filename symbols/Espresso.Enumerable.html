@@ -45,12 +45,12 @@
 		  Namespace Espresso.Enumerable
     </h1>
     
-      <span class="src"><a href="../symbols/src/mixins_enumerable.html">enumerable.js</a></span>
+      <span class="src"><a href="../symbols/src/mixins_enumerable.js.html">enumerable.js</a></span>
     
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -87,7 +87,8 @@ function endResize(e) {
       <h1 class="title">Overview</h1>
       
 			<p class="description">
-				The Enumerable mixin provides common operations on enumerations of objects.
+				<p>The Enumerable mixin provides common operations
+on enumerations of objects.</p>
 			</p>
       
       
@@ -96,7 +97,7 @@ function endResize(e) {
         <dl class="detailList">
 				<dt class="heading">Requires:</dt>
 				
-				<dt>forEach</dt>
+				<dt>`forEach`- the enumerator over the collection.</dt>
 				
 				</dl>
 			
@@ -412,13 +413,12 @@ function endResize(e) {
 
              <div class="description">
                
-  				       <dt>Returns an array where each value on the enumerable
-is mutated by the lambda function.
-{{{
-  var cube = function (n) { return n * n * n };
-  alert([1, 2, 3, 4].map(cube));
-  // -> [1, 8, 27, 64]
-}}}</dd><br/>
+  				       <dt><p>Returns an array where each value on the enumerable
+is mutated by the lambda function.</p>
+
+<div class="code">
+<code><span class="keyword">var</span>&nbsp;cube&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;n&nbsp;*&nbsp;n&nbsp;*&nbsp;n&nbsp;};<br/>alert([<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">4</span>].map(cube));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;[1,&nbsp;8,&nbsp;27,&nbsp;64]</code>
+</div></dd>
                
 						   
              </div>
@@ -507,32 +507,12 @@ is mutated by the lambda function.
 
              <div class="description">
                
-  				       <dt>Reduce the content of an enumerable down to a single value.
-{{{
-  var range = mix(Espresso.Enumerable, {
-    begin: 0,
-    end: 0,
+  				       <dt><p>Reduce the content of an enumerable down to
+a single value.</p>
 
-    forEach: function (lambda, self) {
-      var i = 0;
-      for (var v = this.begin; v <= this.end; v++) {
-        lambda.call(self, v, i++, this);
-      }
-    },
-
-    create: function (begin, end) {
-      return mix(this, { begin: begin, end: end }).into({});
-    }
-  }).into({});
-
-  var multiply = function (a, b) { return a * b; };
-  var factorial = function (n) {
-    return range.create(1, n).reduce(multiply);
-  }
-
-  alert("5! is {}".fmt(factorial(5)));
-  alert("120! is {}".fmt(factorial(120)));
-}}}</dd><br/>
+<div class="code">
+<code><span class="keyword">var</span>&nbsp;range&nbsp;=&nbsp;mix(Espresso.Enumerable,&nbsp;{<br/>&nbsp;&nbsp;begin:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;end:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;forEach:&nbsp;<span class="keyword">function</span>&nbsp;(lambda,&nbsp;self)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">this</span>.begin;&nbsp;v&nbsp;&lt;=&nbsp;<span class="keyword">this</span>.end;&nbsp;v++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lambda.call(self,&nbsp;v,&nbsp;i++,&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;create:&nbsp;<span class="keyword">function</span>&nbsp;(begin,&nbsp;end)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;mix(<span class="keyword">this</span>,&nbsp;{&nbsp;begin:&nbsp;begin,&nbsp;end:&nbsp;end&nbsp;}).into({});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;multiply&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(a,&nbsp;b)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;a&nbsp;*&nbsp;b;&nbsp;};<br/><span class="keyword">var</span>&nbsp;factorial&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;range.create(<span class="string">1</span>,&nbsp;n).reduce(multiply);<br/>}<br/><br/>alert(<span class="string">"5!&nbsp;is&nbsp;{}"</span>.fmt(factorial(<span class="string">5</span>)));<br/>alert(<span class="string">"120!&nbsp;is&nbsp;{}"</span>.fmt(factorial(<span class="string">120</span>)));</code>
+</div></dd>
                
 						   
              </div>
@@ -584,27 +564,26 @@ is mutated by the lambda function.
 
              <div class="description">
                
-  				       <dt>Returns the size of the Espresso.Enumerable.
-{{{
-  var range = mix(Espresso.Enumerable, {
-    begin: 0,
-    end: 0,
+  				       <dt><p>Returns the size of the <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>.</p>
 
-    forEach: function (lambda, self) {
-      var i = 0;
-      for (var v = this.begin; v <= this.end; v++) {
-        lambda.call(self, v, i++, this);
-      }
-    },
+<p>var range = mix(Espresso.Enumerable, {
+  begin: 0,
+  end: 0,</p>
 
-    create: function (begin, end) {
-      return mix(this, { begin: begin, end: end }).into({});
+<p>forEach: function (lambda, self) {
+    var i = 0;
+    for (var v = this.begin; v &lt;= this.end; v++) {
+      lambda.call(self, v, i++, this);
     }
-  }).into({});
+  },</p>
 
-  alert(range.create(0, 20).size());
-  // -> 21
-}}}</dd><br/>
+<p>create: function (begin, end) {
+    return mix(this, { begin: begin, end: end }).into({});
+  }
+}).into({});</p>
+
+<p>alert(range.create(0, 20).size());
+// -> 21</p></dd>
                
 						   
              </div>
@@ -682,27 +661,26 @@ is mutated by the lambda function.
 
              <div class="description">
                
-  				       <dt>Converts an enumerable into an Array.
-{{{
-  var range = mix(Espresso.Enumerable, {
-    begin: 0,
-    end: 0,
+  				       <dt><p>Converts an enumerable into an Array.</p>
 
-    forEach: function (lambda, self) {
-      var i = 0;
-      for (var v = this.begin; v <= this.end; v++) {
-        lambda.call(self, v, i++, this);
-      }
-    },
+<p>var range = mix(Espresso.Enumerable, {
+  begin: 0,
+  end: 0,</p>
 
-    create: function (begin, end) {
-      return mix(this, { begin: begin, end: end }).into({});
+<p>forEach: function (lambda, self) {
+    var i = 0;
+    for (var v = this.begin; v &lt;= this.end; v++) {
+      lambda.call(self, v, i++, this);
     }
-  }).into({});
+  },</p>
 
-  alert(range.create(0, 200).toArray());
-  // -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]
-}}}</dd><br/>
+<p>create: function (begin, end) {
+    return mix(this, { begin: begin, end: end }).into({});
+  }
+}).into({});</p>
+
+<p>alert(range.create(0, 200).toArray());
+// -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]</p></dd>
                
 						   
              </div>
@@ -742,7 +720,7 @@ is mutated by the lambda function.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

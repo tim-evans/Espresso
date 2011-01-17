@@ -48,7 +48,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -83,10 +83,6 @@ function endResize(e) {
 <!-- ============================== class summary ========================== -->
     
       <h1 class="title">Overview</h1>
-      
-			<p class="description">
-				Provides
-			</p>
       
       
 				<dl class="detailList">
@@ -200,10 +196,10 @@ function endResize(e) {
 
              <div class="description">
                
-  				       <dt>Format a string according to a format specifier.
+  				       <dt><p>Format a string according to a format specifier.
 This is a function called by Formatter, 
 A valid specifier can have:
-[[fill]align][minimumwidth]</dd><br/>
+[[fill]align][minimumwidth]</p></dd>
                
 						   
              </div>
@@ -249,7 +245,7 @@ A valid specifier can have:
 
              <div class="description">
                
-  				       <dt>Capitalize a string.</dd><br/>
+  				       <dt><p>Capitalize a string.</p></dd>
                
 						   
              </div>
@@ -274,16 +270,9 @@ A valid specifier can have:
 					</div>
 					
 					
-					<div class="code"><code>&nbsp;&nbsp;[<span class="string">'toast'</span>,&nbsp;<span class="string">'cheese'</span>,&nbsp;<span class="string">'wine'</span>].forEach(<span class="keyword">function</span>&nbsp;(food)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(food.capitalize());<br/>&nbsp;&nbsp;});<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Toast"<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Cheese"<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Wine"</code><div class="status-bar"><a href="#" onclick="demo0()">&#9654;</a></div><div class="console hidden" id="console-0"></div><script type="text/javascript">
-function demo0() {
- document.getElementById("console-0").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-0"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  ['toast', 'cheese', 'wine'].forEach(function (food) {
-    alert(food.capitalize());
-  });
-  // -> "Toast"
-  // -> "Cheese"
-  // -> "Wine"
-}
-</script></div>
+					<div class="code">
+<code>[<span class="string">'toast'</span>,&nbsp;<span class="string">'cheese'</span>,&nbsp;<span class="string">'wine'</span>].forEach(<span class="keyword">function</span>&nbsp;(food)&nbsp;{<br/>&nbsp;&nbsp;alert(food.capitalize());<br/>});<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Toast"<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Cheese"<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Wine"</code>
+</div>
 					
 					
 				 
@@ -297,11 +286,11 @@ function demo0() {
 
              <div class="description">
                
-  				       <dt>Returns true if the string is contained
-inside of the parent string.
+  				       <dt><p>Returns true if the string is contained
+inside of the parent string.</p>
 
-Overrides the Enumerable contains to be something
-more intuitive.</dd><br/>
+<p>Overrides the Enumerable contains to be something
+more intuitive.</p></dd>
                
 						   
              </div>
@@ -337,12 +326,9 @@ more intuitive.</dd><br/>
 					</div>
 					
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">'restraurant'</span>.contains(<span class="string">'aura'</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;true</code><div class="status-bar"><a href="#" onclick="demo1()">&#9654;</a></div><div class="console hidden" id="console-1"></div><script type="text/javascript">
-function demo1() {
- document.getElementById("console-1").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-1"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert('restraurant'.contains('aura'));
-  // -> true
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">'restraurant'</span>.contains(<span class="string">'aura'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;true</code>
+</div>
 					
 					
 				 
@@ -355,9 +341,6 @@ function demo1() {
              <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>escapeHTML</b>()</h3>
 
              <div class="description">
-               
-  				       <dt>Replaces any reserved HTML characters into their
-escaped form.</dd><br/>
                
 						   
              </div>
@@ -402,12 +385,12 @@ you'll end up with a single one.</p>
 by the argument number (which is optional on a single argument).</p>
 
 <p>If you want to tie into this, and want to specify your own
-format specifier, override __fmt__ on your object, and it will
+format specifier, override <strong>fmt</strong> on your object, and it will
 pass you in the specifier (after the colon). You return the
 string it should look like, and that's it!</p>
 
 <p>For an example of an formatting extension, look at the Date mix.
-It implements the Ruby/Python formatting specification for Dates.</p></dd><br/>
+It implements the Ruby/Python formatting specification for Dates.</p></dd>
                
 						   
              </div>
@@ -432,55 +415,25 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd><br/>
 					</div>
 					
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">"b{0}{0}a"</span>.fmt(<span class="string">'an'</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"banana"</code><div class="status-bar"><a href="#" onclick="demo2()">&#9654;</a></div><div class="console hidden" id="console-2"></div><script type="text/javascript">
-function demo2() {
- document.getElementById("console-2").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-2"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert("b{0}{0}a".fmt('an'));
-  // -> "banana"
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">"b{0}{0}a"</span>.fmt(<span class="string">'an'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"banana"</code>
+</div>
 					
-					<div class="code"><code>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;kitty&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">"Mister&nbsp;Mittens"</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;weapons:&nbsp;[<span class="string">"lazzors"</span>,&nbsp;<span class="string">"shuriken"</span>,&nbsp;<span class="string">"rainbows"</span>],<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;fight:&nbsp;<span class="keyword">function</span>&nbsp;(whom)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"fightin'&nbsp;the&nbsp;{}&nbsp;with&nbsp;his&nbsp;{}."</span>.fmt(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whom,&nbsp;<span class="keyword">this</span>.weapons[Math.floor(Math.random()&nbsp;*&nbsp;<span class="keyword">this</span>.weapons.length)]);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;});<br/><br/>&nbsp;&nbsp;alert(<span class="string">"{0.name}&nbsp;is&nbsp;{1}"</span>.fmt(kitty,&nbsp;kitty.fight(<span class="string">'zombies'</span>)));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Mister&nbsp;Mittens&nbsp;is&nbsp;fightin'&nbsp;the&nbsp;zombies&nbsp;with&nbsp;..."</code><div class="status-bar"><a href="#" onclick="demo3()">&#9654;</a></div><div class="console hidden" id="console-3"></div><script type="text/javascript">
-function demo3() {
- document.getElementById("console-3").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-3"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  var kitty = Espresso.Template.extend({
-    name: "Mister Mittens",
-    weapons: ["lazzors", "shuriken", "rainbows"],
-
-    fight: function (whom) {
-      return "fightin' the {} with his {}.".fmt(
-        whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
-    }
-  });
-
-  alert("{0.name} is {1}".fmt(kitty, kitty.fight('zombies')));
-  // -> "Mister Mittens is fightin' the zombies with ..."
-}
-</script></div>
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;kitty&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">"Mister&nbsp;Mittens"</span>,<br/>&nbsp;&nbsp;weapons:&nbsp;[<span class="string">"lazzors"</span>,&nbsp;<span class="string">"shuriken"</span>,&nbsp;<span class="string">"rainbows"</span>],<br/><br/>&nbsp;&nbsp;fight:&nbsp;<span class="keyword">function</span>&nbsp;(whom)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"fightin'&nbsp;the&nbsp;{}&nbsp;with&nbsp;his&nbsp;{}."</span>.fmt(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whom,&nbsp;<span class="keyword">this</span>.weapons[Math.floor(Math.random()&nbsp;*&nbsp;<span class="keyword">this</span>.weapons.length)]);<br/>&nbsp;&nbsp;}<br/>});<br/><br/>alert(<span class="string">"{0.name}&nbsp;is&nbsp;{1}"</span>.fmt(kitty,&nbsp;kitty.fight(<span class="string">'zombies'</span>)));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Mister&nbsp;Mittens&nbsp;is&nbsp;fightin'&nbsp;the&nbsp;zombies&nbsp;with&nbsp;..."</code>
+</div>
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">"I&nbsp;love&nbsp;{pi:.2}"</span>.fmt({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>&nbsp;}));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code><div class="status-bar"><a href="#" onclick="demo4()">&#9654;</a></div><div class="console hidden" id="console-4"></div><script type="text/javascript">
-function demo4() {
- document.getElementById("console-4").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-4"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert("I love {pi:.2}".fmt({ pi: 22 / 7 }));
-  // -> "I love 3.14"
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.2}"</span>.fmt({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
+</div>
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">"The&nbsp;{confection.type}&nbsp;is&nbsp;{confection.descriptor}."</span>.fmt({<br/>&nbsp;&nbsp;&nbsp;&nbsp;confection:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;descriptor:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code><div class="status-bar"><a href="#" onclick="demo5()">&#9654;</a></div><div class="console hidden" id="console-5"></div><script type="text/javascript">
-function demo5() {
- document.getElementById("console-5").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-5"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert("The {confection.type} is {confection.descriptor}.".fmt({
-    confection: {
-      type: 'cake',
-      descriptor: 'a lie'
-    }
-  }));
-  // -> "The cake is a lie."
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">"The&nbsp;{confection.type}&nbsp;is&nbsp;{confection.descriptor}."</span>.fmt({<br/>&nbsp;&nbsp;confection:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;descriptor:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code>
+</div>
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">":-{{"</span>.fmt());&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;Double&nbsp;{{&nbsp;or&nbsp;}}&nbsp;to&nbsp;escape&nbsp;it.<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;":-{"</code><div class="status-bar"><a href="#" onclick="demo6()">&#9654;</a></div><div class="console hidden" id="console-6"></div><script type="text/javascript">
-function demo6() {
- document.getElementById("console-6").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-6"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert(":-{{".fmt());  // Double {{ or }} to escape it.
-  // -> ":-{"
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">":-{{"</span>.fmt());&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;Double&nbsp;{{&nbsp;or&nbsp;}}&nbsp;to&nbsp;escape&nbsp;it.<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;":-{"</code>
+</div>
 					
 					
 				 
@@ -494,8 +447,8 @@ function demo6() {
 
              <div class="description">
                
-  				       <dt>Iterates over every character in a string.
-Required by <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>.</dd><br/>
+  				       <dt><p>Iterates over every character in a string.
+Required by <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>.</p></dd>
                
 						   
              </div>
@@ -537,15 +490,9 @@ Required by <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a
 					</div>
 					
 					
-					<div class="code"><code>&nbsp;&nbsp;<span class="string">"boom"</span>.forEach(alert);<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;'b'<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;'o'<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;'o'<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;'m'</code><div class="status-bar"><a href="#" onclick="demo7()">&#9654;</a></div><div class="console hidden" id="console-7"></div><script type="text/javascript">
-function demo7() {
- document.getElementById("console-7").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-7"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  "boom".forEach(alert);
-  // -> 'b'
-  // -> 'o'
-  // -> 'o'
-  // -> 'm'
-}
-</script></div>
+					<div class="code">
+<code><span class="string">"boom"</span>.forEach(alert);<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'b'<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'o'<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'o'<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'m'</code>
+</div>
 					
 					
 				 
@@ -559,9 +506,9 @@ function demo7() {
 
              <div class="description">
                
-  				       <dt>Returns the character at the given index.
+  				       <dt><p>Returns the character at the given index.
 Provides a more unified interface for dealing with indexing,
-and is more cross-browser than [].</dd><br/>
+and is more cross-browser than <code>[]</code>.</p></dd>
                
 						   
              </div>
@@ -607,7 +554,7 @@ and is more cross-browser than [].</dd><br/>
 
              <div class="description">
                
-  				       <dt>Returns the string repeated the specified number of times.</dd><br/>
+  				       <dt><p>Returns the string repeated the specified number of times.</p></dd>
                
 						   
              </div>
@@ -649,19 +596,13 @@ and is more cross-browser than [].</dd><br/>
 					</div>
 					
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">"bacon"</span>.times(<span class="string">5</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"baconbaconbaconbacon"</code><div class="status-bar"><a href="#" onclick="demo8()">&#9654;</a></div><div class="console hidden" id="console-8"></div><script type="text/javascript">
-function demo8() {
- document.getElementById("console-8").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-8"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert("bacon".times(5));
-  // -> "baconbaconbaconbacon"
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">"bacon"</span>.times(<span class="string">5</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"baconbaconbaconbaconbacon"</code>
+</div>
 					
-					<div class="code"><code>&nbsp;&nbsp;alert(<span class="string">"crunchy"</span>.times(<span class="string">2</span>,&nbsp;<span class="string">"&nbsp;bacon&nbsp;is&nbsp;"</span>));<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"crunchy&nbsp;bacon&nbsp;is&nbsp;crunchy"</code><div class="status-bar"><a href="#" onclick="demo9()">&#9654;</a></div><div class="console hidden" id="console-9"></div><script type="text/javascript">
-function demo9() {
- document.getElementById("console-9").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-9"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  alert("crunchy".times(2, " bacon is "));
-  // -> "crunchy bacon is crunchy"
-}
-</script></div>
+					<div class="code">
+<code>alert(<span class="string">"crunchy"</span>.times(<span class="string">2</span>,&nbsp;<span class="string">"&nbsp;bacon&nbsp;is&nbsp;"</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"crunchy&nbsp;bacon&nbsp;is&nbsp;crunchy"</code>
+</div>
 					
 					
 				 
@@ -671,9 +612,11 @@ function demo9() {
 					<a name="toJSON"> </a>
           <div>
              <a name="toJSON"> </a>
-             <h3> <b>toJSON</b>(key)</h3>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toJSON</b>(key)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Shim for <code>toJSON</code>. Returns the <code>valueOf</code> the String.</p></dd>
                
 						   
              </div>
@@ -694,6 +637,13 @@ function demo9() {
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> This.</dt>
+							
+							</dl>
+						
 						
 
 						
@@ -711,8 +661,6 @@ function demo9() {
              <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>trim</b>()</h3>
 
              <div class="description">
-               
-  				       <dt>Trim leading and trailing whitespace.</dd><br/>
                
 						   
              </div>
@@ -754,9 +702,6 @@ function demo9() {
 
              <div class="description">
                
-  				       <dt>Unescapes any escaped HTML strings into their readable
-forms.</dd><br/>
-               
 						   
              </div>
 
@@ -795,7 +740,7 @@ forms.</dd><br/>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:50 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

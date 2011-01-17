@@ -48,7 +48,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -101,7 +101,7 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#alias">alias</a></b>()</td>
+              + <b><a href="../symbols/Function.html#alias">alias</a></b>(aliases)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -126,27 +126,22 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#defer">defer</a></b>(that)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#delay">delay</a></b>(timeout, that)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Function.html#inferior">inferior</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#on">on</a></b>()</td>
+              + <b><a href="../symbols/Function.html#observes">observes</a></b>(observers)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#property">property</a></b>()</td>
+              + <b><a href="../symbols/Function.html#on">on</a></b>(subscriptions)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Function.html#property">property</a></b>(dependentKeys)</td>
             </tr>
 					
           </table>
@@ -167,16 +162,33 @@ function endResize(e) {
 					<a name="alias"> </a>
           <div>
              <a name="alias"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>alias</b>()</h3>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>alias</b>(aliases)</h3>
 
              <div class="description">
                
-  				       <dt>Provides a mechanism to alias a function with
-other names on the object.</dd><br/>
+  				       <dt><p>Provides a mechanism to alias a function with
+other names on the object.</p>
+
+<p>Any arguments passed in will be used as aliases
+for the function. Each of these aliases will be
+references to the original, meaning that all of
+them will be indistinguishable and if one is
+altered in place, then all will be.</p></dd>
                
 						   
              </div>
 
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>aliases</b>
+									
+								</dt>
+								<dd>The aliases this function has.</dd>
+							
+							</dl>
 						
 						
 						
@@ -198,7 +210,7 @@ other names on the object.</dd><br/>
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -210,11 +222,23 @@ other names on the object.</dd><br/>
 
              <div class="description">
                
-  				       <dt>Around provides `super` functionality to a function.
+  				       <dt><p>Around provides <code>super</code> functionality to a function.
 When the decorated function is called, it will have it's
-first argument bound to the function this one will override.
-If this function will not override anything, then the first
-argument will be an empty function that returns nothing.</dd><br/>
+first argument bound to the function this one will override.</p>
+
+<p>If this function will not override anything, then the first
+argument will be an empty function that returns nothing.</p>
+
+<p>The <code>super</code> function will always be in the current scope of
+the function being called at the moment. Since the scope is
+maintained for you, you <strong>must</strong> make sure that scope that the
+first in the chain is what you want all down the chain. This
+is the typical behaviour of <code>super</code> in other languages;
+therefore it is done for you, and forces you into that
+situation.</p>
+
+<p>NOTE: If you try to rebind the property using
+      <a href="../symbols/Function.html#bind">Function#bind</a>, it will <em>not</em> work.</p></dd>
                
 						   
              </div>
@@ -240,7 +264,7 @@ argument will be an empty function that returns nothing.</dd><br/>
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -252,33 +276,14 @@ argument will be an empty function that returns nothing.</dd><br/>
 
              <div class="description">
                
-  				       <dt>Bind the value of `this` on a function before hand,
-with any extra arguments being passed in as initial arguments.
+  				       <dt><p>Bind the value of <code>this</code> on a function before hand,
+with any extra arguments being passed in as initial arguments.</p>
 
-This implementation conforms to the ECMAScript 5 standard.
-{{{
-  var Person = Espresso.Template.extend({
-    name: 'nil',
-    greet: function (greeting) {
-      alert(greeting.fmt(this.name));
-    }
-  });
+<p>This implementation conforms to the ECMAScript 5 standard.</p>
 
-  var wash = Person.extend({
-    name: 'Hoban Washburne'
-  });
-
-  var mal = Person.extend({
-    name: 'Malcolm Reynolds'
-  });
-
-  mal.greet("Hello, {}!");
-  // -> "Hello, Malcolm Reynolds!"
-
-  var greet = mal.greet.bind(wash);
-  greet("Howdy, {}!");
-  // -> "Howdy, Hoban Washburne!"
-}}}</dd><br/>
+<div class="code">
+<code><span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'nil'</span>,<br/>&nbsp;&nbsp;greet:&nbsp;<span class="keyword">function</span>&nbsp;(greeting)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(greeting.fmt(<span class="keyword">this</span>.name));<br/>&nbsp;&nbsp;}<br/>});<br/><br/><span class="keyword">var</span>&nbsp;wash&nbsp;=&nbsp;Person.extend({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Hoban&nbsp;Washburne'</span><br/>});<br/><br/><span class="keyword">var</span>&nbsp;mal&nbsp;=&nbsp;Person.extend({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Malcolm&nbsp;Reynolds'</span><br/>});<br/><br/>mal.greet(<span class="string">"Hello,&nbsp;{}!"</span>);<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Hello,&nbsp;Malcolm&nbsp;Reynolds!"<br/><br/><span class="keyword">var</span>&nbsp;greet&nbsp;=&nbsp;mal.greet.bind(wash);<br/>greet(<span class="string">"Howdy,&nbsp;{}!"</span>);<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Howdy,&nbsp;Hoban&nbsp;Washburne!"</code>
+</div></dd>
                
 						   
              </div>
@@ -302,7 +307,8 @@ This implementation conforms to the ECMAScript 5 standard.
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The function passed in, wrapped to ensure `this` is the correct scope.</dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The function passed in, wrapped to ensure `this`
+      is the correct scope.</dt>
 							
 							</dl>
 						
@@ -315,7 +321,7 @@ This implementation conforms to the ECMAScript 5 standard.
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -327,7 +333,11 @@ This implementation conforms to the ECMAScript 5 standard.
 
              <div class="description">
                
-  				       <dt>Marks the computed property as cacheable.</dd><br/>
+  				       <dt><p>Marks the computed property as cacheable.</p>
+
+<p>Using KVO.get on the function multiple
+times will cache the response until it has been
+set again.</p></dd>
                
 						   
              </div>
@@ -353,7 +363,7 @@ This implementation conforms to the ECMAScript 5 standard.
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -365,7 +375,7 @@ This implementation conforms to the ECMAScript 5 standard.
 
              <div class="description">
                
-  				       <dt>Curry will add arguments to a function, returning the function as-is</dd><br/>
+  				       <dt><p>Curry will add arguments to a function, returning the function as-is</p></dd>
                
 						   
              </div>
@@ -384,93 +394,7 @@ This implementation conforms to the ECMAScript 5 standard.
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="defer"> </a>
-          <div>
-             <a name="defer"> </a>
-             <h3> <b>defer</b>(that)</h3>
-
-             <div class="description">
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>that</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="delay"> </a>
-          <div>
-             <a name="delay"> </a>
-             <h3> <b>delay</b>(timeout, that)</h3>
-
-             <div class="description">
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>timeout</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>that</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -482,10 +406,12 @@ This implementation conforms to the ECMAScript 5 standard.
 
              <div class="description">
                
-  				       <dt>Marks the function as inferior.
-If there's another attribute on the Object
-you're mixing in to, the inferior function will
-not be mixed in.</dd><br/>
+  				       <dt><p>If the attribute being mixed in exists on the
+Object being mixed in, the function marked as
+inferior will <strong>not</strong> be mixed in.</p>
+
+<p>Also, if the base function is inferior, it
+will be overriden.</p></dd>
                
 						   
              </div>
@@ -511,7 +437,86 @@ not be mixed in.</dd><br/>
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="observes"> </a>
+          <div>
+             <a name="observes"> </a>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>observes</b>(observers)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Notifies the function when a property did change.
+The notification will be delivered synchronously
+to the function.</p>
+
+<p><code>observes</code> is intended to emphasize the observer
+pattern, where messages are delivered synchronously
+to the method. This is extremely useful for taking
+action when an internal event needs to be propagated
+to many internal sources.</p>
+
+<p>Try not to expose <code>observes</code> as a public API method,
+as it will potentially crash the library's code if
+<em>any</em> error is thrown.</p>
+
+<p>All <code>observes</code> does is subscribes the function to the
+property paths given using synchronous delivery.</p>
+
+<p>Here's a simple clock using observers to propagate
+changes from appropriate levels outward.</p>
+
+<div class="code">
+<code><span class="keyword">var</span>&nbsp;Clock&nbsp;=&nbsp;Espresso.Class.extend({<br/>&nbsp;&nbsp;time:&nbsp;<span class="value">null</span>,<br/>&nbsp;&nbsp;timer:&nbsp;<span class="value">null</span>,<br/><br/>&nbsp;&nbsp;init:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.set(<span class="string">'timer'</span>,&nbsp;setInterval(<span class="keyword">this</span>.tick.bind(<span class="keyword">this</span>),&nbsp;<span class="string">1000</span>));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.tick();<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;tick:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.set(<span class="string">'time'</span>,&nbsp;<span class="keyword">new</span>&nbsp;Date(Date.now()));<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;timeDidChange:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"{:c}"</span>.fmt(<span class="keyword">this</span>.get(<span class="string">'time'</span>)));<br/>&nbsp;&nbsp;}.observes(<span class="string">'time'</span>)<br/>});<br/><br/><span class="keyword">var</span>&nbsp;clock&nbsp;=&nbsp;<span class="keyword">new</span>&nbsp;Clock();<br/>setTimeout(<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;clearInterval(clock.get(<span class="string">'timer'</span>))<br/>},&nbsp;<span class="string">5000</span>);</code>
+</div></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>observers</b>
+									
+								</dt>
+								<dd>The property paths to be
+      notified when anything gets published to them.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
+							
+							</dl>
+						
+						
+
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dt><a href="../symbols/Function.html#on">Function#on</a></dt>
+							
+							</dl>
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -519,16 +524,38 @@ not be mixed in.</dd><br/>
 					<a name="on"> </a>
           <div>
              <a name="on"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>on</b>()</h3>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>on</b>(subscriptions)</h3>
 
              <div class="description">
                
-  				       <dt>Notifies the function when a property did change.
-The notification will be delivered synchronously to the function.</dd><br/>
+  				       <dt><p>Notifies the function when a property did change.
+The notification will be delivered asynchronously
+to the function.</p>
+
+<p><code>on</code> is intended to emphasize the publish/subscribe
+pattern, where messages are delivered asynchronously
+to the method, with the intention that the method
+is foreign code that absolutely cannot disturb the
+execution of the library.</p>
+
+<p>All <code>on</code> does is subscribes the function to the
+property paths given using asynchronous delivery.</p></dd>
                
 						   
              </div>
 
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>subscriptions</b>
+									
+								</dt>
+								<dd>The events to be
+      notified when anything gets published to them.</dd>
+							
+							</dl>
 						
 						
 						
@@ -544,13 +571,20 @@ The notification will be delivered synchronously to the function.</dd><br/>
 						
 
 						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dt><a href="../symbols/Function.html#observes">Function#observes</a></dt>
+							
+							</dl>
+						
 					
 
 					</div>
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					<hr />
@@ -558,16 +592,28 @@ The notification will be delivered synchronously to the function.</dd><br/>
 					<a name="property"> </a>
           <div>
              <a name="property"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>property</b>()</h3>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>property</b>(dependentKeys)</h3>
 
              <div class="description">
                
-  				       <dt>Marks the function as a computed property.
-You may now use the function for get() and set().</dd><br/>
+  				       <dt><p>Marks the function as a computed property.
+You may now use the function for <code>get</code> and <code>set</code>.</p></dd>
                
 						   
              </div>
 
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>dependentKeys</b>
+									
+								</dt>
+								<dd>The property paths to be
+      notified when anything gets published to them.</dd>
+							
+							</dl>
 						
 						
 						
@@ -589,7 +635,7 @@ You may now use the function for get() and set().</dd><br/>
 					
 				 
 					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.html">function.js</a>.
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
 					
@@ -606,7 +652,7 @@ You may now use the function for get() and set().</dd><br/>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:50 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

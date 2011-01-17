@@ -45,12 +45,12 @@
 		  Namespace Espresso.KVO
     </h1>
     
-      <span class="src"><a href="../symbols/src/mixins_kvo.html">kvo.js</a></span>
+      <span class="src"><a href="../symbols/src/mixins_kvo.js.html">kvo.js</a></span>
     
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -87,23 +87,56 @@ function endResize(e) {
       <h1 class="title">Overview</h1>
       
 			<p class="description">
-				Key-Value Observing (KVO) is a design pattern build on top of the
-Publish-Subscribe pattern. It's designed to have notifications
-delivered to functions when a value changes and allows calculated
-properties as well as dependant properties.
+				<p><a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Key-Value Observing</a> (KVO) is a mechanism that allows
+objects to be notified of changes to specified properties of
+other Objects. It is based off of the observer pattern, which
+in turn is built on top of the Publish-Subscribe pattern.</p>
 
-To take advantage of KVO, simply use get() and set() when you want
-to access or set a value.
+<p>KVO is used on top of <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a> for notifying
+observers that a change occured.</p>
+
+<p>To understand Key-Value coding, you must understand property
+paths first. This simply means that you need to understand
+the Object model of the object that you are doing a <code>get</code> or
+<code>set</code> on. Take the following example:</p>
+
+<div class="code">
+<code><span class="keyword">var</span>&nbsp;Beatles&nbsp;=&nbsp;mix(Espresso.KVO).into({<br/>&nbsp;&nbsp;Paul:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'vocals'</span>,&nbsp;<span class="string">'bass'</span>,&nbsp;<span class="string">'guitar'</span>,&nbsp;<span class="string">'piano'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'keyboards'</span>,&nbsp;<span class="string">'drums'</span>,&nbsp;<span class="string">'ukelele'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'mandolin'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;John:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'vocals'</span>,&nbsp;<span class="string">'guitar'</span>,&nbsp;<span class="string">'piano'</span>,&nbsp;<span class="string">'banjo'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'harmonica'</span>,&nbsp;<span class="string">'mellotron'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'six-string&nbsp;bass'</span>,&nbsp;<span class="string">'percussion'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;Ringo:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'drums'</span>,&nbsp;<span class="string">'vocals'</span>,&nbsp;<span class="string">'percussion'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'tambourine'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;George:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'guitar'</span>,&nbsp;<span class="string">'vocals'</span>,&nbsp;<span class="string">'bass'</span>,&nbsp;<span class="string">'keyboards'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'ukelele'</span>,&nbsp;<span class="string">'mandolin'</span>,&nbsp;<span class="string">'sitar'</span>,&nbsp;<span class="string">'tambura'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'sarod'</span>,&nbsp;<span class="string">'swarmandal'</span>]<br/>&nbsp;&nbsp;}<br/>});<br/><br/>alert(Beatles.get(<span class="string">'Paul.instruments.0'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'vocals'</code>
+</div>
+
+<p>Using <code>get</code> provides optimizations such as caching on an Object.</p>
+
+<p>Using <code>set</code> provides notifications to observing functions /
+properties.</p>
+
+<p>The KVO mixin provides the ability to have dynamically computed
+properties via the <code>property</code> decorator on functions and the
+ability to intercept <code>get</code>s or <code>set</code>s to unknown properties via
+<code>unknownProperty</code>.</p>
+
+<p>Computed properties are simply a function that takes 2 arguments,
+the key and the value of the property that triggered the function
+call. These properties may also have dependent keys. When a
+property has dependent keys, every single time a dependent key
+gets <code>set</code>, the property will get recomputed.</p>
+
+<p>Consider the following:</p>
+
+<div class="code">
+<code><span class="keyword">var</span>&nbsp;Box&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;width:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;height:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;depth:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;volume:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>.get(<span class="string">'width'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'height'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'depth'</span>);<br/>&nbsp;&nbsp;}.property(<span class="string">'width'</span>,&nbsp;<span class="string">'height'</span>,&nbsp;<span class="string">'depth'</span>).cacheable()<br/>});</code>
+</div>
+
+<p>The <code>volume</code> property will get recomputed every single time the
+<code>width</code>, <code>height</code>, or <code>depth</code> values change. If you had another
+object that you would like to monitor the changes, perhaps a
+renderer, you could attach observers to each of the properties
+by subscribing to the property path (via
+<a href="../symbols/Espresso.PubSub.html#subscribe">Espresso.PubSub#subscribe</a>) or by decorating your functions
+with <a href="../symbols/Function.html#observes">Function#observes</a>, providing any property paths
+that you would like to be notified on.</p>
 			</p>
       
       
-			
-				<dl class="detailList">
-				<dt class="heading">See:</dt>
-				
-				<dt><a href="http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html">Key-Value Observing</a></dt>
-				
-				</dl>
 			
       
 			
@@ -185,40 +218,15 @@ to access or set a value.
 
              <div class="description">
                
-  				       <dt>Get a value on an object.
-Use this instead of subscript ([]) or dot notation
+  				       <dt><p>Get a value on an object.</p>
+
+<p>Use this instead of subscript (<code>[]</code>) or dot notation
 for public variables. Otherwise, you won't reap benefits
 of being notified when they are set, or if the property
-is computed.
+is computed.</p>
 
-Get is tolerant of when trying to access objects that
-don't exist- it will return undefined in that case.
-
-{{{
-  var Oxygen = mix(Espresso.KVO).into({
-    symbol: 'O'
-  });
-
-  var Hydrogen = mix(Espresso.KVO).into({
-    symbol: 'H'
-  });
-
-  var water = mix(Espresso.KVO).into({
-    structure: [Hydrogen, Oxygen, Hydrogen],
-    symbol: function () {
-      return this.get('structure').pluck('symbol').join('=');
-    }.property()
-  });
-
-  alert(Oxygen.get('symbol'));
-  // -> 'O'
-
-  alert(water.get('structure[0].symbol'));
-  // -> 'H'
-
-  alert(water.get('symbol'));
-  // -> 'H=O=H'
-}}}</dd><br/>
+<p>Get is tolerant of when trying to access objects that
+don't exist- it will return undefined in that case.</p></dd>
                
 						   
              </div>
@@ -264,40 +272,15 @@ don't exist- it will return undefined in that case.
 
              <div class="description">
                
-  				       <dt>Set a value on an object.
-Use this instead of subscript ([]) or dot notation
+  				       <dt><p>Set a value on an object.</p>
+
+<p>Use this instead of subscript (<code>[]</code>) or dot notation
 for public variables. Otherwise, you won't reap benefits
 of being notified when they are set, or if the property
-is computed.
+is computed.</p>
 
-Set is tolerant of when trying to access objects that
-don't exist- it will ignore your attempt in that case.
-
-Keep in mind that events are lazy- they get processed after
-the processor has nothing to do. So don't expect to get notified
-immediately when you set the value.
-
-{{{
-  var person = Espresso.Template.extend({
-    name: '',
-
-    _firstTime: true,
-    nameDidChange: function (key, value) {
-      if (this._firstTime) {
-        this._firstTime = false;
-        alert("Hi, my name's {}".fmt(value));
-      } else {
-        alert("No wait, it's {}".fmt(value));
-      }
-    }.on('name')
-  });
-
-  person.set('name', 'Ian Donald Calvin Euclid Zappa');
-  // -> "Hi, my name's Ian Donald Calvin Euclid Zappa"
-
-  person.set('name', 'Dweezil Zappa');
-  // -> "No wait, it's Dweezil Zappa"
-}}}</dd><br/>
+<p>Set is tolerant of when trying to access objects that
+don't exist- it will ignore your attempt in that case.</p></dd>
                
 						   
              </div>
@@ -345,9 +328,15 @@ immediately when you set the value.
 					<a name="unknownProperty"> </a>
           <div>
              <a name="unknownProperty"> </a>
-             <h3> <b>unknownProperty</b>(key, value)</h3>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>unknownProperty</b>(key, value)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Called whenever you try to get or set a nonexistent
+property.</p>
+
+<p>This is a generic property that you can override to
+intercept general gets and sets, making use out of them.</p></dd>
                
 						   
              </div>
@@ -374,6 +363,13 @@ immediately when you set the value.
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The value of the key.</dt>
+							
+							</dl>
+						
 						
 
 						
@@ -397,7 +393,7 @@ immediately when you set the value.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:53 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:50 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

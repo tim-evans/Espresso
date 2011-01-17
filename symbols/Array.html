@@ -48,7 +48,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -85,7 +85,7 @@ function endResize(e) {
       <h1 class="title">Overview</h1>
       
 			<p class="description">
-				Shim for the native Array object.
+				<p>Shim for the native Array object.</p>
 			</p>
       
       
@@ -123,7 +123,12 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Array.html#flatten">flatten</a></b>()</td>
+              + <b><a href="../symbols/Array.html#compact">compact</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Array.html#flatten">flatten</a></b>(level)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -173,7 +178,7 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Array.html#without">without</a></b>()</td>
+              + <b><a href="../symbols/Array.html#without">without</a></b>(values)</td>
             </tr>
 					
           </table>
@@ -195,12 +200,14 @@ function endResize(e) {
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="flatten"> </a>
+					<a name="compact"> </a>
           <div>
-             <a name="flatten"> </a>
-             <h3> <b>flatten</b>()</h3>
+             <a name="compact"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>compact</b>()</h3>
 
              <div class="description">
+               
+  				       <dt><p>Removes all <code>undefined</code> or <code>null</code> values.</p></dd>
                
 						   
              </div>
@@ -210,12 +217,80 @@ function endResize(e) {
 						
 						
 						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The array without any `undefined` or `null` values.</dt>
+							
+							</dl>
+						
 						
 
 						
 					
 
 					</div>
+					
+					
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;nil;<br/><br/>alert([<span class="value">undefined</span>,&nbsp;<span class="value">null</span>,&nbsp;nil,&nbsp;<span class="string">'nada'</span>].compact());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;['nada']</code>
+</div>
+					
+					
+				 
+					
+					<hr />
+				
+					<a name="flatten"> </a>
+          <div>
+             <a name="flatten"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>flatten</b>(level)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Returns a new array that's a one-dimensional flattening of this
+array (recursively). That is, for every element that's an array,
+extract its elements into the new array. If the optional level
+arguments determines the level of recursion to flatten.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> <b>level</b>
+									<i>Optional</i>
+								</dt>
+								<dd>The maximum level of recursion.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The flattened array.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+					
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;arr&nbsp;=&nbsp;[<span class="string">1</span>,&nbsp;[<span class="string">2</span>,&nbsp;[<span class="string">3</span>,&nbsp;[<span class="string">4</span>,&nbsp;[<span class="string">5</span>]]]]];<br/>alert(arr.flatten());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5]<br/><br/>alert(arr.flatten(<span class="string">2</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;[1,&nbsp;2,&nbsp;3,&nbsp;[4,&nbsp;[5]]];</code>
+</div>
+					
 					
 				 
 					
@@ -228,10 +303,10 @@ function endResize(e) {
 
              <div class="description">
                
-  				       <dt>Iterator over the Array.
+  				       <dt><p>Iterator over the Array.</p>
 
-Implemented to be in conformance with ECMA-262 Edition 5,
-so you will use the native forEach where it exists.</dd><br/>
+<p>Implemented to be in conformance with ECMA-262 Edition 5,
+so you will use the native <code>forEach</code> where it exists.</p></dd>
                
 						   
              </div>
@@ -272,19 +347,6 @@ so you will use the native forEach where it exists.</dd><br/>
 
 					</div>
 					
-					
-					<div class="code"><code>&nbsp;&nbsp;[<span class="string">1</span>,&nbsp;<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">5</span>].forEach(alert);<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;1<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;1<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;2<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;3<br/>&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;5</code><div class="status-bar"><a href="#" onclick="demo0()">&#9654;</a></div><div class="console hidden" id="console-0"></div><script type="text/javascript">
-function demo0() {
- document.getElementById("console-0").innerHTML = ""; var alert = function(text) { var div = document.getElementById("console-0"); div.setAttribute("class", "console"); div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>"; };  [1, 1, 2, 3, 5].forEach(alert);
-  // -> 1
-  // -> 1
-  // -> 2
-  // -> 3
-  // -> 5
-}
-</script></div>
-					
-					
 				 
 					
 					<hr />
@@ -295,6 +357,11 @@ function demo0() {
              <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Array.<b>from</b>(iterable)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Convert an iterable object into an Array.</p>
+
+<p>This is used mostly for the arguments variable
+in functions.</p></dd>
                
 						   
              </div>
@@ -336,9 +403,12 @@ function demo0() {
 					<a name="indexOf"> </a>
           <div>
              <a name="indexOf"> </a>
-             <h3> <b>indexOf</b>(o, fromIndex)</h3>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> <b>indexOf</b>(o, fromIndex)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Shim for Internet Explorer, which provides no <code>indexOf</code> for
+Array prototypes.</p></dd>
                
 						   
              </div>
@@ -348,22 +418,29 @@ function demo0() {
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>o</b>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>o</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The object to test.</dd>
 							
 								<dt>
-									<b>fromIndex</b>
-									
+									<span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> <b>fromIndex</b>
+									<i>Optional</i>
 								</dt>
-								<dd></dd>
+								<dd>The index to start looking at for the element.</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The first index of an item.</dt>
+							
+							</dl>
 						
 						
 
@@ -383,7 +460,7 @@ function demo0() {
 
              <div class="description">
                
-  				       <dt>Returns whether the object passed in is an Array or not.</dd><br/>
+  				       <dt><p>Returns whether the object passed in is an Array or not.</p></dd>
                
 						   
              </div>
@@ -425,11 +502,12 @@ function demo0() {
 					<a name="lastIndexOf"> </a>
           <div>
              <a name="lastIndexOf"> </a>
-             <h3> <b>lastIndexOf</b>(searchElement, fromIndex)</h3>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> <b>lastIndexOf</b>(searchElement, fromIndex)</h3>
 
              <div class="description">
                
-  				       <dt>Returns the last index that the object is found at.</dd><br/>
+  				       <dt><p>Shim for the last index that the object is found at.
+Returns -1 if the item is not found.</p></dd>
                
 						   
              </div>
@@ -459,7 +537,7 @@ function demo0() {
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt>The last index of an item.</dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The last index of an item.</dt>
 							
 							</dl>
 						
@@ -484,9 +562,11 @@ function demo0() {
 					<a name="remove"> </a>
           <div>
              <a name="remove"> </a>
-             <h3> <b>remove</b>(from, to)</h3>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> <b>remove</b>(from, to)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Removes the value from the array.</p></dd>
                
 						   
              </div>
@@ -496,22 +576,29 @@ function demo0() {
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>from</b>
+									<span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> <b>from</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The position to begin removing values from.</dd>
 							
 								<dt>
-									<b>to</b>
-									
+									<span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> <b>to</b>
+									<i>Optional</i>
 								</dt>
-								<dd></dd>
+								<dd>The position to remove values to.</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The length of the array.</dt>
+							
+							</dl>
 						
 						
 
@@ -520,6 +607,12 @@ function demo0() {
 
 					</div>
 					
+					
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;breakfast&nbsp;=&nbsp;[<span class="string">"banana"</span>,&nbsp;<span class="string">"waffles"</span>,&nbsp;<span class="string">"bacon"</span>,&nbsp;<span class="string">"coffee"</span>];<br/>breakfast.remove(<span class="string">0</span>);<br/><br/>alert(breakfast);<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;["waffles",&nbsp;"bacon",&nbsp;"coffee"]<br/><br/>breakfast.unshift(<span class="string">"sausages"</span>,&nbsp;<span class="string">"pancakes"</span>)<br/>alert(breakfast);<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;["sausages",&nbsp;"pancakes",&nbsp;"waffles",&nbsp;"bacon",&nbsp;"coffee"]<br/><br/>breakfast.remove(<span class="string">1</span>,&nbsp;<span class="string">2</span>);<br/>alert(breakfast);<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;["sausages",&nbsp;"bacon",&nbsp;"coffee"]</code>
+</div>
+					
+					
 				 
 					
 					<hr />
@@ -527,11 +620,12 @@ function demo0() {
 					<a name="reverse"> </a>
           <div>
              <a name="reverse"> </a>
-             <h3> <b>reverse</b>()</h3>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>reverse</b>()</h3>
 
              <div class="description">
                
-  				       <dt>KVO compliant reverse().</dd><br/>
+  				       <dt><p>Shim for Internet Explorer, which provides no reverse for
+Array prototypes. Returns -1 if the item is not found.</p></dd>
                
 						   
              </div>
@@ -540,6 +634,13 @@ function demo0() {
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The array in reverse order.</dt>
+							
+							</dl>
 						
 						
 
@@ -555,6 +656,12 @@ function demo0() {
 
 					</div>
 					
+					
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;racecar&nbsp;=&nbsp;<span class="string">"racecar"</span>.split(<span class="string">''</span>);<br/>alert(racecar.reverse().join(<span class="string">''</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'racecar'</code>
+</div>
+					
+					
 				 
 					
 					<hr />
@@ -566,7 +673,7 @@ function demo0() {
 
              <div class="description">
                
-  				       <dt>The size of the Array.</dd><br/>
+  				       <dt><p>The size of the Array.</p></dd>
                
 						   
              </div>
@@ -601,7 +708,7 @@ function demo0() {
 
              <div class="description">
                
-  				       <dt>Returns all unique values on the array.</dd><br/>
+  				       <dt><p>Returns a new array by removing duplicate values in <code>this</code>.</p></dd>
                
 						   
              </div>
@@ -614,7 +721,7 @@ function demo0() {
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> </dt>
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The array with all duplicates removed.</dt>
 							
 							</dl>
 						
@@ -625,6 +732,12 @@ function demo0() {
 
 					</div>
 					
+					
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;magic&nbsp;=&nbsp;<span class="string">'abracadabra'</span>.split(<span class="string">''</span>).unique().join(<span class="string">''</span>);<br/>alert(magic);<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'abrcd'</code>
+</div>
+					
+					
 				 
 					
 					<hr />
@@ -632,17 +745,38 @@ function demo0() {
 					<a name="without"> </a>
           <div>
              <a name="without"> </a>
-             <h3> <b>without</b>()</h3>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>without</b>(values)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Returns a new array by removing all values passed in.</p></dd>
                
 						   
              </div>
 
 						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>values</b>
+									
+								</dt>
+								<dd>Removes all values on the array that
+      match the arguments passed in.</dd>
+							
+							</dl>
 						
 						
 						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The array without the values given.</dt>
+							
+							</dl>
 						
 						
 
@@ -667,7 +801,7 @@ function demo0() {
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Fri Dec 31 2010 23:12:52 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 16 2011 19:59:48 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

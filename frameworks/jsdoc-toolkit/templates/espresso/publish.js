@@ -288,12 +288,16 @@ var toReplace = [{
   css: 'single-line-comment'
 }];
 
+function escapeHTML(string) {
+  return String(string).replace(/ /g, '&nbsp;')
+                       .replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;');
+}
+
 /** highlight an example code block, formatting it properly */
 function highlight(block) {
   var raw = block;
-  block = String(block).replace(/ /g, '&nbsp;')
-                       .replace(/</g, '&lt;')
-                       .replace(/>/g, '&gt;');
+  block = escapeHTML(block);
 
   var matches = [], match, regexp, css, i, len, other, idx, res = [];
   for (i = 0, len = toReplace.length; i < len; i++) {
@@ -354,23 +358,7 @@ function highlight(block) {
 var guid = 0;
 function code(block) {
   block = removeExtraSpaces(block);
-  return '<div class="code">\n\
-  <code>' + highlight(block) + '</code>\n\
-  <div class="status-bar">\n\
-    <a href="#" onclick="demo' + guid + '()">&#9654;</a>\n\
-  </div>\n\
-  <div class="console hidden" id="console-' + guid + '"></div>\n\
-  <script type="text/javascript">\n\
-    function demo' + guid + '() {\n\
-      document.getElementById("console-' + guid + '").innerHTML = "";\n\
-      var alert = function(text) {\n\
-        var div = document.getElementById("console-' + (guid++) + '");\n\
-        div.setAttribute("class", "console");\n\
-        div.innerHTML += "&nbsp;&nbsp;=>&nbsp;" + text + "<br/>";\n\
-      };' + block + '\n\
-    }\n\
-  </script>\n\
-</div>';
+  return '<div class="code">\n<code>' + highlight(block) + '</code>\n</div>';
 }
 
 
@@ -1309,10 +1297,10 @@ var _DoCodeSpans = function(text) {
 	text = text.replace(/(^|[^\\])(`+)([^\r]*?[^`])\2(?!`)/gm,
 		function(wholeMatch,m1,m2,m3,m4) {
 			var c = m3;
-			c = c.replace(/^([ \t]*)/g,"");	// leading whitespace
-			c = c.replace(/[ \t]*$/g,"");	// trailing whitespace
+//			c = c.replace(/^([ \t]*)/g,"");	// leading whitespace
+//			c = c.replace(/[ \t]*$/g,"");	// trailing whitespace
 			c = _EncodeCode(c);
-			return m1+"<pre>"+c+"</pre>";
+			return m1+"<code>"+escapeHTML(c)+"</code>";
 		});
 
 	return text;

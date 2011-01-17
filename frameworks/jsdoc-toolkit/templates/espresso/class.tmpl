@@ -284,7 +284,7 @@
 					</div>
 					<div class="description">
 						{+htmlize(resolveLinks(member.desc))+}
-					</div><br/>
+					</div>
 					
 					<if test="member.example.length">
 					<for each="example" in="member.example">
@@ -345,7 +345,7 @@
 
              <div class="description">
                <if test="member.desc">
-  				       <dt>{+htmlize(resolveLinks(member.desc))+}</dd><br/>
+  				       <dt>{+htmlize(resolveLinks(member.desc))+}</dd>
                </if>
 						   <if test="member.author"><br/>
                  <i>Author: </i>{+member.author+}.

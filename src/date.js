@@ -180,7 +180,7 @@ mix(/** @lends Date# */{
   }())
 }).into(Date.prototype);
 
-mix({
+mix(/** @lends Date */{
 
   /**
     Shim for `now`.

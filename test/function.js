@@ -143,8 +143,8 @@ context("Function",
     assert.kindOf("function", Function.prototype.on);
   }),
 
-  should("have a function named 'observe'", function () {
-    assert.kindOf("function", Function.prototype.observe);
+  should("have a function named 'observes'", function () {
+    assert.kindOf("function", Function.prototype.observes);
   }),
 
   should("have a function named 'property'", function () {

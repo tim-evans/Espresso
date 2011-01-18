@@ -6,7 +6,7 @@ function publish(symbolSet) {
 		outDir:       JSDOC.opt.d || SYS.pwd + "../out/jsdoc/",
 		templatesDir: JSDOC.opt.t || SYS.pwd + "../templates/jsdoc/",
 		symbolsDir:   "symbols/",
-		srcDir:       "symbols/src/"
+		srcDir:       "symbols/"
 	};
   var context = {
     t: publish.conf.templatesDir,
@@ -21,7 +21,7 @@ function publish(symbolSet) {
 	}
 	
 	// create the folders and subfolders to hold the output
-	IO.mkPath((publish.conf.outDir + "symbols/src").split("/"));
+	IO.mkPath((publish.conf.outDir + "symbols").split("/"));
 		
 	// used to allow Link to check the details of things being linked to
 	Link.symbolSet = symbolSet;
@@ -54,7 +54,7 @@ function publish(symbolSet) {
 	var files = JSDOC.opt.srcFiles;
   for (i = 0, l = files.length; i < l; i++) {
     var file = files[i];
-    var srcDir = publish.conf.outDir + "symbols/src/";
+    var srcDir = publish.conf.outDir + "symbols/";
     makeSrcFile(file, srcDir);
   }
 

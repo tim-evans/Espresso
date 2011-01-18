@@ -177,7 +177,7 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
 
       // Expected behaviour is strange unless publishes
       // are done immediately.
-      if (object.publish) {
+      if (object.publish && !(property.isIdempotent && !didChange)) {
         object.publish(key, value);
       }
     }

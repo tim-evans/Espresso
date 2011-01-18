@@ -24,7 +24,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.4.2',
+  VERSION: '0.5.2',
 
   /**
     The global variable.

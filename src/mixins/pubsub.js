@@ -104,7 +104,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
       subscriptions[event].forEach(function (subscription) {
         subscriber = subscription.subscriber;
         if (subscription.synchronous) {
-          subscriber.apply(this, args);
+          Espresso.Scheduler.invoke(subscriber, args, this);
         } else {
           Espresso.Scheduler.defer(subscriber, args, this);
         }
@@ -112,17 +112,51 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
       }, this);
     }
     if (!published && Espresso.isCallable(this.unpublishedEvent)) {
-      this.unpublishedEvent.apply(this, arguments);
+      Espresso.Scheduler.invoke(this.unpublishedEvent, arguments, this);
     }
     return this;
   }
 };
 
+/** @namespace
+
+  The scheduler is a mechanism to call functions in an
+  abstract fashion. The built-in implementation is
+  simplistic and may not meet the needs of your library.
+
+  It's here so you may swap out functionality to suit your
+  needs without mucking with moving parts within Espresso.
+  You may interpret the functions as you see fit. Just mind
+  that mucking with their implementation *will* change how
+  notifications are delivered for the {@link Espresso.PubSub}
+  and {@link Espresso.KVO} mixins.
+ */
 Espresso.Scheduler = {
+
+  /**
+    Defers execution until a later time (when the ready
+    queue is empty).
+
+    @param {Function} lambda The function to call.
+    @param {Array} args The arguments to apply to the function.
+    @param {Object} that The object to apply as `this`.
+   */
   defer: function (lambda, args, that) {
     that = that || lambda;
     setTimeout(function () {
       lambda.apply(that, args);
     }, 0);
+  },
+
+  /**
+    Invokes a function immediately.
+
+    @param {Function} lambda The function to call.
+    @param {Array} args The arguments to apply to the function.
+    @param {Object} that The object to apply as `this`.
+   */
+  invoke: function (lambda, args, that) {
+    that = that || lambda;
+    lambda.apply(that, args);
   }
 };

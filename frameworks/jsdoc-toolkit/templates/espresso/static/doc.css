@@ -80,7 +80,8 @@ body.doc {
 }
 
 .doc p {
-  padding-left: 10px;
+  line-height: 1.5em !important;
+  margin: 1em 0px !important;
 }
 
 .doc #header #status span {
@@ -213,16 +214,25 @@ body.doc {
 }
 
 .doc #content h1 {
-  font-size: 1.6em;
-  font-weight: normal;
-  padding-bottom: 2px;
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #999;
+  font-size: 175%;
+  margin-top: 1.3em !important;
+}
+
+.doc #content h2 {
+  font-size: 150%;
+  margin-top: 1.3em !important;
 }
 
 .doc #content h3 {
-  font-size: 1.3em;
-  font-weight: normal;
+  margin-top: 1em !important;
 }
+
+.doc #content ul li {
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
 .doc .fineprint {
   position: absolute;
   bottom: 0;

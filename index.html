@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+  <title>JsDoc Reference - Espresso</title>
+  <link rel="stylesheet" type="text/css" href="static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="static/doc.css"></link>
+  <script type="text/javascript" src="../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+    <h1>Espresso</h1>
+    <span class="caption">A pick-me up for JavaScript Library authors.</span>
+    <span id="status"></span>
+  </div>
+  <div id="module">
+    <h1>About</h1>
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="symbols/_global_.html">_global_</a></li><li><a href="symbols/Array.html">Array</a></li><li><a href="symbols/Boolean.html">Boolean</a></li><li><a href="symbols/Date.html">Date</a></li><li><a href="symbols/Espresso.html">Espresso</a></li><ul><li><a href="symbols/Espresso.Class.html">Class</a></li><li><a href="symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="symbols/Espresso.Hash.html">Hash</a></li><li><a href="symbols/Espresso.KVO.html">KVO</a></li><li><a href="symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="symbols/Espresso.Template.html">Template</a></li></ul><li><a href="symbols/Function.html">Function</a></li><li><a href="symbols/JSON.html">JSON</a></li><li><a href="symbols/Number.html">Number</a></li><li><a href="symbols/Object.html">Object</a></li><li><a href="symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+    <h2>What exactly <em>is</em> Espresso?</h2>
+    <p>Espresso is a JavaScript library that serves as groundwork for developing specialized JavaScript libraries. This means that Espresso acts as a shim, taking care of all of the cross-browser discrepancies, and leaves you to <em>not worry</em> about whatever unsupported clients are doing.</p>
+
+    <p>In addition to acting as a shim, Espresso provides some espressive mechanisms for mixins, eventing, and observing.</p>
+
+<h3>Mixins</h3>
+
+<p>The <code>mix</code> function is the gooey center of it all. At it's simplest, it copies over slots on an object to a target object. At it's most complex, it can do feature detection, subscribe to events, provide aliases to functions, and provides a simple way to create diffs / copies of an existing object.</p>
+
+<p>One of the core features to <code>mix</code> is the ability to have function decorators. All decorators bundled with the library use the mechanism. They provide a level of readability and a whiff of metaprogramming that make reading your code a pleasure.</p>
+
+<p>The no-frills decorators are the following:</p>
+<ul>
+<li><code>inferior</code>: tells <code>mix</code> <em>not</em> to override the base function if it exists.</li>
+<li><code>around</code>: the <code>super</code> mechanism of Espresso. The base function will be provided as the first argument to your function.</li>
+<li><code>alias</code>: tells <code>mix</code> to mixin the function under the additional names given.</li>
+</ul>
+
+<p>In addition to these, there are decorators for the Publish-Subscribe mixin and the Key-Value Observing mixin. These decorators will be discussed in their pertinent sections.</p>
+
+<h3>Publish-Subscribe</h3>
+
+<p>The Publish-Subscribe mixin (PubSub) provides a general purpose mechanism for subscribing to an event and being notified when it occurs. Currently, the mixin provides the ability to configure how the events should be delivered to the function (asynchronously or synchronously). The default is asynchronous execution. The mixin also has a hook to handle any events that have no subscribers. This can be used to lazily catch errors, or may be used in a more proactive manner to do some clever metaprogramming. The power is in your hands.</p>
+
+<p>For those who like that sugary stuff, PubSub has a decorator for subscribing to events asynchronously via the <code>on</code> decorator.</p>
+
+<h3>Key-Value Observing</h3>
+
+<p>The Key-Value Observing mixin (KVO) is inspired by SproutCore's Observable mixin, which was in turn inspired from Cocoa's KVO paradigm.</p>
+
+<p>For those of you not familiar with the KVO, here's a crash course. KVO describes when you register as an observer to changes on a property path. When that property changes, you get notified. Let's break that down a bit. A property path is simply an absolute path to an object like <code>coffee.isHot</code>. If <code>isHot</code> changes (from <code>true</code> to <code>false</code>), then you get notified. It's that simple.</p>
+
+<p>To get and set, you need to use <code>get</code> and <code>set</code> provided by the KVO mixin. These provide all the magic of Key-Value Observing. <code>get</code> and <code>set</code> provides functionality for computed properties and caching.</p>
+
+<p>The decorators for KVO are the following:</p>
+
+<ul>
+<li><code>property</code> marks the property as a computed property. You may do<code>get</code>s and <code>set</code>s on the property now.</li>
+<li><code>cacheable</code> marks the property as cacheable. <code>get</code>ting the value more than once will return the cached value.</li>
+<li><code>idempotent</code> marks the property as idempotent. <code>set</code>ting the value more than once will not call the computed property again.</li>
+<li><code>observes</code> notifies the function whenever the dependent keys are <code>set</code>.</li>
+</ul>
+
+<p>The mixin as of now, is completely compliant with SproutCore's implementation, and will gracefully degrade to using it. Note that it doesn't work the other way around, as Espresso's KVO mixin is dependent on the PubSub mixin.</p>
+
+<h3>Classes and Templates</h3>
+
+<p>Espresso has two mechanisms for inheritance. There's a prototypal inheritance through <code>Template</code>s and classical inheritance through <code>Class</code>es. Both have the same semantics, but have totally different designs and use cases for them.</p>
+
+<p><code>Template</code>s are always instances, and are purely one-offs from an empty object. Every single time a <code>Template</code> is <code>extend</code>ed, it will be initialized.</p>
+
+<p><code>Class</code>es are always functions, and are instantiated upon creating the object with the <code>new</code> operator. A <code>Class</code> is instantiated when it is invoked with <code>new</code> rather than when <code>extend</code>ing an object.</p>
+
+<h3>String Formatting</h3>
+
+<p>Espresso provides a powerful string formatting based off of Python's {format} strings. Those familiar with Ruby's #{templates} and .NET's String.Format will be feel right at home with the formatting mechanism provided. This means you can have pretty string templates like <code>"{pi} is delicious"</code>.
+</p>
+  </div>
+
+  <div class="fineprint" style="clear:both">
+    
+      Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.1.0 on Mon Jan 17 2011 23:28:40 GMT-0500 (EST)
+  </div>
+
+  <script type="text/javascript" src="../frameworks/shoulda.js/shoulda.js"></script>
+  <script type="text/javascript" src="../test/test.js"></script>
+
+  <script type="text/javascript" src="../test/core.js"></script>
+  <script type="text/javascript" src="../test/mix.js"></script>
+  <script type="text/javascript" src="../test/class.js"></script>
+  <script type="text/javascript" src="../test/template.js"></script>
+  <script type="text/javascript" src="../test/formatter.js"></script>
+  <script type="text/javascript" src="../test/hash.js"></script>
+  <script type="text/javascript" src="../test/function.js"></script>
+  <script type="text/javascript" src="../test/object.js"></script>
+  <script type="text/javascript" src="../test/string.js"></script>
+  <script type="text/javascript">
+    Tests.run();
+    if (Tests.testsFailed > 0) {
+      document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+
+    } else {
+      document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+    }
+  </script>
+</body>
+</html>

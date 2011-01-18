@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Object</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
+
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
+
+  <div id="module">
+		<h1>
+				
+		  Built-In Namespace Object
+    </h1>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+
+
+<!-- ============================== constructor summary ====================
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Object.html#__fmt__">__fmt__</a></b>(spec)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Object.html#.keys">keys</a></b>(O)</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name="__fmt__"> </a>
+          <div>
+             <a name="__fmt__"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Formats an Object by coercing the Object to a
+String and calling <code>__fmt__</code> on the string with
+the format specifier passed in.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
+									
+								</dt>
+								<dd>The string specification to format the object.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The object as a formatted string according to the specification.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/object.js.html">object.js</a>.
+				 
+					
+					<hr />
+				
+					<a name=".keys"> </a>
+          <div>
+             <a name=".keys"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Object.<b>keys</b>(O)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Returns all iterable keys on the passed Object.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>O</b>
+									
+								</dt>
+								<dd>The object to return the keys of.</dd>
+							
+							</dl>
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{TypeError}</span>  <b></b>
+								</dt>
+								<dd>When `O` is not an object.</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A list of all keys on the object passed in.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/object.js.html">object.js</a>.
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Mon Jan 17 2011 23:28:40 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

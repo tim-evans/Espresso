@@ -2877,7 +2877,11 @@ mix(/** @lends Boolean# */{
 Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** @lends Espresso.Hash# */{
 
   /**
-   * Iterator
+    Iterator over the Hash.
+
+    @param {Function} lambda The callback to call for each element.
+    @param {Object} [self] The Object to use as this when executing the callback.
+    @returns {void}
    */
   forEach: function (lambda, self) {
     var k, v;
@@ -2890,20 +2894,19 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
   },
 
   /**
-   * Return all of the iterable keys on the hash.
-   *
-   * {{{
-   *   var alphabet = Espresso.Hash.extend({
-   *     a: 00, b: 01, c: 02, d: 03, e: 04, f: 05,
-   *     g: 06, h: 07, i: 08, j: 09, k: 10, j: 11,
-   *     k: 12, l: 13, m: 14, n: 15, o: 16, p: 17,
-   *     q: 18, r: 19, s: 20, t: 21, u: 22, v: 23,
-   *     w: 24, x: 25, y: 26, z: 27
-   *   });
-   *
-   *   alert(alphabet.keys());
-   * }}}
-   * @returns {Array} A list of all of the iterable keys on the hash.
+    Return all of the iterable keys on the hash.
+
+    @returns {Array} A list of all of the iterable keys on the hash.
+    @example
+      var alphabet = Espresso.Hash.extend({
+        a: 00, b: 01, c: 02, d: 03, e: 04, f: 05,
+        g: 06, h: 07, i: 08, j: 09, k: 10, j: 11,
+        k: 12, l: 13, m: 14, n: 15, o: 16, p: 17,
+        q: 18, r: 19, s: 20, t: 21, u: 22, v: 23,
+        w: 24, x: 25, y: 26, z: 27
+      });
+
+      alert(alphabet.keys());
    */
   keys: function () {
     return this.map(function (v, k) {
@@ -2912,22 +2915,21 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
   },
 
   /**
-   * Return all iterable values on the hash.
-   *
-   * {{{
-   *   var days = Espresso.Hash.extend({
-   *     1: 'Sunday',
-   *     2: 'Monday',
-   *     3: 'Tuesday',
-   *     4: 'Wednesday',
-   *     5: 'Thursday',
-   *     6: 'Friday',
-   *     7: 'Saturday'
-   *   });
-   *
-   *   alert(days.values());
-   * }}}
-   * @returns {Array} A list of all iterable values on the hash.
+    Return all iterable values on the hash.
+
+    @returns {Array} A list of all iterable values on the hash.
+    @example
+      var days = Espresso.Hash.extend({
+        1: 'Sunday',
+        2: 'Monday',
+        3: 'Tuesday',
+        4: 'Wednesday',
+        5: 'Thursday',
+        6: 'Friday',
+        7: 'Saturday'
+      });
+
+      alert(days.values());
    */
   values: function () {
     return this.map(function (v, k) {
@@ -2936,8 +2938,9 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
   },
 
   /**
-   * Convert the Hash into an Array of tuples.
-   * @returns {Array[]} An array of tuples.
+    Convert the Hash into an Array of tuples.
+
+    @returns {Array[]} An array of tuples.
    */
   toArray: function () {
     return this.map(function (v, k) {

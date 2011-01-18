@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Date</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
+
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
+
+  <div id="module">
+		<h1>
+				
+		  Built-In Namespace Date
+    </h1>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+
+
+<!-- ============================== constructor summary ====================
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Date.html#__fmt__">__fmt__</a></b>(spec)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Date.html#.now">now</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Date.html#toISOString">toISOString</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Date.html#toJSON">toJSON</a></b>(key)</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name="__fmt__"> </a>
+          <div>
+             <a name="__fmt__"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Date Formatting support.</p>
+
+<p>The following flags are acceptable in a format string:</p>
+
+<ul>
+<li><code>a</code> The abbreviated weekday name ("Sun")</li>
+<li><code>A</code> The full weekday name ("Sunday")</li>
+<li><code>b</code> The abbreviated month name ("Jan")</li>
+<li><code>B</code> The full month name ("January")</li>
+<li><code>c</code> The preferred local date and time representation</li>
+<li><code>d</code> Day of the month (01..31)</li>
+<li><code>H</code> Hour of the day, 24-hour clock (00..23)</li>
+<li><code>I</code> Hour of the day, 12-hour clock (01..12)</li>
+<li><code>j</code> Day of the year (001..366)</li>
+<li><code>m</code> Month of the year (01..12)</li>
+<li><code>M</code> Minute of the hour (00..59)</li>
+<li><code>p</code> Meridian indicator ("AM" or "PM")</li>
+<li><code>S</code> Second of the minute (00..60)</li>
+<li><code>U</code> Week number of the current year, starting with the first Sunday as the first day of the first week (00..53)</li>
+<li><code>W</code> Week number of the current year, starting with the first Monday as the first day of the first week (00..53)</li>
+<li><code>w</code> Day of the week (Sunday is 0, 0..6)</li>
+<li><code>x</code> Preferred representation for the date alone, no time</li>
+<li><code>X</code> Preferred representation for the time alone, no date</li>
+<li><code>y</code> Year without a century (00..99)</li>
+<li><code>Y</code> Year with century</li>
+<li><code>Z</code> Timezone name or abbreviation (EST)</li>
+</ul>
+
+<p>For example:</p>
+
+<div class="code">
+<code>alert(<span class="string">"Today&nbsp;is&nbsp;{:A,&nbsp;B&nbsp;d,&nbsp;Y}."</span>.fmt(<span class="keyword">new</span>&nbsp;Date()));<br/><br/>alert(<span class="string">"The&nbsp;time&nbsp;is:&nbsp;{:c}."</span>.fmt(<span class="keyword">new</span>&nbsp;Date()));</code>
+</div></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
+									
+								</dt>
+								<dd>The specifier to transform the date to a formatted string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The Date transformed into a string as specified.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+				 
+					
+					<hr />
+				
+					<a name=".now"> </a>
+          <div>
+             <a name=".now"> </a>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> Date.<b>now</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Shim for <code>now</code>.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The current time.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="toISOString"> </a>
+          <div>
+             <a name="toISOString"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toISOString</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Shim for <code>toISOString</code>.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The ISO 6081 formatted UTC date.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="toJSON"> </a>
+          <div>
+             <a name="toJSON"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toJSON</b>(key)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Shim for <code>toJSON</code> for Date.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>key</b>
+									<i>Optional</i>
+								</dt>
+								<dd>Optional key argument.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The date as an ISO Formatted string.</dt>
+							
+							</dl>
+						
+						
+
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dt>15.9.5.44 Date.prototype.toJSON</dt>
+							
+							</dl>
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Mon Jan 17 2011 23:28:39 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

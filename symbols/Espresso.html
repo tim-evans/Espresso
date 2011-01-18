@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Espresso</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+  <span id="status"></span>
+</div>
+
+<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
+<script type="text/javascript" src="../../test/test.js"></script>
+<script type="text/javascript" src="../../test/core.js"></script>
+<script type="text/javascript" src="../../test/mix.js"></script>
+<script type="text/javascript" src="../../test/class.js"></script>
+<script type="text/javascript" src="../../test/template.js"></script>
+<script type="text/javascript" src="../../test/formatter.js"></script>
+<script type="text/javascript" src="../../test/hash.js"></script>
+<script type="text/javascript" src="../../test/function.js"></script>
+<script type="text/javascript" src="../../test/object.js"></script>
+<script type="text/javascript" src="../../test/string.js"></script>
+<script type="text/javascript">
+  Tests.run();
+  if (Tests.testsFailed > 0) {
+    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
+  } else {
+    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
+  }
+</script>
+
+  <div id="module">
+		<h1>
+				
+		  Namespace Espresso
+    </h1>
+    
+      <span class="src"><a href="../symbols/src/core.js.html">core.js</a></span>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/_global_.html">_global_</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				<p>Espresso is a JavaScript library to be used as a
+foundation library to create JavaScript libraries.
+It also acts as a partial shim to ECMAScript 5,
+falling back to native browser support when available.</p>
+
+<p>Espresso's goal is to provide a small library that
+provides the basics that provide the power to
+developers to produce sophisticated JavaScript libraries
+that have clear, concise, and readable code, as well as
+powerful consumer-facing APIs.</p>
+
+<p>What does this mean? Less code and robust APIs!</p>
+
+<p>This library provides the Publish-Subscribe pattern,
+Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
+			</p>
+      
+      
+			
+      
+			
+			
+			
+    
+
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.">
+				<caption>Namespace Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.html">Espresso</a></b>
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.html#.global">global</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.html#.VERSION">VERSION</a>
+              </td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.getObjectFor">getObjectFor</a></b>(key, object)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.hasValue">hasValue</a></b>(o)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.isCallable">isCallable</a></b>(obj)</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<h1 class="title">Field Detail</h1>
+				
+          <div>
+             <a name=".global"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> Espresso.<b>global</b></h3>
+					</div>
+					<div class="description">
+						<p>The global variable.</p>
+
+<p>Used to be independant of what the global <code>this</code> is,
+whether it's <code>window</code> or <code>document</code> in a browser or
+<code>global</code> in NodeJS.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name=".VERSION"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.<b>VERSION</b></h3>
+					</div>
+					<div class="description">
+						<p>The version string.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name=".getObjectFor"> </a>
+          <div>
+             <a name=".getObjectFor"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> Espresso.<b>getObjectFor</b>(key, object)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Lookup a variable's value given its Object notation.
+This requires absolute queries to the Object, only using
+the <code>.</code> notation.</p>
+
+<p>The most effort that is performed on behalf of the
+lookup when it fails is when it's an array AND it's the
+only element in the array, THEN it will unpack the element
+and make that the argument.</p>
+
+<p>This does not mean that absolute notation does not
+work in these cases; it just means that it's optional.</p>
+
+<p>This prevents unnecessary indexing by the user,
+expecially in the case of the arguments Array.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>key</b>
+									
+								</dt>
+								<dd>The key to get on the target.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>object</b>
+									<i>Optional</i>
+								</dt>
+								<dd>The target object to get a value from.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The referenced value in the args passed in.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+					
+					<div class="code">
+<code><span class="single-line-comment">//</span>&nbsp;Properties&nbsp;on&nbsp;the&nbsp;global&nbsp;scope&nbsp;need&nbsp;to&nbsp;be&nbsp;there-<br/><span class="single-line-comment">//</span>&nbsp;local&nbsp;scoped&nbsp;variables&nbsp;will&nbsp;not&nbsp;be&nbsp;found!<br/>Espresso.global.arthur&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Arthur&nbsp;Dent'</span>,<br/>&nbsp;&nbsp;species:&nbsp;<span class="string">'Human'</span>,<br/>&nbsp;&nbsp;description:&nbsp;<span class="string">'Mostly&nbsp;Harmless'</span><br/>});<br/><br/>alert(Espresso.getObjectFor(<span class="string">"arthur.name"</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'Arthur&nbsp;Dent'</code>
+</div>
+					
+					<div class="code">
+<code>alert(Espresso.getObjectFor(<span class="string">"lang.pr._coffee"</span>,&nbsp;{<br/>&nbsp;&nbsp;lang:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;en:&nbsp;{&nbsp;_coffee:&nbsp;<span class="string">"coffee"</span>&nbsp;},<br/>&nbsp;&nbsp;&nbsp;&nbsp;pr:&nbsp;{&nbsp;_coffee:&nbsp;<span class="string">"cafe"</span>&nbsp;}<br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"cafe"</code>
+</div>
+					
+					
+				 
+					
+					<hr />
+				
+					<a name=".hasValue"> </a>
+          <div>
+             <a name=".hasValue"> </a>
+             <h3><span class="light">(<a href="../symbols/Boolean.html">Boolean</a>)</span> Espresso.<b>hasValue</b>(o)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Checks whether the variable is defined <em>and</em> is not null.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>o</b>
+									
+								</dt>
+								<dd>The object to test if it's defined or not.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> True if the value is not null and not undefined.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+					
+					<div class="code">
+<code><span class="keyword">var</span>&nbsp;unbound;&nbsp;<span class="single-line-comment">//</span>&nbsp;This&nbsp;variable&nbsp;is&nbsp;very&nbsp;lonely&nbsp;(and&nbsp;very&nbsp;much&nbsp;undefined)<br/><span class="value">undefined</span>&nbsp;=&nbsp;<span class="string">'all&nbsp;your&nbsp;base&nbsp;belong&nbsp;to&nbsp;us'</span>;&nbsp;<span class="single-line-comment">//</span>&nbsp;Yes,&nbsp;you&nbsp;can&nbsp;rename&nbsp;undefined,&nbsp;but...<br/>alert(Espresso.hasValue(unbound));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;false<br/><br/>alert(Espresso.hasValue(<span class="value">undefined</span>));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;true</code>
+</div>
+					
+					
+				 
+					
+					<hr />
+				
+					<a name=".isCallable"> </a>
+          <div>
+             <a name=".isCallable"> </a>
+             <h3><span class="light">(<a href="../symbols/Boolean.html">Boolean</a>)</span> Espresso.<b>isCallable</b>(obj)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>ECMAScript compliant isCallable.</p>
+
+<blockquote>
+  <p>The abstract operation IsCallable determines if its argument,
+  which must be an ECMAScript language value, is a callable function
+  Object if it's an Object that hass a function called <code>call</code>.</p>
+</blockquote>
+
+<p>This allows overriding <code>call</code> on an object, effectively making it
+a callable object.</p>
+
+<p>The one addition is ensuring that the method is also applicable,
+(having the <code>apply</code> being callable too).</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>obj</b>
+									
+								</dt>
+								<dd>The Object to check whether it is callable or not.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> True if the Object is callable, otherwise false.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Mon Jan 17 2011 23:28:39 GMT-0500 (EST)
+		</div>
+	</body>
+</html>

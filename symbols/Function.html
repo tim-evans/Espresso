@@ -136,16 +136,6 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#observes">observes</a></b>(observers)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#on">on</a></b>(subscriptions)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Function.html#property">property</a></b>(dependentKeys)</td>
             </tr>
 					
@@ -490,153 +480,6 @@ will be overriden.</p></dd>
 					
 					<hr />
 				
-					<a name="observes"> </a>
-          <div>
-             <a name="observes"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>observes</b>(observers)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Notifies the function when a property did change.
-The notification will be delivered synchronously
-to the function.</p>
-
-<p><code>observes</code> is intended to emphasize the observer
-pattern, where messages are delivered synchronously
-to the method. This is extremely useful for taking
-action when an internal event needs to be propagated
-to many internal sources.</p>
-
-<p>Try not to expose <code>observes</code> as a public API method,
-as it will potentially crash the library's code if
-<em>any</em> error is thrown.</p>
-
-<p>All <code>observes</code> does is subscribes the function to the
-property paths given using synchronous delivery.</p>
-
-<p>Here's a simple clock using observers to propagate
-changes from appropriate levels outward.</p>
-
-<div class="code">
-<code><span class="keyword">var</span>&nbsp;Clock&nbsp;=&nbsp;Espresso.Class.extend({<br/>&nbsp;&nbsp;time:&nbsp;<span class="value">null</span>,<br/>&nbsp;&nbsp;timer:&nbsp;<span class="value">null</span>,<br/><br/>&nbsp;&nbsp;init:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.set(<span class="string">'timer'</span>,&nbsp;setInterval(<span class="keyword">this</span>.tick.bind(<span class="keyword">this</span>),&nbsp;<span class="string">1000</span>));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.tick();<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;tick:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.set(<span class="string">'time'</span>,&nbsp;<span class="keyword">new</span>&nbsp;Date(Date.now()));<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;timeDidChange:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"{:c}"</span>.fmt(<span class="keyword">this</span>.get(<span class="string">'time'</span>)));<br/>&nbsp;&nbsp;}.observes(<span class="string">'time'</span>)<br/>});<br/><br/><span class="keyword">var</span>&nbsp;clock&nbsp;=&nbsp;<span class="keyword">new</span>&nbsp;Clock();<br/>setTimeout(<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;clearInterval(clock.get(<span class="string">'timer'</span>))<br/>},&nbsp;<span class="string">5000</span>);</code>
-</div></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(...)</span> <b>observers</b>
-									
-								</dt>
-								<dd>The property paths to be
-      notified when anything gets published to them.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
-							
-							</dl>
-						
-						
-
-						
-							<dl class="detailList">
-							<dt class="heading">See:</dt>
-							
-								<dt><a href="../symbols/Function.html#on">Function#on</a></dt>
-							
-							</dl>
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="on"> </a>
-          <div>
-             <a name="on"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>on</b>(subscriptions)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Notifies the function when a property did change.
-The notification will be delivered asynchronously
-to the function.</p>
-
-<p><code>on</code> is intended to emphasize the publish/subscribe
-pattern, where messages are delivered asynchronously
-to the method, with the intention that the method
-is foreign code that absolutely cannot disturb the
-execution of the library.</p>
-
-<p>All <code>on</code> does is subscribes the function to the
-property paths given using asynchronous delivery.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(...)</span> <b>subscriptions</b>
-									
-								</dt>
-								<dd>The events to be
-      notified when anything gets published to them.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
-							
-							</dl>
-						
-						
-
-						
-							<dl class="detailList">
-							<dt class="heading">See:</dt>
-							
-								<dt><a href="../symbols/Function.html#observes">Function#observes</a></dt>
-							
-							</dl>
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-				 
-					
-					<hr />
-				
 					<a name="property"> </a>
           <div>
              <a name="property"> </a>
@@ -700,7 +543,7 @@ You may now use the function for <code>get</code> and <code>set</code>.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jan 18 2011 09:51:56 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jan 18 2011 18:24:15 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

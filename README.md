@@ -33,8 +33,6 @@ In addition to these, there are decorators for the Publish-Subscribe mixin and t
 
 The Publish-Subscribe mixin (PubSub) provides a general purpose mechanism for subscribing to an event and being notified when it occurs. Currently, the mixin provides the ability to configure how the events should be delivered to the function (asynchronously or synchronously). The default is asynchronous execution. The mixin also has a hook to handle any events that have no subscribers. This can be used to lazily catch errors, or may be used in a more proactive manner to do some clever metaprogramming. The power is in your hands.
 
-For those who like that sugary stuff, PubSub has a decorator for subscribing to events asynchronously via the `on` decorator.
-
 
 ### Key-Value Observing
 
@@ -52,8 +50,6 @@ The decorators for KVO are the following:
     more than once will return the cached value.
  - `idempotent` marks the property as idempotent. `set`ting the value
     more than once will not call the computed property again.
- - `observes` notifies the function whenever the dependent keys are
-    `set`.
 
 The mixin as of now, is completely compliant with SproutCore's implementation, and will gracefully degrade to using it. Note that it doesn't work the other way around, as Espresso's KVO mixin is dependent on the PubSub mixin.
 

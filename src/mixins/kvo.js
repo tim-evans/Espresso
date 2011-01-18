@@ -72,8 +72,7 @@
   object that you would like to monitor the changes, perhaps a
   renderer, you could attach observers to each of the properties
   by subscribing to the property path (via
-  {@link Espresso.PubSub#subscribe}) or by decorating your functions
-  with {@link Function#observes}, providing any property paths
+  {@link Espresso.PubSub#subscribe}), providing any property paths
   that you would like to be notified on.
 
     [kvo]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html

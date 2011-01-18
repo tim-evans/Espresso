@@ -141,7 +141,7 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
   set: function (key, value) {
     key = key.toString();
 
-    var property, idx = key.lastIndexOf('.'), object, result;
+    var property, idx = key.lastIndexOf('.'), object, result, didChange = false;
     if (idx === -1) {
       object = this;
     } else {
@@ -153,8 +153,19 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
       property = object[key];
 
       if (property && property.isProperty) {
-        result = property.call(object, key, value);
-        if (property.isCacheable) {
+        if (property.isIdempotent) {
+          object.__value__ = object.__value__ || {};
+          if (object.__value__[key] !== value) {
+            result = property.call(object, key, value);
+            didChange = true;
+          }
+          object.__value__[key] = value;
+        } else {
+          result = property.call(object, key, value);
+          didChange = true;
+        }
+
+        if (property.isCacheable && didChange) {
           object.__cache__ = object.__cache__ || {};
           object.__cache__[key] = result;
         }

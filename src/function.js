@@ -276,6 +276,21 @@ mix(/** @lends Function.prototype */{
     this.isProperty = true;
 
     return this;
+  },
+
+  /**
+    Marks the computed property as idempotent.
+
+    Using {@link KVO.set} on the function multiple
+    times will do act like setting the function once.
+
+    @returns {Function} The reciever.
+   */
+  idempotent: function () {
+    this.isIdempotent = true;
+    this.isProperty = true;
+
+    return this;
   }
 
 }).into(Function.prototype);
@@ -284,9 +299,11 @@ mix(/** @lends Function.prototype */{
 
   /**
     Bind the value of `this` on a function before hand,
-    with any extra arguments being passed in as initial arguments.
+    with any extra arguments being passed in as initial
+    arguments.
 
-    This implementation conforms to the ECMAScript 5 standard.
+    This implementation conforms to the ECMAScript 5
+    standard.
 
         var Person = Espresso.Template.extend({
           name: 'nil',

@@ -1,5 +1,5 @@
 SRC =	license.js core.js mixer.js function.js mixins/enumerable.js mixins/pubsub.js	\
-	mixins/kvo.js array.js template.js class.js string.js formatter.js number.js \
+	mixins/kvo.js array.js template.js class.js module.js string.js formatter.js number.js \
 	date.js object.js boolean.js hash.js lang/json.js
 
 DOCDIR = ../docs

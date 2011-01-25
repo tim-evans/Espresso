@@ -47,14 +47,6 @@ context("Espresso.Template",
     })
   ),
 
-  should("mixin Espresso.KVO", function () {
-    assert.mixesIn(Espresso.Template, Espresso.KVO);
-  }),
-
-  should("mixin Espresso.PubSub", function () {
-    assert.mixesIn(Espresso.Template, Espresso.PubSub);
-  }),
-
   context("extend",
     should("mixin arguments passed into extend()", function () {
       var Cappucino = Espresso.Template.extend({

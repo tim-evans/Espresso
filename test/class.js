@@ -55,14 +55,6 @@ context("Espresso.Class",
     })
   ),
 
-  should("mixin Espresso.KVO", function () {
-    assert.mixesIn(Espresso.Class.prototype, Espresso.KVO);
-  }),
-
-  should("mixin Espresso.PubSub", function () {
-    assert.mixesIn(Espresso.Class.prototype, Espresso.PubSub);
-  }),
-
   context("extend",
     should("be an instance of the Espresso.Class", function () {
       var Cappucino = Espresso.Class.extend();

@@ -48,8 +48,6 @@
 
     [resig]: http://ejohn.org/blog/simple-javascript-inheritance/
 
-  @extends Espresso.PubSub
-  @extends Espresso.KVO
  */
 Espresso.Class = function () {};
 
@@ -92,7 +90,7 @@ mix(/** @scope Espresso.Class */{
   }())
 }).into(Espresso.Class);
 
-mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
+mix(/** @scope Espresso.Class.prototype */{
 
   /**
     Filters out private variables and functions
@@ -103,8 +101,8 @@ mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
   toJSON: function (key) {
     var k, v, json = {};
     for (k in this) {
-      v = this.get(k);
-      if (k.charAt(0) !== "_" && !Espresso.isCallable(v) && k !== 'unknownProperty') {
+      v = this.get ? this.get(k) : this[k];
+      if (k.charAt && k.charAt(0) !== "_" && !Espresso.isCallable(v) && k !== 'unknownProperty') {
         json[k] = v;
       }
     }

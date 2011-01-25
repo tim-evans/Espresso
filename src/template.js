@@ -42,12 +42,12 @@
   since they are typeless and require stateless objects
   to perform at their best.
 
-  @extends Espresso.PubSub
-  @extends Espresso.KVO
  */
-Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Template# */{
+Espresso.Template = mix(/** @lends Espresso.Template# */{
 
-  /**
+  /** @function
+    @name init
+    @desc
     Override `init` to act like a constructor like so:
 
         var shotgun = Espresso.Template.extend({
@@ -61,7 +61,6 @@ Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Templ
 
     @returns {void}
    */
-  init: function () {},
 
   /**
     Extend a Template with a collection of objects.
@@ -131,8 +130,8 @@ Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Templ
   toJSON: function (key) {
     var k, v, json = {};
     for (k in this) {
-      v = this.get(k);
-      if (k.charAt(0) !== "_" && !Espresso.isCallable(v) && k !== 'unknownProperty') {
+      v = this.get ? this.get(k) : this[k];
+      if (k.charAt && k.charAt(0) !== "_" && !Espresso.isCallable(v) && k !== 'unknownProperty') {
         json[k] = v;
       }
     }

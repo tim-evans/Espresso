@@ -1,6 +1,6 @@
 /*globals Espresso */
 
-/** @class
+/** @namespace
 
   Advanced String Formatting borrowed from the eponymous Python PEP.
   It provides a flexible and powerful string formatting utility
@@ -59,7 +59,7 @@
       _hello = Localizer.extend({
         en: 'hello',
         fr: 'bonjour',
-        jp: 'konnichiwa'
+        ja: 'こんにちは'
       });
 
       alert(Espresso.Formatter.fmt("{:en}", _hello));
@@ -68,111 +68,118 @@
       alert(Espresso.Formatter.fmt("{:fr}", _hello));
       // => "bonjour"
 
-      alert(Espresso.Formatter.fmt("{:jp}", _hello));
-      // => "konnichiwa"
+      alert(Espresso.Formatter.fmt("{:ja}", _hello));
+      // => "こんにちは"
 
     [pep]: http://www.python.org/dev/peps/pep-3101/
+
+  @name Espresso.Formatter
  */
-Espresso.Formatter = {
+(function ()/** @lends Espresso.Formatter */{
+  var SPECIFIER = 
 
-  /**
-    The specifier regular expression.
+  module('Espresso.Formatter', fmt);
 
-    The groups are:
+  mix({
+    /**
+      The specifier regular expression.
 
-      `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
+      The groups are:
 
-    The brackets (`[]`) indicates an optional element.
+        `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
 
-    The `fill` is the character to fill the rest of the minimum width
-    of the string.
+      The brackets (`[]`) indicates an optional element.
 
-    The `align` is one of:
+      The `fill` is the character to fill the rest of the minimum width
+      of the string.
 
-      - `^` Forces the field to be centered within the available space.
-      - `<` Forces the field to be left-aligned within the available
-            space. This is the default.
-      - `>` Forces the field to be right-aligned within the available space.
-      - `=` Forces the padding to be placed after the sign (if any)
-            but before the digits. This alignment option is only valid
-            for numeric types.
+      The `align` is one of:
 
-    Unless the minimum field width is defined, the field width
-    will always be the same size as the data to fill it, so that
-    the alignment option has no meaning in this case.
+        - `^` Forces the field to be centered within the available space.
+        - `<` Forces the field to be left-aligned within the available
+              space. This is the default.
+        - `>` Forces the field to be right-aligned within the available space.
+        - `=` Forces the padding to be placed after the sign (if any)
+              but before the digits. This alignment option is only valid
+              for numeric types.
 
-    The `sign` is only valid for numeric types, and can be one of
-    the following:
+      Unless the minimum field width is defined, the field width
+      will always be the same size as the data to fill it, so that
+      the alignment option has no meaning in this case.
 
-      - `+` Indicates that a sign shoulb be used for both positive
-            as well as negative numbers.
-      - `-` Indicates that a sign shoulb be used only for as negative
-            numbers. This is the default.
-      - ` ` Indicates that a leading space should be used on positive
-            numbers.
+      The `sign` is only valid for numeric types, and can be one of
+      the following:
 
-    If the `#` character is present, integers use the 'alternate form'
-    for formatting. This means that binary, octal, and hexadecimal
-    output will be prefixed with '0b', '0o', and '0x', respectively.
+        - `+` Indicates that a sign shoulb be used for both positive
+              as well as negative numbers.
+        - `-` Indicates that a sign shoulb be used only for as negative
+              numbers. This is the default.
+        - ` ` Indicates that a leading space should be used on positive
+              numbers.
 
-    `width` is a decimal integer defining the minimum field width. If
-    not specified, then the field width will be determined by the
-    content.
+      If the `#` character is present, integers use the 'alternate form'
+      for formatting. This means that binary, octal, and hexadecimal
+      output will be prefixed with '0b', '0o', and '0x', respectively.
 
-    If the width field is preceded by a zero (`0`) character, this enables
-    zero-padding. This is equivalent to an alignment type of `=` and a
-    fill character of `0`.
+      `width` is a decimal integer defining the minimum field width. If
+      not specified, then the field width will be determined by the
+      content.
 
-    The 'precision' is a decimal number indicating how many digits
-    should be displayed after the decimal point in a floating point
-    conversion. For non-numeric types the field indicates the maximum
-    field size- in other words, how many characters will be used from
-    the field content. The precision is ignored for integer conversions.
+      If the width field is preceded by a zero (`0`) character, this enables
+      zero-padding. This is equivalent to an alignment type of `=` and a
+      fill character of `0`.
 
-    Finally, the 'type' determines how the data should be presented.
+      The 'precision' is a decimal number indicating how many digits
+      should be displayed after the decimal point in a floating point
+      conversion. For non-numeric types the field indicates the maximum
+      field size- in other words, how many characters will be used from
+      the field content. The precision is ignored for integer conversions.
 
-    The available integer presentation types are:
+      Finally, the 'type' determines how the data should be presented.
 
-      - `b` Binary. Outputs the number in base 2.
-      - `c` Character. Converts the integer to the corresponding
-            Unicode character before printing.
-      - `d` Decimal Integer. Outputs the number in base 10.
-      - `o` Octal format. Outputs the number in base 8.
-      - `x` Hex format. Outputs the number in base 16, using lower-
-            case letters for the digits above 9.
-      - `X` Hex format. Outputs the number in base 16, using upper-
-            case letters for the digits above 9.
-      - `n` Number. This is the same as `d`, except that it uses the
-            current locale setting to insert the appropriate
-            number separator characters.
-      - ` ` (None) the same as `d`
+      The available integer presentation types are:
 
-    The available floating point presentation types are:
+        - `b` Binary. Outputs the number in base 2.
+        - `c` Character. Converts the integer to the corresponding
+              Unicode character before printing.
+        - `d` Decimal Integer. Outputs the number in base 10.
+        - `o` Octal format. Outputs the number in base 8.
+        - `x` Hex format. Outputs the number in base 16, using lower-
+              case letters for the digits above 9.
+        - `X` Hex format. Outputs the number in base 16, using upper-
+              case letters for the digits above 9.
+        - `n` Number. This is the same as `d`, except that it uses the
+              current locale setting to insert the appropriate
+              number separator characters.
+        - ` ` (None) the same as `d`
 
-      - `e` Exponent notation. Prints the number in scientific
-            notation using the letter `e` to indicate the exponent.
-      - `E` Exponent notation. Same as `e` except it converts the
-            number to uppercase.
-      - `f` Fixed point. Displays the number as a fixed-point
-            number.
-      - `F` Fixed point. Same as `f` except it converts the number
-            to uppercase.
-      - `g` General format. This prints the number as a fixed-point
-            number, unless the number is too large, in which case
-            it switches to `e` exponent notation.
-      - `G` General format. Same as `g` except switches to `E`
-            if the number gets to large.
-      - `n` Number. This is the same as `g`, except that it uses the
-            current locale setting to insert the appropriate
-            number separator characters.
-      - `%` Percentage. Multiplies the number by 100 and displays
-            in fixed (`f`) format, followed by a percent sign.
-      - ` ` (None) similar to `g`, except that it prints at least one
-            digit after the decimal point.
+      The available floating point presentation types are:
 
-    @type RegExp
-   */
-  SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/,
+        - `e` Exponent notation. Prints the number in scientific
+              notation using the letter `e` to indicate the exponent.
+        - `E` Exponent notation. Same as `e` except it converts the
+              number to uppercase.
+        - `f` Fixed point. Displays the number as a fixed-point
+              number.
+        - `F` Fixed point. Same as `f` except it converts the number
+              to uppercase.
+        - `g` General format. This prints the number as a fixed-point
+              number, unless the number is too large, in which case
+              it switches to `e` exponent notation.
+        - `G` General format. Same as `g` except switches to `E`
+              if the number gets to large.
+        - `n` Number. This is the same as `g`, except that it uses the
+              current locale setting to insert the appropriate
+              number separator characters.
+        - `%` Percentage. Multiplies the number by 100 and displays
+              in fixed (`f`) format, followed by a percent sign.
+        - ` ` (None) similar to `g`, except that it prints at least one
+              digit after the decimal point.
+
+      @type RegExp
+     */
+    SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
+  }).into(Espresso.Formatter);
 
   /**
     Format a template string with provided arguments.
@@ -180,7 +187,7 @@ Espresso.Formatter = {
     @param {String} template The template string to format the arguments with.
     @returns {String} The template formatted with the given leftover arguments.
    */
-  fmt: function (template) {
+  function fmt(template) {
     var args = Array.from(arguments).slice(1),
         prev = '',
         buffer = [],
@@ -200,7 +207,7 @@ Espresso.Formatter = {
       }
 
       if (ch === '{') {
-        result = this.parseField(template.slice(idx + 1), args);
+        result = parseField(template.slice(idx + 1), args);
         buffer[buffer.length] = result[1];
         idx += result[0];
       } else if (ch !== '}') {
@@ -209,9 +216,9 @@ Espresso.Formatter = {
       prev = ch;
     }
     return buffer.join('');
-  },
+  }
 
-  /**
+  /** @ignore
     Parses the template with the arguments provided,
     parsing any nested templates.
 
@@ -219,7 +226,7 @@ Espresso.Formatter = {
     @param {Array} args The arguments to parse the template string.
     @returns {String} The formatted template.
    */
-  parseField: function (template, args) {
+  function parseField(template, args) {
     var fieldspec = [], result = null, idx = 0, ch, len = template.length;
 
     for (; idx < len; idx += 1) {
@@ -229,7 +236,7 @@ Espresso.Formatter = {
           return [1, '{'];
         }
 
-        result = this.parseField(template.slice(idx + 1), args);
+        result = parseField(template.slice(idx + 1), args);
         if (!result[0]) {
           return [idx, '{'];
         } else {
@@ -237,15 +244,15 @@ Espresso.Formatter = {
           fieldspec[fieldspec.length] = result[1];
         }
       } else if (ch === '}') {
-        return [idx + 1, this.formatField(fieldspec.join(''), args)];
+        return [idx + 1, formatField(fieldspec.join(''), args)];
       } else {
         fieldspec[fieldspec.length] = ch;
       }
     }
     return [template.length, fieldspec.join('')];
-  },
+  }
 
-  /**
+  /** @ignore
     Returns the value of the template string formatted with the
     given arguments.
 
@@ -253,7 +260,7 @@ Espresso.Formatter = {
     @param {Array} args An Array of arguments to use to format the template string.
     @returns {String} The formatted template.
    */
-  formatField: function (value, args) {
+  function formatField(value, args) {
     var iSpec = value.indexOf(':'),
         spec;
     iSpec = iSpec === -1 ? value.length : iSpec;
@@ -271,5 +278,5 @@ Espresso.Formatter = {
     }
 
     return value.__fmt__ ? value.__fmt__(spec) : value;
-  }  
-};
+  }
+}());

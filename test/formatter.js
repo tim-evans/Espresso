@@ -52,16 +52,6 @@ context("Formatter",
     })
   ),
 
-  // Assume parseField works if fmt works
-  should("have a function named parseField", function () {
-    assert.kindOf("function", Espresso.Formatter.parseField);
-  }),
-
-  // Assume formatField works if fmt works
-  should("have a function named formatField", function () {
-    assert.kindOf("function", Espresso.Formatter.formatField);
-  }),
-
   should("have a field named SPECIFIER", function () {
     assert.kindOf("regexp", Espresso.Formatter.SPECIFIER);
   })

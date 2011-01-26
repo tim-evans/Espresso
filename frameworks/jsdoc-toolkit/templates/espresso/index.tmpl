@@ -65,14 +65,6 @@
 
 <p>The mixin as of now, is completely compliant with SproutCore's implementation, and will gracefully degrade to using it. Note that it doesn't work the other way around, as Espresso's KVO mixin is dependent on the PubSub mixin.</p>
 
-<h3>Classes and Templates</h3>
-
-<p>Espresso has two mechanisms for inheritance. There's a prototypal inheritance through <code>Template</code>s and classical inheritance through <code>Class</code>es. Both have the same semantics, but have totally different designs and use cases for them.</p>
-
-<p><code>Template</code>s are always instances, and are purely one-offs from an empty object. Every single time a <code>Template</code> is <code>extend</code>ed, it will be initialized.</p>
-
-<p><code>Class</code>es are always functions, and are instantiated upon creating the object with the <code>new</code> operator. A <code>Class</code> is instantiated when it is invoked with <code>new</code> rather than when <code>extend</code>ing an object.</p>
-
 <h3>String Formatting</h3>
 
 <p>Espresso provides a powerful string formatting based off of Python's {format} strings. Those familiar with Ruby's #{templates} and .NET's String.Format will be feel right at home with the formatting mechanism provided. This means you can have pretty string templates like <code>"{pi} is delicious"</code>.

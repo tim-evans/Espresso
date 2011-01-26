@@ -54,15 +54,6 @@ The decorators for KVO are the following:
 The mixin as of now, is completely compliant with SproutCore's implementation, and will gracefully degrade to using it. Note that it doesn't work the other way around, as Espresso's KVO mixin is dependent on the PubSub mixin.
 
 
-### Classes and Templates
-
-Espresso has two mechanisms for inheritance. There's a prototypal inheritance through `Template`s and classical inheritance through `Class`es. Both have the same semantics, but have totally different designs and use cases for them. Both mixin `PubSub` and `KVO`.
-
-`Template`s are always instances, and are purely one-offs from an empty object. Every single time a `Template` is `extend`ed, it will be initialized.
-
-`Class`es are always functions, and are instantiated upon creating the object with the `new` operator. A `Class` is instantiated when it is invoked with `new` rather than when `extend`ing an object.
-
-
 ### String Formatting
 
 Espresso provides a powerful string formatting based off of Python's {format} strings. Those familiar with Ruby's #{templates} and .NET's String.Format will be feel right at home with the formatting mechanism provided. This means you can have pretty string templates like `"{pi} is delicious"`.

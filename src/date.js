@@ -1,43 +1,21 @@
 /*globals mix */
 mix(/** @lends Date# */{
 
-  useUTC: false,
-
-  get: (function () {
-    var validSlots = ["Date", "Day", "FullYear", "Hours", "Milliseconds", "Minutes", "Month", "Seconds"];
-    return function (key) {
-      var prefix = "get";
-      key = key.capitalize();
-      if (this.useUTC && validSlots.indexOf(key) !== -1) {
-        prefix += "UTC";
-      }
-      return this[prefix + key]();
-    };
-  }()),
-
-  set: (function () {
-    var validSlots = ["Date", "Day", "FullYear", "Hours", "Milliseconds", "Minutes", "Month", "Seconds"];
-    return function (key, value) {
-      var prefix = "set";
-      key = key.capitalize();
-      if (this.useUTC && validSlots.indexOf(key) !== -1) {
-        prefix += "UTC";
-      }
-      return this[prefix + key](value);
-    };
-  }()),
-
   /**
     Shim for `toISOString`.
 
     @returns {String} The ISO 6081 formatted UTC date.
    */
   toISOString: function () {
-    var prev = this.useUTC, result;
-    this.useUTC = true;
-    result = "{:Y-m-dTH:M:S.f}Z".fmt(this);
-    this.useUTC = prev;
-    return result;
+    return "{}-{}-{}T{}:{}:{}.{}Z".fmt(
+      this.getUTCFullYear(),
+      this.getUTCMonth(),
+      this.getUTCDate(),
+      this.getUTCHours(),
+      this.getUTCMinutes(),
+      this.getUTCSeconds(),
+      this.getUTCMilliseconds()
+    );
   }.inferior(),
 
   /**
@@ -85,6 +63,8 @@ mix(/** @lends Date# */{
 
         alert("The time is: {:c}.".fmt(new Date()));
 
+    Note: all times used with `fmt` are **NOT** in UTC.
+
     @param {String} spec The specifier to transform the date to a formatted string.
     @returns {String} The Date transformed into a string as specified.
    */
@@ -99,62 +79,56 @@ mix(/** @lends Date# */{
       for (; i < spec.length; i += 1) {
         switch (spec[i]) {
         case 'a':
-          result[result.length] = days[this.get('day')].slice(0, 3);
+          result[result.length] = days[this.getDay()].slice(0, 3);
           break;
         case 'A':
-          result[result.length] = days[this.get('day')];
+          result[result.length] = days[this.getDay()];
           break;
         case 'b':
-          result[result.length] = months[this.get('month')].slice(0, 3);
+          result[result.length] = months[this.getMonth()].slice(0, 3);
           break;
         case 'B':
-          result[result.length] = months[this.get('month')];
+          result[result.length] = months[this.getMonth()];
           break;
         case 'c':
-          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.get('date'));
+          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.getDate());
           break;
         case 'd':
-          result[result.length] = "{:02}".fmt(this.get('date'));
-          break;
-        case 'e':
-          result[result.length] = "{: 2}".fmt(this.get('date'));
-          break;
-        case 'f':
-          result[result.length] = "{:03}".fmt(this.get('milliseconds'));
+          result[result.length] = "{:02}".fmt(this.getDate());
           break;
         case 'H':
-          result[result.length] = "{:02}".fmt(this.get('hours'));
+          result[result.length] = "{:02}".fmt(this.getHours());
           break;
         case 'I':
-          result[result.length] = "{:02}".fmt(this.get('hours') % 12);
+          result[result.length] = "{:02}".fmt(this.getHours() % 12);
           break;
         case 'j':
-          result[result.length] = "{:03}".fmt(Math.ceil((this - new Date(this.get('fullYear'), 0, 1)) / 86400000));
+          result[result.length] = "{:03}".fmt(Math.ceil((this - new Date(this.getFullYear(), 0, 1)) / 86400000));
           break;
         case 'm':
-          result[result.length] = "{:02}".fmt(this.get('month') + 1);
+          result[result.length] = "{:02}".fmt(this.getMonth() + 1);
           break;
         case 'M':
-          result[result.length] = "{:02}".fmt(this.get('minutes'));
+          result[result.length] = "{:02}".fmt(this.getMinutes());
           break;
         case 'p':
-          result[result.length] = this.get('hours') > 11 ? "PM" : "AM";
+          result[result.length] = this.getHours() > 11 ? "PM" : "AM";
           break;
         case 'S':
-          result[result.length] = "{:02}".fmt(this.get('seconds'));
+          result[result.length] = "{:02}".fmt(this.getSeconds());
           break;
         case 'U':
           // Monday as the first day of the week
-          var day = ((this.get('day') + 6) % 7) + 1;
+          var day = ((this.getDay() + 6) % 7) + 1;
           result[result.length] = "{:02}".fmt(
-            Math.ceil((((this - new Date(this.get('fullYear'), 0, 1)) / 86400000) + day) / 7) - 1);
+            Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + day) / 7) - 1);
           break;
         case 'w':
-          result[result.length] = this.get('day');
+          result[result.length] = this.getDay();
           break;
         case 'W':
           result[result.length] = "{:02}".fmt(
-            Math.ceil((((this - new Date(this.get('fullYear'), 0, 1)) / 86400000) + this.get('day') + 1) / 7) - 1);
+            Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + this.getDay() + 1) / 7) - 1);
           break;
         case 'x':
           result[result.length] = "{:m/d/y}".fmt(this);
@@ -166,10 +140,10 @@ mix(/** @lends Date# */{
           result[result.length] = "{:02}".fmt(this.getYear() % 100);
           break;
         case 'Y':
-          result[result.length] = this.get('fullYear');
+          result[result.length] = this.getFullYear();
           break;
         case 'Z':
-          result[result.length] = this.get('timezoneOffset');
+          result[result.length] = this.getTimezoneOffset();
           break;
         default:
           result[result.length] = spec[i];

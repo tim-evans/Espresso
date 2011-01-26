@@ -1,11 +1,6 @@
 /*globals mix Espresso */
 
-/** @namespace
-  @name String
-
-  @extends Espresso.Enumerable
- */
-mix(Espresso.Enumerable, /** @scope String.prototype */{
+mix(/** @scope String.prototype */{
 
   /**
     Iterates over every character in a string.

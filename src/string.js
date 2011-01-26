@@ -185,7 +185,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
       // => "banana"
 
     @example
-      var kitty = Espresso.Template.extend({
+      var kitty = mix({
         name: "Mister Mittens",
         weapons: ["lazzors", "shuriken", "rainbows"],
 
@@ -193,7 +193,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
           return "fightin' the {} with his {}.".fmt(
             whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
         }
-      });
+      }).into({});
 
       alert("{0.name} is {1}".fmt(kitty, kitty.fight('zombies')));
       // => "Mister Mittens is fightin' the zombies with ..."

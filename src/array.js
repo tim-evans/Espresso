@@ -42,15 +42,6 @@ mix(/** @scope Array */{
 mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
   /**
-    The size of the Array.
-
-    @returns {Number} The length of the Array.
-   */
-  size: function () {
-    return this.length;
-  }.property(),
-
-  /**
     Iterator over the Array.
 
     Implemented to be in conformance with ECMA-262 Edition 5,
@@ -309,11 +300,17 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
       // => 'abrcd'
    */
   unique: function () {
-    var o = Espresso.Hash.extend();
+    var o = {}, values = [];
     this.forEach(function (v) {
       o[v] = v;
     });
-    return o.values();
+
+    for (var k in o) {
+      if (o.hasOwnProperty(k)) {
+        values.push(o[k]);
+      }
+    }
+    return values;
   },
 
   /**

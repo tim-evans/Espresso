@@ -14,9 +14,13 @@ context("Object",
     }),
 
     should("not return keys that aren't it's own property", function () {
-      var keys = Object.keys(Espresso.Template.
-               extend({ a: 'a', b: 'b' }).
-               extend({ c: 'c', d: 'd' }));
+      var base = mix({ a: 'a', b: 'b' }).into({});
+      var F = function () {};
+      F.prototype = base;
+      base = new F();
+      base = mix({ c: 'c', d: 'd' }).into(base);
+
+      var keys = Object.keys(base);
 
       assert.isTrue(keys.indexOf('a') === -1);
       assert.isTrue(keys.indexOf('b') === -1);

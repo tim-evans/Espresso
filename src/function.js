@@ -90,9 +90,18 @@ mix(/** @lends Function.prototype */{
         return value;
       }
 
-      return function () {
+      /** @ignore */
+      var lambda = function () {
         return value.apply(this, [base.bind(this)].concat(Array.from(arguments)));
       };
+
+      // Copy over properties on `value`
+      for (var k in value) {
+        if (value.hasOwnProperty(k)) {
+          lambda[k] = value[k];
+        }
+      }
+      return lambda;
     };
     return this;
   },
@@ -183,18 +192,18 @@ mix(/** @lends Function.prototype */{
     This implementation conforms to the ECMAScript 5
     standard.
 
-        var Person = Espresso.Template.extend({
+        var Person = mix({
           name: 'nil',
           greet: function (greeting) {
             alert(greeting.fmt(this.name));
           }
-        });
+        }).into({});
 
-        var wash = Person.extend({
+        var wash = mix(Person).into({
           name: 'Hoban Washburne'
         });
 
-        var mal = Person.extend({
+        var mal = mix(Person).into({
           name: 'Malcolm Reynolds'
         });
 

@@ -40,11 +40,10 @@
   Using `mix`, it's possible to create whatever types
   of objects you want, without polluting it's namespace.
   Espresso uses `mix` internally as a shim for ECMAScript 5
-  compatability and creating the base objects
-  {@link Espresso.Template} and {@link Espresso.Class}.
+  compatability and creating the core of your library.
 
   @param {...} mixins Objects to mixin to the template provided on into.
-  @returns {Object} An object with "into" field, call into with the template
+  @returns {Object} An object with `into` field, call into with the template
                     to apply the mixins on. That will return the template
                     with the mixins on it.
  */
@@ -63,7 +62,7 @@ mix = function () {
           value = mixin[key];
 
           _ = value && value._;
-          if (Espresso.isCallable(value)) {
+          if (Espresso.isCallable(value) && _) {
             for (decorator in _) {
               if (_.hasOwnProperty(decorator)) {
                 value = _[decorator](template, value, key);

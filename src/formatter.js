@@ -50,13 +50,13 @@
 
   Consider the following example:
 
-      Localizer = Espresso.Template.extend({
+      Localizer = mix({
         __fmt__: function (spec) {
           return this.get(spec);
         }
-      });
+      }).into({});
 
-      _hello = Localizer.extend({
+      _hello = mix(Localizer).into({
         en: 'hello',
         fr: 'bonjour',
         ja: 'こんにちは'

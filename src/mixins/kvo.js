@@ -57,7 +57,7 @@
 
   Consider the following:
 
-      var Box = Espresso.Template.extend({
+      var Box = mix(Espresso.KVO).into({
         width: 0,
         height: 0,
         depth: 0,
@@ -76,8 +76,10 @@
   that you would like to be notified on.
 
     [kvo]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
+
+  @extends Espresso.PubSub
  */
-Espresso.KVO = /** @lends Espresso.KVO# */{
+Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
 
   /**
     Get a value on an object.
@@ -201,4 +203,4 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
     return this[key];
   }
 
-};
+});

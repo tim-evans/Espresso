@@ -58,11 +58,11 @@ Espresso = {
     @example
       // Properties on the global scope need to be there-
       // local scoped variables will not be found!
-      Espresso.global.arthur = Espresso.Template.extend({
+      window.arthur = {
         name: 'Arthur Dent',
         species: 'Human',
         description: 'Mostly Harmless'
-      });
+      };
 
       alert(Espresso.getObjectFor("arthur.name"));
       // => 'Arthur Dent'

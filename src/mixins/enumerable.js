@@ -38,7 +38,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }
 
     this.forEach(function (k, v) {
-      arr.set(arr.length, lambda.call(self, k, v, this));
+      arr.push(lambda.call(self, k, v, this));
     }, this);
     return arr;
   }.inferior(),
@@ -137,7 +137,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
     return this.reduce(function (seive, v, k, t) {
       if (lambda.call(self, v, k, t)) {
-        seive.set(seive.length, v);
+        seive.push(v);
       }
     }, []);
   }.inferior(),
@@ -161,16 +161,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       return every || lambda(self, v, k, t);
     }, false);
   }.inferior(),
-
-  pluck: function (property) {
-    return this.map(function (v) {
-      if (v.get) {
-        return v.get(property);
-      } else {
-        return v[property];
-      }
-    });
-  },
 
   extract: function (keys) {
     if (!Array.isArray(keys)) {
@@ -204,7 +194,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
     return this.reduce(function (result, v, k, that) {
       if (lambda(v, k, that)) {
-        result.set(result.length, v);
+        result.push(v);
       }
       return result;
     }, []);

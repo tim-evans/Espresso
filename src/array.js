@@ -6,7 +6,6 @@
   Shim for the native Array object.
 
   @extends Espresso.Enumerable
-  @extends Espresso.KVO
  */
 mix(/** @scope Array */{
 
@@ -39,7 +38,7 @@ mix(/** @scope Array */{
 
 }).into(Array);
 
-mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
+mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
   /**
     Iterator over the Array.
@@ -55,7 +54,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     var len, k;
 
     // 3. Let len be ToUint32(lenValue).
-    len = this.get('size');
+    len = this.length;
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
@@ -74,7 +73,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
         // ii. Call the [[Call]] internal method of lambda
         //     with T as the this value and argument list
         //     containing kValue, k, and O.
-        lambda.call(self, this.get(k), k, this);
+        lambda.call(self, this[k], k, this);
       }
 
       // d. Increase k by 1.
@@ -98,7 +97,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     i = fromIndex >= 0 ? fromIndex:
                          Math.max(i, len - Math.abs(fromIndex));
     for (; i < len; i += 1) {
-      if (o === this.get(i)) {
+      if (o === this[i]) {
         return i;
       }
     }
@@ -129,7 +128,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     O = [];
 
     // 3. Let len be ToUint(lenVal)
-    len = this.get('size');
+    len = this.length;
 
     // 4. Let middle be floor(len/2)
     middle = Math.floor(len / 2);
@@ -150,11 +149,11 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
       // d. Let lowerValue be the result of calling the [[Get]]
       //    intenal method of O with argument lowerP
-      lowerValue = this.get(lowerP);
+      lowerValue = this[lowerP];
       
       // e. Let upperValue be the result of calling the [[Get]]
       //    intenal method of O with argument upperP
-      upperValue = this.get(upperP);
+      upperValue = this[upperP];
 
       // h. If lowerExists is true and upperExists is true, then
       //     i. Call the [[Put]] internal method of O with arguments
@@ -183,7 +182,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     @see ECMA-262 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex ])
    */
   lastIndexOf: function (searchElement, fromIndex) {
-    var k = 0, len = this.get('size'), n;
+    var k = 0, len = this.length, n;
 
     // 4. If len is 0, return -1.
     if (len === 0) {
@@ -216,7 +215,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
         //      Strict Equality Comparision Algorithm to
         //      searchElement and elementK.
         // iii. If same is true, return k.
-          this.get(k.toString() === searchElement)) {
+          this[k.toString()] === searchElement) {
         return k;
       }
 

@@ -178,7 +178,7 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
 
       // Expected behaviour is strange unless publishes
       // are done immediately.
-      if (object.publish && !(property.isIdempotent && !didChange)) {
+      if (object.publish && !(property && property.isIdempotent && !didChange)) {
         object.publish(key, value);
       }
     }

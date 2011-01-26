@@ -11,6 +11,15 @@ mix(/** @lends Number# */{
     return this.valueOf();
   }.inferior(),
 
+  /**
+    Formatter for `Number`s.
+
+    Don't call this function- It's here for `Espresso.Formatter`
+    to take care of buisiness for you.
+
+    @param {String} spec The specifier to format the number as.
+    @returns {String} The number formatted as specified.
+   */
   __fmt__: function (spec) {
     // Don't want Infinity, -Infinity and NaN in here!
     if (!isFinite(this)) {

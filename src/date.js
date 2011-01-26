@@ -53,7 +53,7 @@ mix(/** @lends Date# */{
 
   /** @function
     @desc
-    Date Formatting support.
+    Date Formatting support (for use with `fmt`).
 
     The following flags are acceptable in a format string:
 

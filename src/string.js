@@ -222,10 +222,10 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   },
 
   /**
-    Format a string according to a format specifier.
-    This is a function called by Formatter, 
-    A valid specifier can have:
-    [[fill]align][minimumwidth]
+    Formatter for `String`s.
+
+    Don't call this function- It's here for `Espresso.Formatter`
+    to take care of buisiness for you.
 
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.

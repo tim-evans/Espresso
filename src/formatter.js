@@ -76,11 +76,9 @@
   @name Espresso.Formatter
  */
 (function ()/** @lends Espresso.Formatter */{
-  var SPECIFIER = 
+  Espresso.Formatter = mix({
+    fmt: fmt,
 
-  module('Espresso.Formatter', fmt);
-
-  mix({
     /**
       The specifier regular expression.
 
@@ -179,7 +177,7 @@
       @type RegExp
      */
     SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
-  }).into(Espresso.Formatter);
+  }).into({});
 
   /**
     Format a template string with provided arguments.

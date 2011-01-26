@@ -17,7 +17,10 @@
  */
 (function () /** @lends JSON */{
 
-  module("JSON", stringify.inferior(), parse.inferior());
+  JSON = mix({
+    stringify: stringify.inferior(),
+    parse: parse.inferior()
+  }).into(JSON || {});
 
   var escapable, abbrev, stack, indent, gap, space,
       PropertyList, ReplacerFunction;

@@ -105,6 +105,65 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
+    Reduce the content of an array down to a single
+    value (starting from the end and working backwards).
+
+    @param {Function} lambda The lambda that performs the reduction.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [seed] The seed value to provide for the first time.
+    @returns {Object} The reduced output.
+   */
+  reduceRight: function (lambda, seed) {
+    var shouldSeed = (arguments.length === 1),
+        len = this.length, v;
+
+    // 4. If IsCallable(lambda) is false, throw a TypeError exception
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
+    while (len-- >= 0) {
+      v = this[len];
+      if (shouldSeed) {
+        seed = v;
+        shouldSeed = false;
+      } else {
+        seed = lambda(seed, v, len, this);
+      }
+    }
+
+    // 5. If len is 0 and seed is not present, throw a TypeError exception.
+    if (shouldSeed) {
+      throw new TypeError("There was nothing to reduce!");
+    }
+    return seed;
+  }.inferior(),
+
+  /**
+    Shim for Opera's buggy `concat` function not following
+    ECMAScript5 specifications.
+
+    @param {...} The items to concat.
+    @returns {Array} A new array with the values added to the end.
+   */
+  concat: function () {
+    var array = slice.call(this, 0);
+
+    Array.from(arguments).forEach(function (item) {
+      if (Array.isArray(item) && !('callee' in item)) {
+        for (var j = 0, len = item.length; j < len; j++) {
+          array.push(item[j]);
+        }
+      } else {
+        array.push(item);
+      }
+    }, this);
+    return array;
+  }.inferior([].concat(arguments)[0][0] === 1),
+
+  /**
     Shim for Internet Explorer, which provides no reverse for
     Array prototypes. Returns -1 if the item is not found.
 

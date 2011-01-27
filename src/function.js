@@ -10,11 +10,14 @@ mix(/** @lends Function.prototype */{
     Also, if the base function is inferior, it
     will be overriden.
 
+    @param {Function} [condition] If it returns `true`,
+      the function is inferior. Otherwise, it isn't.
     @returns {Function} The reciever.
    */
-  inferior: function () {
+  inferior: function (condition) {
     this._ = this._ || {};
-    this.isInferior = true;
+    this.isInferior = arguments.length === 1 ?
+      (Espresso.isCallable(condition) ? condition() : condition) : true;
 
     /** @ignore */
     this._.inferior = function (template, value, key) {

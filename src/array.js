@@ -161,7 +161,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       }
     }, this);
     return array;
-  }.inferior([].concat(arguments)[0][0] === 1),
+  }.inferior(function () { return [].concat(arguments)[0][0] === 1; }),
 
   /**
     Shim for Internet Explorer, which provides no reverse for

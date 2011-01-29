@@ -10,9 +10,20 @@
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
   /** @function
+    Iterates over the items on the Enumerable.
+
+    The Function `forEach` should follow the specification as
+    defined in the ECMAScript 5 standard. All function using
+    `forEach` in the Enumerable mixin depend on it being this way.
+
+    @param {Function} lambda The callback to call for each element.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The Object to use as this when executing the callback.
     @returns {void}
    */
-  forEach: function () {
+  forEach: function (lambda, that) {
     throw new Error("You MUST override Espresso.Enumerable.forEach to be able " +
                     "to use the Enumerable mixin.");
   }.inferior(),
@@ -22,7 +33,10 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     is mutated by the lambda function.
 
     @param {Function} lambda The lambda that transforms an element in the enumerable.
-    @param {Object} [self] The value of 'this' inside the lambda.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
     @returns {Array} The collection of results from the map function.
     @example
       var cube = function (n) { return n * n * n };
@@ -44,10 +58,12 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-    Reduce the content of an enumerable down to
-    a single value.
+    Reduce the content of an enumerable down to a single value.
 
     @param {Function} lambda The lambda that performs the reduction.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
     @param {Object} [seed] The seed value to provide for the first time.
     @returns {Object} The reduced output.
     @example
@@ -130,6 +146,17 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     });
   }.inferior(),
 
+  /**
+    Returns all elements on the Enumerable for which the
+    input function returns true for.
+
+    @param {Function} lambda The function to filter the Enumerable.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
+    @returns {Object[]} An array with the values for which `lambda` returns `true`
+   */
   filter: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -142,6 +169,17 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, []);
   }.inferior(),
 
+  /**
+    Returns `true` if `lambda` returns `true` for every element
+    in the Enumerable, otherwise, it returns `false`.
+
+    @param {Function} lambda The lambda that transforms an element in the enumerable.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
+    @returns {Boolean} `true` if `lambda` returns `true` for every iteration.
+  */
   every: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -152,6 +190,17 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, true);
   }.inferior(),
 
+  /**
+    Returns `true` if `lambda` returns `true` for at least one
+    element in the Enumerable, otherwise, it returns `false`.
+
+    @param {Function} lambda The lambda that transforms an element in the enumerable.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
+    @returns {Boolean} `true` if `lambda` returns `true` at least once.
+   */
   some: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -162,16 +211,35 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, false);
   }.inferior(),
 
+  /**
+    Returns all values for the keys provided.
+
+    @param {...} keys The keys to extract values from.
+    @returns {Object[]} The values for the keys provided (not.
+   */
   extract: function (keys) {
     if (!Array.isArray(keys)) {
       keys = [keys];
     }
 
-    return this.findAll(function (v, k) {
+    return this.filter(function (v, k) {
       return keys.indexOf(k) !== -1;
     });
   },
 
+  /**
+    Returns the first value for which `lambda` returns `true`.
+    If nothing is found, `find` will return `ifnone`, a default
+    value provided as an optional argument or `undefined` if
+    `ifnone` was not provided.
+
+    @param {Function} lambda The lambda that returns something truthy or falsy.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [ifnone] The value to return if nothing is found.
+    @returns {Object} The first object to which `lambda` returns something truthy.
+   */
   find: function (lambda, ifnone) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -185,19 +253,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       }
       return result;
     }, ifnone);
-  },
-
-  findAll: function (lambda) {
-    if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
-    }
-
-    return this.reduce(function (result, v, k, that) {
-      if (lambda(v, k, that)) {
-        result.push(v);
-      }
-      return result;
-    }, []);
   },
 
   /**

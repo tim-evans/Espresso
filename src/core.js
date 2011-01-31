@@ -86,19 +86,7 @@ Espresso = {
       if (property in obj) {
         obj = obj[property];
       } else {
-        // Try to be helpful-
-        //  1) If the property doesn't exist on the object,
-        //  2) The object is an Array
-        //  3) The Array has only one element in it.
-        // Unpack the element and try the lookup again.
-        if (Array.isArray(obj) && obj.length === 1) {
-          obj = obj[0];
-        }
-        if (obj && property in obj) { // prevent the apocalypse
-          obj = obj[property];
-        } else {
-          obj = undefined;
-        }
+        obj = undefined;
       }
       return obj;
     };

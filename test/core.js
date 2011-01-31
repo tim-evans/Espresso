@@ -41,11 +41,6 @@ context("Espresso",
     should("follow . delimited property paths", function () {
       var o = { a: { b: { c: 'd' } } };
       assert.equal(Espresso.getObjectFor("a.b.c", o), "d");
-    }),
-
-    should("unpack arrays if unsuccessful in finding the property", function () {
-      var o = { greeting: "konnichiwa" };
-      assert.equal(Espresso.getObjectFor("greeting", [o]), "konnichiwa");
     })
   ),
 

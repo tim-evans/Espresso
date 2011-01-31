@@ -16,28 +16,7 @@
   <div id="header">
   <h1><a href="../">Espresso</a></h1>
   <span class="caption">A pick-me up for JavaScript Library authors.</span>
-  <span id="status"></span>
 </div>
-
-<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
-<script type="text/javascript" src="../../test/test.js"></script>
-<script type="text/javascript" src="../../test/core.js"></script>
-<script type="text/javascript" src="../../test/mix.js"></script>
-<script type="text/javascript" src="../../test/class.js"></script>
-<script type="text/javascript" src="../../test/template.js"></script>
-<script type="text/javascript" src="../../test/formatter.js"></script>
-<script type="text/javascript" src="../../test/hash.js"></script>
-<script type="text/javascript" src="../../test/function.js"></script>
-<script type="text/javascript" src="../../test/object.js"></script>
-<script type="text/javascript" src="../../test/string.js"></script>
-<script type="text/javascript">
-  Tests.run();
-  if (Tests.testsFailed > 0) {
-    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
-  } else {
-    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
-  }
-</script>
 
   <div id="module">
 		<h1>
@@ -48,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -94,8 +73,6 @@ function endResize(e) {
 				
 				<dt><a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a></dt>
 				
-				<dt><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></dt>
-				
 				</dl>
       
 			
@@ -124,6 +101,11 @@ function endResize(e) {
 						<tr class="nameDescription">
               <td><span class="fixedFont">
               + <b><a href="../symbols/Array.html#compact">compact</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Array.html#concat">concat</a></b>(The)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -158,17 +140,17 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
+              + <b><a href="../symbols/Array.html#reduceRight">reduceRight</a></b>(lambda, seed)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
               + <b><a href="../symbols/Array.html#remove">remove</a></b>(from, to)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
               + <b><a href="../symbols/Array.html#reverse">reverse</a></b>()</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Array.html#size">size</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -186,7 +168,7 @@ function endResize(e) {
 				
 				
 				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>: </dt><dd><a href="../symbols/Espresso.Enumerable.html#contains">contains</a>, <a href="../symbols/Espresso.Enumerable.html#every">every</a>, <a href="../symbols/Espresso.Enumerable.html#extract">extract</a>, <a href="../symbols/Espresso.Enumerable.html#filter">filter</a>, <a href="../symbols/Espresso.Enumerable.html#map">map</a>, <a href="../symbols/Espresso.Enumerable.html#pluck">pluck</a>, <a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a>, <a href="../symbols/Espresso.Enumerable.html#some">some</a>, <a href="../symbols/Espresso.Enumerable.html#toArray">toArray</a></dd><dt>Methods borrowed from class <a href="../symbols/Espresso.KVO.html">Espresso.KVO</a>: </dt><dd><a href="../symbols/Espresso.KVO.html#get">get</a>, <a href="../symbols/Espresso.KVO.html#set">set</a>, <a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></dd>
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>: </dt><dd><a href="../symbols/Espresso.Enumerable.html#contains">contains</a>, <a href="../symbols/Espresso.Enumerable.html#every">every</a>, <a href="../symbols/Espresso.Enumerable.html#extract">extract</a>, <a href="../symbols/Espresso.Enumerable.html#filter">filter</a>, <a href="../symbols/Espresso.Enumerable.html#find">find</a>, <a href="../symbols/Espresso.Enumerable.html#map">map</a>, <a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a>, <a href="../symbols/Espresso.Enumerable.html#some">some</a>, <a href="../symbols/Espresso.Enumerable.html#toArray">toArray</a></dd>
 				</dl>
 				
 			
@@ -236,6 +218,53 @@ function endResize(e) {
 <code><span class="keyword">var</span>&nbsp;nil;<br/><br/>alert([<span class="value">undefined</span>,&nbsp;<span class="value">null</span>,&nbsp;nil,&nbsp;<span class="string">'nada'</span>].compact());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;['nada']</code>
 </div>
 					
+					
+				 
+					
+					<hr />
+				
+					<a name="concat"> </a>
+          <div>
+             <a name="concat"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>concat</b>(The)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Shim for Opera's buggy <code>concat</code> function not following
+ECMAScript5 specifications.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>The</b>
+									
+								</dt>
+								<dd>items to concat.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> A new array with the values added to the end.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
 					
 				 
 					
@@ -559,6 +588,77 @@ Returns -1 if the item is not found.</p></dd>
 					
 					<hr />
 				
+					<a name="reduceRight"> </a>
+          <div>
+             <a name="reduceRight"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>reduceRight</b>(lambda, seed)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Reduce the content of an array down to a single
+value (starting from the end and working backwards).</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
+									
+								</dt>
+								<dd>The lambda that performs the reduction.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
+									
+								</dt>
+								<dd>The value of the enumerated item.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
+									
+								</dt>
+								<dd>The key of the enumerated item.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
+									
+								</dt>
+								<dd>The object being enumerated over.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>seed</b>
+									<i>Optional</i>
+								</dt>
+								<dd>The seed value to provide for the first time.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The reduced output.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
 					<a name="remove"> </a>
           <div>
              <a name="remove"> </a>
@@ -666,41 +766,6 @@ Array prototypes. Returns -1 if the item is not found.</p></dd>
 					
 					<hr />
 				
-					<a name="size"> </a>
-          <div>
-             <a name="size"> </a>
-             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> <b>size</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>The size of the Array.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The length of the Array.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
-				
 					<a name="unique"> </a>
           <div>
              <a name="unique"> </a>
@@ -801,7 +866,7 @@ Array prototypes. Returns -1 if the item is not found.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jan 18 2011 18:24:14 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 30 2011 19:27:58 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

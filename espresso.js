@@ -51,7 +51,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.5.2',
+  VERSION: '0.6.2',
 
   /**
     The global variable.
@@ -85,11 +85,11 @@ Espresso = {
     @example
       // Properties on the global scope need to be there-
       // local scoped variables will not be found!
-      Espresso.global.arthur = Espresso.Template.extend({
+      window.arthur = {
         name: 'Arthur Dent',
         species: 'Human',
         description: 'Mostly Harmless'
-      });
+      };
 
       alert(Espresso.getObjectFor("arthur.name"));
       // => 'Arthur Dent'
@@ -113,19 +113,7 @@ Espresso = {
       if (property in obj) {
         obj = obj[property];
       } else {
-        // Try to be helpful-
-        //  1) If the property doesn't exist on the object,
-        //  2) The object is an Array
-        //  3) The Array has only one element in it.
-        // Unpack the element and try the lookup again.
-        if (Array.isArray(obj) && obj.length === 1) {
-          obj = obj[0];
-        }
-        if (obj && property in obj) { // prevent the apocalypse
-          obj = obj[property];
-        } else {
-          obj = undefined;
-        }
+        obj = undefined;
       }
       return obj;
     };
@@ -255,11 +243,10 @@ Espresso.global.Espresso = Espresso;
   Using `mix`, it's possible to create whatever types
   of objects you want, without polluting it's namespace.
   Espresso uses `mix` internally as a shim for ECMAScript 5
-  compatability and creating the base objects
-  {@link Espresso.Template} and {@link Espresso.Class}.
+  compatability and creating the core of your library.
 
   @param {...} mixins Objects to mixin to the template provided on into.
-  @returns {Object} An object with "into" field, call into with the template
+  @returns {Object} An object with `into` field, call into with the template
                     to apply the mixins on. That will return the template
                     with the mixins on it.
  */
@@ -278,7 +265,7 @@ mix = function () {
           value = mixin[key];
 
           _ = value && value._;
-          if (Espresso.isCallable(value)) {
+          if (Espresso.isCallable(value) && _) {
             for (decorator in _) {
               if (_.hasOwnProperty(decorator)) {
                 value = _[decorator](template, value, key);
@@ -315,11 +302,14 @@ mix(/** @lends Function.prototype */{
     Also, if the base function is inferior, it
     will be overriden.
 
+    @param {Function} [condition] If it returns `true`,
+      the function is inferior. Otherwise, it isn't.
     @returns {Function} The reciever.
    */
-  inferior: function () {
+  inferior: function (condition) {
     this._ = this._ || {};
-    this.isInferior = true;
+    this.isInferior = arguments.length === 1 ?
+      (Espresso.isCallable(condition) ? condition() : condition) : true;
 
     /** @ignore */
     this._.inferior = function (template, value, key) {
@@ -395,9 +385,18 @@ mix(/** @lends Function.prototype */{
         return value;
       }
 
-      return function () {
+      /** @ignore */
+      var lambda = function () {
         return value.apply(this, [base.bind(this)].concat(Array.from(arguments)));
       };
+
+      // Copy over properties on `value`
+      for (var k in value) {
+        if (value.hasOwnProperty(k)) {
+          lambda[k] = value[k];
+        }
+      }
+      return lambda;
     };
     return this;
   },
@@ -488,18 +487,18 @@ mix(/** @lends Function.prototype */{
     This implementation conforms to the ECMAScript 5
     standard.
 
-        var Person = Espresso.Template.extend({
+        var Person = mix({
           name: 'nil',
           greet: function (greeting) {
             alert(greeting.fmt(this.name));
           }
-        });
+        }).into({});
 
-        var wash = Person.extend({
+        var wash = mix(Person).into({
           name: 'Hoban Washburne'
         });
 
-        var mal = Person.extend({
+        var mal = mix(Person).into({
           name: 'Malcolm Reynolds'
         });
 
@@ -593,9 +592,20 @@ mix(/** @lends Function.prototype */{
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
   /** @function
+    Iterates over the items on the Enumerable.
+
+    The Function `forEach` should follow the specification as
+    defined in the ECMAScript 5 standard. All function using
+    `forEach` in the Enumerable mixin depend on it being this way.
+
+    @param {Function} lambda The callback to call for each element.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The Object to use as this when executing the callback.
     @returns {void}
    */
-  forEach: function () {
+  forEach: function (lambda, that) {
     throw new Error("You MUST override Espresso.Enumerable.forEach to be able " +
                     "to use the Enumerable mixin.");
   }.inferior(),
@@ -604,13 +614,16 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     Returns an array where each value on the enumerable
     is mutated by the lambda function.
 
-        var cube = function (n) { return n * n * n };
-        alert([1, 2, 3, 4].map(cube));
-        // -> [1, 8, 27, 64]
-
     @param {Function} lambda The lambda that transforms an element in the enumerable.
-    @param {Object} [self] The value of 'this' inside the lambda.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
     @returns {Array} The collection of results from the map function.
+    @example
+      var cube = function (n) { return n * n * n };
+      alert([1, 2, 3, 4].map(cube));
+      // -> [1, 8, 27, 64]
    */
   map: function (lambda, self) {
     var arr = [];
@@ -620,46 +633,45 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       throw new TypeError("{} is not callable.".fmt(lambda));
     }
 
-    lambda = lambda || function (v) {
-      return v;
-    };
     this.forEach(function (k, v) {
-      arr.set(arr.length, lambda.call(self, k, v, this));
+      arr.push(lambda.call(self, k, v, this));
     }, this);
     return arr;
   }.inferior(),
 
   /**
-    Reduce the content of an enumerable down to
-    a single value.
-
-        var range = mix(Espresso.Enumerable, {
-          begin: 0,
-          end: 0,
-
-          forEach: function (lambda, self) {
-            var i = 0;
-            for (var v = this.begin; v <= this.end; v++) {
-              lambda.call(self, v, i++, this);
-            }
-          },
-
-          create: function (begin, end) {
-            return mix(this, { begin: begin, end: end }).into({});
-          }
-        }).into({});
-
-        var multiply = function (a, b) { return a * b; };
-        var factorial = function (n) {
-          return range.create(1, n).reduce(multiply);
-        }
-
-        alert("5! is {}".fmt(factorial(5)));
-        alert("120! is {}".fmt(factorial(120)));
+    Reduce the content of an enumerable down to a single value.
 
     @param {Function} lambda The lambda that performs the reduction.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
     @param {Object} [seed] The seed value to provide for the first time.
     @returns {Object} The reduced output.
+    @example
+      var range = mix(Espresso.Enumerable, {
+        begin: 0,
+        end: 0,
+
+        forEach: function (lambda, self) {
+          var i = 0;
+          for (var v = this.begin; v <= this.end; v++) {
+            lambda.call(self, v, i++, this);
+          }
+        },
+
+        create: function (begin, end) {
+          return mix(this, { begin: begin, end: end }).into({});
+        }
+      }).into({});
+
+      var multiply = function (a, b) { return a * b; };
+      var factorial = function (n) {
+        return range.create(1, n).reduce(multiply);
+      }
+
+      alert("5! is {}".fmt(factorial(5)));
+      alert("120! is {}".fmt(factorial(120)));
    */
   reduce: function (lambda, seed) {
     var shouldSeed = (arguments.length === 1),
@@ -689,26 +701,26 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   /**
     Converts an enumerable into an Array.
 
-        var range = mix(Espresso.Enumerable, {
-          begin: 0,
-          end: 0,
+    @returns {Array} The enumerable as an Array.
+    @example
+      var range = mix(Espresso.Enumerable, {
+        begin: 0,
+        end: 0,
 
-          forEach: function (lambda, self) {
-            var i = 0;
-            for (var v = this.begin; v <= this.end; v++) {
-              lambda.call(self, v, i++, this);
-            }
-          },
-
-          create: function (begin, end) {
-            return mix(this, { begin: begin, end: end }).into({});
+        forEach: function (lambda, self) {
+          var i = 0;
+          for (var v = this.begin; v <= this.end; v++) {
+            lambda.call(self, v, i++, this);
           }
-        }).into({});
+        },
 
-        alert(range.create(0, 200).toArray());
-        // -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]
+        create: function (begin, end) {
+          return mix(this, { begin: begin, end: end }).into({});
+        }
+      }).into({});
 
-    @returns {Array}
+      alert(range.create(0, 200).toArray());
+      // -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]
    */
   toArray: function () {
     return this.map(function (v) {
@@ -717,35 +729,16 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-    Returns the size of the {@link Espresso.Enumerable}.
+    Returns all elements on the Enumerable for which the
+    input function returns true for.
 
-        var range = mix(Espresso.Enumerable, {
-          begin: 0,
-          end: 0,
-
-          forEach: function (lambda, self) {
-            var i = 0;
-            for (var v = this.begin; v <= this.end; v++) {
-              lambda.call(self, v, i++, this);
-            }
-          },
-
-          create: function (begin, end) {
-            return mix(this, { begin: begin, end: end }).into({});
-          }
-        }).into({});
-
-        alert(range.create(0, 20).size());
-        // -> 21
-
-    @returns {Number}
+    @param {Function} lambda The function to filter the Enumerable.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
+    @returns {Object[]} An array with the values for which `lambda` returns `true`
    */
-  size: function () {
-    return this.reduce(function (i) {
-      return i + 1;
-    }, 0);
-  },
-
   filter: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -753,11 +746,22 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
     return this.reduce(function (seive, v, k, t) {
       if (lambda.call(self, v, k, t)) {
-        seive.set(seive.length, v);
+        seive.push(v);
       }
     }, []);
   }.inferior(),
 
+  /**
+    Returns `true` if `lambda` returns `true` for every element
+    in the Enumerable, otherwise, it returns `false`.
+
+    @param {Function} lambda The lambda that transforms an element in the enumerable.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
+    @returns {Boolean} `true` if `lambda` returns `true` for every iteration.
+  */
   every: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -768,6 +772,17 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, true);
   }.inferior(),
 
+  /**
+    Returns `true` if `lambda` returns `true` for at least one
+    element in the Enumerable, otherwise, it returns `false`.
+
+    @param {Function} lambda The lambda that transforms an element in the enumerable.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [self] The value of `this` inside the lambda.
+    @returns {Boolean} `true` if `lambda` returns `true` at least once.
+   */
   some: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".fmt(lambda));
@@ -778,28 +793,57 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, false);
   }.inferior(),
 
-  pluck: function (property) {
-    return this.map(function (v) {
-      if (v.get) {
-        return v.get(property);
-      } else {
-        return v[property];
-      }
-    });
-  },
+  /**
+    Returns all values for the keys provided.
 
+    @param {...} keys The keys to extract values from.
+    @returns {Object[]} The values for the keys provided (not.
+   */
   extract: function (keys) {
-    var arr = [];
     if (!Array.isArray(keys)) {
       keys = [keys];
     }
 
-    keys.forEach(function (v, k) {
-      arr.set(arr.length, this.get(k));
-    }, this);
-    return arr;
+    return this.filter(function (v, k) {
+      return keys.indexOf(k) !== -1;
+    });
   },
 
+  /**
+    Returns the first value for which `lambda` returns `true`.
+    If nothing is found, `find` will return `ifnone`, a default
+    value provided as an optional argument or `undefined` if
+    `ifnone` was not provided.
+
+    @param {Function} lambda The lambda that returns something truthy or falsy.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [ifnone] The value to return if nothing is found.
+    @returns {Object} The first object to which `lambda` returns something truthy.
+   */
+  find: function (lambda, ifnone) {
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
+    var finished = false;
+    return this.reduce(function (result, v, k, that) {
+      if (!finished && lambda(v, k, that)) {
+        finished = true;
+        result = v;
+      }
+      return result;
+    }, ifnone);
+  },
+
+  /**
+    Whether or not the {@link Espresso.Enumerable} contains
+    the variables.
+
+    @param {...} values The values to check whether they exist
+      on the Enumerable.
+   */
   contains: function (val) {
     var args = Array.from(arguments);
 
@@ -852,13 +896,13 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
   _subscriptions: null,
 
   /**
-   * Subscribe to an event.
-   *
-   * @param {Object} event The event to subscribe to.
-   * @param {Function} handler The handler to call when the event is published.
-   * @param {Object} [options] Optional parameters.
-   *   @param {Boolean} [options.synchronous] Whether the handler should be called synchronously or not. Defaults to asynchronous calls.
-   * @returns {Object} The reciever.
+    Subscribe to an event.
+
+    @param {Object} event The event to subscribe to.
+    @param {Function} handler The handler to call when the event is published.
+    @param {Object} [options] Optional parameters.
+      @param {Boolean} [options.synchronous] Whether the handler should be called synchronously or not. Defaults to asynchronous calls.
+    @returns {Object} The reciever.
    */
   subscribe: function (event, handler, options) {
     if (!Espresso.isCallable(handler)) {
@@ -879,11 +923,11 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
   },
 
   /**
-   * Unsubscribe from an event.
-   *
-   * @param {Object} event The event to subscribe to.
-   * @param {Function} handler The handler to call when the event is published.
-   * @returns {Object} The reciever.
+    Unsubscribe from an event.
+
+    @param {Object} event The event to subscribe to.
+    @param {Function} handler The handler to call when the event is published.
+    @returns {Object} The reciever.
    */
   unsubscribe: function (event, handler) {
     var subscriptions = this._subscriptions, handlers, i, len;
@@ -900,18 +944,25 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
   },
 
   /**
-   * Gets called when an event has no subscribers to it.
-   * Override to handle the case when nothing is published.
-   *
-   * @param {Object} event The event that was ignored.
+    Gets called when an event has no subscribers to it.
+
+    Override to handle the case when nothing is published.
+    (There are no subscribers for an event.)
+
+    Any parameters passed to the event are also passed into
+    the function. All unpublished events are `invoke`d rather
+    than `defer`red.
+
+    @param {Object} event The event that was ignored.
+    @returns {void}
    */
   unpublishedEvent: function (event) {},
 
   /**
-   * Publish an event, passing all arguments along to the subscribed functions.
-   *
-   * @param {Object} event The event to publish.
-   * @returns {Object} The reciever.
+    Publish an event, passing all arguments along to the subscribed functions.
+
+    @param {Object} event The event to publish.
+    @returns {Object} The reciever.
    */
   publish: function (event) {
     var subscriptions = this._subscriptions,
@@ -1035,7 +1086,7 @@ Espresso.Scheduler = {
 
   Consider the following:
 
-      var Box = Espresso.Template.extend({
+      var Box = mix(Espresso.KVO).into({
         width: 0,
         height: 0,
         depth: 0,
@@ -1054,8 +1105,10 @@ Espresso.Scheduler = {
   that you would like to be notified on.
 
     [kvo]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
+
+  @extends Espresso.PubSub
  */
-Espresso.KVO = /** @lends Espresso.KVO# */{
+Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
 
   /**
     Get a value on an object.
@@ -1154,7 +1207,7 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
 
       // Expected behaviour is strange unless publishes
       // are done immediately.
-      if (object.publish && !(property.isIdempotent && !didChange)) {
+      if (object.publish && !(property && property.isIdempotent && !didChange)) {
         object.publish(key, value);
       }
     }
@@ -1179,7 +1232,7 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
     return this[key];
   }
 
-};
+});
 /*globals mix Enumerable Espresso */
 
 /** @name Array
@@ -1188,7 +1241,6 @@ Espresso.KVO = /** @lends Espresso.KVO# */{
   Shim for the native Array object.
 
   @extends Espresso.Enumerable
-  @extends Espresso.KVO
  */
 mix(/** @scope Array */{
 
@@ -1221,16 +1273,7 @@ mix(/** @scope Array */{
 
 }).into(Array);
 
-mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
-
-  /**
-    The size of the Array.
-
-    @returns {Number} The length of the Array.
-   */
-  size: function () {
-    return this.length;
-  }.property(),
+mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
   /**
     Iterator over the Array.
@@ -1246,7 +1289,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     var len, k;
 
     // 3. Let len be ToUint32(lenValue).
-    len = this.get('size');
+    len = this.length;
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
@@ -1265,7 +1308,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
         // ii. Call the [[Call]] internal method of lambda
         //     with T as the this value and argument list
         //     containing kValue, k, and O.
-        lambda.call(self, this.get(k), k, this);
+        lambda.call(self, this[k], k, this);
       }
 
       // d. Increase k by 1.
@@ -1289,12 +1332,71 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     i = fromIndex >= 0 ? fromIndex:
                          Math.max(i, len - Math.abs(fromIndex));
     for (; i < len; i += 1) {
-      if (o === this.get(i)) {
+      if (o === this[i]) {
         return i;
       }
     }
     return -1;
   }.inferior(),
+
+  /**
+    Reduce the content of an array down to a single
+    value (starting from the end and working backwards).
+
+    @param {Function} lambda The lambda that performs the reduction.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [seed] The seed value to provide for the first time.
+    @returns {Object} The reduced output.
+   */
+  reduceRight: function (lambda, seed) {
+    var shouldSeed = (arguments.length === 1),
+        len = this.length, v;
+
+    // 4. If IsCallable(lambda) is false, throw a TypeError exception
+    if (!Espresso.isCallable(lambda)) {
+      throw new TypeError("{} is not callable.".fmt(lambda));
+    }
+
+    while (len-- >= 0) {
+      v = this[len];
+      if (shouldSeed) {
+        seed = v;
+        shouldSeed = false;
+      } else {
+        seed = lambda(seed, v, len, this);
+      }
+    }
+
+    // 5. If len is 0 and seed is not present, throw a TypeError exception.
+    if (shouldSeed) {
+      throw new TypeError("There was nothing to reduce!");
+    }
+    return seed;
+  }.inferior(),
+
+  /**
+    Shim for Opera's buggy `concat` function not following
+    ECMAScript5 specifications.
+
+    @param {...} The items to concat.
+    @returns {Array} A new array with the values added to the end.
+   */
+  concat: function () {
+    var array = slice.call(this, 0);
+
+    Array.from(arguments).forEach(function (item) {
+      if (Array.isArray(item) && !('callee' in item)) {
+        for (var j = 0, len = item.length; j < len; j++) {
+          array.push(item[j]);
+        }
+      } else {
+        array.push(item);
+      }
+    }, this);
+    return array;
+  }.inferior(function () { return [].concat(arguments)[0][0] === 1; }),
 
   /**
     Shim for Internet Explorer, which provides no reverse for
@@ -1320,7 +1422,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     O = [];
 
     // 3. Let len be ToUint(lenVal)
-    len = this.get('size');
+    len = this.length;
 
     // 4. Let middle be floor(len/2)
     middle = Math.floor(len / 2);
@@ -1341,11 +1443,11 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
 
       // d. Let lowerValue be the result of calling the [[Get]]
       //    intenal method of O with argument lowerP
-      lowerValue = this.get(lowerP);
+      lowerValue = this[lowerP];
       
       // e. Let upperValue be the result of calling the [[Get]]
       //    intenal method of O with argument upperP
-      upperValue = this.get(upperP);
+      upperValue = this[upperP];
 
       // h. If lowerExists is true and upperExists is true, then
       //     i. Call the [[Put]] internal method of O with arguments
@@ -1374,7 +1476,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
     @see ECMA-262 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex ])
    */
   lastIndexOf: function (searchElement, fromIndex) {
-    var k = 0, len = this.get('size'), n;
+    var k = 0, len = this.length, n;
 
     // 4. If len is 0, return -1.
     if (len === 0) {
@@ -1407,7 +1509,7 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
         //      Strict Equality Comparision Algorithm to
         //      searchElement and elementK.
         // iii. If same is true, return k.
-          this.get(k.toString() === searchElement)) {
+          this[k.toString()] === searchElement) {
         return k;
       }
 
@@ -1491,11 +1593,17 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
       // => 'abrcd'
    */
   unique: function () {
-    var o = Espresso.Hash.extend();
+    var o = {}, values = [];
     this.forEach(function (v) {
       o[v] = v;
     });
-    return o.values();
+
+    for (var k in o) {
+      if (o.hasOwnProperty(k)) {
+        values.push(o[k]);
+      }
+    }
+    return values;
   },
 
   /**
@@ -1531,270 +1639,9 @@ mix(Espresso.Enumerable, Espresso.KVO, /** @scope Array.prototype */{
   }
 
 }).into(Array.prototype);
-/*globals Espresso mix*/
-
-/** @class
-
-  Templates provide inheritance without any classes.
-
-  The idiomatic use of templates is to have generic
-  object that uses internal slots to determine what
-  to do.
-
-  In Object Oriented design, a constructor would look
-  like the following:
-
-      var Person = Espresso.Class.extend({
-        init: function (name) {
-          this.set('name', name);
-        }
-      });
-
-      var hoban = new Person("Hoban 'Wash' Washburne");
-
-  Using templates, the equivalent code would be:
-
-      var Person = Espresso.Template.extend({
-        name: null // Imply a name
-      });
-
-      var hoban = Person.extend({
-        name: "Hoban 'Wash' Washburne"
-      });
-
-  The end result is straightforward (and transparent)
-  object construction.
-
-  The other benefit to using templates over classes
-  is the fact that _everything_ is an object, and
-  therefore can be extended upon. This allows one-off
-  objects to be created from derivative objects, and
-  truly encapsulates the concept prototypal inheritance.
-
-  Templates are slightly more advanced than Classes,
-  since they are typeless and require stateless objects
-  to perform at their best.
-
-  @extends Espresso.PubSub
-  @extends Espresso.KVO
- */
-Espresso.Template = mix(Espresso.PubSub, Espresso.KVO, /** @lends Espresso.Template# */{
-
-  /**
-    Override `init` to act like a constructor like so:
-
-        var shotgun = Espresso.Template.extend({
-          init: function () { alert("bang!"); }
-        });
-
-    These constructors will take no arguments,
-    and are called after the extending is finished.
-    For stacked Espresso.Templates, use `around()` to
-    get the super object passed in as the first argument.
-
-    @returns {void}
-   */
-  init: function () {},
-
-  /**
-    Extend a Template with a collection of objects.
-
-    If you use around to get the super argument of the
-    base object's function, the function will be augmented
-    in such a way that you don't have to set the scope in
-    which the function should be called in. Just call the
-    function normally, assuming that it is "special" and
-    will have `this` reference the current context you're in.
-    If you want to, you certainly have the option to apply
-    the scope if you want.
-
-    @returns {Espresso.Template} The extended template.
-
-    @example
-      var Animal = Espresso.Template.extend({
-        move: function (meters) {
-          return "{} moved {} m.".fmt(this.name, meters);
-        }
-      });
-
-      var Snake = Animal.extend({
-        move: function ($super) {
-          return "Slithering... {}".fmt($super(5));
-        }.around()
-      });
-
-      var Horse = Animal.extend({
-        move: function ($super) {
-          return "Galloping... {}".fmt($super(45));
-       }.around()
-      });
-
-      var sam = Snake.extend({ name: "Sammy the Python" });
-      var tom = Horse.extend({ name: "Tommy the Palomino" });
-
-      alert(sam.move());
-      // -> "Slithering... Sammy the Python moved 5 m."
-      alert(tom.move());
-      // -> "Galloping... Tommy the Palomino moved 45 m."
-   */
-  extend: function () {
-    var F = function () {},
-        extension;
-
-    F.prototype = this;
-    extension = new F();
-    mix.apply(null, arguments).into(extension);
-
-    if (Espresso.isCallable(extension.init)) {
-      extension.init();
-    }
-    return extension;
-  },
-
-  /** @function
-
-    Filters out private variables, functions, and
-    {@link KVO#unknownProperty} when parsing to JSON.
-
-    It _will_ get any computed properties (via the
-    `property` decorator on an Object.
-
-    @returns Object The slots to stringify to JSON.
-   */
-  toJSON: function (key) {
-    var k, v, json = {};
-    for (k in this) {
-      v = this.get(k);
-      if (k.charAt(0) !== "_" && !Espresso.isCallable(v) && k !== 'unknownProperty') {
-        json[k] = v;
-      }
-    }
-
-    return json;
-  }
-
-}).into({});
-/*global mix Espresso*/
-
-/** @class
-
-  Class provides a manner to perform classical inheritance
-  with the ability to mixin modules and extend current classes.
-
-  Class is {@link Espresso.Template}'s sister, which provides
-  a root class for all other classes to inherit from.
-
-  This means that the following will work:
-
-      var Person = Espresso.Class.extend({
-        init: function (isDancing) {
-          this.dancing = isDancing;
-        },
-
-        isDancing: function () {
-          return this.get('dancing');
-        }.property('dancing')
-      });
-
-      var Ninja = Person.extend({
-        init: function ($super) {
-          $super(false);
-        }.around(),
-
-        hasShuriken: function () {
-          return true; // of course!
-        }.property()
-      });
-
-      var p = new Person(true);
-      alert(p.get('isDancing'));
-      // => true
-
-      var n = new Ninja();
-      alert(n.get('isDancing'));
-      // => false
-      alert(n.get('hasShuriken'));
-      // => true
-
-      alert(p instanceof Person && p instanceof Espresso.Class &&
-            n instanceof Ninja && n instanceof Person && n instanceof Espresso.Class);
-      // => true
-
-  Based off of John Resig's [simple inheritance][resig].
-
-    [resig]: http://ejohn.org/blog/simple-javascript-inheritance/
-
-  @extends Espresso.PubSub
-  @extends Espresso.KVO
- */
-Espresso.Class = function () {};
-
-mix(/** @scope Espresso.Class */{
-
-  /** @function
-    @desc
-
-    Extend the class with the given properties.
-    Multiple inheritance is not allowed without
-    breaking the inheritance chain.
-
-    @returns {Espresso.Class} The extended Class.
-   */
-  extend: (function () {
-    var initializing = false;
-
-    return function () {
-      // Prevent initialization when creating the Class.
-      initializing = true;
-      var prototype = new this(), i, len = arguments.length;
-      initializing = false;
-
-      for (i = 0; i < len; i += 1) {
-        mix.apply(null, [arguments[i]]).into(prototype);
-      }
-
-      function Class() {
-        if (!initializing && Espresso.isCallable(this.init)) {
-          this.init.apply(this, arguments);
-        }
-      }
-
-      Class.prototype = prototype;
-      Class.constructor = Class;
-
-      Class.extend = arguments.callee;
-      return Class;
-    };
-  }())
-}).into(Espresso.Class);
-
-mix(Espresso.PubSub, Espresso.KVO, /** @scope Espresso.Class.prototype */{
-
-  /**
-    Filters out private variables and functions
-    when serializing the JSON to a String.
-
-    @returns {Object} The object hash to use when converting to JSON.
-   */
-  toJSON: function (key) {
-    var k, v, json = {};
-    for (k in this) {
-      v = this.get(k);
-      if (k.charAt(0) !== "_" && !Espresso.isCallable(v) && k !== 'unknownProperty') {
-        json[k] = v;
-      }
-    }
-    return json;
-  }
-}).into(Espresso.Class.prototype);
 /*globals mix Espresso */
 
-/** @namespace
-  @name String
-
-  @extends Espresso.Enumerable
- */
-mix(Espresso.Enumerable, /** @scope String.prototype */{
+mix(/** @scope String.prototype */{
 
   /**
     Iterates over every character in a string.
@@ -1823,18 +1670,6 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   },
 
   /**
-    Returns the character at the given index.
-    Provides a more unified interface for dealing with indexing,
-    and is more cross-browser than `[]`.
-
-    @param {Number} idx The index of the string to get.
-    @returns {String} The character at index idx.
-   */
-  get: function (idx) {
-    return this.charAt(idx);
-  },
-
-  /**
     Capitalize a string.
 
     @returns {String} The string, capitalized.
@@ -1847,7 +1682,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
       // => "Wine"
    */
   capitalize: function () {
-    return this.get(0).toUpperCase() + this.slice(1);
+    return this.charAt(0).toUpperCase() + this.slice(1);
   },
 
   /**
@@ -1974,7 +1809,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
       // => "banana"
 
     @example
-      var kitty = Espresso.Template.extend({
+      var kitty = mix({
         name: "Mister Mittens",
         weapons: ["lazzors", "shuriken", "rainbows"],
 
@@ -1982,7 +1817,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
           return "fightin' the {} with his {}.".fmt(
             whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
         }
-      });
+      }).into({});
 
       alert("{0.name} is {1}".fmt(kitty, kitty.fight('zombies')));
       // => "Mister Mittens is fightin' the zombies with ..."
@@ -2011,10 +1846,10 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
   },
 
   /**
-    Format a string according to a format specifier.
-    This is a function called by Formatter, 
-    A valid specifier can have:
-    [[fill]align][minimumwidth]
+    Formatter for `String`s.
+
+    Don't call this function- It's here for `Espresso.Formatter`
+    to take care of buisiness for you.
 
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.
@@ -2068,7 +1903,7 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
 }).into(String.prototype);
 /*globals Espresso */
 
-/** @class
+/** @namespace
 
   Advanced String Formatting borrowed from the eponymous Python PEP.
   It provides a flexible and powerful string formatting utility
@@ -2118,16 +1953,16 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
 
   Consider the following example:
 
-      Localizer = Espresso.Template.extend({
+      Localizer = mix({
         __fmt__: function (spec) {
-          return this.get(spec);
+          return this[spec];
         }
-      });
+      }).into({});
 
-      _hello = Localizer.extend({
+      _hello = mix(Localizer).into({
         en: 'hello',
         fr: 'bonjour',
-        jp: 'konnichiwa'
+        ja: 'こんにちは'
       });
 
       alert(Espresso.Formatter.fmt("{:en}", _hello));
@@ -2136,111 +1971,116 @@ mix(Espresso.Enumerable, /** @scope String.prototype */{
       alert(Espresso.Formatter.fmt("{:fr}", _hello));
       // => "bonjour"
 
-      alert(Espresso.Formatter.fmt("{:jp}", _hello));
-      // => "konnichiwa"
+      alert(Espresso.Formatter.fmt("{:ja}", _hello));
+      // => "こんにちは"
 
     [pep]: http://www.python.org/dev/peps/pep-3101/
+
+  @name Espresso.Formatter
  */
-Espresso.Formatter = {
+(function ()/** @lends Espresso.Formatter */{
+  Espresso.Formatter = mix({
+    fmt: fmt,
 
-  /**
-    The specifier regular expression.
+    /**
+      The specifier regular expression.
 
-    The groups are:
+      The groups are:
 
-      `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
+        `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
 
-    The brackets (`[]`) indicates an optional element.
+      The brackets (`[]`) indicates an optional element.
 
-    The `fill` is the character to fill the rest of the minimum width
-    of the string.
+      The `fill` is the character to fill the rest of the minimum width
+      of the string.
 
-    The `align` is one of:
+      The `align` is one of:
 
-      - `^` Forces the field to be centered within the available space.
-      - `<` Forces the field to be left-aligned within the available
-            space. This is the default.
-      - `>` Forces the field to be right-aligned within the available space.
-      - `=` Forces the padding to be placed after the sign (if any)
-            but before the digits. This alignment option is only valid
-            for numeric types.
+        - `^` Forces the field to be centered within the available space.
+        - `<` Forces the field to be left-aligned within the available
+              space. This is the default.
+        - `>` Forces the field to be right-aligned within the available space.
+        - `=` Forces the padding to be placed after the sign (if any)
+              but before the digits. This alignment option is only valid
+              for numeric types.
 
-    Unless the minimum field width is defined, the field width
-    will always be the same size as the data to fill it, so that
-    the alignment option has no meaning in this case.
+      Unless the minimum field width is defined, the field width
+      will always be the same size as the data to fill it, so that
+      the alignment option has no meaning in this case.
 
-    The `sign` is only valid for numeric types, and can be one of
-    the following:
+      The `sign` is only valid for numeric types, and can be one of
+      the following:
 
-      - `+` Indicates that a sign shoulb be used for both positive
-            as well as negative numbers.
-      - `-` Indicates that a sign shoulb be used only for as negative
-            numbers. This is the default.
-      - ` ` Indicates that a leading space should be used on positive
-            numbers.
+        - `+` Indicates that a sign shoulb be used for both positive
+              as well as negative numbers.
+        - `-` Indicates that a sign shoulb be used only for as negative
+              numbers. This is the default.
+        - ` ` Indicates that a leading space should be used on positive
+              numbers.
 
-    If the `#` character is present, integers use the 'alternate form'
-    for formatting. This means that binary, octal, and hexadecimal
-    output will be prefixed with '0b', '0o', and '0x', respectively.
+      If the `#` character is present, integers use the 'alternate form'
+      for formatting. This means that binary, octal, and hexadecimal
+      output will be prefixed with '0b', '0o', and '0x', respectively.
 
-    `width` is a decimal integer defining the minimum field width. If
-    not specified, then the field width will be determined by the
-    content.
+      `width` is a decimal integer defining the minimum field width. If
+      not specified, then the field width will be determined by the
+      content.
 
-    If the width field is preceded by a zero (`0`) character, this enables
-    zero-padding. This is equivalent to an alignment type of `=` and a
-    fill character of `0`.
+      If the width field is preceded by a zero (`0`) character, this enables
+      zero-padding. This is equivalent to an alignment type of `=` and a
+      fill character of `0`.
 
-    The 'precision' is a decimal number indicating how many digits
-    should be displayed after the decimal point in a floating point
-    conversion. For non-numeric types the field indicates the maximum
-    field size- in other words, how many characters will be used from
-    the field content. The precision is ignored for integer conversions.
+      The 'precision' is a decimal number indicating how many digits
+      should be displayed after the decimal point in a floating point
+      conversion. For non-numeric types the field indicates the maximum
+      field size- in other words, how many characters will be used from
+      the field content. The precision is ignored for integer conversions.
 
-    Finally, the 'type' determines how the data should be presented.
+      Finally, the 'type' determines how the data should be presented.
 
-    The available integer presentation types are:
+      The available integer presentation types are:
 
-      - `b` Binary. Outputs the number in base 2.
-      - `c` Character. Converts the integer to the corresponding
-            Unicode character before printing.
-      - `d` Decimal Integer. Outputs the number in base 10.
-      - `o` Octal format. Outputs the number in base 8.
-      - `x` Hex format. Outputs the number in base 16, using lower-
-            case letters for the digits above 9.
-      - `X` Hex format. Outputs the number in base 16, using upper-
-            case letters for the digits above 9.
-      - `n` Number. This is the same as `d`, except that it uses the
-            current locale setting to insert the appropriate
-            number separator characters.
-      - ` ` (None) the same as `d`
+        - `b` Binary. Outputs the number in base 2.
+        - `c` Character. Converts the integer to the corresponding
+              Unicode character before printing.
+        - `d` Decimal Integer. Outputs the number in base 10.
+        - `o` Octal format. Outputs the number in base 8.
+        - `x` Hex format. Outputs the number in base 16, using lower-
+              case letters for the digits above 9.
+        - `X` Hex format. Outputs the number in base 16, using upper-
+              case letters for the digits above 9.
+        - `n` Number. This is the same as `d`, except that it uses the
+              current locale setting to insert the appropriate
+              number separator characters.
+        - ` ` (None) the same as `d`
 
-    The available floating point presentation types are:
+      The available floating point presentation types are:
 
-      - `e` Exponent notation. Prints the number in scientific
-            notation using the letter `e` to indicate the exponent.
-      - `E` Exponent notation. Same as `e` except it converts the
-            number to uppercase.
-      - `f` Fixed point. Displays the number as a fixed-point
-            number.
-      - `F` Fixed point. Same as `f` except it converts the number
-            to uppercase.
-      - `g` General format. This prints the number as a fixed-point
-            number, unless the number is too large, in which case
-            it switches to `e` exponent notation.
-      - `G` General format. Same as `g` except switches to `E`
-            if the number gets to large.
-      - `n` Number. This is the same as `g`, except that it uses the
-            current locale setting to insert the appropriate
-            number separator characters.
-      - `%` Percentage. Multiplies the number by 100 and displays
-            in fixed (`f`) format, followed by a percent sign.
-      - ` ` (None) similar to `g`, except that it prints at least one
-            digit after the decimal point.
+        - `e` Exponent notation. Prints the number in scientific
+              notation using the letter `e` to indicate the exponent.
+        - `E` Exponent notation. Same as `e` except it converts the
+              number to uppercase.
+        - `f` Fixed point. Displays the number as a fixed-point
+              number.
+        - `F` Fixed point. Same as `f` except it converts the number
+              to uppercase.
+        - `g` General format. This prints the number as a fixed-point
+              number, unless the number is too large, in which case
+              it switches to `e` exponent notation.
+        - `G` General format. Same as `g` except switches to `E`
+              if the number gets to large.
+        - `n` Number. This is the same as `g`, except that it uses the
+              current locale setting to insert the appropriate
+              number separator characters.
+        - `%` Percentage. Multiplies the number by 100 and displays
+              in fixed (`f`) format, followed by a percent sign.
+        - ` ` (None) similar to `g`, except that it prints at least one
+              digit after the decimal point.
 
-    @type RegExp
-   */
-  SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/,
+      @type RegExp
+     */
+    SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
+  }).into({});
 
   /**
     Format a template string with provided arguments.
@@ -2248,14 +2088,14 @@ Espresso.Formatter = {
     @param {String} template The template string to format the arguments with.
     @returns {String} The template formatted with the given leftover arguments.
    */
-  fmt: function (template) {
+  function fmt(template) {
     var args = Array.from(arguments).slice(1),
         prev = '',
         buffer = [],
         result, idx, len = template.length, ch;
 
     for (idx = 0; idx < len; idx += 1) {
-      ch = template.get(idx);
+      ch = template.charAt(idx);
 
       if (prev === '}') {
         if (ch !== '}') {
@@ -2268,7 +2108,7 @@ Espresso.Formatter = {
       }
 
       if (ch === '{') {
-        result = this.parseField(template.slice(idx + 1), args);
+        result = parseField(template.slice(idx + 1), args);
         buffer[buffer.length] = result[1];
         idx += result[0];
       } else if (ch !== '}') {
@@ -2277,9 +2117,9 @@ Espresso.Formatter = {
       prev = ch;
     }
     return buffer.join('');
-  },
+  }
 
-  /**
+  /** @ignore
     Parses the template with the arguments provided,
     parsing any nested templates.
 
@@ -2287,17 +2127,17 @@ Espresso.Formatter = {
     @param {Array} args The arguments to parse the template string.
     @returns {String} The formatted template.
    */
-  parseField: function (template, args) {
+  function parseField(template, args) {
     var fieldspec = [], result = null, idx = 0, ch, len = template.length;
 
     for (; idx < len; idx += 1) {
-      ch = template.get(idx);
+      ch = template.charAt(idx);
       if (ch === '{') {
         if (fieldspec.length === 0) {
           return [1, '{'];
         }
 
-        result = this.parseField(template.slice(idx + 1), args);
+        result = parseField(template.slice(idx + 1), args);
         if (!result[0]) {
           return [idx, '{'];
         } else {
@@ -2305,15 +2145,15 @@ Espresso.Formatter = {
           fieldspec[fieldspec.length] = result[1];
         }
       } else if (ch === '}') {
-        return [idx + 1, this.formatField(fieldspec.join(''), args)];
+        return [idx + 1, formatField(fieldspec.join(''), args)];
       } else {
         fieldspec[fieldspec.length] = ch;
       }
     }
     return [template.length, fieldspec.join('')];
-  },
+  }
 
-  /**
+  /** @ignore
     Returns the value of the template string formatted with the
     given arguments.
 
@@ -2321,26 +2161,34 @@ Espresso.Formatter = {
     @param {Array} args An Array of arguments to use to format the template string.
     @returns {String} The formatted template.
    */
-  formatField: function (value, args) {
+  function formatField(value, args) {
     var iSpec = value.indexOf(':'),
-        spec;
+        spec, res;
     iSpec = iSpec === -1 ? value.length : iSpec;
     spec = value.slice(iSpec + 1);
     value = value.slice(0, iSpec);
 
     if (value !== '') {
-      value = Espresso.getObjectFor(value, args);
+      res = Espresso.getObjectFor(value, args);
+      if (typeof res === "undefined" &&
+          Array.isArray(args) && args.length === 1 && args[0]) {
+        if (args[0].get && args[0].get === Espresso.KVO.get) {
+          res = args[0].get(value);
+        } else {
+          res = Espresso.getObjectFor(value, args[0]);
+        }
+      }
     } else {
-      value = args.shift();
+      res = args.shift();
     }
 
     if (!spec) {
-      return value;
+      return res;
     }
 
-    return value.__fmt__ ? value.__fmt__(spec) : value;
-  }  
-};
+    return res.__fmt__ ? res.__fmt__(spec) : res;
+  }
+}());
 /*globals mix Espresso */
 
 mix(/** @lends Number# */{
@@ -2354,6 +2202,15 @@ mix(/** @lends Number# */{
     return this.valueOf();
   }.inferior(),
 
+  /**
+    Formatter for `Number`s.
+
+    Don't call this function- It's here for `Espresso.Formatter`
+    to take care of buisiness for you.
+
+    @param {String} spec The specifier to format the number as.
+    @returns {String} The number formatted as specified.
+   */
   __fmt__: function (spec) {
     // Don't want Infinity, -Infinity and NaN in here!
     if (!isFinite(this)) {
@@ -2484,43 +2341,21 @@ mix(/** @lends Number# */{
 /*globals mix */
 mix(/** @lends Date# */{
 
-  useUTC: false,
-
-  get: (function () {
-    var validSlots = ["Date", "Day", "FullYear", "Hours", "Milliseconds", "Minutes", "Month", "Seconds"];
-    return function (key) {
-      var prefix = "get";
-      key = key.capitalize();
-      if (this.useUTC && validSlots.indexOf(key) !== -1) {
-        prefix += "UTC";
-      }
-      return this[prefix + key]();
-    };
-  }()),
-
-  set: (function () {
-    var validSlots = ["Date", "Day", "FullYear", "Hours", "Milliseconds", "Minutes", "Month", "Seconds"];
-    return function (key, value) {
-      var prefix = "set";
-      key = key.capitalize();
-      if (this.useUTC && validSlots.indexOf(key) !== -1) {
-        prefix += "UTC";
-      }
-      return this[prefix + key](value);
-    };
-  }()),
-
   /**
     Shim for `toISOString`.
 
     @returns {String} The ISO 6081 formatted UTC date.
    */
   toISOString: function () {
-    var prev = this.useUTC, result;
-    this.useUTC = true;
-    result = "{:Y-m-dTH:M:S.f}Z".fmt(this);
-    this.useUTC = prev;
-    return result;
+    return "{}-{}-{}T{}:{}:{}.{}Z".fmt(
+      this.getUTCFullYear(),
+      this.getUTCMonth(),
+      this.getUTCDate(),
+      this.getUTCHours(),
+      this.getUTCMinutes(),
+      this.getUTCSeconds(),
+      this.getUTCMilliseconds()
+    );
   }.inferior(),
 
   /**
@@ -2536,7 +2371,7 @@ mix(/** @lends Date# */{
 
   /** @function
     @desc
-    Date Formatting support.
+    Date Formatting support (for use with `fmt`).
 
     The following flags are acceptable in a format string:
 
@@ -2568,6 +2403,8 @@ mix(/** @lends Date# */{
 
         alert("The time is: {:c}.".fmt(new Date()));
 
+    Note: all times used with `fmt` are **NOT** in UTC.
+
     @param {String} spec The specifier to transform the date to a formatted string.
     @returns {String} The Date transformed into a string as specified.
    */
@@ -2582,62 +2419,56 @@ mix(/** @lends Date# */{
       for (; i < spec.length; i += 1) {
         switch (spec[i]) {
         case 'a':
-          result[result.length] = days[this.get('day')].slice(0, 3);
+          result[result.length] = days[this.getDay()].slice(0, 3);
           break;
         case 'A':
-          result[result.length] = days[this.get('day')];
+          result[result.length] = days[this.getDay()];
           break;
         case 'b':
-          result[result.length] = months[this.get('month')].slice(0, 3);
+          result[result.length] = months[this.getMonth()].slice(0, 3);
           break;
         case 'B':
-          result[result.length] = months[this.get('month')];
+          result[result.length] = months[this.getMonth()];
           break;
         case 'c':
-          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.get('date'));
+          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.getDate());
           break;
         case 'd':
-          result[result.length] = "{:02}".fmt(this.get('date'));
-          break;
-        case 'e':
-          result[result.length] = "{: 2}".fmt(this.get('date'));
-          break;
-        case 'f':
-          result[result.length] = "{:03}".fmt(this.get('milliseconds'));
+          result[result.length] = "{:02}".fmt(this.getDate());
           break;
         case 'H':
-          result[result.length] = "{:02}".fmt(this.get('hours'));
+          result[result.length] = "{:02}".fmt(this.getHours());
           break;
         case 'I':
-          result[result.length] = "{:02}".fmt(this.get('hours') % 12);
+          result[result.length] = "{:02}".fmt(this.getHours() % 12);
           break;
         case 'j':
-          result[result.length] = "{:03}".fmt(Math.ceil((this - new Date(this.get('fullYear'), 0, 1)) / 86400000));
+          result[result.length] = "{:03}".fmt(Math.ceil((this - new Date(this.getFullYear(), 0, 1)) / 86400000));
           break;
         case 'm':
-          result[result.length] = "{:02}".fmt(this.get('month') + 1);
+          result[result.length] = "{:02}".fmt(this.getMonth() + 1);
           break;
         case 'M':
-          result[result.length] = "{:02}".fmt(this.get('minutes'));
+          result[result.length] = "{:02}".fmt(this.getMinutes());
           break;
         case 'p':
-          result[result.length] = this.get('hours') > 11 ? "PM" : "AM";
+          result[result.length] = this.getHours() > 11 ? "PM" : "AM";
           break;
         case 'S':
-          result[result.length] = "{:02}".fmt(this.get('seconds'));
+          result[result.length] = "{:02}".fmt(this.getSeconds());
           break;
         case 'U':
           // Monday as the first day of the week
-          var day = ((this.get('day') + 6) % 7) + 1;
+          var day = ((this.getDay() + 6) % 7) + 1;
           result[result.length] = "{:02}".fmt(
-            Math.ceil((((this - new Date(this.get('fullYear'), 0, 1)) / 86400000) + day) / 7) - 1);
+            Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + day) / 7) - 1);
           break;
         case 'w':
-          result[result.length] = this.get('day');
+          result[result.length] = this.getDay();
           break;
         case 'W':
           result[result.length] = "{:02}".fmt(
-            Math.ceil((((this - new Date(this.get('fullYear'), 0, 1)) / 86400000) + this.get('day') + 1) / 7) - 1);
+            Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + this.getDay() + 1) / 7) - 1);
           break;
         case 'x':
           result[result.length] = "{:m/d/y}".fmt(this);
@@ -2649,10 +2480,10 @@ mix(/** @lends Date# */{
           result[result.length] = "{:02}".fmt(this.getYear() % 100);
           break;
         case 'Y':
-          result[result.length] = this.get('fullYear');
+          result[result.length] = this.getFullYear();
           break;
         case 'Z':
-          result[result.length] = this.get('timezoneOffset');
+          result[result.length] = this.getTimezoneOffset();
           break;
         default:
           result[result.length] = spec[i];
@@ -2741,91 +2572,7 @@ mix(/** @lends Boolean# */{
   }.inferior()
 
 }).into(Boolean.prototype);
-/*globals Espresso */
-
-/** @class
-
-  A KVO compliant Object Hash class.
- 
-  @extends Espresso.Enumerable
-  @extends Espresso.KVO
-  @extends Espresso.Template
- */
-Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** @lends Espresso.Hash# */{
-
-  /**
-    Iterator over the Hash.
-
-    @param {Function} lambda The callback to call for each element.
-    @param {Object} [self] The Object to use as this when executing the callback.
-    @returns {void}
-   */
-  forEach: function (lambda, self) {
-    var k, v;
-    for (k in this) {
-      v = this.get(k);
-      if (k.get(0) !== '_' && !Espresso.isCallable(v) && k !== "unknownProperty") {
-        lambda.call(self, v, k, this);
-      }
-    }
-  },
-
-  /**
-    Return all of the iterable keys on the hash.
-
-    @returns {Array} A list of all of the iterable keys on the hash.
-    @example
-      var alphabet = Espresso.Hash.extend({
-        a: 00, b: 01, c: 02, d: 03, e: 04, f: 05,
-        g: 06, h: 07, i: 08, j: 09, k: 10, j: 11,
-        k: 12, l: 13, m: 14, n: 15, o: 16, p: 17,
-        q: 18, r: 19, s: 20, t: 21, u: 22, v: 23,
-        w: 24, x: 25, y: 26, z: 27
-      });
-
-      alert(alphabet.keys());
-   */
-  keys: function () {
-    return this.map(function (v, k) {
-      return k;
-    });
-  },
-
-  /**
-    Return all iterable values on the hash.
-
-    @returns {Array} A list of all iterable values on the hash.
-    @example
-      var days = Espresso.Hash.extend({
-        1: 'Sunday',
-        2: 'Monday',
-        3: 'Tuesday',
-        4: 'Wednesday',
-        5: 'Thursday',
-        6: 'Friday',
-        7: 'Saturday'
-      });
-
-      alert(days.values());
-   */
-  values: function () {
-    return this.map(function (v, k) {
-      return v;
-    });
-  },
-
-  /**
-    Convert the Hash into an Array of tuples.
-
-    @returns {Array[]} An array of tuples.
-   */
-  toArray: function () {
-    return this.map(function (v, k) {
-      return [k, v];
-    });
-  }
-});
-/*global JSON mix Espresso*/
+/*global JSON module Espresso*/
 
 /** @namespace
   Shim for JSON.
@@ -2842,9 +2589,231 @@ Espresso.Hash = Espresso.Template.extend(Espresso.Enumerable, Espresso.KVO, /** 
 
   @name JSON
  */
-Espresso.global.JSON = Espresso.global.JSON || {};
+(function () /** @lends JSON */{
 
-mix(/** @lends JSON# */{
+  JSON = mix({
+    stringify: stringify.inferior(),
+    parse: parse.inferior()
+  }).into(JSON || {});
+
+  var escapable, abbrev, stack, indent, gap, space,
+      PropertyList, ReplacerFunction;
+
+  escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
+  abbrev = {
+    '\b': '\\b',
+    '\t': '\\t',
+    '\n': '\\n',
+    '\f': '\\f',
+    '\r': '\\r',
+    '"': '\\"',
+    '\\': '\\\\'
+  };
+
+  /** @ignore
+    The abstract operation Str(key, holder) has access to ReplacerFunction
+    from the invocation of the stringify method.
+   */
+  function Str(key, holder) {
+    var value;
+
+    // 1. Let value be the result of calling the [[Get]] internal method of
+    //    holder with argument key.
+    value = holder && (holder.get && holder.get(key) || holder[key]);
+
+    // 2. If Type(value) is Object, then
+    if (typeof value === "object") {
+      // a. Let toJSON be the result of calling the [[Call]] internal method
+      //    of value with argument toJSON
+      // b. If IsCallable(toJSON) is true
+      if (value && Espresso.isCallable(value.toJSON)) {
+        // i. Let value be the result of calling the [[Call]] internal method
+        //    of toJSON passing value as the this value and with an argument
+        //    list consisting of key and value.
+        value = value.toJSON(key);
+      }
+    }
+
+    // 3. If ReplacerFunction is not undefined, then
+    if (typeof ReplacerFunction !== "undefined") {
+      // a. Let value be the result of calling the [[Call]] internal method
+      //    of ReplacerFunction passing holder as the this value and with
+      //    an argument list containing key and value.
+      ReplacerFunction.call(holder, key, value);
+    }
+
+    // 5. If value is null then return "null".
+    switch (typeof value) {
+    case 'boolean':
+    case 'null':
+      return String(value);
+    case 'string':
+      return Quote(value);
+    case 'number':
+      return isFinite(value) ? String(value): "null";
+    case 'object':
+      if (!value) {
+        return 'null';
+      }
+
+      if (Array.isArray(value)) {
+        return JA(value);
+      } else {
+        return JO(value);
+      }
+      break;
+    default:
+      return undefined;
+    }
+  };
+
+  /** @ignore
+    The abstract operation Quote(value) wraps a String value
+    in double quotes and escapes characters within it.
+   */
+  function Quote(value) {
+    escapable.lastIndex = 0;
+    return '"' + (escapable.test(value) ?
+      value.replace(escapable, function (a) {
+        var c = abbrev[a];
+        return typeof c === 'string' ?
+          c: '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+      }): value) + '"';
+  };
+
+  /** @ignore */
+  function JO(value) {
+    var stepback, K, partial;
+
+    // 1. If stack contains value then throw a TypeError exception
+    //    because the structure is cyclical.
+    if (stack.indexOf(value) !== -1) {
+      throw new TypeError("Cannot stringify a cyclical structure to JSON.");
+    }
+
+    // 2. Append value to stack.
+    stack[stack.length] = value;
+
+    // 3. Let stepback be indent.
+    stepback = indent;
+
+    // 4. Let indent be the concatenation of indent and gap.
+    indent += gap;
+
+    // 5. If PropertyList is not undefined, then
+    if (typeof PropertyList !== "undefined") {
+      // a. Let K be PropertyList.
+      K = PropertyList;
+
+    // 6. Else
+    } else {
+      // a. Let K be an internal List of Strings consisting
+      //    of the names of all the own properties of value whose
+      //    [[Enumerable]] attribute is true.
+      //    The ordering of the Strings should be the same as that used by the
+      //    Object.keys standard built-in function.
+      K = Object.keys(value);
+    }
+
+    // 7. Let partial be an empty List.
+    partial = [];
+
+    // 8. For each element P of K.
+    K.forEach(function (P) {
+      var strP = Str(P, value), member;
+      if (typeof strP !== "undefined") {
+        member = Quote(P);
+        member += ":";
+        if (gap !== '') {
+          member += space;
+        }
+        member += strP;
+        partial[partial.length] = member;
+      }
+    });
+
+    var result;
+    if (partial.length === 0) {
+      result = "{}";
+    } else {
+      if (gap === '') {
+        result = "{" + partial.join(',') + "}";
+      } else {
+        result = '{\n' +
+          indent + partial.join(',\n' + indent) + '\n' +
+         stepback + '}';
+      }
+    }
+
+    stack.pop();
+    indent = stepback;
+    return result;
+  };
+
+  /** @ignore */
+  function JA(value) {
+    var stepback, partial, len, index, strP, result;
+
+    // 1. If stack contains value then throw a TypeError exception
+    //    because the structure is cyclical.
+    if (stack.indexOf(value) !== -1) {
+      throw new TypeError("Cannot stringify a cyclical structure to JSON.");
+    }
+
+    // 2. Append value to stack.
+    stack[stack.length] = value;
+
+    // 3. Let stepback be indent.
+    stepback = indent;
+
+    // 4. Let indent be the concatenation of indent and gap.
+    indent += gap;
+
+    // 5. Let partial be an empty List.
+    partial = [];
+
+    // 6. Let len be the result of calling the [[Get]] internal method
+    //    of value with argument "length".
+    len = value.get('length');
+
+    // 7. Let index be 0.
+    index = 0;
+
+    // 8. Repeat while index < len
+    while (index < len) {
+      strP = Str(String(index), value);
+      if (typeof strP === "undefined") {
+        partial[partial.length] = "null";
+      } else {
+        partial[partial.length] = strP;
+      }
+      index += 1;
+    }
+
+    // 9. If partial is empty, then
+    if (partial.length === 0) {
+      result = "[]";
+
+    // 10. Else
+    } else {
+      if (gap === '') {
+        result = "[" + partial.join(',') + "]";
+      } else {
+        result = '[\n' +
+          indent + partial.join(',\n' + indent) + '\n' +
+         stepback + ']';
+      }
+    }
+
+    // 11. Remove the last element of stack.
+    stack.pop();
+
+    // 12. Let indent be stepback.
+    indent = stepback;
+
+    // 13. Return final.
+    return result;
+  };
 
   /** @function
     @desc
@@ -2862,312 +2831,315 @@ mix(/** @lends JSON# */{
 
     @returns {String} The ECMAScript value as a JSON string.
    */
-  stringify: (function () {
-    var escapable, abbrev, stack, indent, gap, space,
-        PropertyList, ReplacerFunction, Str, Quote, JO, JA;
+  function stringify(value, replacer, sp) {
+    var k, v, len, item;
 
-    escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-    abbrev = {
-      '\b': '\\b',
-      '\t': '\\t',
-      '\n': '\\n',
-      '\f': '\\f',
-      '\r': '\\r',
-      '"': '\\"',
-      '\\': '\\\\'
-    };
+    // 1. Let stack be an empty List.
+    stack = [];
 
-    /** @ignore
-     * The abstract operation Str(key, holder) has access to ReplacerFunction
-     * from the invocation of the stringify method.
-     */
-    Str = function (key, holder) {
-      var value;
+    // 2. Let indent be the empty String.
+    indent = '';
 
-      // 1. Let value be the result of calling the [[Get]] internal method of
-      //    holder with argument key.
-      value = holder && (holder.get && holder.get(key) || holder[key]);
+    // 3. Let PropertyList and ReplacerFunction be undefined
+    PropertyList = ReplacerFunction = undefined;
 
-      // 2. If Type(value) is Object, then
-      if (typeof value === "object") {
-        // a. Let toJSON be the result of calling the [[Call]] internal method
-        //    of value with argument toJSON
-        // b. If IsCallable(toJSON) is true
-        if (value && Espresso.isCallable(value.toJSON)) {
-          // i. Let value be the result of calling the [[Call]] internal method
-          //    of toJSON passing value as the this value and with an argument
-          //    list consisting of key and value.
-          value = value.toJSON(key);
-        }
-      }
-
-      // 3. If ReplacerFunction is not undefined, then
-      if (typeof ReplacerFunction !== "undefined") {
-        // a. Let value be the result of calling the [[Call]] internal method
-        //    of ReplacerFunction passing holder as the this value and with
-        //    an argument list containing key and value.
-        ReplacerFunction.call(holder, key, value);
-      }
-
-      // 5. If value is null then return "null".
-      switch (typeof value) {
-      case 'boolean':
-      case 'null':
-        return String(value);
-      case 'string':
-        return Quote(value);
-      case 'number':
-        return isFinite(value) ? String(value): "null";
-      case 'object':
-        if (!value) {
-          return 'null';
-        }
-
-        if (Array.isArray(value)) {
-          return JA(value);
-        } else {
-          return JO(value);
-        }
-        break;
-      default:
-        return undefined;
-      }
-    };
-
-    /** @ignore
-     * The abstract operation Quote(value) wraps a String value
-     * in double quotes and escapes characters within it.
-     */
-    Quote = function (value) {
-      escapable.lastIndex = 0;
-      return '"' + (escapable.test(value) ?
-        value.replace(escapable, function (a) {
-          var c = abbrev[a];
-          return typeof c === 'string' ?
-            c: '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-        }): value) + '"';
-    };
-
-    /** @ignore */
-    JO = function (value) {
-      var stepback, K, partial;
-
-      // 1. If stack contains value then throw a TypeError exception
-      //    because the structure is cyclical.
-      if (stack.indexOf(value) !== -1) {
-        throw new TypeError("Cannot stringify a cyclical structure to JSON.");
-      }
-
-      // 2. Append value to stack.
-      stack[stack.length] = value;
-
-      // 3. Let stepback be indent.
-      stepback = indent;
-
-      // 4. Let indent be the concatenation of indent and gap.
-      indent += gap;
-
-      // 5. If PropertyList is not undefined, then
-      if (typeof PropertyList !== "undefined") {
-        // a. Let K be PropertyList.
-        K = PropertyList;
-
-      // 6. Else
-      } else {
-        // a. Let K be an internal List of Strings consisting
-        //    of the names of all the own properties of value whose
-        //    [[Enumerable]] attribute is true.
-        //    The ordering of the Strings should be the same as that used by the
-        //    Object.keys standard built-in function.
-        K = Object.keys(value);
-      }
-
-      // 7. Let partial be an empty List.
-      partial = [];
-
-      // 8. For each element P of K.
-      K.forEach(function (P) {
-        var strP = Str(P, value), member;
-        if (typeof strP !== "undefined") {
-          member = Quote(P);
-          member += ":";
-          if (gap !== '') {
-            member += space;
-          }
-          member += strP;
-          partial[partial.length] = member;
-        }
-      });
-
-      var result;
-      if (partial.length === 0) {
-        result = "{}";
-      } else {
-        if (gap === '') {
-          result = "{" + partial.join(',') + "}";
-        } else {
-          result = '{\n' +
-            indent + partial.join(',\n' + indent) + '\n' +
-           stepback + '}';
-        }
-      }
-
-      stack.pop();
-      indent = stepback;
-      return result;
-    };
-
-    /** @ignore */
-    JA = function (value) {
-      var stepback, partial, len, index, strP, result;
-
-      // 1. If stack contains value then throw a TypeError exception
-      //    because the structure is cyclical.
-      if (stack.indexOf(value) !== -1) {
-        throw new TypeError("Cannot stringify a cyclical structure to JSON.");
-      }
-
-      // 2. Append value to stack.
-      stack[stack.length] = value;
-
-      // 3. Let stepback be indent.
-      stepback = indent;
-
-      // 4. Let indent be the concatenation of indent and gap.
-      indent += gap;
-
-      // 5. Let partial be an empty List.
-      partial = [];
-
-      // 6. Let len be the result of calling the [[Get]] internal method
-      //    of value with argument "length".
-      len = value.get('length');
-
-      // 7. Let index be 0.
-      index = 0;
-
-      // 8. Repeat while index < len
-      while (index < len) {
-        strP = Str(String(index), value);
-        if (typeof strP === "undefined") {
-          partial[partial.length] = "null";
-        } else {
-          partial[partial.length] = strP;
-        }
-        index += 1;
-      }
-
-      // 9. If partial is empty, then
-      if (partial.length === 0) {
-        result = "[]";
-
-      // 10. Else
-      } else {
-        if (gap === '') {
-          result = "[" + partial.join(',') + "]";
-        } else {
-          result = '[\n' +
-            indent + partial.join(',\n' + indent) + '\n' +
-           stepback + ']';
-        }
-      }
-
-      // 11. Remove the last element of stack.
-      stack.pop();
-
-      // 12. Let indent be stepback.
-      indent = stepback;
-
-      // 13. Return final.
-      return result;
-    };
-
-    return function (value, replacer, sp) {
-      var k, v, len, item;
-
-      // 1. Let stack be an empty List.
-      stack = [];
-
-      // 2. Let indent be the empty String.
-      indent = '';
-
-      // 3. Let PropertyList and ReplacerFunction be undefined
-      PropertyList = ReplacerFunction = undefined;
-
-      // 4. If Type(replacer) is Object, then
-      if (typeof replacer === "object") {
-        // a. If IsCallable(replacer) is true, then
-        if (isCallable(replacer)) {
-          //  i. Let ReplacerFunction be replacer.
-          ReplacerFunction = replacer;
+    // 4. If Type(replacer) is Object, then
+    if (typeof replacer === "object") {
+      // a. If IsCallable(replacer) is true, then
+      if (isCallable(replacer)) {
+        //  i. Let ReplacerFunction be replacer.
+        ReplacerFunction = replacer;
 
         // b. Else if the [[Class]] internal property of replacer is "Array", then
-        } else if (Array.isArray()) {
-          //  i. Let PropertyList be an empty internal List
-          PropertyList = [];
+      } else if (Array.isArray()) {
+        //  i. Let PropertyList be an empty internal List
+        PropertyList = [];
 
-          // ii. For each value v of a property of replacer that has an array
-          //     index property name. The properties are enumerated in the ascending
-          //     array index order of their names.
-          len = replacer.length;
-          for (k = 0; k < len; k += 1) {
-            v = replacer[k];
-            item = undefined;
-            if (typeof v === "string") {
-              item = v;
-            } else if (typeof v === "number") {
-              item = v.toString();
-            } else if (typeof v === "object" &&
-                       (/string/i.test(Object.prototype.toString.call(v)) ||
-                        /number/i.test(Object.prototype.toString.call(v)))) {
-              item = v.toString();
-            }
-            if (typeof item !== "undefined" && PropertyList.indexOf(item) === -1) {
-              PropertyList[PropertyList.length] = item;
-            }
+        // ii. For each value v of a property of replacer that has an array
+        //     index property name. The properties are enumerated in the ascending
+        //     array index order of their names.
+        len = replacer.length;
+        for (k = 0; k < len; k += 1) {
+          v = replacer[k];
+          item = undefined;
+          if (typeof v === "string") {
+            item = v;
+          } else if (typeof v === "number") {
+            item = v.toString();
+          } else if (typeof v === "object" &&
+                     (/string/i.test(Object.prototype.toString.call(v)) ||
+                      /number/i.test(Object.prototype.toString.call(v)))) {
+            item = v.toString();
+          }
+          if (typeof item !== "undefined" && PropertyList.indexOf(item) === -1) {
+            PropertyList[PropertyList.length] = item;
           }
         }
       }
-
-      // 5. If Type(space) is Object then,
-      if (typeof sp === "object") {
-        // a. If the [[Class]] property of space is "Number" then,
-        if (/number/i.test(Object.prototype.toString.call(sp))) {
-          // i. Let space be ToNumber(space).
-          sp = Number(sp);
+    }
+    // 5. If Type(space) is Object then,
+    if (typeof sp === "object") {
+      // a. If the [[Class]] property of space is "Number" then,
+      if (/number/i.test(Object.prototype.toString.call(sp))) {
+        // i. Let space be ToNumber(space).
+        sp = Number(sp);
 
         // b. Else if the [[Class]] internal property of space is "String" then,
-        } else if (/string/i.test(Object.prototype.toString.call(sp))) {
-          // i. Let space be ToString(space)
-          sp = sp.toString();
+      } else if (/string/i.test(Object.prototype.toString.call(sp))) {
+        // i. Let space be ToString(space)
+        sp = sp.toString();
+      }
+    }
+
+    // 6. If Type(space) is Number
+    if (typeof sp === "number") {
+      // a. Let space be min(10, ToInteger(space)).
+      sp = Math.min(10, sp);
+      // b. Set gap to a String containing `space` space characters.
+      //    This will be the empty String if space is less than 1.
+      gap = sp < 1 ? '': ' '.times(sp);
+
+    // 7. Else if Type(space) is String
+    } else if (typeof sp === "string") {
+      // a. If the number of characters in space is 10 or less,
+      //    set gap to space otherwise set gap to a String consisting
+      //    of the first 10 characters of space.
+      gap = (sp.length <= 10) ? sp: sp.slice(0, 10);
+
+    // 8. Else
+    } else {
+      // a. Set gap to the empty String.
+      gap = '';
+    }
+    space = sp;
+
+    return Str('', {'': value});
+  }
+
+  /** @ignore */
+  function evaluate(text) {
+    var at = 0,     // The index of the current character
+        ch = ' ',   // The current character
+        escapee = { '"':  '"',
+                    '\\': '\\',
+                    '/':  '/',
+                    b:    '\b',
+                    f:    '\f',
+                    n:    '\n',
+                    r:    '\r',
+                    t:    '\t' },
+    /** @ignore */
+    next = function (c) {
+      // If a c parameter is provided, verify that it matches the current character.
+      if (c && c !== ch) {
+        throw new SyntaxError("Expected '{}' instead of '{}'".fmt(c, ch));
+      }
+
+      // Get the next character. When there are no more characters,
+      // return the empty string.
+      ch = text.charAt(at);
+      at += 1;
+      return ch;
+    },
+
+    // Parse a number value.
+    /** @ignore */
+    number = function () {
+      var number,
+          string = '';
+
+      if (ch === '-') {
+        string = '-';
+        next('-');
+      }
+      while (ch >= '0' && ch <= '9') {
+        string += ch;
+        next();
+      }
+      if (ch === '.') {
+        string += '.';
+        while (next() && ch >= '0' && ch <= '9') {
+          string += ch;
         }
       }
-
-      // 6. If Type(space) is Number
-      if (typeof sp === "number") {
-        // a. Let space be min(10, ToInteger(space)).
-        sp = Math.min(10, sp);
-        // b. Set gap to a String containing `space` space characters.
-        //    This will be the empty String if space is less than 1.
-        gap = sp < 1 ? '': ' '.times(sp);
-
-      // 7. Else if Type(space) is String
-      } else if (typeof sp === "string") {
-        // a. If the number of characters in space is 10 or less,
-        //    set gap to space otherwise set gap to a String consisting
-        //    of the first 10 characters of space.
-        gap = (sp.length <= 10) ? sp: sp.slice(0, 10);
-
-      // 8. Else
-      } else {
-        // a. Set gap to the empty String.
-        gap = '';
+      if (ch === 'e' || ch === 'E') {
+        string += ch;
+        next();
+        if (ch === '-' || ch === '+') {
+          string += ch;
+          next();
+        }
+        while (ch >= '0' && ch <= '9') {
+          string += ch;
+          next();
+        }
       }
-      space = sp;
+      number = +string;
+      if (isNaN(number)) {
+        throw new SyntaxError("'{}' is not a number.".fmt(string));
+      } else {
+        return number;
+      }
+    },
 
-      return Str('', {'': value});
+    // Parse a string value.
+    /** @ignore */
+    string = function () {
+      var hex, i, string = '', uffff;
+
+      // When parsing for string values, we must look for " and \ characters.
+      if (ch === '"') {
+        while (next()) {
+          if (ch === '"') {
+            next();
+            return string;
+          } else if (ch === '\\') {
+            next();
+            if (ch === 'u') {
+              uffff = 0;
+              for (i = 0; i < 4; i += 1) {
+                hex = parseInt(next(), 16);
+                if (!isFinite(hex)) {
+                  break;
+                }
+                uffff = uffff * 16 + hex;
+              }
+              string += String.fromCharCode(uffff);
+            } else if (typeof escapee[ch] === 'string') {
+              string += escapee[ch];
+            } else {
+              break;
+            }
+          } else {
+            string += ch;
+          }
+        }
+      }
+      throw new SyntaxError("Bad string.");
+    },
+
+    // Skip whitespace.
+    /** @ignore */
+    white = function () {
+      while (ch && ch <= ' ') {
+        next();
+      }
+    },
+
+    // true, false, or null.
+    /** @ignore */
+    word = function () {
+      switch (ch) {
+      case 't':
+        next('t');
+        next('r');
+        next('u');
+        next('e');
+        return true;
+      case 'f':
+        next('f');
+        next('a');
+        next('l');
+        next('s');
+        next('e');
+        return false;
+      case 'n':
+        next('n');
+        next('u');
+        next('l');
+        next('l');
+        return null;
+      }
+      throw new SyntaxError("Unexpected character '{}'".fmt(ch));
+    },
+
+    value,  // Place holder for the value function.
+
+    // Parse an array value.
+    /** @ignore */
+    array = function () {
+      var array = [];
+
+      if (ch === '[') {
+        next('[');
+        white();
+        if (ch === ']') {
+          next(']');
+          return array;   // empty array
+        }
+        while (ch) {
+          array.push(value());
+          white();
+          if (ch === ']') {
+            next(']');
+            return array;
+          }
+          next(',');
+          white();
+        }
+      }
+      throw new SyntaxError("Bad Array");
+    },
+
+    // Parse an object value.
+    /** @ignore */
+    object = function () {
+      var key,
+          object = {};
+
+      if (ch === '{') {
+        next('{');
+        white();
+        if (ch === '}') {
+          next('}');
+          return object;   // empty object
+        }
+        while (ch) {
+          key = string();
+          white();
+          next(':');
+          if (Object.hasOwnProperty.call(object, key)) {
+            throw new SyntaxError('Duplicate key "{}"'.fmt(key));
+          }
+          object[key] = value();
+          white();
+          if (ch === '}') {
+            next('}');
+            return object;
+          }
+          next(',');
+          white();
+        }
+      }
+      throw new SyntaxError("Bad Object");
     };
-  }()).inferior(),
+
+    // Parse a JSON value. It could be an object, an array, a string, a number,
+    // or a word.
+    /** @ignore */
+    value = function () {
+      white();
+      switch (ch) {
+      case '{':
+        return object();
+      case '[':
+        return array();
+      case '"':
+        return string();
+      case '-':
+        return number();
+      default:
+        return ch >= '0' && ch <= '9' ? number() : word();
+      }
+    };
+
+    var ret = value();
+    white();
+    if (ch) {
+      throw new SyntaxError("Unexpected character '{}'".fmt(ch));
+    }
+    return ret;
+  }
 
   /** @function
     @desc
@@ -3186,259 +3158,30 @@ mix(/** @lends JSON# */{
 
     @returns {Object} The JSON text as an ECMAScript value.
    */
-  parse: (function () {
+  function parse(text, reviver) {
+    var o = evaluate(text);
+
     /** @ignore */
-    var evaluate = function (text) {
-      var at = 0,     // The index of the current character
-          ch = ' ',   // The current character
-          escapee = { '"':  '"',
-                      '\\': '\\',
-                      '/':  '/',
-                      b:    '\b',
-                      f:    '\f',
-                      n:    '\n',
-                      r:    '\r',
-                      t:    '\t' },
-      /** @ignore */
-      next = function (c) {
-        // If a c parameter is provided, verify that it matches the current character.
-        if (c && c !== ch) {
-          throw new SyntaxError("Expected '{}' instead of '{}'".fmt(c, ch));
-        }
+    var Walk = function (holder, key) {
+      var val = holder[key], k, v;
 
-        // Get the next character. When there are no more characters,
-        // return the empty string.
-        ch = text.charAt(at);
-        at += 1;
-        return ch;
-      },
-
-      // Parse a number value.
-      /** @ignore */
-      number = function () {
-        var number,
-            string = '';
-
-        if (ch === '-') {
-          string = '-';
-          next('-');
-        }
-        while (ch >= '0' && ch <= '9') {
-          string += ch;
-          next();
-        }
-        if (ch === '.') {
-          string += '.';
-          while (next() && ch >= '0' && ch <= '9') {
-            string += ch;
-          }
-        }
-        if (ch === 'e' || ch === 'E') {
-          string += ch;
-          next();
-          if (ch === '-' || ch === '+') {
-            string += ch;
-            next();
-          }
-          while (ch >= '0' && ch <= '9') {
-            string += ch;
-            next();
-          }
-        }
-        number = +string;
-        if (isNaN(number)) {
-          throw new SyntaxError("'{}' is not a number.".fmt(string));
-        } else {
-          return number;
-        }
-      },
-
-      // Parse a string value.
-      /** @ignore */
-      string = function () {
-        var hex,
-            i,
-            string = '',
-            uffff;
-
-        // When parsing for string values, we must look for " and \ characters.
-        if (ch === '"') {
-          while (next()) {
-            if (ch === '"') {
-              next();
-              return string;
-            } else if (ch === '\\') {
-              next();
-              if (ch === 'u') {
-                uffff = 0;
-                for (i = 0; i < 4; i += 1) {
-                  hex = parseInt(next(), 16);
-                  if (!isFinite(hex)) {
-                    break;
-                  }
-                  uffff = uffff * 16 + hex;
-                }
-                string += String.fromCharCode(uffff);
-              } else if (typeof escapee[ch] === 'string') {
-                string += escapee[ch];
-              } else {
-                break;
-              }
+      if (Espresso.hasValue(val)) {
+        for (k in val) {
+          if (val.hasOwnProperty(k)) {
+            v = Walk(val, k);
+            if (typeof v === "undefined") {
+              delete val[k];
             } else {
-              string += ch;
+              val[k] = v;
             }
           }
         }
-        throw new SyntaxError("Bad string.");
-      },
-
-      // Skip whitespace.
-      /** @ignore */
-      white = function () {
-        while (ch && ch <= ' ') {
-          next();
-        }
-      },
-
-      // true, false, or null.
-      /** @ignore */
-      word = function () {
-        switch (ch) {
-        case 't':
-          next('t');
-          next('r');
-          next('u');
-          next('e');
-          return true;
-        case 'f':
-          next('f');
-          next('a');
-          next('l');
-          next('s');
-          next('e');
-          return false;
-        case 'n':
-          next('n');
-          next('u');
-          next('l');
-          next('l');
-          return null;
-        }
-        throw new SyntaxError("Unexpected character '{}'".fmt(ch));
-      },
-
-      value,  // Place holder for the value function.
-
-      // Parse an array value.
-      /** @ignore */
-      array = function () {
-        var array = [];
-
-        if (ch === '[') {
-          next('[');
-          white();
-          if (ch === ']') {
-            next(']');
-            return array;   // empty array
-          }
-          while (ch) {
-            array.push(value());
-            white();
-            if (ch === ']') {
-              next(']');
-              return array;
-            }
-            next(',');
-            white();
-          }
-        }
-        throw new SyntaxError("Bad Array");
-      },
-
-      // Parse an object value.
-      /** @ignore */
-      object = function () {
-        var key,
-            object = {};
-
-        if (ch === '{') {
-          next('{');
-          white();
-          if (ch === '}') {
-            next('}');
-            return object;   // empty object
-          }
-          while (ch) {
-            key = string();
-            white();
-            next(':');
-            if (Object.hasOwnProperty.call(object, key)) {
-              throw new SyntaxError('Duplicate key "{}"'.fmt(key));
-            }
-            object[key] = value();
-            white();
-            if (ch === '}') {
-              next('}');
-              return object;
-            }
-            next(',');
-            white();
-          }
-        }
-        throw new SyntaxError("Bad Object");
-      };
-
-      // Parse a JSON value. It could be an object, an array, a string, a number,
-      // or a word.
-      /** @ignore */
-      value = function () {
-        white();
-        switch (ch) {
-        case '{':
-          return object();
-        case '[':
-          return array();
-        case '"':
-          return string();
-        case '-':
-          return number();
-        default:
-          return ch >= '0' && ch <= '9' ? number() : word();
-        }
-      };
-
-      var ret = value();
-      white();
-      if (ch) {
-        throw new SyntaxError("Unexpected character '{}'".fmt(ch));
       }
-      return ret;
+      return reviver.call(holder, key, val);
     };
 
-    return function (text, reviver) {
-      var o = evaluate(text);
+    return Espresso.isCallable(reviver) ?
+      Walk({ '': o }, ''): o;
+  }
 
-      /** @ignore */
-      var Walk = function (holder, key) {
-        var val = holder[key], k, v;
-
-        if (Espresso.hasValue(val)) {
-          for (k in val) {
-            if (val.hasOwnProperty(k)) {
-              v = Walk(val, k);
-              if (typeof v === "undefined") {
-                delete val[k];
-              } else {
-                val[k] = v;
-              }
-            }
-          }
-        }
-        return reviver.call(holder, key, val);
-      };
-
-      return Espresso.isCallable(reviver) ?
-        Walk({ '': o }, ''): o;
-    };
-  }()).inferior()
-}).into(JSON);
+}());

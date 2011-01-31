@@ -16,28 +16,7 @@
   <div id="header">
   <h1><a href="../">Espresso</a></h1>
   <span class="caption">A pick-me up for JavaScript Library authors.</span>
-  <span id="status"></span>
 </div>
-
-<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
-<script type="text/javascript" src="../../test/test.js"></script>
-<script type="text/javascript" src="../../test/core.js"></script>
-<script type="text/javascript" src="../../test/mix.js"></script>
-<script type="text/javascript" src="../../test/class.js"></script>
-<script type="text/javascript" src="../../test/template.js"></script>
-<script type="text/javascript" src="../../test/formatter.js"></script>
-<script type="text/javascript" src="../../test/hash.js"></script>
-<script type="text/javascript" src="../../test/function.js"></script>
-<script type="text/javascript" src="../../test/object.js"></script>
-<script type="text/javascript" src="../../test/string.js"></script>
-<script type="text/javascript">
-  Tests.run();
-  if (Tests.testsFailed > 0) {
-    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
-  } else {
-    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
-  }
-</script>
 
   <div id="module">
 		<h1>
@@ -48,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -127,9 +106,14 @@ function endResize(e) {
 					<a name="__fmt__"> </a>
           <div>
              <a name="__fmt__"> </a>
-             <h3> <b>__fmt__</b>(spec)</h3>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
 
              <div class="description">
+               
+  				       <dt><p>Formatter for <code>Number</code>s.</p>
+
+<p>Don't call this function- It's here for <code>Espresso.Formatter</code>
+to take care of buisiness for you.</p></dd>
                
 						   
              </div>
@@ -139,16 +123,23 @@ function endResize(e) {
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>spec</b>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The specifier to format the number as.</dd>
 							
 							</dl>
 						
 						
 						
 						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The number formatted as specified.</dt>
+							
+							</dl>
 						
 						
 
@@ -225,7 +216,7 @@ function endResize(e) {
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jan 18 2011 18:24:15 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 30 2011 19:27:59 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

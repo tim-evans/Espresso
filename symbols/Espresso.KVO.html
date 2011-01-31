@@ -16,28 +16,7 @@
   <div id="header">
   <h1><a href="../">Espresso</a></h1>
   <span class="caption">A pick-me up for JavaScript Library authors.</span>
-  <span id="status"></span>
 </div>
-
-<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
-<script type="text/javascript" src="../../test/test.js"></script>
-<script type="text/javascript" src="../../test/core.js"></script>
-<script type="text/javascript" src="../../test/mix.js"></script>
-<script type="text/javascript" src="../../test/class.js"></script>
-<script type="text/javascript" src="../../test/template.js"></script>
-<script type="text/javascript" src="../../test/formatter.js"></script>
-<script type="text/javascript" src="../../test/hash.js"></script>
-<script type="text/javascript" src="../../test/function.js"></script>
-<script type="text/javascript" src="../../test/object.js"></script>
-<script type="text/javascript" src="../../test/string.js"></script>
-<script type="text/javascript">
-  Tests.run();
-  if (Tests.testsFailed > 0) {
-    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
-  } else {
-    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
-  }
-</script>
 
   <div id="module">
 		<h1>
@@ -50,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -123,7 +102,7 @@ gets <code>set</code>, the property will get recomputed.</p>
 <p>Consider the following:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;Box&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;width:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;height:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;depth:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;volume:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>.get(<span class="string">'width'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'height'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'depth'</span>);<br/>&nbsp;&nbsp;}.property(<span class="string">'width'</span>,&nbsp;<span class="string">'height'</span>,&nbsp;<span class="string">'depth'</span>).cacheable()<br/>});</code>
+<code><span class="keyword">var</span>&nbsp;Box&nbsp;=&nbsp;mix(Espresso.KVO).into({<br/>&nbsp;&nbsp;width:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;height:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;depth:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;volume:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>.get(<span class="string">'width'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'height'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'depth'</span>);<br/>&nbsp;&nbsp;}.property(<span class="string">'width'</span>,&nbsp;<span class="string">'height'</span>,&nbsp;<span class="string">'depth'</span>).cacheable()<br/>});</code>
 </div>
 
 <p>The <code>volume</code> property will get recomputed every single time the
@@ -135,6 +114,13 @@ by subscribing to the property path (via
 that you would like to be notified on.</p>
 			</p>
       
+      
+				<dl class="detailList">
+				<dt class="heading">Extends:</dt>
+				
+				<dt><a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a></dt>
+				
+				</dl>
       
 			
       
@@ -170,6 +156,18 @@ that you would like to be notified on.</p>
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#_subscriptions">_subscriptions</a></dd>
+				</dl>
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
@@ -198,6 +196,10 @@ that you would like to be notified on.</p>
           </table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#publish">publish</a>, <a href="../symbols/Espresso.PubSub.html#subscribe">subscribe</a>, <a href="../symbols/Espresso.PubSub.html#unpublishedEvent">unpublishedEvent</a>, <a href="../symbols/Espresso.PubSub.html#unsubscribe">unsubscribe</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -392,7 +394,7 @@ intercept general gets and sets, making use out of them.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jan 18 2011 18:24:15 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 30 2011 19:27:58 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

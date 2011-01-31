@@ -16,28 +16,7 @@
   <div id="header">
   <h1><a href="../">Espresso</a></h1>
   <span class="caption">A pick-me up for JavaScript Library authors.</span>
-  <span id="status"></span>
 </div>
-
-<script type="text/javascript" src="../../frameworks/shoulda.js/shoulda.js"></script>
-<script type="text/javascript" src="../../test/test.js"></script>
-<script type="text/javascript" src="../../test/core.js"></script>
-<script type="text/javascript" src="../../test/mix.js"></script>
-<script type="text/javascript" src="../../test/class.js"></script>
-<script type="text/javascript" src="../../test/template.js"></script>
-<script type="text/javascript" src="../../test/formatter.js"></script>
-<script type="text/javascript" src="../../test/hash.js"></script>
-<script type="text/javascript" src="../../test/function.js"></script>
-<script type="text/javascript" src="../../test/object.js"></script>
-<script type="text/javascript" src="../../test/string.js"></script>
-<script type="text/javascript">
-  Tests.run();
-  if (Tests.testsFailed > 0) {
-    document.getElementById('status').innerHTML += "<span class='fail'></span> {testsFailed} failed".fmt(Tests);
-  } else {
-    document.getElementById('status').innerHTML += "<span class='pass'></span> OK";
-  }
-</script>
 
   <div id="module">
 		<h1>
@@ -48,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Class.html">Class</a></li><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.Hash.html">Hash</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Template.html">Template</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -81,22 +60,6 @@ function endResize(e) {
   <div id="content">
 
 <!-- ============================== class summary ========================== -->
-    
-      <h1 class="title">Overview</h1>
-      
-      
-				<dl class="detailList">
-				<dt class="heading">Extends:</dt>
-				
-				<dt><a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a></dt>
-				
-				</dl>
-      
-			
-      
-			
-			
-			
     
 
 
@@ -147,11 +110,6 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#get">get</a></b>(idx)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/String.html#times">times</a></b>(n, separator)</td>
             </tr>
 					
@@ -174,10 +132,6 @@ function endResize(e) {
 				
 				
 				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a>: </dt><dd><a href="../symbols/Espresso.Enumerable.html#every">every</a>, <a href="../symbols/Espresso.Enumerable.html#extract">extract</a>, <a href="../symbols/Espresso.Enumerable.html#filter">filter</a>, <a href="../symbols/Espresso.Enumerable.html#map">map</a>, <a href="../symbols/Espresso.Enumerable.html#pluck">pluck</a>, <a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a>, <a href="../symbols/Espresso.Enumerable.html#size">size</a>, <a href="../symbols/Espresso.Enumerable.html#some">some</a>, <a href="../symbols/Espresso.Enumerable.html#toArray">toArray</a></dd>
-				</dl>
-				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -196,10 +150,10 @@ function endResize(e) {
 
              <div class="description">
                
-  				       <dt><p>Format a string according to a format specifier.
-This is a function called by Formatter, 
-A valid specifier can have:
-[[fill]align][minimumwidth]</p></dd>
+  				       <dt><p>Formatter for <code>String</code>s.</p>
+
+<p>Don't call this function- It's here for <code>Espresso.Formatter</code>
+to take care of buisiness for you.</p></dd>
                
 						   
              </div>
@@ -234,6 +188,9 @@ A valid specifier can have:
 
 					</div>
 					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
 				 
 					
 					<hr />
@@ -275,6 +232,9 @@ A valid specifier can have:
 </div>
 					
 					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
 				 
 					
 					<hr />
@@ -332,6 +292,9 @@ more intuitive.</p></dd>
 					
 					
 				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
 					
 					<hr />
 				
@@ -364,6 +327,9 @@ more intuitive.</p></dd>
 
 					</div>
 					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
 				 
 					
 					<hr />
@@ -420,7 +386,7 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 </div>
 					
 					<div class="code">
-<code><span class="keyword">var</span>&nbsp;kitty&nbsp;=&nbsp;Espresso.Template.extend({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">"Mister&nbsp;Mittens"</span>,<br/>&nbsp;&nbsp;weapons:&nbsp;[<span class="string">"lazzors"</span>,&nbsp;<span class="string">"shuriken"</span>,&nbsp;<span class="string">"rainbows"</span>],<br/><br/>&nbsp;&nbsp;fight:&nbsp;<span class="keyword">function</span>&nbsp;(whom)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"fightin'&nbsp;the&nbsp;{}&nbsp;with&nbsp;his&nbsp;{}."</span>.fmt(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whom,&nbsp;<span class="keyword">this</span>.weapons[Math.floor(Math.random()&nbsp;*&nbsp;<span class="keyword">this</span>.weapons.length)]);<br/>&nbsp;&nbsp;}<br/>});<br/><br/>alert(<span class="string">"{0.name}&nbsp;is&nbsp;{1}"</span>.fmt(kitty,&nbsp;kitty.fight(<span class="string">'zombies'</span>)));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Mister&nbsp;Mittens&nbsp;is&nbsp;fightin'&nbsp;the&nbsp;zombies&nbsp;with&nbsp;..."</code>
+<code><span class="keyword">var</span>&nbsp;kitty&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">"Mister&nbsp;Mittens"</span>,<br/>&nbsp;&nbsp;weapons:&nbsp;[<span class="string">"lazzors"</span>,&nbsp;<span class="string">"shuriken"</span>,&nbsp;<span class="string">"rainbows"</span>],<br/><br/>&nbsp;&nbsp;fight:&nbsp;<span class="keyword">function</span>&nbsp;(whom)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"fightin'&nbsp;the&nbsp;{}&nbsp;with&nbsp;his&nbsp;{}."</span>.fmt(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whom,&nbsp;<span class="keyword">this</span>.weapons[Math.floor(Math.random()&nbsp;*&nbsp;<span class="keyword">this</span>.weapons.length)]);<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>alert(<span class="string">"{0.name}&nbsp;is&nbsp;{1}"</span>.fmt(kitty,&nbsp;kitty.fight(<span class="string">'zombies'</span>)));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Mister&nbsp;Mittens&nbsp;is&nbsp;fightin'&nbsp;the&nbsp;zombies&nbsp;with&nbsp;..."</code>
 </div>
 					
 					<div class="code">
@@ -436,6 +402,9 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 </div>
 					
 					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
 				 
 					
 					<hr />
@@ -496,53 +465,8 @@ Required by <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a
 					
 					
 				 
-					
-					<hr />
-				
-					<a name="get"> </a>
-          <div>
-             <a name="get"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>get</b>(idx)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns the character at the given index.
-Provides a more unified interface for dealing with indexing,
-and is more cross-browser than <code>[]</code>.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> <b>idx</b>
-									
-								</dt>
-								<dd>The index of the string to get.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The character at index idx.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
 				 
 					
 					<hr />
@@ -606,6 +530,9 @@ and is more cross-browser than <code>[]</code>.</p></dd>
 					
 					
 				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
 					
 					<hr />
 				
@@ -652,6 +579,9 @@ and is more cross-browser than <code>[]</code>.</p></dd>
 					</div>
 					
 				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
 					
 					<hr />
 				
@@ -692,6 +622,9 @@ and is more cross-browser than <code>[]</code>.</p></dd>
 					</div>
 					
 				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
 					
 					<hr />
 				
@@ -725,6 +658,9 @@ and is more cross-browser than <code>[]</code>.</p></dd>
 					</div>
 					
 				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
 					
 					
 				
@@ -740,7 +676,7 @@ and is more cross-browser than <code>[]</code>.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jan 18 2011 18:24:15 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Jan 30 2011 19:27:59 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

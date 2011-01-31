@@ -216,12 +216,12 @@ body.doc {
 .doc #content h1 {
   border-bottom: 1px solid #999;
   font-size: 175%;
-  margin-top: 1.3em !important;
+  margin-top: 1.2em !important;
 }
 
 .doc #content h2 {
   font-size: 150%;
-  margin-top: 1.3em !important;
+  margin-top: 1.1em !important;
 }
 
 .doc #content h3 {

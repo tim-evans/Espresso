@@ -260,21 +260,29 @@
    */
   function formatField(value, args) {
     var iSpec = value.indexOf(':'),
-        spec;
+        spec, res;
     iSpec = iSpec === -1 ? value.length : iSpec;
     spec = value.slice(iSpec + 1);
     value = value.slice(0, iSpec);
 
     if (value !== '') {
-      value = Espresso.getObjectFor(value, args);
+      res = Espresso.getObjectFor(value, args);
+      if (typeof res === "undefined" &&
+          Array.isArray(args) && args.length === 1 && args[0]) {
+        if (args[0].get && args[0].get === Espresso.KVO.get) {
+          res = args[0].get(value);
+        } else {
+          res = Espresso.getObjectFor(value, args[0]);
+        }
+      }
     } else {
-      value = args.shift();
+      res = args.shift();
     }
 
     if (!spec) {
-      return value;
+      return res;
     }
 
-    return value.__fmt__ ? value.__fmt__(spec) : value;
+    return res.__fmt__ ? res.__fmt__(spec) : res;
   }
 }());

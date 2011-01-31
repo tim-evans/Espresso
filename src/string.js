@@ -29,18 +29,6 @@ mix(/** @scope String.prototype */{
   },
 
   /**
-    Returns the character at the given index.
-    Provides a more unified interface for dealing with indexing,
-    and is more cross-browser than `[]`.
-
-    @param {Number} idx The index of the string to get.
-    @returns {String} The character at index idx.
-   */
-  get: function (idx) {
-    return this.charAt(idx);
-  },
-
-  /**
     Capitalize a string.
 
     @returns {String} The string, capitalized.
@@ -53,7 +41,7 @@ mix(/** @scope String.prototype */{
       // => "Wine"
    */
   capitalize: function () {
-    return this.get(0).toUpperCase() + this.slice(1);
+    return this.charAt(0).toUpperCase() + this.slice(1);
   },
 
   /**

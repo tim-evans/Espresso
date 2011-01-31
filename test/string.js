@@ -22,23 +22,6 @@ context("String",
     })
   ),
 
-  should("have an instance function named 'get'", function () {
-    assert.kindOf('function', "".get);
-  }),
-
-  context("get", 
-    should("return the character at the provided index", function () {
-      assert.equal('t', "tea".get(0));
-      assert.equal('e', "tea".get(1));
-      assert.equal('a', "tea".get(2));
-    }),
-
-    should("return the empty string if the number is out of range", function () {
-      assert.equal('', "one".get(3));
-      assert.equal('', "one".get(-1));
-    })
-  ),
-
   should("have an instance function named 'capitalize'", function () {
     assert.kindOf('function', "".capitalize);
   }),

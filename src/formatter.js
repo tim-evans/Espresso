@@ -52,7 +52,7 @@
 
       Localizer = mix({
         __fmt__: function (spec) {
-          return this.get(spec);
+          return this[spec];
         }
       }).into({});
 
@@ -192,7 +192,7 @@
         result, idx, len = template.length, ch;
 
     for (idx = 0; idx < len; idx += 1) {
-      ch = template.get(idx);
+      ch = template.charAt(idx);
 
       if (prev === '}') {
         if (ch !== '}') {
@@ -228,7 +228,7 @@
     var fieldspec = [], result = null, idx = 0, ch, len = template.length;
 
     for (; idx < len; idx += 1) {
-      ch = template.get(idx);
+      ch = template.charAt(idx);
       if (ch === '{') {
         if (fieldspec.length === 0) {
           return [1, '{'];

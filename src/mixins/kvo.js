@@ -95,9 +95,9 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     @param {String} key The key to lookup on the object.
     @returns {Object} The value of the key.
    */
-  get: function (key) {
-    key = key.toString();
-    var value, idx = key.lastIndexOf('.'), object;
+  get: function (k) {
+    k = k.toString();
+    var key = k, value, idx = key.lastIndexOf('.'), object;
     if (idx === -1) {
       object = this;
     } else {
@@ -108,7 +108,11 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     if (object) {
       value = object[key];
       if (typeof value === "undefined") {
-        value = object.unknownProperty.call(object, key);
+        if (Espresso.isCallable(object.unknownProperty)) {
+          object.unknownProperty.call(object, key);
+        } else {
+          this.unknownProperty(k, v);
+        }
       } else if (value && value.isProperty) {
         if (value.isCacheable) {
           object.__cache__ = object.__cache__ || {};
@@ -120,6 +124,8 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
         value = value.call(object, key);
       }
       return value;
+    } else {
+      this.unknownProperty(k);
     }
     return undefined;
   },
@@ -139,10 +145,10 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     @param {Object} value The value to set the object at the key's path to.
     @returns {Object} The reciever.
    */
-  set: function (key, value) {
-    key = key.toString();
+  set: function (k, v) {
+    k = k.toString();
 
-    var property, idx = key.lastIndexOf('.'), object, result, didChange = false;
+    var property, key = k, value = v, idx = key.lastIndexOf('.'), object, result, didChange = false;
     if (idx === -1) {
       object = this;
     } else {
@@ -171,7 +177,11 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
           object.__cache__[key] = result;
         }
       } else if (typeof property === "undefined") {
-        object.unknownProperty.call(object, key, value);
+        if (Espresso.isCallable(object.unknownProperty)) {
+          object.unknownProperty.call(object, key, value);
+        } else {
+          this.unknownProperty(k, v);
+        }
       } else {
         object[key] = value;
       }
@@ -181,6 +191,8 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
       if (object.publish && !(property && property.isIdempotent && !didChange)) {
         object.publish(key, value);
       }
+    } else {
+      this.unknownProperty(k, v);
     }
     return this;
   },

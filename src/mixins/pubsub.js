@@ -42,6 +42,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
     @param {Function} handler The handler to call when the event is published.
     @param {Object} [options] Optional parameters.
       @param {Boolean} [options.synchronous] Whether the handler should be called synchronously or not. Defaults to asynchronous calls.
+      @param {Function} [options.condition] A mechanism to refine whether a specific event is wanted. Return true if you would like the event, and false if you don't.
     @returns {Object} The reciever.
    */
   subscribe: function (event, handler, options) {
@@ -53,6 +54,11 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
     if (!subscriptions[event]) {
       subscriptions[event] = [];
     }
+
+    if (options && options.condition && !Espresso.isCallable(options.condition)) {
+      delete options.condition;
+    }
+    mix({ condition: function () { return true; }.inferior() }).into(options);
 
     subscriptions[event].push(mix(options, {
       subscriber: handler
@@ -109,13 +115,15 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
         args = arguments, subscriber, published = false;
     if (subscriptions && subscriptions[event]) {
       subscriptions[event].forEach(function (subscription) {
-        subscriber = subscription.subscriber;
-        if (subscription.synchronous) {
-          Espresso.Scheduler.invoke(subscriber, args, this);
-        } else {
-          Espresso.Scheduler.defer(subscriber, args, this);
+        if (Espresso.Scheduler.invoke(subscription.condition, args, this)) {
+          subscriber = subscription.subscriber;
+          if (subscription.synchronous) {
+            Espresso.Scheduler.invoke(subscriber, args, this);
+          } else {
+            Espresso.Scheduler.defer(subscriber, args, this);
+          }
+          published = true;
         }
-        published = true;
       }, this);
     }
     if (!published && Espresso.isCallable(this.unpublishedEvent)) {
@@ -164,6 +172,6 @@ Espresso.Scheduler = {
    */
   invoke: function (lambda, args, that) {
     that = that || lambda;
-    lambda.apply(that, args);
+    return lambda.apply(that, args);
   }
 };

@@ -41,7 +41,49 @@ context("Espresso.PubSub",
       assert.isFalse(win);
       pubsub.publish("bang", 'a', 'b', 'c');
       assert.isTrue(win);
-    })
+    }),
+
+    context("condition", 
+      should("deliver events only if the condition returns true", function () {
+        var shot = false;
+        pubsub.subscribe("bang", function (evt) {
+          shot = true;
+        }, { synchronous: true,
+             condition: function () { return false; }});
+        assert.isFalse(shot);
+        pubsub.publish("bang");
+        assert.isFalse(shot);
+      }),
+
+      should("not barf on subscribe with condition not being a function", function () {
+        var shot = false;
+        pubsub.subscribe("bang", function (evt) {
+          shot = true;
+        }, { synchronous: true,
+             condition: null });
+        assert.isFalse(shot);
+        pubsub.publish("bang");
+        assert.isTrue(shot);
+      }),
+
+      should("pass all arguments to the condition function before being processed by the event", function () {
+        var shot = false;
+        pubsub.subscribe("bang", function (evt) {
+          shot = true;
+        }, { synchronous: true,
+             condition: function (evt, a, b, c) {
+               assert.equal('bang', evt);
+               assert.equal('a', a);
+               assert.equal('b', b);
+               assert.equal('c', c);
+               return true;
+             }
+        });
+        assert.isFalse(shot);
+        pubsub.publish("bang", 'a', 'b', 'c');
+        assert.isTrue(shot);
+      })
+    )
   ),
 
   should("have a function named unsubscribe", function () {

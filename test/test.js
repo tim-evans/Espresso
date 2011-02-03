@@ -40,10 +40,11 @@ assert.raises = function (err, lambda) {
 
 assert.mixesIn = function (o) {
   var mixins = Array.from(arguments).slice(1);
-
   for (var i = 0, len = mixins.length; i < len; i++) {
-    for (var j = 0, l = mixins[i].length; j < l; j++) {
-      assert.isTrue(o[mixins[i]][j]);
+    for (var k in mixins[i]) {
+      if (mixins[i].hasOwnProperty(k)) {
+        assert.isTrue(o[k]);
+      }
     }
   }
 };

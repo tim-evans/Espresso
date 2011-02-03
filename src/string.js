@@ -4,7 +4,6 @@ mix(/** @scope String.prototype */{
 
   /**
     Iterates over every character in a string.
-    Required by {@link Espresso.Enumerable}.
 
     @param {Function} callback The callback to call for each element.
     @param {Object} that The Object to use as this when executing the callback.

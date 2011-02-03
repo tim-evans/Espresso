@@ -2,10 +2,6 @@
 
 context("String",
 
-  should("mixin Espresso.Enumerable", function () {
-    assert.mixesIn(Espresso.Enumerable);
-  }),
-
   should("have an instance function named 'forEach'", function () {
     assert.kindOf('function', "".forEach);
   }),

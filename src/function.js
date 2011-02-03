@@ -18,6 +18,7 @@ mix(/** @lends Function.prototype */{
     this._ = this._ || {};
     this.isInferior = arguments.length === 1 ?
       (Espresso.isCallable(condition) ? condition() : condition) : true;
+    if (!this.isInferior) { return this; }
 
     /** @ignore */
     this._.inferior = function (template, value, key) {
@@ -262,10 +263,39 @@ mix(/** @lends Function.prototype */{
       }
     };
     return bound;
-  }.inferior(),
+  }.inferior(false), // bind seems to be broken on all browsers
 
   /**
-   * Curry will add arguments to a function, returning the function as-is
+    Currying transforms a function by transforming by composing it into
+    functions that each take a subset of the arguments of the whole.
+    The aggregate of all of the arguments passed into curried function
+    and the actual function call is what will be provided to the function
+    that's being curried.
+
+    This effectively means that you can transform a very simple call into
+    atomic calls as follows:
+
+        var mult = function () {
+          return Array.from(arguments).reduce(function (E, x) { return E * x; }, 1);
+        };
+
+        alert(mult.curry(2, 2)());
+        // => 4
+
+    Or specify a function that is a subset of the first:
+
+        var add = function () {
+          return Array.from(arguments).reduce(function (E, x) { return E + x; }, 0);
+        };
+
+        var inc = add.curry(1);
+
+        alert(inc(5));
+        // => 6
+
+    In layman's terms, `curry` will prepopulate arguments for a function.
+    @param {...} args Arguments that will be curried to the function.
+    @returns {Function} The function with the arguments provided saved for later.
    */
   curry: function () {
     var Target, A;

@@ -18,6 +18,17 @@ context("Function",
           o = {};
       mix({ k: lambda }).into(o);
       assert.equal(o.k, lambda);
+    }),
+
+    should("mixin the slot conditionally depending on the value passed in", function () {
+      var lambda = function () {}.inferior(true),
+          o = { k: "Superior" };
+      mix({ k: lambda }).into(o);
+      assert.equal(o.k, "Superior");
+
+      lambda = function () {}.inferior(false);
+      mix({ k: lambda }).into(o);
+      assert.equal(o.k, lambda);
     })
   ),
 
@@ -183,7 +194,45 @@ context("Function",
     assert.kindOf("function", Function.prototype.bind);
   }),
 
+  context("bind",
+    should("properly bind `this` for functions", function () {
+      var that = "foo", lambda = function () { assert.equal(that, this); };
+      lambda.bind(that)();
+    }),
+
+    should("properly bind `this` for constructors", function () {
+      var that = "foo", K;
+      function Class() {
+        assert.equal(that, this);
+      }
+      K = Class.bind(that);
+      new K();
+    }),
+
+    should("pass extra arguments along for the ride", function () {
+      var that = "foo", lambda = function (a, b, c) { assert.equal(a, 'a');
+                                                      assert.equal(b, 'b');
+                                                      assert.equal(c, 'c');
+                                                      assert.equal(that, this); };
+      lambda.bind(that, 'a', 'b')('c');
+    })
+  ),
+
   should("have a function named 'curry'", function () {
     assert.kindOf("function", Function.prototype.curry);
-  })
+  }),
+
+  context("curry",
+    should("pass extra arguments along for the ride", function () {
+      var lambda = function (a, b, c) { assert.equal(a, 'a');
+                                        assert.equal(b, 'b');
+                                        assert.equal(c, 'c'); };
+      lambda.curry('a', 'b')('c');
+    }),
+
+    should("dynamically compute `this` via the this provided", function () {
+      var that = "foo", lambda = function () { assert.equal(that, this); };
+      lambda.curry().apply(that);
+    })
+  )
 );

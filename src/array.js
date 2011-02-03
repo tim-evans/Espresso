@@ -149,7 +149,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @returns {Array} A new array with the values added to the end.
    */
   concat: function () {
-    var array = slice.call(this, 0);
+    var array = this.slice.call(this, 0);
 
     Array.from(arguments).forEach(function (item) {
       if (Array.isArray(item) && !('callee' in item)) {
@@ -161,7 +161,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       }
     }, this);
     return array;
-  }.inferior(function () { return [].concat(arguments)[0][0] === 1; }),
+  }.inferior(function () { return [].concat(arguments)[0][0] !== 1; }),
 
   /**
     Shim for Internet Explorer, which provides no reverse for

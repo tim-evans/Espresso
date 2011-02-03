@@ -51,7 +51,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.6.2',
+  VERSION: '0.7.0',
 
   /**
     The global variable.
@@ -310,6 +310,7 @@ mix(/** @lends Function.prototype */{
     this._ = this._ || {};
     this.isInferior = arguments.length === 1 ?
       (Espresso.isCallable(condition) ? condition() : condition) : true;
+    if (!this.isInferior) { return this; }
 
     /** @ignore */
     this._.inferior = function (template, value, key) {
@@ -554,10 +555,39 @@ mix(/** @lends Function.prototype */{
       }
     };
     return bound;
-  }.inferior(),
+  }.inferior(false), // bind seems to be broken on all browsers
 
   /**
-   * Curry will add arguments to a function, returning the function as-is
+    Currying transforms a function by transforming by composing it into
+    functions that each take a subset of the arguments of the whole.
+    The aggregate of all of the arguments passed into curried function
+    and the actual function call is what will be provided to the function
+    that's being curried.
+
+    This effectively means that you can transform a very simple call into
+    atomic calls as follows:
+
+        var mult = function () {
+          return Array.from(arguments).reduce(function (E, x) { return E * x; }, 1);
+        };
+
+        alert(mult.curry(2, 2)());
+        // => 4
+
+    Or specify a function that is a subset of the first:
+
+        var add = function () {
+          return Array.from(arguments).reduce(function (E, x) { return E + x; }, 0);
+        };
+
+        var inc = add.curry(1);
+
+        alert(inc(5));
+        // => 6
+
+    In layman's terms, `curry` will prepopulate arguments for a function.
+    @param {...} args Arguments that will be curried to the function.
+    @returns {Function} The function with the arguments provided saved for later.
    */
   curry: function () {
     var Target, A;
@@ -902,6 +932,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
     @param {Function} handler The handler to call when the event is published.
     @param {Object} [options] Optional parameters.
       @param {Boolean} [options.synchronous] Whether the handler should be called synchronously or not. Defaults to asynchronous calls.
+      @param {Function} [options.condition] A mechanism to refine whether a specific event is wanted. Return true if you would like the event, and false if you don't.
     @returns {Object} The reciever.
    */
   subscribe: function (event, handler, options) {
@@ -913,6 +944,11 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
     if (!subscriptions[event]) {
       subscriptions[event] = [];
     }
+
+    if (options && options.condition && !Espresso.isCallable(options.condition)) {
+      delete options.condition;
+    }
+    mix({ condition: function () { return true; }.inferior() }).into(options);
 
     subscriptions[event].push(mix(options, {
       subscriber: handler
@@ -969,13 +1005,15 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
         args = arguments, subscriber, published = false;
     if (subscriptions && subscriptions[event]) {
       subscriptions[event].forEach(function (subscription) {
-        subscriber = subscription.subscriber;
-        if (subscription.synchronous) {
-          Espresso.Scheduler.invoke(subscriber, args, this);
-        } else {
-          Espresso.Scheduler.defer(subscriber, args, this);
+        if (Espresso.Scheduler.invoke(subscription.condition, args, this)) {
+          subscriber = subscription.subscriber;
+          if (subscription.synchronous) {
+            Espresso.Scheduler.invoke(subscriber, args, this);
+          } else {
+            Espresso.Scheduler.defer(subscriber, args, this);
+          }
+          published = true;
         }
-        published = true;
       }, this);
     }
     if (!published && Espresso.isCallable(this.unpublishedEvent)) {
@@ -1024,7 +1062,7 @@ Espresso.Scheduler = {
    */
   invoke: function (lambda, args, that) {
     that = that || lambda;
-    lambda.apply(that, args);
+    return lambda.apply(that, args);
   }
 };
 /*globals Espresso */
@@ -1124,9 +1162,9 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     @param {String} key The key to lookup on the object.
     @returns {Object} The value of the key.
    */
-  get: function (key) {
-    key = key.toString();
-    var value, idx = key.lastIndexOf('.'), object;
+  get: function (k) {
+    k = k.toString();
+    var key = k, value, idx = key.lastIndexOf('.'), object;
     if (idx === -1) {
       object = this;
     } else {
@@ -1137,7 +1175,11 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     if (object) {
       value = object[key];
       if (typeof value === "undefined") {
-        value = object.unknownProperty.call(object, key);
+        if (Espresso.isCallable(object.unknownProperty)) {
+          object.unknownProperty.call(object, key);
+        } else {
+          this.unknownProperty(k, v);
+        }
       } else if (value && value.isProperty) {
         if (value.isCacheable) {
           object.__cache__ = object.__cache__ || {};
@@ -1149,6 +1191,8 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
         value = value.call(object, key);
       }
       return value;
+    } else {
+      this.unknownProperty(k);
     }
     return undefined;
   },
@@ -1168,10 +1212,10 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     @param {Object} value The value to set the object at the key's path to.
     @returns {Object} The reciever.
    */
-  set: function (key, value) {
-    key = key.toString();
+  set: function (k, v) {
+    k = k.toString();
 
-    var property, idx = key.lastIndexOf('.'), object, result, didChange = false;
+    var property, key = k, value = v, idx = key.lastIndexOf('.'), object, result, didChange = false;
     if (idx === -1) {
       object = this;
     } else {
@@ -1200,7 +1244,11 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
           object.__cache__[key] = result;
         }
       } else if (typeof property === "undefined") {
-        object.unknownProperty.call(object, key, value);
+        if (Espresso.isCallable(object.unknownProperty)) {
+          object.unknownProperty.call(object, key, value);
+        } else {
+          this.unknownProperty(k, v);
+        }
       } else {
         object[key] = value;
       }
@@ -1210,6 +1258,8 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
       if (object.publish && !(property && property.isIdempotent && !didChange)) {
         object.publish(key, value);
       }
+    } else {
+      this.unknownProperty(k, v);
     }
     return this;
   },
@@ -1384,7 +1434,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @returns {Array} A new array with the values added to the end.
    */
   concat: function () {
-    var array = slice.call(this, 0);
+    var array = this.slice.call(this, 0);
 
     Array.from(arguments).forEach(function (item) {
       if (Array.isArray(item) && !('callee' in item)) {
@@ -1396,7 +1446,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       }
     }, this);
     return array;
-  }.inferior(function () { return [].concat(arguments)[0][0] === 1; }),
+  }.inferior(function () { return [].concat(arguments)[0][0] !== 1; }),
 
   /**
     Shim for Internet Explorer, which provides no reverse for
@@ -1645,7 +1695,6 @@ mix(/** @scope String.prototype */{
 
   /**
     Iterates over every character in a string.
-    Required by {@link Espresso.Enumerable}.
 
     @param {Function} callback The callback to call for each element.
     @param {Object} that The Object to use as this when executing the callback.

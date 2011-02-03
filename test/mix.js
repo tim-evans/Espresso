@@ -55,6 +55,12 @@ context("mix",
     assert.raises(TypeError, mix({}).into, null);
   }),
 
+  should("treat null or undefined objects as noops", function () {
+    var nil;
+    assert.isTrue(mix(null).into({}));
+    assert.isTrue(mix(nil).into({}));
+  }),
+
   should("make a function alias when annotated as such", function () {
     var result = mix({
       coffee: function () {

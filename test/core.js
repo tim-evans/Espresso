@@ -48,7 +48,7 @@ context("Espresso",
     assert.kindOf('function', Espresso.hasValue);
   }),
 
-  context("getObjectFor",
+  context("hasValue",
     should("return false for null values", function () {
       assert.isFalse(Espresso.hasValue(null));
     }),
@@ -61,5 +61,21 @@ context("Espresso",
 
   should("have a function named isCallable", function () {
     assert.kindOf('function', Espresso.isCallable);
-  })
+  }),
+
+  context("isCallable",
+    should("return `true` if the function is a function", function () {
+      assert.isTrue(Espresso.isCallable(function () {}));
+    }),
+
+    should("return `true` if the function implements `apply` and `call`", function () {
+      assert.isTrue(Espresso.isCallable({ apply: function () {},
+                                          call: function () {} }));
+    }),
+
+    should("return `false` if the function implements `apply` and `call` (and they're not callable)", function () {
+      assert.isFalse(Espresso.isCallable({ apply: null,
+                                           call: null }));
+    })
+  )
 );

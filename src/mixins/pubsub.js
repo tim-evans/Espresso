@@ -81,7 +81,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
       handlers = subscriptions[event];
       for (i = 0, len = handlers.length; i < len; i += 1) {
         if (handlers[i].subscriber === handler) {
-          subscriptions[event].remove(i);
+          subscriptions[event].splice(i, 1);
           break;
         }
       }

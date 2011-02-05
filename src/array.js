@@ -124,7 +124,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       throw new TypeError("{} is not callable.".fmt(lambda));
     }
 
-    while (len-- >= 0) {
+    while (len-- > 0) {
       v = this[len];
       if (shouldSeed) {
         seed = v;
@@ -142,30 +142,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Shim for Opera's buggy `concat` function not following
-    ECMAScript5 specifications.
-
-    @param {...} The items to concat.
-    @returns {Array} A new array with the values added to the end.
-   */
-  concat: function () {
-    var array = this.slice.call(this, 0);
-
-    Array.from(arguments).forEach(function (item) {
-      if (Array.isArray(item) && !('callee' in item)) {
-        for (var j = 0, len = item.length; j < len; j++) {
-          array.push(item[j]);
-        }
-      } else {
-        array.push(item);
-      }
-    }, this);
-    return array;
-  }.inferior(function () { return [].concat(arguments)[0][0] !== 1; }),
-
-  /**
     Shim for Internet Explorer, which provides no reverse for
-    Array prototypes. Returns -1 if the item is not found.
+    Array prototypes. Note: the Array is reversed in-place.
 
     @returns {Array} The array in reverse order.
 
@@ -184,7 +162,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
     // 1. Let O be the result of calling ToObject
     //    passing this value as the argument.
-    O = [];
+    O = this;
 
     // 3. Let len be ToUint(lenVal)
     len = this.length;
@@ -219,8 +197,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       //        lowerP, upperValue, and true.
       //     i. Call the [[Put]] internal method of O with arguments
       //        upperP, lowerValue, and true.
-      O.set(lowerP, upperValue);
-      O.set(upperP, lowerValue);
+      O[lowerP] = upperValue;
+      O[upperP] = lowerValue;
 
       // l. Increase lower by 1.
       lower += 1;
@@ -267,14 +245,13 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       // a. Let kPresent be the result of calling the [[HasProperty]]
       //    internal method of O with argument toString(k).
       // b. If kPresent is true, then
-      if (this.hasOwnProperty(searchElement) &&
         //   i. Let elementK be the result of calling the [[Get]]
         //      internal method of O with the argument toString(k).
         //  ii. Let same be the result of applying the
         //      Strict Equality Comparision Algorithm to
         //      searchElement and elementK.
         // iii. If same is true, return k.
-          this[k.toString()] === searchElement) {
+      if (this[k.toString()] === searchElement) {
         return k;
       }
 
@@ -319,33 +296,6 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     });
 
     return ret;
-  },
-
-  /**
-    Removes the value from the array.
-
-    @param {Number} from The position to begin removing values from.
-    @param {Number} [to] The position to remove values to.
-    @returns {Number} The length of the array.
-    @example
-      var breakfast = ["banana", "waffles", "bacon", "coffee"];
-      breakfast.remove(0);
-
-      alert(breakfast);
-      // => ["waffles", "bacon", "coffee"]
-
-      breakfast.unshift("sausages", "pancakes")
-      alert(breakfast);
-      // => ["sausages", "pancakes", "waffles", "bacon", "coffee"]
-
-      breakfast.remove(1, 2);
-      alert(breakfast);
-      // => ["sausages", "bacon", "coffee"]
-   */
-  remove: function (from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from: from;
-    return this.push.apply(this, rest);
   },
 
   /**

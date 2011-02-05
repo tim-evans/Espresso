@@ -82,12 +82,11 @@ Espresso = {
    */
   getObjectFor: (function () {
     /** @ignore */
-    var __nil__; // something truely undefined
     var getProperty = function (property, obj) {
       if (property in obj) {
         obj = obj[property];
       } else {
-        obj = __nil__;
+        obj = void 0;
       }
       return obj;
     };

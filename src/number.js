@@ -125,7 +125,7 @@ mix(/** @lends Number# */{
     case 'g':
     case 'd':
     case '':
-    case undefined:
+    case void 0:
       value = String(value).toLowerCase();
       break;
     default:

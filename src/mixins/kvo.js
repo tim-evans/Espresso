@@ -127,7 +127,7 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     } else {
       this.unknownProperty(k);
     }
-    return undefined;
+    return void 0;
   },
 
   /**

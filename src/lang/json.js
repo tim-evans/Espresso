@@ -89,7 +89,7 @@
       }
       break;
     default:
-      return undefined;
+      return void 0;
     }
   };
 

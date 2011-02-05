@@ -57,14 +57,14 @@
 <span class='line'> 50</span>     @param {String} [separator] The separator to put between each iteration of the string.
 <span class='line'> 51</span>     @returns {String} The string repeated n times.
 <span class='line'> 52</span>     @example
-<span class='line'> 53</span>       alert("bacon".times(5));
+<span class='line'> 53</span>       alert("bacon".repeat(5));
 <span class='line'> 54</span>       // => "baconbaconbaconbaconbacon"
 <span class='line'> 55</span> 
 <span class='line'> 56</span>     @example
-<span class='line'> 57</span>       alert("crunchy".times(2, " bacon is "));
+<span class='line'> 57</span>       alert("crunchy".repeat(2, " bacon is "));
 <span class='line'> 58</span>       // => "crunchy bacon is crunchy"
 <span class='line'> 59</span>    */</span><span class="WHIT">
-<span class='line'> 60</span> </span><span class="WHIT">  </span><span class="NAME">times</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">n</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">sep</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">  </span><span class="NAME">repeat</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">n</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">sep</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 61</span> </span><span class="WHIT">    </span><span class="NAME">sep</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">sep</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 62</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">n</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Array</span><span class="PUNC">(</span><span class="NAME">n</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">join</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">sep</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 63</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
@@ -253,7 +253,7 @@
 <span class='line'>246</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>247</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>248</span> 
-<span class='line'>249</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">fill.times</span><span class="PUNC">(</span><span class="NAME">before</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">fill.times</span><span class="PUNC">(</span><span class="NAME">after</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">fill.repeat</span><span class="PUNC">(</span><span class="NAME">before</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">fill.repeat</span><span class="PUNC">(</span><span class="NAME">after</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>250</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>251</span> 
 <span class='line'>252</span> </span><span class="WHIT">  </span><span class="COMM">/**

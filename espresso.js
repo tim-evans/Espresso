@@ -113,7 +113,7 @@ Espresso = {
       if (property in obj) {
         obj = obj[property];
       } else {
-        obj = undefined;
+        obj = void 0;
       }
       return obj;
     };
@@ -971,7 +971,7 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
       handlers = subscriptions[event];
       for (i = 0, len = handlers.length; i < len; i += 1) {
         if (handlers[i].subscriber === handler) {
-          subscriptions[event].remove(i);
+          subscriptions[event].splice(i, 1);
           break;
         }
       }
@@ -1194,7 +1194,7 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
     } else {
       this.unknownProperty(k);
     }
-    return undefined;
+    return void 0;
   },
 
   /**
@@ -1409,7 +1409,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       throw new TypeError("{} is not callable.".fmt(lambda));
     }
 
-    while (len-- >= 0) {
+    while (len-- > 0) {
       v = this[len];
       if (shouldSeed) {
         seed = v;
@@ -1427,30 +1427,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Shim for Opera's buggy `concat` function not following
-    ECMAScript5 specifications.
-
-    @param {...} The items to concat.
-    @returns {Array} A new array with the values added to the end.
-   */
-  concat: function () {
-    var array = this.slice.call(this, 0);
-
-    Array.from(arguments).forEach(function (item) {
-      if (Array.isArray(item) && !('callee' in item)) {
-        for (var j = 0, len = item.length; j < len; j++) {
-          array.push(item[j]);
-        }
-      } else {
-        array.push(item);
-      }
-    }, this);
-    return array;
-  }.inferior(function () { return [].concat(arguments)[0][0] !== 1; }),
-
-  /**
     Shim for Internet Explorer, which provides no reverse for
-    Array prototypes. Returns -1 if the item is not found.
+    Array prototypes. Note: the Array is reversed in-place.
 
     @returns {Array} The array in reverse order.
 
@@ -1469,7 +1447,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
     // 1. Let O be the result of calling ToObject
     //    passing this value as the argument.
-    O = [];
+    O = this;
 
     // 3. Let len be ToUint(lenVal)
     len = this.length;
@@ -1504,8 +1482,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       //        lowerP, upperValue, and true.
       //     i. Call the [[Put]] internal method of O with arguments
       //        upperP, lowerValue, and true.
-      O.set(lowerP, upperValue);
-      O.set(upperP, lowerValue);
+      O[lowerP] = upperValue;
+      O[upperP] = lowerValue;
 
       // l. Increase lower by 1.
       lower += 1;
@@ -1552,14 +1530,13 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       // a. Let kPresent be the result of calling the [[HasProperty]]
       //    internal method of O with argument toString(k).
       // b. If kPresent is true, then
-      if (this.hasOwnProperty(searchElement) &&
         //   i. Let elementK be the result of calling the [[Get]]
         //      internal method of O with the argument toString(k).
         //  ii. Let same be the result of applying the
         //      Strict Equality Comparision Algorithm to
         //      searchElement and elementK.
         // iii. If same is true, return k.
-          this[k.toString()] === searchElement) {
+      if (this[k.toString()] === searchElement) {
         return k;
       }
 
@@ -1604,33 +1581,6 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     });
 
     return ret;
-  },
-
-  /**
-    Removes the value from the array.
-
-    @param {Number} from The position to begin removing values from.
-    @param {Number} [to] The position to remove values to.
-    @returns {Number} The length of the array.
-    @example
-      var breakfast = ["banana", "waffles", "bacon", "coffee"];
-      breakfast.remove(0);
-
-      alert(breakfast);
-      // => ["waffles", "bacon", "coffee"]
-
-      breakfast.unshift("sausages", "pancakes")
-      alert(breakfast);
-      // => ["sausages", "pancakes", "waffles", "bacon", "coffee"]
-
-      breakfast.remove(1, 2);
-      alert(breakfast);
-      // => ["sausages", "bacon", "coffee"]
-   */
-  remove: function (from, to) {
-    var rest = this.slice((to || from) + 1 || this.length);
-    this.length = from < 0 ? this.length + from: from;
-    return this.push.apply(this, rest);
   },
 
   /**
@@ -1741,14 +1691,14 @@ mix(/** @scope String.prototype */{
     @param {String} [separator] The separator to put between each iteration of the string.
     @returns {String} The string repeated n times.
     @example
-      alert("bacon".times(5));
+      alert("bacon".repeat(5));
       // => "baconbaconbaconbaconbacon"
 
     @example
-      alert("crunchy".times(2, " bacon is "));
+      alert("crunchy".repeat(2, " bacon is "));
       // => "crunchy bacon is crunchy"
    */
-  times: function (n, sep) {
+  repeat: function (n, sep) {
     sep = sep || '';
     return n < 1 ? '': (new Array(n)).join(this + sep) + this;
   },
@@ -1937,7 +1887,7 @@ mix(/** @scope String.prototype */{
       }
     }
 
-    return fill.times(before) + value + fill.times(after);
+    return fill.repeat(before) + value + fill.repeat(after);
   },
 
   /**
@@ -2365,7 +2315,7 @@ mix(/** @lends Number# */{
     case 'g':
     case 'd':
     case '':
-    case undefined:
+    case void 0:
       value = String(value).toLowerCase();
       break;
     default:
@@ -2444,7 +2394,6 @@ mix(/** @lends Date# */{
      - `X` Preferred representation for the time alone, no date
      - `y` Year without a century (00..99)
      - `Y` Year with century
-     - `Z` Timezone name or abbreviation (EST)
 
     For example:
 
@@ -2530,9 +2479,6 @@ mix(/** @lends Date# */{
           break;
         case 'Y':
           result[result.length] = this.getFullYear();
-          break;
-        case 'Z':
-          result[result.length] = this.getTimezoneOffset();
           break;
         default:
           result[result.length] = spec[i];
@@ -2712,7 +2658,7 @@ mix(/** @lends Boolean# */{
       }
       break;
     default:
-      return undefined;
+      return void 0;
     }
   };
 
@@ -2946,7 +2892,7 @@ mix(/** @lends Boolean# */{
       sp = Math.min(10, sp);
       // b. Set gap to a String containing `space` space characters.
       //    This will be the empty String if space is less than 1.
-      gap = sp < 1 ? '': ' '.times(sp);
+      gap = sp < 1 ? '': ' '.repeat(sp);
 
     // 7. Else if Type(space) is String
     } else if (typeof sp === "string") {

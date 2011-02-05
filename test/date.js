@@ -37,7 +37,7 @@ context("Date",
     formatting("'{:w}' with 'window.date' should return '4'"),
     formatting("'{:W}' with 'window.date' should return '02'"),
     formatting("'{:x}' with 'window.date' should return '01/13/11'"),
-    formatting("'{:X}' with 'window.date' should return '15:06:54'"),
+    // :X is dependent on locale
     formatting("'{:y}' with 'window.date' should return '11'"),
     formatting("'{:Y}' with 'window.date' should return '2011'")
   )

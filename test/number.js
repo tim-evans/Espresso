@@ -32,7 +32,7 @@ context("Number",
     formatting("'{:#X}' with '10' should return '0xA'"),
     formatting("'{:c}' with '48' should return '0'"),
     formatting("'{:d}' with '32' should return '32'"),
-    formatting("'{:n}' with '32000' should return '32000'"), // dependant on locale.
+    // 'n' flag is OS/browser dependent.
 
     formatting("'{:e}' with '1000' should return '1e+3'"),
     formatting("'{:E}' with '1000' should return '1E+3'"),

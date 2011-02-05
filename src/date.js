@@ -55,7 +55,6 @@ mix(/** @lends Date# */{
      - `X` Preferred representation for the time alone, no date
      - `y` Year without a century (00..99)
      - `Y` Year with century
-     - `Z` Timezone name or abbreviation (EST)
 
     For example:
 
@@ -141,9 +140,6 @@ mix(/** @lends Date# */{
           break;
         case 'Y':
           result[result.length] = this.getFullYear();
-          break;
-        case 'Z':
-          result[result.length] = this.getTimezoneOffset();
           break;
         default:
           result[result.length] = spec[i];

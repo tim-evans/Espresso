@@ -39,7 +39,6 @@ context("Date",
     formatting("'{:x}' with 'window.date' should return '01/13/11'"),
     formatting("'{:X}' with 'window.date' should return '15:06:54'"),
     formatting("'{:y}' with 'window.date' should return '11'"),
-    formatting("'{:Y}' with 'window.date' should return '2011'"),
-    formatting("'{:Z}' with 'window.date' should return 'EST'")
+    formatting("'{:Y}' with 'window.date' should return '2011'")
   )
 );

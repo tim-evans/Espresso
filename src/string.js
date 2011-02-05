@@ -50,14 +50,14 @@ mix(/** @scope String.prototype */{
     @param {String} [separator] The separator to put between each iteration of the string.
     @returns {String} The string repeated n times.
     @example
-      alert("bacon".times(5));
+      alert("bacon".repeat(5));
       // => "baconbaconbaconbaconbacon"
 
     @example
-      alert("crunchy".times(2, " bacon is "));
+      alert("crunchy".repeat(2, " bacon is "));
       // => "crunchy bacon is crunchy"
    */
-  times: function (n, sep) {
+  repeat: function (n, sep) {
     sep = sep || '';
     return n < 1 ? '': (new Array(n)).join(this + sep) + this;
   },
@@ -246,7 +246,7 @@ mix(/** @scope String.prototype */{
       }
     }
 
-    return fill.times(before) + value + fill.times(after);
+    return fill.repeat(before) + value + fill.repeat(after);
   },
 
   /**

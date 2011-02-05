@@ -323,7 +323,7 @@
       sp = Math.min(10, sp);
       // b. Set gap to a String containing `space` space characters.
       //    This will be the empty String if space is less than 1.
-      gap = sp < 1 ? '': ' '.times(sp);
+      gap = sp < 1 ? '': ' '.repeat(sp);
 
     // 7. Else if Type(space) is String
     } else if (typeof sp === "string") {

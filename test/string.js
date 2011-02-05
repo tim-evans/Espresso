@@ -30,23 +30,23 @@ context("String",
     })
   ),
 
-  should("have an instance function named 'times'", function () {
-    assert.kindOf('function', "".times);
+  should("have an instance function named 'repeat'", function () {
+    assert.kindOf('function', "".repeat);
   }),
 
-  context("times",
+  context("repeat",
     should("repeat the string K times", function () {
-      assert.equal('a'.times(-1), '');
-      assert.equal('a'.times(0), '');
-      assert.equal('a'.times(5), 'aaaaa');
-      assert.equal('nom'.times(2), 'nomnom');
-      assert.equal('test'.times(100).length, 400);
+      assert.equal('a'.repeat(-1), '');
+      assert.equal('a'.repeat(0), '');
+      assert.equal('a'.repeat(5), 'aaaaa');
+      assert.equal('nom'.repeat(2), 'nomnom');
+      assert.equal('test'.repeat(100).length, 400);
     }),
 
     should("use the provided character as a separator", function () {
-      assert.equal('^'.times(2, '_'), '^_^');
-      assert.equal('.'.times(1, '   '), '.');
-      assert.equal('a'.times(3, '  '), 'a  a  a');
+      assert.equal('^'.repeat(2, '_'), '^_^');
+      assert.equal('.'.repeat(1, '   '), '.');
+      assert.equal('a'.repeat(3, '  '), 'a  a  a');
     })
   ),
 

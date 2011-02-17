@@ -23,19 +23,44 @@
   preexisting objects, use `mix` to do so, using the
   Object as the second parameter, like so:
 
-      mix({
-        gsub: function (find, replace) {
-          if (/string/i.test(Object.prototype.toString.call(find))) {
-            find = new RegExp(find, 'g');
-          }
-          return this.replace(find, replace);
+      // Simple screenplay reader.
+      var screenplay = {
+        dialogue: function (speaker, dialogue) {
+          alert("{}: {}".fmt(speaker, dialogue));
+        },
+
+        scene: function () {
+          var args = Array.from(arguments);
+          args.forEach(function (line) {
+            this.dialogue.apply(this, line);
+          }, this);
         }
-      }).into(String.prototype);
+      };
 
-      var song = "I swiped your cat / And I stole your cathodes"
-      alert(song.gsub('cat', 'banjo'));
+      // Add the Spanish Inquisition.
+      mix({
+        dialogue: function (original, speaker, dialogue) {
+          original(speaker, dialogue);
+          if (dialogue.indexOf("Spanish Inquisition") !== -1) {
+            original("Cardinal Ximinez",
+                     "Nobody Expects the Spanish Inquisition!");
+          }
+        }.around()
+      }).into(screenplay);
 
-      alert(song.gsub(/\bcat\b/, 'banjo'));
+      screenplay.scene(
+        ["Chapman",   "Trouble at the mill."],
+        ["Cleveland", "Oh no- what kind of trouble?"],
+        ["Chapman",   "One on't cross beams gone owt askew on treadle."],
+        ["Cleveland", "Pardon?"],
+        ["Chapman",   "One on't cross beams gone owt askew on treadle."],
+        ["Cleveland", "I don't understand what you're saying."],
+        ["Chapman",   "One of the cross beams gone out askew on the treadle."],
+        ["Cleveland", "Well, what on earth does that mean?"],
+        ["Chapman",   "I don't know- Mr. Wentworth just told me to come in here " +
+                      "and say that there was trouble at the mill, that's all- " +
+                      "I didn't expect a kind of Spanish Inquisition!"]
+      );
 
   Using `mix`, it's possible to create whatever types
   of objects you want, without polluting it's namespace.
@@ -55,6 +80,10 @@ mix = function () {
     into: function (template) {
       var mixin, key, value,
           _, decorator;
+
+      if (!Espresso.hasValue(template)) {
+        throw new TypeError("Cannot mix into null or undefined values.");
+      }
 
       for (; i < len; i += 1) {
         mixin = mixins[i];

@@ -50,12 +50,15 @@ mix(/** @scope String.prototype */{
     @param {String} [separator] The separator to put between each iteration of the string.
     @returns {String} The string repeated n times.
     @example
-      alert("bacon".repeat(5));
-      // => "baconbaconbaconbaconbacon"
+      var tourettes = function (word) {
+        var out = "";
+        for (var i = 0, len = word.length; i < len; i++) {
+          out += word.charAt(i).repeat(Math.floor(Math.random() * 3) + 1);
+        }
+        return out;
+      };
 
-    @example
-      alert("crunchy".repeat(2, " bacon is "));
-      // => "crunchy bacon is crunchy"
+      alert(tourettes("espresso"));
    */
   repeat: function (n, sep) {
     sep = sep || '';
@@ -167,28 +170,14 @@ mix(/** @scope String.prototype */{
       // => "banana"
 
     @example
-      var kitty = mix({
-        name: "Mister Mittens",
-        weapons: ["lazzors", "shuriken", "rainbows"],
-
-        fight: function (whom) {
-          return "fightin' the {} with his {}.".fmt(
-            whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
-        }
-      }).into({});
-
-      alert("{0.name} is {1}".fmt(kitty, kitty.fight('zombies')));
-      // => "Mister Mittens is fightin' the zombies with ..."
-
-    @example
       alert("I love {pi:.2}".fmt({ pi: 22 / 7 }));
       // => "I love 3.14"
 
     @example
-      alert("The {confection.type} is {confection.descriptor}.".fmt({
-        confection: {
-          type: 'cake',
-          descriptor: 'a lie'
+      alert("The {thing.name} is {thing.desc}.".fmt({
+        thing: {
+          name: 'cake',
+          desc: 'a lie'
         }
       }));
       // => "The cake is a lie."

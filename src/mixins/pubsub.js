@@ -1,14 +1,15 @@
 /** @namespace
-  Publish-Subscribe mixin that provides the basics of eventing.
+  Publish-Subscribe is a design pattern that allows
+  event broadcasting to subscribed handlers. When an
+  event is published to a node, the event is broadcasted
+  to all subscribed handlers.
+
+  Events can be filtered at runtime, which can tell
+  PubSub whether or not it should publish events to
+  that handler, and they can be sent either synchronously
+  or asynchronously (the default is asynchronous).
 
   @example
-    var sailor = mix(Espresso.PubSub, {
-      name: "",
-      ahoy: function (action, sailor) {
-        alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
-      }
-    }).into({});
-
     var ship = mix(Espresso.PubSub, {
       sailors: [],
 

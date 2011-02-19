@@ -1,12 +1,8 @@
 /*global context setup should assert Espresso formatting*/
 
 context("Formatter", 
-  should("be defined", function () {
-    assert.isTrue(Espresso.Formatter);
-  }),
-
   should("have a function named fmt", function () {
-    assert.kindOf("function", Espresso.Formatter.fmt);
+    assert.kindOf("function", Espresso.fmt);
   }),
 
   context("fmt",
@@ -34,7 +30,7 @@ context("Formatter",
 
     // Syntax errors
     should("throw an error when encountering unmatched braces", function () {
-      assert.raises(Error, Espresso.Formatter.fmt.bind(Espresso.Formatter),
+      assert.raises(Error, Espresso.fmt.bind(Espresso),
                     "{answer", { answer: 42 });
     }),
 
@@ -47,13 +43,13 @@ context("Formatter",
           assert.equal(spec, s);
         }
       };
-      Espresso.Formatter.fmt(template, obj);
+      Espresso.fmt(template, obj);
       assert.isTrue(called);
     })
   ),
 
   should("have a field named SPECIFIER", function () {
-    assert.kindOf("regexp", Espresso.Formatter.SPECIFIER);
+    assert.kindOf("regexp", Espresso.FMT_SPECIFIER);
   })
 
 );

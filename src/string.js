@@ -189,20 +189,20 @@ mix(/** @scope String.prototype */{
   fmt: function () {
     var args = Array.from(arguments);
     args.unshift(this.toString());
-    return Espresso.Formatter.fmt.apply(Espresso.Formatter, args);
+    return Espresso.fmt.apply(null, args);
   },
 
   /**
     Formatter for `String`s.
 
-    Don't call this function- It's here for `Espresso.Formatter`
+    Don't call this function- It's here for `Espresso.fmt`
     to take care of buisiness for you.
 
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.
    */
   __fmt__: function (spec) {
-    var match = spec.match(Espresso.Formatter.SPECIFIER),
+    var match = spec.match(Espresso.FMT_SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
         minWidth = match[6] || 0,

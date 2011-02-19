@@ -1,82 +1,83 @@
 /*globals Espresso */
 
-/** @namespace
+(function ()/** @lends Espresso */{
+  mix({
+    /** @function
+      @desc
+      Advanced String Formatting borrowed from the eponymous Python PEP.
+      It provides a flexible and powerful string formatting utility
+      that allows the your string templates to have meaning!
 
-  Advanced String Formatting borrowed from the eponymous Python PEP.
-  It provides a flexible and powerful string formatting utility
-  that allows the your string templates to have meaning!
+      The formatter follows the rules of Python [PEP 3101][pep]
+      (Advanced String Formatting) strictly, but takes into account
+      differences between JavaScript and Python.
 
-  The formatter follows the rules of Python [PEP 3101][pep]
-  (Advanced String Formatting) strictly, but takes into account
-  differences between JavaScript and Python.
+      To use literal object notation, just pass in one argument for
+      the formatter. This is optional however, as you can always
+      absolutely name the arguments via the number in the argument
+      list. This means that:
 
-  To use literal object notation, just pass in one argument for
-  the formatter. This is optional however, as you can always
-  absolutely name the arguments via the number in the argument
-  list. This means that:
+          alert(Espresso.fmt("Hello, {name}!", { name: "world" }));
 
-      alert(Espresso.Formatter.fmt("Hello, {name}!", { name: "world" }));
+      is equivalent to:
 
-  is equivalent to:
+          alert(Espresso.fmt("Hello, {0.name}!", { name: "world" }));
 
-      alert(Espresso.Formatter.fmt("Hello, {0.name}!", { name: "world" }));
+      For more than one argument you must provide the position of your
+      argument.
 
-  For more than one argument you must provide the position of your
-  argument.
+          alert(Espresso.fmt("{0}, {1}!", "hello", "world"));
 
-      alert(Espresso.Formatter.fmt("{0}, {1}!", "hello", "world"));
+      If your arguments and formatter are "as is"- that is, in order,
+      and flat objects as you intend them to be, you can write your
+      template string like so:
 
-  If your arguments and formatter are "as is"- that is, in order,
-  and flat objects as you intend them to be, you can write your
-  template string like so:
+          alert(Espresso.fmt("{}, {}!", "hello", "world"));
 
-      alert(Espresso.Formatter.fmt("{}, {}!", "hello", "world"));
+      To use the literals `{` and `}`, simply double them, like the following:
 
-  To use the literals `{` and `}`, simply double them, like the following:
+          alert(Espresso.fmt("{lang} uses the {{variable}} format too!", {
+             lang: "Python", variable: "(not used)"
+          }));
+          // => "Python uses the {variable} format too!"
 
-      alert(Espresso.Formatter.fmt("{lang} uses the {{variable}} format too!", {
-         lang: "Python", variable: "(not used)"
-      }));
-      // => "Python uses the {variable} format too!"
+      Check out the examples given for some ideas on how to use it.
 
-  Check out the examples given for some ideas on how to use it.
+      For developers wishing to have their own custom handler for the
+      formatting specifiers, you should write your own  `__fmt__` function
+      that takes the specifier in as an argument and returns the formatted
+      object as a string. All formatters are implemented using this pattern,
+      with a fallback to Object's `__fmt__`, which turns said object into
+      a string, then calls `__fmt__` on a string.
 
-  For developers wishing to have their own custom handler for the
-  formatting specifiers, you should write your own  `__fmt__` function
-  that takes the specifier in as an argument and returns the formatted
-  object as a string. All formatters are implemented using this pattern,
-  with a fallback to Object's `__fmt__`, which turns said object into
-  a string, then calls `__fmt__` on a string.
+      Consider the following example:
 
-  Consider the following example:
+          Localizer = mix({
+            __fmt__: function (spec) {
+              return this[spec];
+            }
+          }).into({});
 
-      Localizer = mix({
-        __fmt__: function (spec) {
-          return this[spec];
-        }
-      }).into({});
+          _hello = mix(Localizer).into({
+            en: 'hello',
+            fr: 'bonjour',
+            ja: 'こんにちは'
+          });
 
-      _hello = mix(Localizer).into({
-        en: 'hello',
-        fr: 'bonjour',
-        ja: 'こんにちは'
-      });
+          alert(Espresso.fmt("{:en}", _hello));
+          // => "hello"
 
-      alert(Espresso.Formatter.fmt("{:en}", _hello));
-      // => "hello"
+          alert(Espresso.fmt("{:fr}", _hello));
+          // => "bonjour"
 
-      alert(Espresso.Formatter.fmt("{:fr}", _hello));
-      // => "bonjour"
+          alert(Espresso.fmt("{:ja}", _hello));
+          // => "こんにちは"
 
-      alert(Espresso.Formatter.fmt("{:ja}", _hello));
-      // => "こんにちは"
+        [pep]: http://www.python.org/dev/peps/pep-3101/
 
-    [pep]: http://www.python.org/dev/peps/pep-3101/
-
-  @name Espresso.Formatter
- */
-(function ()/** @lends Espresso.Formatter */{
-  Espresso.Formatter = mix({
+      @param {String} template The template string to format the arguments with.
+      @returns {String} The template formatted with the given leftover arguments.
+     */
     fmt: fmt,
 
     /**
@@ -176,15 +177,10 @@
 
       @type RegExp
      */
-    SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
-  }).into({});
+    FMT_SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
+  }).into(Espresso);
 
-  /**
-    Format a template string with provided arguments.
-
-    @param {String} template The template string to format the arguments with.
-    @returns {String} The template formatted with the given leftover arguments.
-   */
+  /** @ignore */  // Docs are above
   function fmt(template) {
     var args = Array.from(arguments).slice(1),
         prev = '',

@@ -44,14 +44,14 @@ context("Object",
   context("__fmt__",
     should("defer to String.prototype.__fmt__", function () {
       var o = {};
-      assert.equal(Espresso.Formatter.fmt("{}", o), "[object Object]");
+      assert.equal(Espresso.fmt("{}", o), "[object Object]");
 
       o = {
         toString: function () {
           return "object"; 
         }
       };
-      assert.equal(Espresso.Formatter.fmt("{}", o), "object");
+      assert.equal(Espresso.fmt("{}", o), "object");
     })
   )
 );

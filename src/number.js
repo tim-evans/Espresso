@@ -14,7 +14,7 @@ mix(/** @lends Number# */{
   /**
     Formatter for `Number`s.
 
-    Don't call this function- It's here for `Espresso.Formatter`
+    Don't call this function- It's here for `Espresso.fmt`
     to take care of buisiness for you.
 
     @param {String} spec The specifier to format the number as.
@@ -26,7 +26,7 @@ mix(/** @lends Number# */{
       return this;
     }
 
-    var match = spec.match(Espresso.Formatter.SPECIFIER),
+    var match = spec.match(Espresso.FMT_SPECIFIER),
         align = match[1],
         fill = match[2],
         sign = match[3] || '-',

@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
   <script type="text/javascript" src="../frameworks/shoulda.js/shoulda.js"></script>
   <script type="text/javascript" src="../bin/espresso.js"></script>
   <script type="text/javascript" src="test.js"></script>
-</head>
 
   <!-- Configuration for shoulda.js -->
   <script type="text/javascript">
-    Tests.outputMethod = function (message) {
-      var console = document.getElementById('console');
-      console.innerHTML += "<div>" + message + "</div>";
+    Tests.printFailure = function (testName, msg) {
+      var log = document.getElementById('console');
+      log.innerHTML += "<div class='message'><span class='fail'>fail</span>" + testName + ":<br/>" + msg + "</div>";
+    };
+
+    Tests.printTestSummary = function () {
+      var log = document.getElementById('summary');
+      log.innerHTML = "Completed: " + Tests.testsFailed + ' / ' + Tests.testsRun;
     }
+
+    Tests.outputMethod = function () {};
   </script>
+</head>
 <body>
-  <div id="console"></div>
+  <div id="console">
+    <div id="summary"></div>
+  </div>
 
   <script type="text/javascript" src="core.js"></script>
   <script type="text/javascript" src="mixer.js"></script>

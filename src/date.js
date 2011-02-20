@@ -68,26 +68,22 @@ mix(/** @lends Date# */{
     @returns {String} The Date transformed into a string as specified.
    */
   __fmt__: (function () {
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        months = ["January", "February", "March", "April", "May", "June",
-                  "July", "August", "September", "October", "November", "December"];
-
     return function (spec) {
       var result = [], i = 0;
 
       for (; i < spec.length; i += 1) {
         switch (spec[i]) {
         case 'a':
-          result[result.length] = days[this.getDay()].slice(0, 3);
+          result[result.length] = Date.days[this.getDay()].slice(0, 3);
           break;
         case 'A':
-          result[result.length] = days[this.getDay()];
+          result[result.length] = Date.days[this.getDay()];
           break;
         case 'b':
-          result[result.length] = months[this.getMonth()].slice(0, 3);
+          result[result.length] = Date.months[this.getMonth()].slice(0, 3);
           break;
         case 'B':
-          result[result.length] = months[this.getMonth()];
+          result[result.length] = Date.months[this.getMonth()];
           break;
         case 'c':
           result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.getDate());
@@ -159,6 +155,24 @@ mix(/** @lends Date */{
    */
   now: function () {
     return new Date().getTime();
-  }.inferior()
+  }.inferior(),
 
+  /**
+    Strings for the days of the week.
+    If you want to use a different locale,
+    set the `days` string to reflect the locale's.
+
+    @type String[]
+   */
+  days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
+  /**
+    Strings for the months of the week.
+    If you want to use a different locale,
+    set the `months` string to reflect the locale's.
+
+    @type String[]
+   */
+  months: ["January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December"]
 }).into(Date);

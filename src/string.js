@@ -66,7 +66,7 @@ mix(/** @scope String.prototype */{
   },
 
   /** @function
-
+    @desc
     Trim leading and trailing whitespace.
 
     @returns {String} The string with leading and trailing whitespace removed.
@@ -79,8 +79,9 @@ mix(/** @scope String.prototype */{
     };
   }()).inferior(),
 
-  /** @function
 
+  /** @function
+    @desc
     Unescapes any escaped HTML strings into their readable
     forms.
 
@@ -110,6 +111,7 @@ mix(/** @scope String.prototype */{
   }()).inferior(),
 
   /** @function
+    @desc
     Replaces any reserved HTML characters into their
     escaped form.
 

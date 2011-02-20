@@ -51,7 +51,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.7.0',
+  VERSION: '0.7.2',
 
   /**
     The global variable.
@@ -226,19 +226,44 @@ Espresso.global.Espresso = Espresso;
   preexisting objects, use `mix` to do so, using the
   Object as the second parameter, like so:
 
-      mix({
-        gsub: function (find, replace) {
-          if (/string/i.test(Object.prototype.toString.call(find))) {
-            find = new RegExp(find, 'g');
-          }
-          return this.replace(find, replace);
+      // Simple screenplay reader.
+      var screenplay = {
+        dialogue: function (speaker, dialogue) {
+          alert("{}: {}".fmt(speaker, dialogue));
+        },
+
+        scene: function () {
+          var args = Array.from(arguments);
+          args.forEach(function (line) {
+            this.dialogue.apply(this, line);
+          }, this);
         }
-      }).into(String.prototype);
+      };
 
-      var song = "I swiped your cat / And I stole your cathodes"
-      alert(song.gsub('cat', 'banjo'));
+      // Add the Spanish Inquisition.
+      mix({
+        dialogue: function (original, speaker, dialogue) {
+          original(speaker, dialogue);
+          if (dialogue.indexOf("Spanish Inquisition") !== -1) {
+            original("Cardinal Ximinez",
+                     "Nobody Expects the Spanish Inquisition!");
+          }
+        }.around()
+      }).into(screenplay);
 
-      alert(song.gsub(/\bcat\b/, 'banjo'));
+      screenplay.scene(
+        ["Chapman",   "Trouble at the mill."],
+        ["Cleveland", "Oh no- what kind of trouble?"],
+        ["Chapman",   "One on't cross beams gone owt askew on treadle."],
+        ["Cleveland", "Pardon?"],
+        ["Chapman",   "One on't cross beams gone owt askew on treadle."],
+        ["Cleveland", "I don't understand what you're saying."],
+        ["Chapman",   "One of the cross beams gone out askew on the treadle."],
+        ["Cleveland", "Well, what on earth does that mean?"],
+        ["Chapman",   "I don't know- Mr. Wentworth just told me to come in here " +
+                      "and say that there was trouble at the mill, that's all- " +
+                      "I didn't expect a kind of Spanish Inquisition!"]
+      );
 
   Using `mix`, it's possible to create whatever types
   of objects you want, without polluting it's namespace.
@@ -258,6 +283,10 @@ mix = function () {
     into: function (template) {
       var mixin, key, value,
           _, decorator;
+
+      if (!Espresso.hasValue(template)) {
+        throw new TypeError("Cannot mix into null or undefined values.");
+      }
 
       for (; i < len; i += 1) {
         mixin = mixins[i];
@@ -889,16 +918,17 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }
 };
 /** @namespace
-  Publish-Subscribe mixin that provides the basics of eventing.
+  Publish-Subscribe is a design pattern that allows
+  event broadcasting to subscribed handlers. When an
+  event is published to a node, the event is broadcasted
+  to all subscribed handlers.
+
+  Events can be filtered at runtime, which can tell
+  PubSub whether or not it should publish events to
+  that handler, and they can be sent either synchronously
+  or asynchronously (the default is asynchronous).
 
   @example
-    var sailor = mix(Espresso.PubSub, {
-      name: "",
-      ahoy: function (action, sailor) {
-        alert("{0.name}: Ahoy, {1.name}!".fmt(this, sailor));
-      }
-    }).into({});
-
     var ship = mix(Espresso.PubSub, {
       sailors: [],
 
@@ -1691,12 +1721,15 @@ mix(/** @scope String.prototype */{
     @param {String} [separator] The separator to put between each iteration of the string.
     @returns {String} The string repeated n times.
     @example
-      alert("bacon".repeat(5));
-      // => "baconbaconbaconbaconbacon"
+      var tourettes = function (word) {
+        var out = "";
+        for (var i = 0, len = word.length; i < len; i++) {
+          out += word.charAt(i).repeat(Math.floor(Math.random() * 3) + 1);
+        }
+        return out;
+      };
 
-    @example
-      alert("crunchy".repeat(2, " bacon is "));
-      // => "crunchy bacon is crunchy"
+      alert(tourettes("espresso"));
    */
   repeat: function (n, sep) {
     sep = sep || '';
@@ -1704,7 +1737,7 @@ mix(/** @scope String.prototype */{
   },
 
   /** @function
-
+    @desc
     Trim leading and trailing whitespace.
 
     @returns {String} The string with leading and trailing whitespace removed.
@@ -1717,8 +1750,9 @@ mix(/** @scope String.prototype */{
     };
   }()).inferior(),
 
-  /** @function
 
+  /** @function
+    @desc
     Unescapes any escaped HTML strings into their readable
     forms.
 
@@ -1748,6 +1782,7 @@ mix(/** @scope String.prototype */{
   }()).inferior(),
 
   /** @function
+    @desc
     Replaces any reserved HTML characters into their
     escaped form.
 
@@ -1808,28 +1843,14 @@ mix(/** @scope String.prototype */{
       // => "banana"
 
     @example
-      var kitty = mix({
-        name: "Mister Mittens",
-        weapons: ["lazzors", "shuriken", "rainbows"],
-
-        fight: function (whom) {
-          return "fightin' the {} with his {}.".fmt(
-            whom, this.weapons[Math.floor(Math.random() * this.weapons.length)]);
-        }
-      }).into({});
-
-      alert("{0.name} is {1}".fmt(kitty, kitty.fight('zombies')));
-      // => "Mister Mittens is fightin' the zombies with ..."
-
-    @example
       alert("I love {pi:.2}".fmt({ pi: 22 / 7 }));
       // => "I love 3.14"
 
     @example
-      alert("The {confection.type} is {confection.descriptor}.".fmt({
-        confection: {
-          type: 'cake',
-          descriptor: 'a lie'
+      alert("The {thing.name} is {thing.desc}.".fmt({
+        thing: {
+          name: 'cake',
+          desc: 'a lie'
         }
       }));
       // => "The cake is a lie."
@@ -1841,20 +1862,20 @@ mix(/** @scope String.prototype */{
   fmt: function () {
     var args = Array.from(arguments);
     args.unshift(this.toString());
-    return Espresso.Formatter.fmt.apply(Espresso.Formatter, args);
+    return Espresso.fmt.apply(null, args);
   },
 
   /**
     Formatter for `String`s.
 
-    Don't call this function- It's here for `Espresso.Formatter`
+    Don't call this function- It's here for `Espresso.fmt`
     to take care of buisiness for you.
 
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.
    */
   __fmt__: function (spec) {
-    var match = spec.match(Espresso.Formatter.SPECIFIER),
+    var match = spec.match(Espresso.FMT_SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
         minWidth = match[6] || 0,
@@ -1902,83 +1923,84 @@ mix(/** @scope String.prototype */{
 }).into(String.prototype);
 /*globals Espresso */
 
-/** @namespace
+(function ()/** @lends Espresso */{
+  mix({
+    /** @function
+      @desc
+      Advanced String Formatting borrowed from the eponymous Python PEP.
+      It provides a flexible and powerful string formatting utility
+      that allows the your string templates to have meaning!
 
-  Advanced String Formatting borrowed from the eponymous Python PEP.
-  It provides a flexible and powerful string formatting utility
-  that allows the your string templates to have meaning!
+      The formatter follows the rules of Python [PEP 3101][pep]
+      (Advanced String Formatting) strictly, but takes into account
+      differences between JavaScript and Python.
 
-  The formatter follows the rules of Python [PEP 3101][pep]
-  (Advanced String Formatting) strictly, but takes into account
-  differences between JavaScript and Python.
+      To use literal object notation, just pass in one argument for
+      the formatter. This is optional however, as you can always
+      absolutely name the arguments via the number in the argument
+      list. This means that:
 
-  To use literal object notation, just pass in one argument for
-  the formatter. This is optional however, as you can always
-  absolutely name the arguments via the number in the argument
-  list. This means that:
+          alert(Espresso.fmt("Hello, {name}!", { name: "world" }));
 
-      alert(Espresso.Formatter.fmt("Hello, {name}!", { name: "world" }));
+      is equivalent to:
 
-  is equivalent to:
+          alert(Espresso.fmt("Hello, {0.name}!", { name: "world" }));
 
-      alert(Espresso.Formatter.fmt("Hello, {0.name}!", { name: "world" }));
+      For more than one argument you must provide the position of your
+      argument.
 
-  For more than one argument you must provide the position of your
-  argument.
+          alert(Espresso.fmt("{0}, {1}!", "hello", "world"));
 
-      alert(Espresso.Formatter.fmt("{0}, {1}!", "hello", "world"));
+      If your arguments and formatter are "as is"- that is, in order,
+      and flat objects as you intend them to be, you can write your
+      template string like so:
 
-  If your arguments and formatter are "as is"- that is, in order,
-  and flat objects as you intend them to be, you can write your
-  template string like so:
+          alert(Espresso.fmt("{}, {}!", "hello", "world"));
 
-      alert(Espresso.Formatter.fmt("{}, {}!", "hello", "world"));
+      To use the literals `{` and `}`, simply double them, like the following:
 
-  To use the literals `{` and `}`, simply double them, like the following:
+          alert(Espresso.fmt("{lang} uses the {{variable}} format too!", {
+             lang: "Python", variable: "(not used)"
+          }));
+          // => "Python uses the {variable} format too!"
 
-      alert(Espresso.Formatter.fmt("{lang} uses the {{variable}} format too!", {
-         lang: "Python", variable: "(not used)"
-      }));
-      // => "Python uses the {variable} format too!"
+      Check out the examples given for some ideas on how to use it.
 
-  Check out the examples given for some ideas on how to use it.
+      For developers wishing to have their own custom handler for the
+      formatting specifiers, you should write your own  `__fmt__` function
+      that takes the specifier in as an argument and returns the formatted
+      object as a string. All formatters are implemented using this pattern,
+      with a fallback to Object's `__fmt__`, which turns said object into
+      a string, then calls `__fmt__` on a string.
 
-  For developers wishing to have their own custom handler for the
-  formatting specifiers, you should write your own  `__fmt__` function
-  that takes the specifier in as an argument and returns the formatted
-  object as a string. All formatters are implemented using this pattern,
-  with a fallback to Object's `__fmt__`, which turns said object into
-  a string, then calls `__fmt__` on a string.
+      Consider the following example:
 
-  Consider the following example:
+          Localizer = mix({
+            __fmt__: function (spec) {
+              return this[spec];
+            }
+          }).into({});
 
-      Localizer = mix({
-        __fmt__: function (spec) {
-          return this[spec];
-        }
-      }).into({});
+          _hello = mix(Localizer).into({
+            en: 'hello',
+            fr: 'bonjour',
+            ja: 'こんにちは'
+          });
 
-      _hello = mix(Localizer).into({
-        en: 'hello',
-        fr: 'bonjour',
-        ja: 'こんにちは'
-      });
+          alert(Espresso.fmt("{:en}", _hello));
+          // => "hello"
 
-      alert(Espresso.Formatter.fmt("{:en}", _hello));
-      // => "hello"
+          alert(Espresso.fmt("{:fr}", _hello));
+          // => "bonjour"
 
-      alert(Espresso.Formatter.fmt("{:fr}", _hello));
-      // => "bonjour"
+          alert(Espresso.fmt("{:ja}", _hello));
+          // => "こんにちは"
 
-      alert(Espresso.Formatter.fmt("{:ja}", _hello));
-      // => "こんにちは"
+        [pep]: http://www.python.org/dev/peps/pep-3101/
 
-    [pep]: http://www.python.org/dev/peps/pep-3101/
-
-  @name Espresso.Formatter
- */
-(function ()/** @lends Espresso.Formatter */{
-  Espresso.Formatter = mix({
+      @param {String} template The template string to format the arguments with.
+      @returns {String} The template formatted with the given leftover arguments.
+     */
     fmt: fmt,
 
     /**
@@ -2078,15 +2100,10 @@ mix(/** @scope String.prototype */{
 
       @type RegExp
      */
-    SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
-  }).into({});
+    FMT_SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
+  }).into(Espresso);
 
-  /**
-    Format a template string with provided arguments.
-
-    @param {String} template The template string to format the arguments with.
-    @returns {String} The template formatted with the given leftover arguments.
-   */
+  /** @ignore */  // Docs are above
   function fmt(template) {
     var args = Array.from(arguments).slice(1),
         prev = '',
@@ -2170,7 +2187,7 @@ mix(/** @scope String.prototype */{
     if (value !== '') {
       res = Espresso.getObjectFor(value, args);
       if (typeof res === "undefined" &&
-          Array.isArray(args) && args.length === 1 && args[0]) {
+          Array.isArray(args) && args.length === 1 && Espresso.hasValue(args[0])) {
         if (args[0].get && args[0].get === Espresso.KVO.get) {
           res = args[0].get(value);
         } else {
@@ -2204,7 +2221,7 @@ mix(/** @lends Number# */{
   /**
     Formatter for `Number`s.
 
-    Don't call this function- It's here for `Espresso.Formatter`
+    Don't call this function- It's here for `Espresso.fmt`
     to take care of buisiness for you.
 
     @param {String} spec The specifier to format the number as.
@@ -2216,7 +2233,7 @@ mix(/** @lends Number# */{
       return this;
     }
 
-    var match = spec.match(Espresso.Formatter.SPECIFIER),
+    var match = spec.match(Espresso.FMT_SPECIFIER),
         align = match[1],
         fill = match[2],
         sign = match[3] || '-',
@@ -2407,26 +2424,22 @@ mix(/** @lends Date# */{
     @returns {String} The Date transformed into a string as specified.
    */
   __fmt__: (function () {
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        months = ["January", "February", "March", "April", "May", "June",
-                  "July", "August", "September", "October", "November", "December"];
-
     return function (spec) {
       var result = [], i = 0;
 
       for (; i < spec.length; i += 1) {
         switch (spec[i]) {
         case 'a':
-          result[result.length] = days[this.getDay()].slice(0, 3);
+          result[result.length] = Date.days[this.getDay()].slice(0, 3);
           break;
         case 'A':
-          result[result.length] = days[this.getDay()];
+          result[result.length] = Date.days[this.getDay()];
           break;
         case 'b':
-          result[result.length] = months[this.getMonth()].slice(0, 3);
+          result[result.length] = Date.months[this.getMonth()].slice(0, 3);
           break;
         case 'B':
-          result[result.length] = months[this.getMonth()];
+          result[result.length] = Date.months[this.getMonth()];
           break;
         case 'c':
           result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.getDate());
@@ -2498,8 +2511,26 @@ mix(/** @lends Date */{
    */
   now: function () {
     return new Date().getTime();
-  }.inferior()
+  }.inferior(),
 
+  /**
+    Strings for the days of the week.
+    If you want to use a different locale,
+    set the `days` string to reflect the locale's.
+
+    @type String[]
+   */
+  days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
+  /**
+    Strings for the months of the week.
+    If you want to use a different locale,
+    set the `months` string to reflect the locale's.
+
+    @type String[]
+   */
+  months: ["January", "February", "March", "April", "May", "June",
+           "July", "August", "September", "October", "November", "December"]
 }).into(Date);
 /*globals mix */
 

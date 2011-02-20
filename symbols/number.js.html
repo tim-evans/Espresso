@@ -21,7 +21,7 @@
 <span class='line'> 14</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'> 15</span>     Formatter for `Number`s.
 <span class='line'> 16</span> 
-<span class='line'> 17</span>     Don't call this function- It's here for `Espresso.Formatter`
+<span class='line'> 17</span>     Don't call this function- It's here for `Espresso.fmt`
 <span class='line'> 18</span>     to take care of buisiness for you.
 <span class='line'> 19</span> 
 <span class='line'> 20</span>     @param {String} spec The specifier to format the number as.
@@ -33,7 +33,7 @@
 <span class='line'> 26</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 27</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 28</span> 
-<span class='line'> 29</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">match</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">spec.match</span><span class="PUNC">(</span><span class="NAME">Espresso.Formatter.SPECIFIER</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">match</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">spec.match</span><span class="PUNC">(</span><span class="NAME">Espresso.FMT_SPECIFIER</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 30</span> </span><span class="WHIT">        </span><span class="NAME">align</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">match</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 31</span> </span><span class="WHIT">        </span><span class="NAME">fill</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">match</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 32</span> </span><span class="WHIT">        </span><span class="NAME">sign</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">match</span><span class="PUNC">[</span><span class="NUMB">3</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="STRN">'-'</span><span class="PUNC">,</span><span class="WHIT">

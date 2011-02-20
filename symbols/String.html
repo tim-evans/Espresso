@@ -27,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -152,7 +152,7 @@ function endResize(e) {
                
   				       <dt><p>Formatter for <code>String</code>s.</p>
 
-<p>Don't call this function- It's here for <code>Espresso.Formatter</code>
+<p>Don't call this function- It's here for <code>Espresso.fmt</code>
 to take care of buisiness for you.</p></dd>
                
 						   
@@ -305,6 +305,9 @@ more intuitive.</p></dd>
 
              <div class="description">
                
+  				       <dt><p>Replaces any reserved HTML characters into their
+escaped form.</p></dd>
+               
 						   
              </div>
 
@@ -386,15 +389,11 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 </div>
 					
 					<div class="code">
-<code><span class="keyword">var</span>&nbsp;kitty&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">"Mister&nbsp;Mittens"</span>,<br/>&nbsp;&nbsp;weapons:&nbsp;[<span class="string">"lazzors"</span>,&nbsp;<span class="string">"shuriken"</span>,&nbsp;<span class="string">"rainbows"</span>],<br/><br/>&nbsp;&nbsp;fight:&nbsp;<span class="keyword">function</span>&nbsp;(whom)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="string">"fightin'&nbsp;the&nbsp;{}&nbsp;with&nbsp;his&nbsp;{}."</span>.fmt(<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whom,&nbsp;<span class="keyword">this</span>.weapons[Math.floor(Math.random()&nbsp;*&nbsp;<span class="keyword">this</span>.weapons.length)]);<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>alert(<span class="string">"{0.name}&nbsp;is&nbsp;{1}"</span>.fmt(kitty,&nbsp;kitty.fight(<span class="string">'zombies'</span>)));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Mister&nbsp;Mittens&nbsp;is&nbsp;fightin'&nbsp;the&nbsp;zombies&nbsp;with&nbsp;..."</code>
-</div>
-					
-					<div class="code">
 <code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.2}"</span>.fmt({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
 </div>
 					
 					<div class="code">
-<code>alert(<span class="string">"The&nbsp;{confection.type}&nbsp;is&nbsp;{confection.descriptor}."</span>.fmt({<br/>&nbsp;&nbsp;confection:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;descriptor:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code>
+<code>alert(<span class="string">"The&nbsp;{thing.name}&nbsp;is&nbsp;{thing.desc}."</span>.fmt({<br/>&nbsp;&nbsp;thing:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;desc:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code>
 </div>
 					
 					<div class="code">
@@ -520,11 +519,7 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 					
 					
 					<div class="code">
-<code>alert(<span class="string">"bacon"</span>.repeat(<span class="string">5</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"baconbaconbaconbaconbacon"</code>
-</div>
-					
-					<div class="code">
-<code>alert(<span class="string">"crunchy"</span>.repeat(<span class="string">2</span>,&nbsp;<span class="string">"&nbsp;bacon&nbsp;is&nbsp;"</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"crunchy&nbsp;bacon&nbsp;is&nbsp;crunchy"</code>
+<code><span class="keyword">var</span>&nbsp;tourettes&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(word)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;out&nbsp;=&nbsp;<span class="string">""</span>;<br/>&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>,&nbsp;len&nbsp;=&nbsp;word.length;&nbsp;i&nbsp;&lt;&nbsp;len;&nbsp;i++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;+=&nbsp;word.charAt(i).repeat(Math.floor(Math.random()&nbsp;*&nbsp;<span class="string">3</span>)&nbsp;+&nbsp;<span class="string">1</span>);<br/>&nbsp;&nbsp;}<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;out;<br/>};<br/><br/>alert(tourettes(<span class="string">"espresso"</span>));</code>
 </div>
 					
 					
@@ -591,6 +586,8 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 
              <div class="description">
                
+  				       <dt><p>Trim leading and trailing whitespace.</p></dd>
+               
 						   
              </div>
 
@@ -634,6 +631,9 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 
              <div class="description">
                
+  				       <dt><p>Unescapes any escaped HTML strings into their readable
+forms.</p></dd>
+               
 						   
              </div>
 
@@ -675,7 +675,7 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sat Feb 05 2011 17:58:47 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Feb 20 2011 14:34:33 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

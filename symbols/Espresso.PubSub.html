@@ -29,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Formatter.html">Formatter</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -66,7 +66,15 @@ function endResize(e) {
       <h1 class="title">Overview</h1>
       
 			<p class="description">
-				<p>Publish-Subscribe mixin that provides the basics of eventing.</p>
+				<p>Publish-Subscribe is a design pattern that allows
+event broadcasting to subscribed handlers. When an
+event is published to a node, the event is broadcasted
+to all subscribed handlers.</p>
+
+<p>Events can be filtered at runtime, which can tell
+PubSub whether or not it should publish events to
+that handler, and they can be sent either synchronously
+or asynchronously (the default is asynchronous).</p>
 			</p>
       
       
@@ -76,7 +84,7 @@ function endResize(e) {
 			
 			
 		  <div class="code">
-<code><span class="keyword">var</span>&nbsp;sailor&nbsp;=&nbsp;mix(Espresso.PubSub,&nbsp;{<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">""</span>,<br/>&nbsp;&nbsp;ahoy:&nbsp;<span class="keyword">function</span>&nbsp;(action,&nbsp;sailor)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"{0.name}:&nbsp;Ahoy,&nbsp;{1.name}!"</span>.fmt(<span class="keyword">this</span>,&nbsp;sailor));<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(Espresso.PubSub,&nbsp;{<br/>&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor,&nbsp;sync)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Added&nbsp;{name}"</span>.fmt(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor),&nbsp;{&nbsp;synchronous:&nbsp;!!sync&nbsp;});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>ship.add(ahab,&nbsp;<span class="keyword">true</span>);<br/>ship.add(daveyJones);<br/>ship.add(flapjack);</code>
+<code><span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(Espresso.PubSub,&nbsp;{<br/>&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor,&nbsp;sync)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Added&nbsp;{name}"</span>.fmt(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor),&nbsp;{&nbsp;synchronous:&nbsp;!!sync&nbsp;});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>ship.add(ahab,&nbsp;<span class="keyword">true</span>);<br/>ship.add(daveyJones);<br/>ship.add(flapjack);</code>
 </div>
 			
 			
@@ -431,7 +439,7 @@ than <code>defer</code>red.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sat Feb 05 2011 17:58:46 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Feb 20 2011 14:34:33 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

@@ -45,7 +45,7 @@
 
     // 1. Let value be the result of calling the [[Get]] internal method of
     //    holder with argument key.
-    value = holder && (holder.get && holder.get(key) || holder[key]);
+    value = holder[key];
 
     // 2. If Type(value) is Object, then
     if (typeof value === "object") {
@@ -65,7 +65,7 @@
       // a. Let value be the result of calling the [[Call]] internal method
       //    of ReplacerFunction passing holder as the this value and with
       //    an argument list containing key and value.
-      ReplacerFunction.call(holder, key, value);
+      value = ReplacerFunction.call(holder, key, value);
     }
 
     // 5. If value is null then return "null".
@@ -151,7 +151,7 @@
         member = Quote(P);
         member += ":";
         if (gap !== '') {
-          member += space;
+          member += ' ';
         }
         member += strP;
         partial[partial.length] = member;
@@ -200,7 +200,7 @@
 
     // 6. Let len be the result of calling the [[Get]] internal method
     //    of value with argument "length".
-    len = value.get('length');
+    len = value.length;
 
     // 7. Let index be 0.
     index = 0;
@@ -250,7 +250,7 @@
     @param {Object} value An ECMAScript value.
     @param {Function|Array} [replacer] Either a function that
       alters the way objects and arrays are stringified or an
-      array of strings and numbers that acts as a white list
+      array of strings and numbers that acts as a whitelist
       for selecteing the object properties that will be stringified.
     @param {String|Number} [space] Allows the result to have
       white space injected into it to improve human readability.
@@ -267,39 +267,37 @@
     indent = '';
 
     // 3. Let PropertyList and ReplacerFunction be undefined
-    PropertyList = ReplacerFunction = undefined;
+    PropertyList = ReplacerFunction = void 0;
 
     // 4. If Type(replacer) is Object, then
-    if (typeof replacer === "object") {
       // a. If IsCallable(replacer) is true, then
-      if (isCallable(replacer)) {
+    if (Espresso.isCallable(replacer)) {
         //  i. Let ReplacerFunction be replacer.
-        ReplacerFunction = replacer;
+      ReplacerFunction = replacer;
 
         // b. Else if the [[Class]] internal property of replacer is "Array", then
-      } else if (Array.isArray()) {
+    } else if (Array.isArray(replacer)) {
         //  i. Let PropertyList be an empty internal List
-        PropertyList = [];
+      PropertyList = [];
 
         // ii. For each value v of a property of replacer that has an array
         //     index property name. The properties are enumerated in the ascending
         //     array index order of their names.
-        len = replacer.length;
-        for (k = 0; k < len; k += 1) {
-          v = replacer[k];
-          item = undefined;
-          if (typeof v === "string") {
-            item = v;
-          } else if (typeof v === "number") {
-            item = v.toString();
-          } else if (typeof v === "object" &&
-                     (/string/i.test(Object.prototype.toString.call(v)) ||
-                      /number/i.test(Object.prototype.toString.call(v)))) {
-            item = v.toString();
-          }
-          if (typeof item !== "undefined" && PropertyList.indexOf(item) === -1) {
-            PropertyList[PropertyList.length] = item;
-          }
+      len = replacer.length;
+      for (k = 0; k < len; k += 1) {
+        v = replacer[k];
+        item = void 0;
+        if (typeof v === "string") {
+          item = v;
+        } else if (typeof v === "number") {
+          item = v.toString();
+        } else if (typeof v === "object" &&
+                   (/string/i.test(Object.prototype.toString.call(v)) ||
+                    /number/i.test(Object.prototype.toString.call(v)))) {
+          item = v.toString();
+        }
+        if (typeof item !== "undefined" && PropertyList.indexOf(item) === -1) {
+          PropertyList[PropertyList.length] = item;
         }
       }
     }

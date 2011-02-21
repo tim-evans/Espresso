@@ -1,14 +1,5 @@
 /*global context setup should assert JSON*/
 
-var stringifying = function (spec) {
-  return should(spec, function () {
-    var parts = spec.match(/'([^']+)' should return '([^']+)'/),
-        object = eval('(' + parts[1] + ')'),
-        expected = parts[2];
-    assert.equal(JSON.stringify(object), expected);
-  });
-};
-
 context("JSON",
 
   should("exist", function () {
@@ -92,6 +83,32 @@ context("JSON",
       assert.kindOf("object", o.a);
       assert.kindOf("object", o.a.b);
       assert.equal(o.a.b.c, 1);
+    }),
+
+    should("take a reviver function", function () {
+      var o = JSON.parse('[0, 1, 2, 3, 4, 5]', function () {
+        assert.equal(arguments.length, 2);
+      });
+    }),
+
+    should("take a reviver function that can alter the values of the returned object", function () {
+      var o = JSON.parse('[0, 1, 2, 3, 4, 5]', function (key, value) {
+         if (!Array.isArray(value)) {
+           return value + 1;
+         } else {
+           return value;
+         }
+      });
+
+      assert.kindOf("array", o);
+      for (var i = 0, len = o.length; i < len; i++) {
+        assert.equal(o[i], i + 1);
+      }
+    }),
+
+    should("delete the values passed back if `undefined` is returned", function () {
+      var o = JSON.parse('{ "a": { "b": { "c": 1 }}}', function () {});
+      assert.equal(null, o);
     })
   ),
 
@@ -100,18 +117,94 @@ context("JSON",
   }),
 
   context("stringify",
-    stringifying("'\"string\"' should return '\"string\"'"),
-    stringifying("'123' should return '123'"),
-    stringifying("'true' should return 'true'"),
-    stringifying("'false' should return 'false'"),
-    stringifying("'null' should return 'null'"),
+    should("stringify Strings properly", function () {
+      assert.equal(JSON.stringify('string'), '"string"');
+    }),
 
-    stringifying("'[]' should return '[]'"),
-    stringifying("'[0, \"string\", false]' should return '[0,\"string\",false]'"),
-    stringifying("'[0, [1, [2]]]' should return '[0,[1,[2]]]'"),
+    should("stringify Numbers properly", function () {
+      assert.equal(JSON.stringify(123), '123');
+    }),
 
-    stringifying("'{}' should return '{}'"),
-    stringifying("'{ a: 0, b: \"string\", c: false, d: null }' should return '{\"a\":0,\"b\":\"string\",\"c\":false,\"d\":null}'"),
-    stringifying("'{ a: { b: { c: 0 }}}' should return '{\"a\":{\"b\":{\"c\":0}}}'")
+    should("stringify Booleans properly", function () {
+      assert.equal(JSON.stringify(false), 'false');
+      assert.equal(JSON.stringify(true), 'true');
+    }),
+
+    should("stringify null values properly", function () {
+      assert.equal(JSON.stringify(null), 'null');
+    }),
+
+    should("not stringify undefined values properly", function () {
+      assert.equal(JSON.stringify(undefined), null);
+    }),
+
+    should("stringify Arrays properly", function () {
+      assert.equal(JSON.stringify([]), '[]');
+    }),
+
+    should("stringify values inside Arrays properly", function () {
+      assert.equal(JSON.stringify([0, 'string', false, null]), '[0,"string",false,null]');
+    }),
+
+    should("stringify nested Arrays properly", function () {
+      assert.equal(JSON.stringify([0, [1, [2]]]), '[0,[1,[2]]]');
+    }),
+
+    should("stringify Objects properly", function () {
+      assert.equal(JSON.stringify({}), '{}');
+    }),
+
+    should("stringify values inside Objects properly", function () {
+      assert.equal(JSON.stringify({ a: 0, b: 'string', c: false, d: null}), '{"a":0,"b":"string","c":false,"d":null}');
+    }),
+
+    should("stringify nested Objects properly", function () {
+      assert.equal(JSON.stringify({ a: { b: { c: 0 }}}), '{"a":{"b":{"c":0}}}');
+    }),
+
+    should("take an array that acts like a whitelist", function () {
+      assert.equal(JSON.stringify({ a: 0, b: false, c: null }, ['a', 'c']), '{"a":0,"c":null}');
+    }),
+
+    should("take a function that transforms the object", function () {
+      assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, function (k, v) {
+        if (k === "") {
+          return v;
+        }
+        return v + 1;
+      }), '{"a":1,"b":2,"c":3}');
+
+      assert.equal(JSON.stringify([0, 1, 2, 3], function (k, v) {
+        return "foo";
+      }), '"foo"');
+
+      assert.equal(JSON.stringify([0, 1, 2, 3], function (k, v) {
+      }), null);
+    }),
+
+    should("take a string that provides more readability via spaces in the JSON", function () {
+      ['foo', '   ', "\'", "\n"].forEach(function (v) {
+        assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, v),
+                     '{{\n{0}"a": 0,\n{0}"b": 1,\n{0}"c": 2\n}}'.fmt(v));
+      });
+    }),
+
+    should("take a number that provides more readability via spaces in the JSON", function () {
+      assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, 0),
+                   '{"a":0,"b":1,"c":2}');
+      assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, -1),
+                   '{"a":0,"b":1,"c":2}');
+      [1, 2, 3].forEach(function (v) {
+        assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, v),
+                     '{{\n{0}"a": 0,\n{0}"b": 1,\n{0}"c": 2\n}}'.fmt(" ".repeat(v)));
+      });
+    }),
+
+    should("have a max number of 10 spaces in the JSON", function () {
+      [10, 11, 20, 30].forEach(function (v) {
+        assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, 10),
+                     '{{\n{0}"a": 0,\n{0}"b": 1,\n{0}"c": 2\n}}'.fmt(" ".repeat(10)));
+      });
+    })
   )
 );

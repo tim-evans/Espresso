@@ -130,23 +130,179 @@ context("Espresso.Enumerable",
     assert.kindOf("function", Espresso.Enumerable.filter);
   }),
 
+  context("filter",
+    should("thow an error if no function is provided", function () {
+      assert.raises(Error, Espresso.Enumerable.filter);
+    }),
+
+    should("return an Array", function () {
+      assert.isTrue(Array.isArray(enumerable.filter(function () {})));
+    }),
+
+    should("call the function with 3 arguments", function () {
+      enumerable.filter(function () {
+        assert.equal(arguments.length, 3);
+      });
+    }),
+
+    should("have an optional second argument that augments `this`", function () {
+      enumerable.filter(function () {
+        assert.equal('foo', this.toString());
+      }, 'foo');
+    })
+  ),
+
   should("have a function named 'every'", function () {
     assert.kindOf("function", Espresso.Enumerable.every);
   }),
+
+  context("every",
+    should("thow an error if no function is provided", function () {
+      assert.raises(Error, Espresso.Enumerable.every);
+    }),
+
+    should("return true if all of the iterations returns true", function () {
+      assert.isTrue(enumerable.every(function (v) {
+        return true;
+      }));
+    }),
+
+    should("return false any of the iterations returns false", function () {
+      assert.isFalse(enumerable.every(function (v) {
+        return v !== 0;
+      }));
+    }),
+
+    should("call the function with 3 arguments", function () {
+      enumerable.every(function () {
+        assert.equal(arguments.length, 3);
+      });
+    }),
+
+    should("have an optional second argument that augments `this`", function () {
+      enumerable.every(function () {
+        assert.equal('foo', this.toString());
+      }, 'foo');
+    })
+  ),
 
   should("have a function named 'some'", function () {
     assert.kindOf("function", Espresso.Enumerable.some);
   }),
 
+  context("some",
+    should("thow an error if no function is provided", function () {
+      assert.raises(Error, Espresso.Enumerable.some);
+    }),
+
+    should("return true if any of the iterations returns true", function () {
+      assert.isTrue(enumerable.some(function (v) {
+        return v === 0;
+      }));
+    }),
+
+    should("return false if none of the iterations returns true", function () {
+      assert.isFalse(enumerable.some(function (v) {}));
+    }),
+
+    should("call the function with 3 arguments", function () {
+      enumerable.some(function () {
+        assert.equal(arguments.length, 3);
+      });
+    }),
+
+    should("have an optional second argument that augments `this`", function () {
+      enumerable.some(function () {
+        assert.equal('foo', this.toString());
+      }, 'foo');
+    })
+  ),
+
   should("have a function named 'extract'", function () {
     assert.kindOf("function", Espresso.Enumerable.extract);
   }),
+
+  context("extract",
+    setup(function () {
+      enumerable = mix(Espresso.Enumerable).into({
+        forEach: function (lambda, self) {
+          var values = ['foo', 'bar', 'baz', 'qux', 'quux'];
+          for (var i = 0, len = values.length; i < len; i++) {
+            lambda.call(self || this, values[i], i, this);
+          }
+        }
+      });
+    }),
+
+    should("return all values for the provided keys", function () {
+      var values = enumerable.extract(0, 2, 4, 5);
+      assert.isTrue(values.indexOf('foo') !== -1);
+      assert.isFalse(values.indexOf('bar') !== -1);
+      assert.isTrue(values.indexOf('baz') !== -1);
+      assert.isFalse(values.indexOf('qux') !== -1);
+      assert.isTrue(values.indexOf('quux') !== -1);
+      assert.equal(values.length, 3);
+    })
+  ),
 
   should("have a function named 'find'", function () {
     assert.kindOf("function", Espresso.Enumerable.find);
   }),
 
+  context("find",
+    should("thow an error if no function is provided", function () {
+      assert.raises(Error, Espresso.Enumerable.find);
+    }),
+
+    should("return an Array", function () {
+      assert.isTrue(Array.isArray(enumerable.filter(function () {})));
+    }),
+
+    should("call the function with 3 arguments", function () {
+      enumerable.find(function () {
+        assert.equal(arguments.length, 3);
+      });
+    }),
+
+    should("return the first element for which the function returns `true`", function () {
+      assert.equal(enumerable.find(function () {
+        return true;
+      }), 0);
+
+      assert.equal(enumerable.find(function (v) {
+        return v == 5;
+      }), 5);
+    }),
+
+    should("have an optional second argument that is the default value (if nothing return strue)", function () {
+      assert.equal(enumerable.find(function () {
+        return false;
+      }, 'foo'), 'foo');
+    })
+  ),
+
   should("have a function named 'contains'", function () {
     assert.kindOf("function", Espresso.Enumerable.contains);
-  })
+  }),
+
+  context("contains",
+    should("return 'true' if the item is contained in the enumerable", function () {
+      enumerable.forEach(function (v) {
+        assert.isTrue(enumerable.contains(v));
+      });
+    }),
+
+    should("return 'false' if the item is not contained in the enumerable", function () {
+      var nil;
+      assert.isFalse(enumerable.contains('foo'));
+      assert.isFalse(enumerable.contains(false));
+      assert.isFalse(enumerable.contains(nil));
+      assert.isFalse(enumerable.contains(null));
+    }),
+
+    should("deal with multiple variables", function () {
+      assert.isFalse(enumerable.contains('0', 1, 2, 3, 4, 5));
+      assert.isTrue(enumerable.contains.apply(enumerable, enumerable.toArray()));
+    })
+  )
 );

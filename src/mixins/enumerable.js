@@ -10,6 +10,7 @@
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
   /** @function
+    @desc
     Iterates over the items on the Enumerable.
 
     The Function `forEach` should follow the specification as
@@ -166,6 +167,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       if (lambda.call(self, v, k, t)) {
         seive.push(v);
       }
+      return seive;
     }, []);
   }.inferior(),
 
@@ -207,7 +209,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }
 
     return this.reduce(function (every, v, k, t) {
-      return every || lambda(self, v, k, t);
+      return every || lambda.call(self, v, k, t);
     }, false);
   }.inferior(),
 
@@ -217,11 +219,9 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @param {...} keys The keys to extract values from.
     @returns {Object[]} The values for the keys provided (not.
    */
-  extract: function (keys) {
-    if (!Array.isArray(keys)) {
-      keys = [keys];
-    }
-
+  extract: function () {
+    var keys = Array.from(arguments);
+    
     return this.filter(function (v, k) {
       return keys.indexOf(k) !== -1;
     });

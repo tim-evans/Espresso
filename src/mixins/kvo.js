@@ -109,9 +109,9 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
       value = object[key];
       if (typeof value === "undefined") {
         if (Espresso.isCallable(object.unknownProperty)) {
-          object.unknownProperty.call(object, key);
+          return object.unknownProperty.call(object, key);
         } else {
-          this.unknownProperty(k, v);
+          return this.unknownProperty(k, v);
         }
       } else if (value && value.isProperty) {
         if (value.isCacheable) {
@@ -125,7 +125,7 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
       }
       return value;
     } else {
-      this.unknownProperty(k);
+      return this.unknownProperty(k);
     }
     return void 0;
   },

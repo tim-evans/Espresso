@@ -17,7 +17,7 @@
 <span class='line'> 10</span>   or asynchronously (the default is asynchronous).
 <span class='line'> 11</span> 
 <span class='line'> 12</span>   @example
-<span class='line'> 13</span>     var ship = mix(Espresso.PubSub, {
+<span class='line'> 13</span>     var ship = mix(Espresso.Subscribable, {
 <span class='line'> 14</span>       sailors: [],
 <span class='line'> 15</span> 
 <span class='line'> 16</span>       add: function (sailor, sync) {
@@ -38,7 +38,7 @@
 <span class='line'> 31</span>  */</span><span class="WHIT">
 <span class='line'> 32</span> </span><span class="COMM">/*global mix Espresso */</span><span class="WHIT">
 <span class='line'> 33</span> 
-<span class='line'> 34</span> </span><span class="NAME">Espresso.PubSub</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lends Espresso.PubSub# */</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="NAME">Espresso.Subscribable</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="COMM">/** @lends Espresso.Subscribable# */</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 35</span> 
 <span class='line'> 36</span> </span><span class="WHIT">  </span><span class="COMM">/** @private */</span><span class="WHIT">
 <span class='line'> 37</span> </span><span class="WHIT">  </span><span class="NAME">_subscriptions</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT">
@@ -151,8 +151,8 @@
 <span class='line'>144</span>   needs without mucking with moving parts within Espresso.
 <span class='line'>145</span>   You may interpret the functions as you see fit. Just mind
 <span class='line'>146</span>   that mucking with their implementation *will* change how
-<span class='line'>147</span>   notifications are delivered for the {@link Espresso.PubSub}
-<span class='line'>148</span>   and {@link Espresso.KVO} mixins.
+<span class='line'>147</span>   notifications are delivered for the {@link Espresso.Subscribable}
+<span class='line'>148</span>   and {@link Espresso.Observable} mixins.
 <span class='line'>149</span>  */</span><span class="WHIT">
 <span class='line'>150</span> </span><span class="NAME">Espresso.Scheduler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>151</span> 

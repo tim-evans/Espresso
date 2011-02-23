@@ -51,7 +51,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.7.2',
+  VERSION: '0.7.4',
 
   /**
     The global variable.
@@ -651,6 +651,7 @@ mix(/** @lends Function.prototype */{
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
   /** @function
+    @desc
     Iterates over the items on the Enumerable.
 
     The Function `forEach` should follow the specification as
@@ -807,6 +808,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       if (lambda.call(self, v, k, t)) {
         seive.push(v);
       }
+      return seive;
     }, []);
   }.inferior(),
 
@@ -848,7 +850,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }
 
     return this.reduce(function (every, v, k, t) {
-      return every || lambda(self, v, k, t);
+      return every || lambda.call(self, v, k, t);
     }, false);
   }.inferior(),
 
@@ -858,11 +860,9 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @param {...} keys The keys to extract values from.
     @returns {Object[]} The values for the keys provided (not.
    */
-  extract: function (keys) {
-    if (!Array.isArray(keys)) {
-      keys = [keys];
-    }
-
+  extract: function () {
+    var keys = Array.from(arguments);
+    
     return this.filter(function (v, k) {
       return keys.indexOf(k) !== -1;
     });
@@ -929,7 +929,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   or asynchronously (the default is asynchronous).
 
   @example
-    var ship = mix(Espresso.PubSub, {
+    var ship = mix(Espresso.Subscribable, {
       sailors: [],
 
       add: function (sailor, sync) {
@@ -950,7 +950,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
  */
 /*global mix Espresso */
 
-Espresso.PubSub = /** @lends Espresso.PubSub# */{
+Espresso.Subscribable = /** @lends Espresso.Subscribable# */{
 
   /** @private */
   _subscriptions: null,
@@ -1063,8 +1063,8 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
   needs without mucking with moving parts within Espresso.
   You may interpret the functions as you see fit. Just mind
   that mucking with their implementation *will* change how
-  notifications are delivered for the {@link Espresso.PubSub}
-  and {@link Espresso.KVO} mixins.
+  notifications are delivered for the {@link Espresso.Subscribable}
+  and {@link Espresso.Observable} mixins.
  */
 Espresso.Scheduler = {
 
@@ -1103,7 +1103,7 @@ Espresso.Scheduler = {
   other Objects. It is based off of the observer pattern, which
   in turn is built on top of the Publish-Subscribe pattern.
 
-  KVO is used on top of {@link Espresso.PubSub} for notifying
+  KVO is used on top of {@link Espresso.Subscribable} for notifying
   observers that a change occured.
 
   To understand Key-Value coding, you must understand property
@@ -1111,7 +1111,7 @@ Espresso.Scheduler = {
   the Object model of the object that you are doing a `get` or
   `set` on. Take the following example:
 
-      var Beatles = mix(Espresso.KVO).into({
+      var Beatles = mix(Espresso.Observable).into({
         Paul: {
           instruments: ['vocals', 'bass', 'guitar', 'piano',
                         'keyboards', 'drums', 'ukelele',
@@ -1141,7 +1141,7 @@ Espresso.Scheduler = {
   Using `set` provides notifications to observing functions /
   properties.
 
-  The KVO mixin provides the ability to have dynamically computed
+  The Observable mixin provides the ability to have dynamically computed
   properties via the `property` decorator on functions and the
   ability to intercept `get`s or `set`s to unknown properties via
   `unknownProperty`.
@@ -1154,7 +1154,7 @@ Espresso.Scheduler = {
 
   Consider the following:
 
-      var Box = mix(Espresso.KVO).into({
+      var Box = mix(Espresso.Observable).into({
         width: 0,
         height: 0,
         depth: 0,
@@ -1169,14 +1169,14 @@ Espresso.Scheduler = {
   object that you would like to monitor the changes, perhaps a
   renderer, you could attach observers to each of the properties
   by subscribing to the property path (via
-  {@link Espresso.PubSub#subscribe}), providing any property paths
+  {@link Espresso.Subscribable#subscribe}), providing any property paths
   that you would like to be notified on.
 
     [kvo]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
 
-  @extends Espresso.PubSub
+  @extends Espresso.Subscribable
  */
-Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
+Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observable# */{
 
   /**
     Get a value on an object.
@@ -1206,9 +1206,9 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
       value = object[key];
       if (typeof value === "undefined") {
         if (Espresso.isCallable(object.unknownProperty)) {
-          object.unknownProperty.call(object, key);
+          value = object.unknownProperty.call(object, key);
         } else {
-          this.unknownProperty(k, v);
+          value = this.unknownProperty(k);
         }
       } else if (value && value.isProperty) {
         if (value.isCacheable) {
@@ -1221,10 +1221,8 @@ Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
         value = value.call(object, key);
       }
       return value;
-    } else {
-      this.unknownProperty(k);
     }
-    return void 0;
+    return this.unknownProperty(k);
   },
 
   /**
@@ -1645,9 +1643,10 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
    */
   without: function () {
     var without = Array.from(arguments);
+
     return this.reduce(function (complement, v) {
       if (without.indexOf(v) === -1) {
-        complement[complement.length] = v;
+        complement.push(v);
       }
       return complement;
     }, []);
@@ -1664,8 +1663,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       // => ['nada']
    */
   compact: function () {
-    var nil;
-    return this.without(null, nil);
+    return this.without(null, void(0));
   }
 
 }).into(Array.prototype);
@@ -2188,11 +2186,7 @@ mix(/** @scope String.prototype */{
       res = Espresso.getObjectFor(value, args);
       if (typeof res === "undefined" &&
           Array.isArray(args) && args.length === 1 && Espresso.hasValue(args[0])) {
-        if (args[0].get && args[0].get === Espresso.KVO.get) {
-          res = args[0].get(value);
-        } else {
-          res = Espresso.getObjectFor(value, args[0]);
-        }
+        res = args[0].get ? args[0].get(value) : Espresso.getObjectFor(value, args[0]);
       }
     } else {
       res = args.shift();
@@ -2428,7 +2422,7 @@ mix(/** @lends Date# */{
       var result = [], i = 0;
 
       for (; i < spec.length; i += 1) {
-        switch (spec[i]) {
+        switch (spec.charAt(i)) {
         case 'a':
           result[result.length] = Date.days[this.getDay()].slice(0, 3);
           break;
@@ -2494,7 +2488,7 @@ mix(/** @lends Date# */{
           result[result.length] = this.getFullYear();
           break;
         default:
-          result[result.length] = spec[i];
+          result[result.length] = spec.charAt(i);
         }
       }
       return result.join('');
@@ -2617,10 +2611,10 @@ mix(/** @lends Boolean# */{
  */
 (function () /** @lends JSON */{
 
-  JSON = mix({
+  Espresso.global["JSON"] = mix({
     stringify: stringify.inferior(),
     parse: parse.inferior()
-  }).into(JSON || {});
+  }).into(Espresso.global["JSON"] || {});
 
   var escapable, abbrev, stack, indent, gap, space,
       PropertyList, ReplacerFunction;
@@ -2645,7 +2639,7 @@ mix(/** @lends Boolean# */{
 
     // 1. Let value be the result of calling the [[Get]] internal method of
     //    holder with argument key.
-    value = holder && (holder.get && holder.get(key) || holder[key]);
+    value = holder[key];
 
     // 2. If Type(value) is Object, then
     if (typeof value === "object") {
@@ -2665,7 +2659,7 @@ mix(/** @lends Boolean# */{
       // a. Let value be the result of calling the [[Call]] internal method
       //    of ReplacerFunction passing holder as the this value and with
       //    an argument list containing key and value.
-      ReplacerFunction.call(holder, key, value);
+      value = ReplacerFunction.call(holder, key, value);
     }
 
     // 5. If value is null then return "null".
@@ -2751,7 +2745,7 @@ mix(/** @lends Boolean# */{
         member = Quote(P);
         member += ":";
         if (gap !== '') {
-          member += space;
+          member += ' ';
         }
         member += strP;
         partial[partial.length] = member;
@@ -2800,7 +2794,7 @@ mix(/** @lends Boolean# */{
 
     // 6. Let len be the result of calling the [[Get]] internal method
     //    of value with argument "length".
-    len = value.get('length');
+    len = value.length;
 
     // 7. Let index be 0.
     index = 0;
@@ -2850,7 +2844,7 @@ mix(/** @lends Boolean# */{
     @param {Object} value An ECMAScript value.
     @param {Function|Array} [replacer] Either a function that
       alters the way objects and arrays are stringified or an
-      array of strings and numbers that acts as a white list
+      array of strings and numbers that acts as a whitelist
       for selecteing the object properties that will be stringified.
     @param {String|Number} [space] Allows the result to have
       white space injected into it to improve human readability.
@@ -2867,39 +2861,37 @@ mix(/** @lends Boolean# */{
     indent = '';
 
     // 3. Let PropertyList and ReplacerFunction be undefined
-    PropertyList = ReplacerFunction = undefined;
+    PropertyList = ReplacerFunction = void 0;
 
     // 4. If Type(replacer) is Object, then
-    if (typeof replacer === "object") {
       // a. If IsCallable(replacer) is true, then
-      if (isCallable(replacer)) {
+    if (Espresso.isCallable(replacer)) {
         //  i. Let ReplacerFunction be replacer.
-        ReplacerFunction = replacer;
+      ReplacerFunction = replacer;
 
         // b. Else if the [[Class]] internal property of replacer is "Array", then
-      } else if (Array.isArray()) {
+    } else if (Array.isArray(replacer)) {
         //  i. Let PropertyList be an empty internal List
-        PropertyList = [];
+      PropertyList = [];
 
         // ii. For each value v of a property of replacer that has an array
         //     index property name. The properties are enumerated in the ascending
         //     array index order of their names.
-        len = replacer.length;
-        for (k = 0; k < len; k += 1) {
-          v = replacer[k];
-          item = undefined;
-          if (typeof v === "string") {
-            item = v;
-          } else if (typeof v === "number") {
-            item = v.toString();
-          } else if (typeof v === "object" &&
-                     (/string/i.test(Object.prototype.toString.call(v)) ||
-                      /number/i.test(Object.prototype.toString.call(v)))) {
-            item = v.toString();
-          }
-          if (typeof item !== "undefined" && PropertyList.indexOf(item) === -1) {
-            PropertyList[PropertyList.length] = item;
-          }
+      len = replacer.length;
+      for (k = 0; k < len; k += 1) {
+        v = replacer[k];
+        item = void 0;
+        if (typeof v === "string") {
+          item = v;
+        } else if (typeof v === "number") {
+          item = v.toString();
+        } else if (typeof v === "object" &&
+                   (/string/i.test(Object.prototype.toString.call(v)) ||
+                    /number/i.test(Object.prototype.toString.call(v)))) {
+          item = v.toString();
+        }
+        if (typeof item !== "undefined" && PropertyList.indexOf(item) === -1) {
+          PropertyList[PropertyList.length] = item;
         }
       }
     }

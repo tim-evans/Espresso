@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="generator" content="JsDoc Toolkit" />
 
-	<title>JsDoc Reference - Espresso.KVO</title>
+	<title>JsDoc Reference - Espresso.Observable</title>
 	
   <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
   <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
@@ -21,15 +21,15 @@
   <div id="module">
 		<h1>
 				
-		  Namespace Espresso.KVO
+		  Namespace Espresso.Observable
     </h1>
     
-      <span class="src"><a href="../symbols/src/mixins_kvo.js.html">kvo.js</a></span>
+      <span class="src"><a href="../symbols/src/mixins_observable.js.html">observable.js</a></span>
     
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -71,7 +71,7 @@ objects to be notified of changes to specified properties of
 other Objects. It is based off of the observer pattern, which
 in turn is built on top of the Publish-Subscribe pattern.</p>
 
-<p>KVO is used on top of <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a> for notifying
+<p>KVO is used on top of <a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a> for notifying
 observers that a change occured.</p>
 
 <p>To understand Key-Value coding, you must understand property
@@ -80,7 +80,7 @@ the Object model of the object that you are doing a <code>get</code> or
 <code>set</code> on. Take the following example:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;Beatles&nbsp;=&nbsp;mix(Espresso.KVO).into({<br/>&nbsp;&nbsp;Paul:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'vocals'</span>,&nbsp;<span class="string">'bass'</span>,&nbsp;<span class="string">'guitar'</span>,&nbsp;<span class="string">'piano'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'keyboards'</span>,&nbsp;<span class="string">'drums'</span>,&nbsp;<span class="string">'ukelele'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'mandolin'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;John:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'vocals'</span>,&nbsp;<span class="string">'guitar'</span>,&nbsp;<span class="string">'piano'</span>,&nbsp;<span class="string">'banjo'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'harmonica'</span>,&nbsp;<span class="string">'mellotron'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'six-string&nbsp;bass'</span>,&nbsp;<span class="string">'percussion'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;Ringo:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'drums'</span>,&nbsp;<span class="string">'vocals'</span>,&nbsp;<span class="string">'percussion'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'tambourine'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;George:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'guitar'</span>,&nbsp;<span class="string">'vocals'</span>,&nbsp;<span class="string">'bass'</span>,&nbsp;<span class="string">'keyboards'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'ukelele'</span>,&nbsp;<span class="string">'mandolin'</span>,&nbsp;<span class="string">'sitar'</span>,&nbsp;<span class="string">'tambura'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'sarod'</span>,&nbsp;<span class="string">'swarmandal'</span>]<br/>&nbsp;&nbsp;}<br/>});<br/><br/>alert(Beatles.get(<span class="string">'Paul.instruments.0'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'vocals'</code>
+<code><span class="keyword">var</span>&nbsp;Beatles&nbsp;=&nbsp;mix(Espresso.Observable).into({<br/>&nbsp;&nbsp;Paul:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'vocals'</span>,&nbsp;<span class="string">'bass'</span>,&nbsp;<span class="string">'guitar'</span>,&nbsp;<span class="string">'piano'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'keyboards'</span>,&nbsp;<span class="string">'drums'</span>,&nbsp;<span class="string">'ukelele'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'mandolin'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;John:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'vocals'</span>,&nbsp;<span class="string">'guitar'</span>,&nbsp;<span class="string">'piano'</span>,&nbsp;<span class="string">'banjo'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'harmonica'</span>,&nbsp;<span class="string">'mellotron'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'six-string&nbsp;bass'</span>,&nbsp;<span class="string">'percussion'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;Ringo:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'drums'</span>,&nbsp;<span class="string">'vocals'</span>,&nbsp;<span class="string">'percussion'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'tambourine'</span>]<br/>&nbsp;&nbsp;},<br/>&nbsp;&nbsp;George:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;instruments:&nbsp;[<span class="string">'guitar'</span>,&nbsp;<span class="string">'vocals'</span>,&nbsp;<span class="string">'bass'</span>,&nbsp;<span class="string">'keyboards'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'ukelele'</span>,&nbsp;<span class="string">'mandolin'</span>,&nbsp;<span class="string">'sitar'</span>,&nbsp;<span class="string">'tambura'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">'sarod'</span>,&nbsp;<span class="string">'swarmandal'</span>]<br/>&nbsp;&nbsp;}<br/>});<br/><br/>alert(Beatles.get(<span class="string">'Paul.instruments.0'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'vocals'</code>
 </div>
 
 <p>Using <code>get</code> provides optimizations such as caching on an Object.</p>
@@ -88,7 +88,7 @@ the Object model of the object that you are doing a <code>get</code> or
 <p>Using <code>set</code> provides notifications to observing functions /
 properties.</p>
 
-<p>The KVO mixin provides the ability to have dynamically computed
+<p>The Observable mixin provides the ability to have dynamically computed
 properties via the <code>property</code> decorator on functions and the
 ability to intercept <code>get</code>s or <code>set</code>s to unknown properties via
 <code>unknownProperty</code>.</p>
@@ -102,7 +102,7 @@ gets <code>set</code>, the property will get recomputed.</p>
 <p>Consider the following:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;Box&nbsp;=&nbsp;mix(Espresso.KVO).into({<br/>&nbsp;&nbsp;width:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;height:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;depth:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;volume:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>.get(<span class="string">'width'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'height'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'depth'</span>);<br/>&nbsp;&nbsp;}.property(<span class="string">'width'</span>,&nbsp;<span class="string">'height'</span>,&nbsp;<span class="string">'depth'</span>).cacheable()<br/>});</code>
+<code><span class="keyword">var</span>&nbsp;Box&nbsp;=&nbsp;mix(Espresso.Observable).into({<br/>&nbsp;&nbsp;width:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;height:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;depth:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;volume:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>.get(<span class="string">'width'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'height'</span>)&nbsp;*&nbsp;<span class="keyword">this</span>.get(<span class="string">'depth'</span>);<br/>&nbsp;&nbsp;}.property(<span class="string">'width'</span>,&nbsp;<span class="string">'height'</span>,&nbsp;<span class="string">'depth'</span>).cacheable()<br/>});</code>
 </div>
 
 <p>The <code>volume</code> property will get recomputed every single time the
@@ -110,7 +110,7 @@ gets <code>set</code>, the property will get recomputed.</p>
 object that you would like to monitor the changes, perhaps a
 renderer, you could attach observers to each of the properties
 by subscribing to the property path (via
-<a href="../symbols/Espresso.PubSub.html#subscribe">Espresso.PubSub#subscribe</a>), providing any property paths
+<a href="../symbols/Espresso.Subscribable.html#subscribe">Espresso.Subscribable#subscribe</a>), providing any property paths
 that you would like to be notified on.</p>
 			</p>
       
@@ -118,7 +118,7 @@ that you would like to be notified on.</p>
 				<dl class="detailList">
 				<dt class="heading">Extends:</dt>
 				
-				<dt><a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a></dt>
+				<dt><a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a></dt>
 				
 				</dl>
       
@@ -132,7 +132,7 @@ that you would like to be notified on.</p>
 
 <!-- ============================== constructor summary ====================
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.KVO.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Observable.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -145,7 +145,7 @@ that you would like to be notified on.</p>
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Espresso.KVO.html">Espresso.KVO</a></b>
+								<b><a href="../symbols/Espresso.Observable.html">Espresso.Observable</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -164,7 +164,7 @@ that you would like to be notified on.</p>
 				
 				
 				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#_subscriptions">_subscriptions</a></dd>
+				<dt>Fields borrowed from class <a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a>: </dt><dd><a href="../symbols/Espresso.Subscribable.html#_subscriptions">_subscriptions</a></dd>
 				</dl>
 				
 			
@@ -180,17 +180,17 @@ that you would like to be notified on.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.KVO.html#get">get</a></b>(key)</td>
+              + <b><a href="../symbols/Espresso.Observable.html#get">get</a></b>(key)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.KVO.html#set">set</a></b>(key, value)</td>
+              + <b><a href="../symbols/Espresso.Observable.html#set">set</a></b>(key, value)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.KVO.html#unknownProperty">unknownProperty</a></b>(key, value)</td>
+              + <b><a href="../symbols/Espresso.Observable.html#unknownProperty">unknownProperty</a></b>(key, value)</td>
             </tr>
 					
           </table>
@@ -198,7 +198,7 @@ that you would like to be notified on.</p>
 				
 				
 				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a>: </dt><dd><a href="../symbols/Espresso.PubSub.html#publish">publish</a>, <a href="../symbols/Espresso.PubSub.html#subscribe">subscribe</a>, <a href="../symbols/Espresso.PubSub.html#unpublishedEvent">unpublishedEvent</a>, <a href="../symbols/Espresso.PubSub.html#unsubscribe">unsubscribe</a></dd>
+				<dt>Methods borrowed from class <a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a>: </dt><dd><a href="../symbols/Espresso.Subscribable.html#publish">publish</a>, <a href="../symbols/Espresso.Subscribable.html#subscribe">subscribe</a>, <a href="../symbols/Espresso.Subscribable.html#unpublishedEvent">unpublishedEvent</a>, <a href="../symbols/Espresso.Subscribable.html#unsubscribe">unsubscribe</a></dd>
 				</dl>
 				
 			
@@ -394,7 +394,7 @@ intercept general gets and sets, making use out of them.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Feb 20 2011 14:34:33 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Wed Feb 23 2011 00:12:32 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

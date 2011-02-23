@@ -337,27 +337,27 @@
 <span class='line'>330</span>    */</span><span class="WHIT">
 <span class='line'>331</span> </span><span class="WHIT">  </span><span class="NAME">without</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>332</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">without</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Array.from</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>333</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.reduce</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">complement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>334</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">without.indexOf</span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>335</span> </span><span class="WHIT">        </span><span class="NAME">complement</span><span class="PUNC">[</span><span class="NAME">complement.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>336</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>337</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">complement</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>338</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>339</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>340</span> 
-<span class='line'>341</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>342</span>     Removes all `undefined` or `null` values.
-<span class='line'>343</span> 
-<span class='line'>344</span>     @returns {Array} The array without any `undefined` or `null` values.
-<span class='line'>345</span>     @example
-<span class='line'>346</span>       var nil;
-<span class='line'>347</span> 
-<span class='line'>348</span>       alert([undefined, null, nil, 'nada'].compact());
-<span class='line'>349</span>       // => ['nada']
-<span class='line'>350</span>    */</span><span class="WHIT">
-<span class='line'>351</span> </span><span class="WHIT">  </span><span class="NAME">compact</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>352</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">nil</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>353</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.without</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">nil</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>333</span> 
+<span class='line'>334</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.reduce</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">complement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>335</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">without.indexOf</span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>336</span> </span><span class="WHIT">        </span><span class="NAME">complement.push</span><span class="PUNC">(</span><span class="NAME">v</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>337</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>338</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">complement</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>339</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>340</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>341</span> 
+<span class='line'>342</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>343</span>     Removes all `undefined` or `null` values.
+<span class='line'>344</span> 
+<span class='line'>345</span>     @returns {Array} The array without any `undefined` or `null` values.
+<span class='line'>346</span>     @example
+<span class='line'>347</span>       var nil;
+<span class='line'>348</span> 
+<span class='line'>349</span>       alert([undefined, null, nil, 'nada'].compact());
+<span class='line'>350</span>       // => ['nada']
+<span class='line'>351</span>    */</span><span class="WHIT">
+<span class='line'>352</span> </span><span class="WHIT">  </span><span class="NAME">compact</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this.without</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">void</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>354</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>355</span> 
 <span class='line'>356</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Array.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">

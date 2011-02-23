@@ -5,7 +5,7 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <meta name="generator" content="JsDoc Toolkit" />
 
-	<title>JsDoc Reference - Espresso.PubSub</title>
+	<title>JsDoc Reference - Espresso.Subscribable</title>
 	
   <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
   <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
@@ -21,15 +21,15 @@
   <div id="module">
 		<h1>
 				
-		  Namespace Espresso.PubSub
+		  Namespace Espresso.Subscribable
     </h1>
     
-      <span class="src"><a href="../symbols/src/mixins_pubsub.js.html">pubsub.js</a></span>
+      <span class="src"><a href="../symbols/src/mixins_subscribable.js.html">subscribable.js</a></span>
     
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.KVO.html">KVO</a></li><li><a href="../symbols/Espresso.PubSub.html">PubSub</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -84,7 +84,7 @@ or asynchronously (the default is asynchronous).</p>
 			
 			
 		  <div class="code">
-<code><span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(Espresso.PubSub,&nbsp;{<br/>&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor,&nbsp;sync)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Added&nbsp;{name}"</span>.fmt(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor),&nbsp;{&nbsp;synchronous:&nbsp;!!sync&nbsp;});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>ship.add(ahab,&nbsp;<span class="keyword">true</span>);<br/>ship.add(daveyJones);<br/>ship.add(flapjack);</code>
+<code><span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(Espresso.Subscribable,&nbsp;{<br/>&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor,&nbsp;sync)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Added&nbsp;{name}"</span>.fmt(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor),&nbsp;{&nbsp;synchronous:&nbsp;!!sync&nbsp;});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>ship.add(ahab,&nbsp;<span class="keyword">true</span>);<br/>ship.add(daveyJones);<br/>ship.add(flapjack);</code>
 </div>
 			
 			
@@ -94,7 +94,7 @@ or asynchronously (the default is asynchronous).</p>
 
 <!-- ============================== constructor summary ====================
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.PubSub.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Subscribable.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -107,7 +107,7 @@ or asynchronously (the default is asynchronous).</p>
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Espresso.PubSub.html">Espresso.PubSub</a></b>
+								<b><a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -128,7 +128,7 @@ or asynchronously (the default is asynchronous).</p>
 						<tr class="nameDescription">
               <td class="fixedFont right">+</td>
               <td class="fixedFont">
-                <a href="../symbols/Espresso.PubSub.html#_subscriptions">_subscriptions</a>
+                <a href="../symbols/Espresso.Subscribable.html#_subscriptions">_subscriptions</a>
               </td>
             </tr>
 					
@@ -149,22 +149,22 @@ or asynchronously (the default is asynchronous).</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.PubSub.html#publish">publish</a></b>(event)</td>
+              + <b><a href="../symbols/Espresso.Subscribable.html#publish">publish</a></b>(event)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.PubSub.html#subscribe">subscribe</a></b>(event, handler, options)</td>
+              + <b><a href="../symbols/Espresso.Subscribable.html#subscribe">subscribe</a></b>(event, handler, options)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.PubSub.html#unpublishedEvent">unpublishedEvent</a></b>(event)</td>
+              + <b><a href="../symbols/Espresso.Subscribable.html#unpublishedEvent">unpublishedEvent</a></b>(event)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.PubSub.html#unsubscribe">unsubscribe</a></b>(event, handler)</td>
+              + <b><a href="../symbols/Espresso.Subscribable.html#unsubscribe">unsubscribe</a></b>(event, handler)</td>
             </tr>
 					
           </table>
@@ -439,7 +439,7 @@ than <code>defer</code>red.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Feb 20 2011 14:34:33 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Wed Feb 23 2011 00:12:32 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

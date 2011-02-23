@@ -10,7 +10,7 @@
   or asynchronously (the default is asynchronous).
 
   @example
-    var ship = mix(Espresso.PubSub, {
+    var ship = mix(Espresso.Subscribable, {
       sailors: [],
 
       add: function (sailor, sync) {
@@ -31,7 +31,7 @@
  */
 /*global mix Espresso */
 
-Espresso.PubSub = /** @lends Espresso.PubSub# */{
+Espresso.Subscribable = /** @lends Espresso.Subscribable# */{
 
   /** @private */
   _subscriptions: null,
@@ -144,8 +144,8 @@ Espresso.PubSub = /** @lends Espresso.PubSub# */{
   needs without mucking with moving parts within Espresso.
   You may interpret the functions as you see fit. Just mind
   that mucking with their implementation *will* change how
-  notifications are delivered for the {@link Espresso.PubSub}
-  and {@link Espresso.KVO} mixins.
+  notifications are delivered for the {@link Espresso.Subscribable}
+  and {@link Espresso.Observable} mixins.
  */
 Espresso.Scheduler = {
 

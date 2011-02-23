@@ -265,11 +265,7 @@
       res = Espresso.getObjectFor(value, args);
       if (typeof res === "undefined" &&
           Array.isArray(args) && args.length === 1 && Espresso.hasValue(args[0])) {
-        if (args[0].get && args[0].get === Espresso.KVO.get) {
-          res = args[0].get(value);
-        } else {
-          res = Espresso.getObjectFor(value, args[0]);
-        }
+        res = args[0].get ? args[0].get(value) : Espresso.getObjectFor(value, args[0]);
       }
     } else {
       res = args.shift();

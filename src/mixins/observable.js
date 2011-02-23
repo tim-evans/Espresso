@@ -6,7 +6,7 @@
   other Objects. It is based off of the observer pattern, which
   in turn is built on top of the Publish-Subscribe pattern.
 
-  KVO is used on top of {@link Espresso.PubSub} for notifying
+  KVO is used on top of {@link Espresso.Subscribable} for notifying
   observers that a change occured.
 
   To understand Key-Value coding, you must understand property
@@ -14,7 +14,7 @@
   the Object model of the object that you are doing a `get` or
   `set` on. Take the following example:
 
-      var Beatles = mix(Espresso.KVO).into({
+      var Beatles = mix(Espresso.Observable).into({
         Paul: {
           instruments: ['vocals', 'bass', 'guitar', 'piano',
                         'keyboards', 'drums', 'ukelele',
@@ -44,7 +44,7 @@
   Using `set` provides notifications to observing functions /
   properties.
 
-  The KVO mixin provides the ability to have dynamically computed
+  The Observable mixin provides the ability to have dynamically computed
   properties via the `property` decorator on functions and the
   ability to intercept `get`s or `set`s to unknown properties via
   `unknownProperty`.
@@ -57,7 +57,7 @@
 
   Consider the following:
 
-      var Box = mix(Espresso.KVO).into({
+      var Box = mix(Espresso.Observable).into({
         width: 0,
         height: 0,
         depth: 0,
@@ -72,14 +72,14 @@
   object that you would like to monitor the changes, perhaps a
   renderer, you could attach observers to each of the properties
   by subscribing to the property path (via
-  {@link Espresso.PubSub#subscribe}), providing any property paths
+  {@link Espresso.Subscribable#subscribe}), providing any property paths
   that you would like to be notified on.
 
     [kvo]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
 
-  @extends Espresso.PubSub
+  @extends Espresso.Subscribable
  */
-Espresso.KVO = mix(Espresso.PubSub).into(/** @lends Espresso.KVO# */{
+Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observable# */{
 
   /**
     Get a value on an object.

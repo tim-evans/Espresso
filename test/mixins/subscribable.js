@@ -1,21 +1,21 @@
 /*global context setup should assert Espresso mix*/
 
 var pubsub;
-context("Espresso.PubSub",
+context("Espresso.Subscribable",
   setup(function () {
-    pubsub = mix(Espresso.PubSub).into({});
+    pubsub = mix(Espresso.Subscribable).into({});
   }),
 
   should("be defined", function () {
-    assert.isTrue(Espresso.PubSub);
+    assert.isTrue(Espresso.Subscribable);
   }),
 
   should("be an Object", function () {
-    assert.kindOf("object", Espresso.PubSub);
+    assert.kindOf("object", Espresso.Subscribable);
   }),
 
   should("have a function named subscribe", function () {
-    assert.kindOf("function", Espresso.PubSub.subscribe);
+    assert.kindOf("function", Espresso.Subscribable.subscribe);
   }),
 
   context("subscribe",
@@ -87,7 +87,7 @@ context("Espresso.PubSub",
   ),
 
   should("have a function named unsubscribe", function () {
-    assert.kindOf("function", Espresso.PubSub.unsubscribe);
+    assert.kindOf("function", Espresso.Subscribable.unsubscribe);
   }),
 
   context("unsubscribe",
@@ -107,7 +107,7 @@ context("Espresso.PubSub",
 
   // Publish is tested in tandem with 'subscribe'.
   should("have a function named publish", function () {
-    assert.kindOf("function", Espresso.PubSub.publish);
+    assert.kindOf("function", Espresso.Subscribable.publish);
   }),
 
   context("unpublishedEvent",

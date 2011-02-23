@@ -31,18 +31,18 @@ In addition to these, there are decorators for the Publish-Subscribe mixin and t
 
 ### Publish-Subscribe
 
-The Publish-Subscribe mixin (PubSub) provides a general purpose mechanism for subscribing to an event and being notified when it occurs. Currently, the mixin provides the ability to configure how the events should be delivered to the function (asynchronously or synchronously). The default is asynchronous execution. The mixin also has a hook to handle any events that have no subscribers. This can be used to lazily catch errors, or may be used in a more proactive manner to do some clever metaprogramming. The power is in your hands.
+The Subscribable mixin provides a general purpose mechanism for subscribing to an event and being notified when it occurs. Currently, the mixin provides the ability to configure how the events should be delivered to the function (asynchronously or synchronously). The default is asynchronous execution. The mixin also has a hook to handle any events that have no subscribers. This can be used to lazily catch errors, or may be used in a more proactive manner to do some clever metaprogramming. The power is in your hands.
 
 
 ### Key-Value Observing
 
-The Key-Value Observing mixin (KVO) is inspired by SproutCore's Observable mixin, which was in turn inspired from Cocoa's KVO paradigm.
+The Observable mixin is inspired by SproutCore's Observable mixin, which was in turn inspired from Cocoa's KVO paradigm.
 
 For those of you not familiar with the KVO, here's a crash course. KVO describes when you register as an observer to changes on a property path. When that property changes, you get notified. Let's break that down a bit. A property path is simply an absolute path to an object like `coffee.isHot`. If `isHot` changes (from `true` to `false`), then you get notified. It's that simple.
 
 To get and set, you need to use `get` and `set` provided by the KVO mixin. These provide all the magic of Key-Value Observing. `get` and `set` provides functionality for computed properties and caching.
 
-The decorators for KVO are the following:
+The decorators for Observable objects are the following:
 
  - `property` marks the property as a computed property. You may do
     `get`s and `set`s on the property now.
@@ -51,7 +51,7 @@ The decorators for KVO are the following:
  - `idempotent` marks the property as idempotent. `set`ting the value
     more than once will not call the computed property again.
 
-The mixin as of now, is completely compliant with SproutCore's implementation, and will gracefully degrade to using it. Note that it doesn't work the other way around, as Espresso's KVO mixin is dependent on the PubSub mixin.
+The mixin as of now, is completely compliant with SproutCore's implementation, and will gracefully degrade to using it. Note that it doesn't work the other way around, as Espresso's Observable mixin is dependent on the Subscribable mixin.
 
 
 ### String Formatting

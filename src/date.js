@@ -72,7 +72,7 @@ mix(/** @lends Date# */{
       var result = [], i = 0;
 
       for (; i < spec.length; i += 1) {
-        switch (spec[i]) {
+        switch (spec.charAt(i)) {
         case 'a':
           result[result.length] = Date.days[this.getDay()].slice(0, 3);
           break;
@@ -138,7 +138,7 @@ mix(/** @lends Date# */{
           result[result.length] = this.getFullYear();
           break;
         default:
-          result[result.length] = spec[i];
+          result[result.length] = spec.charAt(i);
         }
       }
       return result.join('');

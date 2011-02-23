@@ -330,9 +330,10 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
    */
   without: function () {
     var without = Array.from(arguments);
+
     return this.reduce(function (complement, v) {
       if (without.indexOf(v) === -1) {
-        complement[complement.length] = v;
+        complement.push(v);
       }
       return complement;
     }, []);
@@ -349,8 +350,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       // => ['nada']
    */
   compact: function () {
-    var nil;
-    return this.without(null, nil);
+    return this.without(null, void(0));
   }
 
 }).into(Array.prototype);

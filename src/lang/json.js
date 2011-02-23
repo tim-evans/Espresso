@@ -17,10 +17,10 @@
  */
 (function () /** @lends JSON */{
 
-  JSON = mix({
+  Espresso.global["JSON"] = mix({
     stringify: stringify.inferior(),
     parse: parse.inferior()
-  }).into(JSON || {});
+  }).into(Espresso.global["JSON"] || {});
 
   var escapable, abbrev, stack, indent, gap, space,
       PropertyList, ReplacerFunction;

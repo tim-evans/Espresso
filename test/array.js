@@ -205,7 +205,7 @@ context("Array",
 
   context("compact",
     should("return a new Array without any undefined or null values", function () {
-      var nil, arr = [undefined, 'nada', null, 0, nil], res;
+      var nil = void(0), arr = [undefined, 'nada', null, 0, nil], res;
 
       res = arr.compact();
       assert.equal(res.length, 2);
@@ -213,12 +213,14 @@ context("Array",
       assert.equal(res[1], 0);
 
       undefined = 'foo';
-      arr = [undefined, 'nada', null, 0, nil];
-      res = arr.compact();
-      assert.equal(res.length, 3);
-      assert.equal(res[0], undefined);
-      assert.equal(res[1], 'nada');
-      assert.equal(res[2], 0);
+      if (typeof undefined !== "undefined") {
+        arr = [undefined, 'nada', null, 0, nil];
+        res = arr.compact();
+        assert.equal(res.length, 3);
+        assert.equal(res[0], undefined);
+        assert.equal(res[1], 'nada');
+        assert.equal(res[2], 0);
+      }
     })
   )
 

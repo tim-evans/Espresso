@@ -207,10 +207,28 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     @returns {Object} The value of the key.
    */
   unknownProperty: function (key, value) {
-    if (typeof value !== "undefined") {
-      this[key] = value;
+    if (arguments.length === 2) {
+      var parts = key.split('.'), part, root = this,
+          len = parts.length - 1, i = 0, o;
+      for (; i < len; i++) {
+        part = parts[i];
+        o = root.get ? root.get(part) : Espresso.getObjectFor(part, root);
+
+        // Don't mess with existing objects.
+        if (typeof o === "undefined") {
+          root[part] = {};
+          root = root[part];
+        } else {
+          root = o;
+        }
+      }
+
+      o = root.get ? root.get(parts[len]) : Espresso.getObjectFor(parts[len], root);
+      if (typeof o === "undefined") {
+        root[parts[len]] = value;
+      }
     }
-    return this[key];
+    return Espresso.getObjectFor(key, this);
   }
 
 });

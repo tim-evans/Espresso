@@ -48,7 +48,7 @@ assert.mixesIn = function (o) {
   var mixins = Array.from(arguments).slice(1);
   for (var i = 0, len = mixins.length; i < len; i++) {
     for (var k in mixins[i]) {
-      if (mixins[i].hasOwnProperty(k)) {
+      if (mixins[i].hasOwnProperty(k) && Espresso.isCallable(mixins[i])) {
         assert.isTrue(o[k]);
       }
     }

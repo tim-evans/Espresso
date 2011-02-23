@@ -155,7 +155,8 @@ context("JSON",
     }),
 
     should("stringify values inside Objects properly", function () {
-      assert.equal(JSON.stringify({ a: 0, b: 'string', c: false, d: null}), '{"a":0,"b":"string","c":false,"d":null}');
+      assert.equal(JSON.stringify({ a: 0, b: 'string', c: false, d: null}),
+                   '{"a":0,"b":"string","c":false,"d":null}');
     }),
 
     should("stringify nested Objects properly", function () {
@@ -184,26 +185,27 @@ context("JSON",
 
     should("take a string that provides more readability via spaces in the JSON", function () {
       ['foo', '   ', "\'", "\n"].forEach(function (v) {
-        assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, v),
-                     '{{\n{0}"a": 0,\n{0}"b": 1,\n{0}"c": 2\n}}'.fmt(v));
+        assert.matches(new RegExp('{{\n{0}"a":( )?0,\n{0}"b":( )?1,\n{0}"c":( )?2\n}}'.fmt(v)),
+                       JSON.stringify({ a: 0, b: 1, c: 2 }, null, v));
       });
     }),
 
     should("take a number that provides more readability via spaces in the JSON", function () {
-      assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, 0),
-                   '{"a":0,"b":1,"c":2}');
-      assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, -1),
-                   '{"a":0,"b":1,"c":2}');
+      // Opera puts newlines in for some reason...
+      assert.matches(/\{(\n)?"a"\:0,(\n)?"b"\:1,(\n)?"c"\:2(\n)?\}/,
+                     JSON.stringify({ a: 0, b: 1, c: 2 }, null, 0));
+      assert.matches(/\{(\n)?"a"\:0,(\n)?"b"\:1,(\n)?"c"\:2(\n)?\}/,
+                     JSON.stringify({ a: 0, b: 1, c: 2 }, null, -1));
       [1, 2, 3].forEach(function (v) {
-        assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, v),
-                     '{{\n{0}"a": 0,\n{0}"b": 1,\n{0}"c": 2\n}}'.fmt(" ".repeat(v)));
+        assert.matches(new RegExp('{{\n{0}"a":( )?0,\n{0}"b":( )?1,\n{0}"c":( )?2\n}}'.fmt(" ".repeat(v))),
+                       JSON.stringify({ a: 0, b: 1, c: 2 }, null, v));
       });
     }),
 
     should("have a max number of 10 spaces in the JSON", function () {
       [10, 11, 20, 30].forEach(function (v) {
-        assert.equal(JSON.stringify({ a: 0, b: 1, c: 2 }, null, 10),
-                     '{{\n{0}"a": 0,\n{0}"b": 1,\n{0}"c": 2\n}}'.fmt(" ".repeat(10)));
+        assert.matches(new RegExp('{{\n{0}"a":( )?0,\n{0}"b":( )?1,\n{0}"c":( )?2\n}}'.fmt(" ".repeat(10))),
+                       JSON.stringify({ a: 0, b: 1, c: 2 }, null, 10));
       });
     })
   )

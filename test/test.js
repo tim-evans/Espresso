@@ -11,6 +11,12 @@ assert.hasValue = function (o) {
   }
 };
 
+assert.matches = function (expected, actual) {
+  if (!actual.match(expected)) {
+    this.fail("Expected " + this._printObject(expected) + " to match " + this._printObject(actual));
+  }
+};
+
 assert.kindOf = function (type, o) {
   var typ = Object.prototype.toString.call(o),
       re = new RegExp(type, 'i');

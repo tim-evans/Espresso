@@ -1,5 +1,7 @@
 /*!*
-   .`.`.
+
+  ( ( (
+   ) ) )
   ._____.
  (|     | Espresso
    `---`    A pick-me-up for JavaScript libraries.

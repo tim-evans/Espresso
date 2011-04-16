@@ -169,6 +169,23 @@ Espresso = {
                 Espresso.hasValue(obj.apply) &&
                 callable.test(toString.call(obj.apply)));
     };
+  }()),
+
+  /** @function
+    @desc
+    Convert an iterable object into an Array.
+
+    This is used mostly for the arguments variable
+    in functions.
+
+    @param {Object} iterable An iterable object with a length and indexing.
+    @returns {Array} The object passed in as an Array.
+   */
+  toArray: (function () {
+    var slice = Array.prototype.slice;
+    return function (iterable) {
+      return slice.apply(iterable);
+    };
   }())
 };
 

@@ -9,23 +9,6 @@
  */
 mix(/** @scope Array */{
 
-  /** @function
-    @desc
-    Convert an iterable object into an Array.
-
-    This is used mostly for the arguments variable
-    in functions.
-
-    @param {Object} iterable An iterable object with a length and indexing.
-    @returns {Array} The object passed in as an Array.
-   */
-  from: (function () {
-    var slice = Array.prototype.slice;
-    return function (iterable) {
-      return slice.apply(iterable);
-    };
-  }()),
-
   /**
     Returns whether the object passed in is an Array or not.
 
@@ -329,7 +312,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @returns {Array} The array without the values given.
    */
   without: function () {
-    var without = Array.from(arguments);
+    var without = Espresso.toArray(arguments);
 
     return this.reduce(function (complement, v) {
       if (without.indexOf(v) === -1) {

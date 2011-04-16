@@ -30,7 +30,7 @@
         },
 
         scene: function () {
-          var args = Array.from(arguments);
+          var args = Espresso.toArray(arguments);
           args.forEach(function (line) {
             this.dialogue.apply(this, line);
           }, this);

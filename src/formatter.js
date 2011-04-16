@@ -182,7 +182,7 @@
 
   /** @ignore */  // Docs are above
   function fmt(template) {
-    var args = Array.from(arguments).slice(1),
+    var args = Espresso.toArray(arguments).slice(1),
         prev = '',
         buffer = [],
         result, idx, len = template.length, ch;

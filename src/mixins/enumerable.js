@@ -220,7 +220,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @returns {Object[]} The values for the keys provided (not.
    */
   extract: function () {
-    var keys = Array.from(arguments);
+    var keys = Espresso.toArray(arguments);
     
     return this.filter(function (v, k) {
       return keys.indexOf(k) !== -1;
@@ -263,7 +263,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       on the Enumerable.
    */
   contains: function (val) {
-    var args = Array.from(arguments);
+    var args = Espresso.toArray(arguments);
 
     if (args.length > 1) {
       return args.every(function (v, k) {

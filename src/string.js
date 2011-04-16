@@ -189,7 +189,7 @@ mix(/** @scope String.prototype */{
       // => ":-{"
    */
   fmt: function () {
-    var args = Array.from(arguments);
+    var args = Espresso.toArray(arguments);
     args.unshift(this.toString());
     return Espresso.fmt.apply(null, args);
   },

@@ -62,7 +62,7 @@ mix(/** @lends Function.prototype */{
   },
 
   /**
-    Around provides `super` functionality to a function.
+    Refine provides `super` functionality to a function.
     When the decorated function is called, it will have it's
     first argument bound to the function this one will override.
 
@@ -82,13 +82,13 @@ mix(/** @lends Function.prototype */{
 
     @returns {Function} The reciever.
    */
-  around: function () {
+  refine: function () {
     this._ = this._ || {};
 
     var empty = function () {};
 
     /** @ignore */
-    this._.around = function (template, value, key) {
+    this._.refine = function (template, value, key) {
       var base = template[key] || empty;
       if (!Espresso.isCallable(base)) {
         return value;

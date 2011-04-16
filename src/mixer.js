@@ -45,7 +45,7 @@
             original("Cardinal Ximinez",
                      "Nobody Expects the Spanish Inquisition!");
           }
-        }.around()
+        }.refine()
       }).into(screenplay);
 
       screenplay.scene(

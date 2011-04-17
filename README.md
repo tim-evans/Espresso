@@ -22,7 +22,7 @@ The no-frills decorators are the following:
 
  - `inferior`: tells `mix` *not* to override the base function if
     it exists.
- - `around`: the `super` mechanism of Espresso. The base function
+ - `refine`: the `super` mechanism of Espresso. The base function
     will be provided as the first argument to your function.
  - `alias`: tells `mix` to mixin the function under the additional
     names given.

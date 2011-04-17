@@ -96,6 +96,7 @@ context("Espresso.Observable",
     context("cacheable",
       setup(function () {
         callCount = 0;
+
         observable = mix(Espresso.Observable, {
           cacheableProperty: function (k, v) {
             callCount++;
@@ -106,7 +107,11 @@ context("Espresso.Observable",
 
           dependentCacheableProperty: function (k, v) {
             return "{}-{}".fmt(this.get('foo'), callCount++);
-          }.cacheable().property('foo')
+          }.cacheable().property('foo'),
+
+          otherDependentCacheableProperty: function (k, v) {
+            return "{}-{}".fmt(this.get('foo'), callCount++);
+          }.property('foo').cacheable()
         }).into({});
       }),
 
@@ -131,17 +136,20 @@ context("Espresso.Observable",
       should("invalidate the cache when a dependent key is `set`", function () {
         assert.equal(0, callCount);
         assert.equal('bar-0', observable.get('dependentCacheableProperty'));
-        assert.equal(1, callCount);
-        observable.set('foo', 'baz');
+        assert.equal('bar-1', observable.get('otherDependentCacheableProperty'));
         assert.equal(2, callCount);
-        assert.equal('baz-1', observable.get('dependentCacheableProperty'));
+        observable.set('foo', 'baz');
+        assert.equal(4, callCount);
+        assert.equal('baz-2', observable.get('dependentCacheableProperty'));
+        assert.equal('baz-3', observable.get('otherDependentCacheableProperty'));
       }),
 
       should("invalidate the cache before a `get` even takes place if the dependent key was `set`", function () {
         assert.equal(0, callCount);
         observable.set('foo', 'baz');
-        assert.equal(1, callCount);
+        assert.equal(2, callCount);
         assert.equal('baz-0', observable.get('dependentCacheableProperty'));
+        assert.equal('baz-1', observable.get('otherDependentCacheableProperty'));
       })
     )
   ),

@@ -27,7 +27,7 @@ assert.kindOf = function (type, o) {
 };
 
 assert.raises = function (err, lambda) {
-  var args = Array.from(arguments).slice(2),
+  var args = Espresso.toArray(arguments).slice(2),
       caught = false;
 
   try {
@@ -45,7 +45,7 @@ assert.raises = function (err, lambda) {
 };
 
 assert.mixesIn = function (o) {
-  var mixins = Array.from(arguments).slice(1);
+  var mixins = Espresso.toArray(arguments).slice(1);
   for (var i = 0, len = mixins.length; i < len; i++) {
     for (var k in mixins[i]) {
       if (mixins[i].hasOwnProperty(k) && Espresso.isCallable(mixins[i])) {

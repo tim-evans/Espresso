@@ -44,11 +44,11 @@ context("Function",
     })
   ),
 
-  should("have a function named 'around'", function () {
-    assert.kindOf("function", Function.prototype.around);
+  should("have a function named 'refine'", function () {
+    assert.kindOf("function", Function.prototype.refine);
   }),
 
-  context("around",
+  context("refine",
     should("prepend an argument to the argument list of the function when called", function () {
       var called = false;
       var o = mix({
@@ -57,7 +57,7 @@ context("Function",
           assert.equal(arguments.length, 3);
           assert.equal(arguments[1], 'a');
           assert.equal(arguments[2], 'b');
-        }.around()
+        }.refine()
       }).into({});
 
       o.lambda('a', 'b');
@@ -70,7 +70,7 @@ context("Function",
         var o = mix({
           lambda: function ($super) {
             $super('a', 'b');
-          }.around()
+          }.refine()
         }).into({
           lambda: function () {
             called = true;
@@ -90,7 +90,7 @@ context("Function",
           lambda: function ($super) {
             called = true;
             assert.kindOf("function", $super);
-          }.around()
+          }.refine()
         }).into({});
 
         o.lambda();
@@ -102,7 +102,7 @@ context("Function",
         var o = mix({
           lambda: function ($super) {
             $super('a', 'b');
-          }.around()
+          }.refine()
         }).into({
           lambda: function () {
             called = true;
@@ -122,7 +122,7 @@ context("Function",
           lambda: function ($super) {
             called = true;
             $super('a', 'b');
-          }.around()
+          }.refine()
         }).into({});
 
         o.lambda();
@@ -136,7 +136,7 @@ context("Function",
           lambda: function ($super) {
             assert.equal(self, this);
             $super();
-          }.around()
+          }.refine()
         }).into({
           lambda: function () {
             assert.equal(self, this);

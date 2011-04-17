@@ -77,5 +77,22 @@ context("Espresso",
       assert.isFalse(Espresso.isCallable({ apply: null,
                                            call: null }));
     })
+  ),
+
+  should("have a class function named 'toArray'", function () {
+    assert.kindOf('function', Espresso.toArray);
+  }),
+
+  context("toArray",
+    should("turn array-like objects (that have a length and can be indexed by []) into an Array", function () {
+      var pseudoArray = { length: 5, 0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e' },
+          arr = Espresso.toArray(pseudoArray);
+
+      assert.kindOf("array", arr);
+      assert.equal(pseudoArray.length, arr.length);
+      for (var i = 0; i < pseudoArray.length; i++) {
+        assert.equal(pseudoArray[i], arr[i]);
+      }
+    })
   )
 );

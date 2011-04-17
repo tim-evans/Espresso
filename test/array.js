@@ -2,23 +2,6 @@
 
 context("Array",
 
-  should("have a class function named 'from'", function () {
-    assert.kindOf('function', Array.from);
-  }),
-
-  context("from",
-    should("turn array-like objects (that have a length and can be indexed by []) into an Array", function () {
-      var pseudoArray = { length: 5, 0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e' },
-          arr = Array.from(pseudoArray);
-
-      assert.kindOf("array", arr);
-      assert.equal(pseudoArray.length, arr.length);
-      for (var i = 0; i < pseudoArray.length; i++) {
-        assert.equal(pseudoArray[i], arr[i]);
-      }
-    })
-  ),
-
   should("have a class function named 'isArray'", function () {
     assert.kindOf('function', Array.isArray);
   }),

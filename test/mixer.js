@@ -107,7 +107,7 @@ context("mix",
     assert.equal("espresso", espresso.valueOf());
   }),
 
-  should("provide super() functionality via around()", function () {
+  should("provide super() functionality via refine()", function () {
     var superman = mix({
       greet: function () {
         return "No, it's Superman!";
@@ -115,11 +115,11 @@ context("mix",
     }, {
       greet: function ($super) {
         return "It's a plane!" + "\n" + $super();
-      }.around()
+      }.refine()
     }, {
       greet: function ($super) {
         return "It's a bird!" + "\n" + $super();
-      }.around()
+      }.refine()
     }).into({});
 
     assert.equal("It's a bird!\nIt's a plane!\nNo, it's Superman!", superman.greet());

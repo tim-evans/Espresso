@@ -37,7 +37,7 @@
 <span class='line'> 30</span>         },
 <span class='line'> 31</span> 
 <span class='line'> 32</span>         scene: function () {
-<span class='line'> 33</span>           var args = Array.from(arguments);
+<span class='line'> 33</span>           var args = Espresso.toArray(arguments);
 <span class='line'> 34</span>           args.forEach(function (line) {
 <span class='line'> 35</span>             this.dialogue.apply(this, line);
 <span class='line'> 36</span>           }, this);
@@ -52,7 +52,7 @@
 <span class='line'> 45</span>             original("Cardinal Ximinez",
 <span class='line'> 46</span>                      "Nobody Expects the Spanish Inquisition!");
 <span class='line'> 47</span>           }
-<span class='line'> 48</span>         }.around()
+<span class='line'> 48</span>         }.refine()
 <span class='line'> 49</span>       }).into(screenplay);
 <span class='line'> 50</span> 
 <span class='line'> 51</span>       screenplay.scene(

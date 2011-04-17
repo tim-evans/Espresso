@@ -1,5 +1,7 @@
 /*!*
-   .`.`.
+
+  ( ( (
+   ) ) )
   ._____.
  (|     | Espresso
    `---`    A pick-me-up for JavaScript libraries.
@@ -51,7 +53,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.8.4',
+  VERSION: '1.1.0',
 
   /**
     The global variable.
@@ -196,6 +198,23 @@ Espresso = {
                 Espresso.hasValue(obj.apply) &&
                 callable.test(toString.call(obj.apply)));
     };
+  }()),
+
+  /** @function
+    @desc
+    Convert an iterable object into an Array.
+
+    This is used mostly for the arguments variable
+    in functions.
+
+    @param {Object} iterable An iterable object with a length and indexing.
+    @returns {Array} The object passed in as an Array.
+   */
+  toArray: (function () {
+    var slice = Array.prototype.slice;
+    return function (iterable) {
+      return slice.apply(iterable);
+    };
   }())
 };
 
@@ -233,7 +252,7 @@ Espresso.global.Espresso = Espresso;
         },
 
         scene: function () {
-          var args = Array.from(arguments);
+          var args = Espresso.toArray(arguments);
           args.forEach(function (line) {
             this.dialogue.apply(this, line);
           }, this);
@@ -248,7 +267,7 @@ Espresso.global.Espresso = Espresso;
             original("Cardinal Ximinez",
                      "Nobody Expects the Spanish Inquisition!");
           }
-        }.around()
+        }.refine()
       }).into(screenplay);
 
       screenplay.scene(
@@ -365,7 +384,7 @@ mix(/** @lends Function.prototype */{
   alias: function () {
     this._ = this._ || {};
 
-    var aliases = Array.from(arguments),
+    var aliases = Espresso.toArray(arguments),
         idx = aliases.length, mixin;
 
     /** @ignore */
@@ -383,7 +402,7 @@ mix(/** @lends Function.prototype */{
   },
 
   /**
-    Around provides `super` functionality to a function.
+    Refine provides `super` functionality to a function.
     When the decorated function is called, it will have it's
     first argument bound to the function this one will override.
 
@@ -403,13 +422,13 @@ mix(/** @lends Function.prototype */{
 
     @returns {Function} The reciever.
    */
-  around: function () {
+  refine: function () {
     this._ = this._ || {};
 
     var empty = function () {};
 
     /** @ignore */
-    this._.around = function (template, value, key) {
+    this._.refine = function (template, value, key) {
       var base = template[key] || empty;
       if (!Espresso.isCallable(base)) {
         return value;
@@ -417,7 +436,7 @@ mix(/** @lends Function.prototype */{
 
       /** @ignore */
       var lambda = function () {
-        return value.apply(this, [base.bind(this)].concat(Array.from(arguments)));
+        return value.apply(this, [base.bind(this)].concat(Espresso.toArray(arguments)));
       };
 
       // Copy over properties on `value`
@@ -557,7 +576,7 @@ mix(/** @lends Function.prototype */{
     // 3. Let A be a new (possibly empty) internal list of
     //    all argument values provided after self
     //    (arg1, arg2, etc), in order
-    A = Array.from(arguments).slice(1);
+    A = Espresso.toArray(arguments).slice(1);
 
     var bound = function () {
       
@@ -570,7 +589,7 @@ mix(/** @lends Function.prototype */{
         Type.prototype = Target.prototype;
         that = new Type();
 
-        Target.apply(self, A.concat(Array.from(arguments)));
+        Target.apply(self, A.concat(Espresso.toArray(arguments)));
         return that;
       } else {
         // 15.3.4.5.1 [[Call]]
@@ -580,7 +599,7 @@ mix(/** @lends Function.prototype */{
         // 1. Let boundArgs be the value of F's [[BoundArgs]] internal property.
         // 2. Let boundThis be the value of F's [[BoundThis]] internal property.
         // 3. Let target be the value of F's [[TargetFunction]] internal property.
-        return Target.apply(self, A.concat(Array.from(arguments)));
+        return Target.apply(self, A.concat(Espresso.toArray(arguments)));
       }
     };
     return bound;
@@ -597,7 +616,7 @@ mix(/** @lends Function.prototype */{
     atomic calls as follows:
 
         var mult = function () {
-          return Array.from(arguments).reduce(function (E, x) { return E * x; }, 1);
+          return Espresso.toArray(arguments).reduce(function (E, x) { return E * x; }, 1);
         };
 
         alert(mult.curry(2, 2)());
@@ -606,7 +625,7 @@ mix(/** @lends Function.prototype */{
     Or specify a function that is a subset of the first:
 
         var add = function () {
-          return Array.from(arguments).reduce(function (E, x) { return E + x; }, 0);
+          return Espresso.toArray(arguments).reduce(function (E, x) { return E + x; }, 0);
         };
 
         var inc = add.curry(1);
@@ -631,10 +650,10 @@ mix(/** @lends Function.prototype */{
 
     // 3. Let A be a new (possibly empty) internal list of
     //    all argument values (arg1, arg2, etc), in order
-    A = Array.from(arguments);
+    A = Espresso.toArray(arguments);
 
     return function () {
-      return Target.apply(this, A.concat(Array.from(arguments)));
+      return Target.apply(this, A.concat(Espresso.toArray(arguments)));
     };
   }
 
@@ -861,7 +880,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @returns {Object[]} The values for the keys provided (not.
    */
   extract: function () {
-    var keys = Array.from(arguments);
+    var keys = Espresso.toArray(arguments);
     
     return this.filter(function (v, k) {
       return keys.indexOf(k) !== -1;
@@ -904,7 +923,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       on the Enumerable.
    */
   contains: function (val) {
-    var args = Array.from(arguments);
+    var args = Espresso.toArray(arguments);
 
     if (args.length > 1) {
       return args.every(function (v, k) {
@@ -1304,10 +1323,28 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     @returns {Object} The value of the key.
    */
   unknownProperty: function (key, value) {
-    if (typeof value !== "undefined") {
-      this[key] = value;
+    if (arguments.length === 2) {
+      var parts = key.split('.'), part, root = this,
+          len = parts.length - 1, i = 0, o;
+      for (; i < len; i++) {
+        part = parts[i];
+        o = root.get ? root.get(part) : Espresso.getObjectFor(part, root);
+
+        // Don't mess with existing objects.
+        if (typeof o === "undefined") {
+          root[part] = {};
+          root = root[part];
+        } else {
+          root = o;
+        }
+      }
+
+      o = root.get ? root.get(parts[len]) : Espresso.getObjectFor(parts[len], root);
+      if (typeof o === "undefined") {
+        root[parts[len]] = value;
+      }
     }
-    return this[key];
+    return Espresso.getObjectFor(key, this);
   }
 
 });
@@ -1321,23 +1358,6 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
   @extends Espresso.Enumerable
  */
 mix(/** @scope Array */{
-
-  /** @function
-    @desc
-    Convert an iterable object into an Array.
-
-    This is used mostly for the arguments variable
-    in functions.
-
-    @param {Object} iterable An iterable object with a length and indexing.
-    @returns {Array} The object passed in as an Array.
-   */
-  from: (function () {
-    var slice = Array.prototype.slice;
-    return function (iterable) {
-      return slice.apply(iterable);
-    };
-  }()),
 
   /**
     Returns whether the object passed in is an Array or not.
@@ -1642,7 +1662,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @returns {Array} The array without the values given.
    */
   without: function () {
-    var without = Array.from(arguments);
+    var without = Espresso.toArray(arguments);
 
     return this.reduce(function (complement, v) {
       if (without.indexOf(v) === -1) {
@@ -1858,7 +1878,7 @@ mix(/** @scope String.prototype */{
       // => ":-{"
    */
   fmt: function () {
-    var args = Array.from(arguments);
+    var args = Espresso.toArray(arguments);
     args.unshift(this.toString());
     return Espresso.fmt.apply(null, args);
   },
@@ -2103,7 +2123,7 @@ mix(/** @scope String.prototype */{
 
   /** @ignore */  // Docs are above
   function fmt(template) {
-    var args = Array.from(arguments).slice(1),
+    var args = Espresso.toArray(arguments).slice(1),
         prev = '',
         buffer = [],
         result, idx, len = template.length, ch;

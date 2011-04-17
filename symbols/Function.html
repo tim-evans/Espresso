@@ -85,11 +85,6 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#around">around</a></b>()</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Function.html#bind">bind</a></b>(thisArg)</td>
             </tr>
 					
@@ -116,6 +111,11 @@ function endResize(e) {
 						<tr class="nameDescription">
               <td><span class="fixedFont">
               + <b><a href="../symbols/Function.html#property">property</a></b>(dependentKeys)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Function.html#refine">refine</a></b>()</td>
             </tr>
 					
           </table>
@@ -163,60 +163,6 @@ altered in place, then all will be.</p></dd>
 								<dd>The aliases this function has.</dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="around"> </a>
-          <div>
-             <a name="around"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>around</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Around provides <code>super</code> functionality to a function.
-When the decorated function is called, it will have it's
-first argument bound to the function this one will override.</p>
-
-<p>If this function will not override anything, then the first
-argument will be an empty function that returns nothing.</p>
-
-<p>The <code>super</code> function will always be in the current scope of
-the function being called at the moment. Since the scope is
-maintained for you, you <strong>must</strong> make sure that scope that the
-first in the chain is what you want all down the chain. This
-is the typical behaviour of <code>super</code> in other languages;
-therefore it is done for you, and forces you into that
-situation.</p>
-
-<p>NOTE: If you try to rebind the property using
-      <a href="../symbols/Function.html#bind">Function#bind</a>, it will <em>not</em> work.</p></dd>
-               
-						   
-             </div>
-
 						
 						
 						
@@ -361,13 +307,13 @@ that's being curried.</p>
 atomic calls as follows:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;mult&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Array.from(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;*&nbsp;x;&nbsp;},&nbsp;<span class="string">1</span>);<br/>};<br/><br/>alert(mult.curry(<span class="string">2</span>,&nbsp;<span class="string">2</span>)());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;4</code>
+<code><span class="keyword">var</span>&nbsp;mult&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Espresso.toArray(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;*&nbsp;x;&nbsp;},&nbsp;<span class="string">1</span>);<br/>};<br/><br/>alert(mult.curry(<span class="string">2</span>,&nbsp;<span class="string">2</span>)());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;4</code>
 </div>
 
 <p>Or specify a function that is a subset of the first:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;add&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Array.from(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;+&nbsp;x;&nbsp;},&nbsp;<span class="string">0</span>);<br/>};<br/><br/><span class="keyword">var</span>&nbsp;inc&nbsp;=&nbsp;add.curry(<span class="string">1</span>);<br/><br/>alert(inc(<span class="string">5</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;6</code>
+<code><span class="keyword">var</span>&nbsp;add&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Espresso.toArray(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;+&nbsp;x;&nbsp;},&nbsp;<span class="string">0</span>);<br/>};<br/><br/><span class="keyword">var</span>&nbsp;inc&nbsp;=&nbsp;add.curry(<span class="string">1</span>);<br/><br/>alert(inc(<span class="string">5</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;6</code>
 </div>
 
 <p>In layman's terms, <code>curry</code> will prepopulate arguments for a function.</p></dd>
@@ -557,6 +503,60 @@ You may now use the function for <code>get</code> and <code>set</code>.</p></dd>
 					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
+					<hr />
+				
+					<a name="refine"> </a>
+          <div>
+             <a name="refine"> </a>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>refine</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Refine provides <code>super</code> functionality to a function.
+When the decorated function is called, it will have it's
+first argument bound to the function this one will override.</p>
+
+<p>If this function will not override anything, then the first
+argument will be an empty function that returns nothing.</p>
+
+<p>The <code>super</code> function will always be in the current scope of
+the function being called at the moment. Since the scope is
+maintained for you, you <strong>must</strong> make sure that scope that the
+first in the chain is what you want all down the chain. This
+is the typical behaviour of <code>super</code> in other languages;
+therefore it is done for you, and forces you into that
+situation.</p>
+
+<p>NOTE: If you try to rebind the property using
+      <a href="../symbols/Function.html#bind">Function#bind</a>, it will <em>not</em> work.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
+				 
+					
 					
 				
 			
@@ -571,7 +571,7 @@ You may now use the function for <code>get</code> and <code>set</code>.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Wed Feb 23 2011 00:17:05 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Apr 17 2011 17:09:48 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

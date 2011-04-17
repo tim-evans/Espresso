@@ -31,7 +31,7 @@
 <span class='line'> 24</span>     The version string.
 <span class='line'> 25</span>     @type String
 <span class='line'> 26</span>    */</span><span class="WHIT">
-<span class='line'> 27</span> </span><span class="WHIT">  </span><span class="NAME">VERSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'0.8.4'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">  </span><span class="NAME">VERSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'1.1.0'</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 28</span> 
 <span class='line'> 29</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'> 30</span>     The global variable.
@@ -176,9 +176,26 @@
 <span class='line'>169</span> </span><span class="WHIT">                </span><span class="NAME">Espresso.hasValue</span><span class="PUNC">(</span><span class="NAME">obj.apply</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
 <span class='line'>170</span> </span><span class="WHIT">                </span><span class="NAME">callable.test</span><span class="PUNC">(</span><span class="NAME">toString.call</span><span class="PUNC">(</span><span class="NAME">obj.apply</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>171</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>172</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>173</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>174</span> 
-<span class='line'>175</span> </span><span class="COMM">// Apply it at the global scope</span><span class="WHIT">
-<span class='line'>176</span> </span><span class="NAME">Espresso.global.Espresso</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>177</span> </span></pre></body></html>
+<span class='line'>172</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>173</span> 
+<span class='line'>174</span> </span><span class="WHIT">  </span><span class="COMM">/** @function
+<span class='line'>175</span>     @desc
+<span class='line'>176</span>     Convert an iterable object into an Array.
+<span class='line'>177</span> 
+<span class='line'>178</span>     This is used mostly for the arguments variable
+<span class='line'>179</span>     in functions.
+<span class='line'>180</span> 
+<span class='line'>181</span>     @param {Object} iterable An iterable object with a length and indexing.
+<span class='line'>182</span>     @returns {Array} The object passed in as an Array.
+<span class='line'>183</span>    */</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">  </span><span class="NAME">toArray</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">slice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Array.prototype.slice</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">iterable</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">slice.apply</span><span class="PUNC">(</span><span class="NAME">iterable</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>191</span> 
+<span class='line'>192</span> </span><span class="COMM">// Apply it at the global scope</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="NAME">Espresso.global.Espresso</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>194</span> </span></pre></body></html>

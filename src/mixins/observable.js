@@ -82,6 +82,12 @@
 Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observable# */{
 
   /**
+    Walk like a duck.
+    @type Boolean
+   */
+  isObservable: true,
+
+  /**
     Get a value on an object.
 
     Use this instead of subscript (`[]`) or dot notation

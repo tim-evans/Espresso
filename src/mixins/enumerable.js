@@ -9,6 +9,12 @@
  */
 Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
+  /**
+    Walk like a duck.
+    @type Boolean
+   */
+  isEnumerable: true,
+
   /** @function
     @desc
     Iterates over the items on the Enumerable.

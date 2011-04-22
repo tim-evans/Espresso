@@ -33,6 +33,12 @@
 
 Espresso.Subscribable = /** @lends Espresso.Subscribable# */{
 
+  /**
+    Walk like a duck.
+    @type Boolean
+   */
+  isSubscribable: true,
+
   /** @private */
   _subscriptions: null,
 

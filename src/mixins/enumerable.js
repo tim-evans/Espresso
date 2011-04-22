@@ -55,7 +55,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     this.forEach(function (k, v) {
@@ -95,8 +95,8 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
         return range.create(1, n).reduce(multiply);
       }
 
-      alert("5! is {}".fmt(factorial(5)));
-      alert("120! is {}".fmt(factorial(120)));
+      alert("5! is {}".format(factorial(5)));
+      alert("120! is {}".format(factorial(120)));
    */
   reduce: function (lambda, seed) {
     var shouldSeed = (arguments.length === 1),
@@ -104,7 +104,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     this.forEach(function (v, k) {
@@ -166,7 +166,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
    */
   filter: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     return this.reduce(function (seive, v, k, t) {
@@ -190,7 +190,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   */
   every: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     return this.reduce(function (every, v, k, t) {
@@ -211,7 +211,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
    */
   some: function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     return this.reduce(function (every, v, k, t) {
@@ -248,7 +248,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
    */
   find: function (lambda, ifnone) {
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     var finished = false;

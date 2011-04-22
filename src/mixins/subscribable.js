@@ -15,7 +15,7 @@
 
       add: function (sailor, sync) {
         this.sailors.push(sailor);
-        alert("Added {name}".fmt(sailor));
+        alert("Added {name}".format(sailor));
         this.publish("add", sailor);
        this.subscribe("add", sailor.ahoy.bind(sailor), { synchronous: !!sync });
       }
@@ -54,7 +54,7 @@ Espresso.Subscribable = /** @lends Espresso.Subscribable# */{
    */
   subscribe: function (event, handler, options) {
     if (!Espresso.isCallable(handler)) {
-      throw new TypeError("{} is not callable.".fmt(handler));
+      throw new TypeError("{} is not callable.".format(handler));
     }
 
     var subscriptions = this._subscriptions || {};

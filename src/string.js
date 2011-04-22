@@ -238,15 +238,6 @@ mix(/** @scope String.prototype */{
     }
 
     return fill.repeat(before) + value + fill.repeat(after);
-  },
-
-  /**
-    Shim for `toJSON`. Returns the `valueOf` the String.
-
-    @returns {String} This.
-   */
-  toJSON: function (key) {
-    return this.valueOf();
-  }.inferior()
+  }
 
 }).into(String.prototype);

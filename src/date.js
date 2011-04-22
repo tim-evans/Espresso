@@ -18,17 +18,6 @@ mix(/** @lends Date# */{
     );
   }.inferior(),
 
-  /**
-    Shim for `toJSON` for Date.
-
-    @param {Object} [key] Optional key argument.
-    @returns {String} The date as an ISO Formatted string.
-    @see 15.9.5.44 Date.prototype.toJSON
-   */
-  toJSON: function (key) {
-    return isFinite(this.valueOf()) ? this.toISOString(): null;
-  }.inferior(),
-
   /** @function
     @desc
     Date Formatting support (for use with `fmt`).

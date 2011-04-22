@@ -3,15 +3,6 @@
 mix(/** @lends Number# */{
 
   /**
-    Shim for `toJSON`. Returns the `valueOf` the Number.
-
-    @returns {String} This.
-   */
-  toJSON: function (key) {
-    return this.valueOf();
-  }.inferior(),
-
-  /**
     Formatter for `Number`s.
 
     Don't call this function- It's here for `Espresso.fmt`

@@ -162,16 +162,5 @@ context("String",
 
     // Test maximum width
     formatting("'{:.2}' with '\"hello\"' should return 'he'")
-  ),
-
-  // Tested with Espresso.Formatter
-  should("have an instance function named 'toJSON'", function () {
-    assert.kindOf('function', "".toJSON);
-  }),
-
-  context("toJSON",
-    should("return the value of the string", function () {
-      assert.equal("abc".toJSON(), "abc".valueOf());
-    })
   )
 );

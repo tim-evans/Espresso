@@ -27,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -80,7 +80,7 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#__fmt__">__fmt__</a></b>(spec)</td>
+              + <b><a href="../symbols/String.html#__format__">__format__</a></b>(spec)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -100,22 +100,17 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#fmt">fmt</a></b>()</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/String.html#forEach">forEach</a></b>(callback, that)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#repeat">repeat</a></b>(n, separator)</td>
+              + <b><a href="../symbols/String.html#format">format</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#toJSON">toJSON</a></b>(key)</td>
+              + <b><a href="../symbols/String.html#repeat">repeat</a></b>(n, separator)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -143,16 +138,16 @@ function endResize(e) {
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__fmt__"> </a>
+					<a name="__format__"> </a>
           <div>
-             <a name="__fmt__"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__fmt__</b>(spec)</h3>
+             <a name="__format__"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__format__</b>(spec)</h3>
 
              <div class="description">
                
   				       <dt><p>Formatter for <code>String</code>s.</p>
 
-<p>Don't call this function- It's here for <code>Espresso.fmt</code>
+<p>Don't call this function- It's here for <code>Espresso.format</code>
 to take care of buisiness for you.</p></dd>
                
 						   
@@ -242,7 +237,7 @@ to take care of buisiness for you.</p></dd>
 					<a name="contains"> </a>
           <div>
              <a name="contains"> </a>
-             <h3><span class="light">(<a href="../symbols/Boolean.html">Boolean</a>)</span> <b>contains</b>(str)</h3>
+             <h3><span class="light">(Boolean)</span> <b>contains</b>(str)</h3>
 
              <div class="description">
                
@@ -274,7 +269,7 @@ more intuitive.</p></dd>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> true if contained in the other string.</dt>
+								<dt><span class="light fixedFont">(Boolean)</span> true if contained in the other string.</dt>
 							
 							</dl>
 						
@@ -329,77 +324,6 @@ escaped form.</p></dd>
 					
 
 					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="fmt"> </a>
-          <div>
-             <a name="fmt"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>fmt</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Format formats a string in the vein of Python's format,
-Ruby #{templates}, and .NET String.Format.</p>
-
-<p>To write { or } in your Strings, just double them, and
-you'll end up with a single one.</p>
-
-<p>If you have more than one argument, then you can reference
-by the argument number (which is optional on a single argument).</p>
-
-<p>If you want to tie into this, and want to specify your own
-format specifier, override <strong>fmt</strong> on your object, and it will
-pass you in the specifier (after the colon). You return the
-string it should look like, and that's it!</p>
-
-<p>For an example of an formatting extension, look at the Date mix.
-It implements the Ruby/Python formatting specification for Dates.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The formatted string.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code>alert(<span class="string">"b{0}{0}a"</span>.fmt(<span class="string">'an'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"banana"</code>
-</div>
-					
-					<div class="code">
-<code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.2}"</span>.fmt({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
-</div>
-					
-					<div class="code">
-<code>alert(<span class="string">"The&nbsp;{thing.name}&nbsp;is&nbsp;{thing.desc}."</span>.fmt({<br/>&nbsp;&nbsp;thing:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;desc:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code>
-</div>
-					
-					<div class="code">
-<code>alert(<span class="string">":-{{"</span>.fmt());&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;Double&nbsp;{{&nbsp;or&nbsp;}}&nbsp;to&nbsp;escape&nbsp;it.<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;":-{"</code>
-</div>
-					
 					
 				 
 					   <br />
@@ -469,6 +393,77 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 					
 					<hr />
 				
+					<a name="format"> </a>
+          <div>
+             <a name="format"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>format</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Format formats a string in the vein of Python's format,
+Ruby #{templates}, and .NET String.Format.</p>
+
+<p>To write { or } in your Strings, just double them, and
+you'll end up with a single one.</p>
+
+<p>If you have more than one argument, then you can reference
+by the argument number (which is optional on a single argument).</p>
+
+<p>If you want to tie into this, and want to specify your own
+format specifier, override <strong>format</strong> on your object, and it will
+pass you in the specifier (after the colon). You return the
+string it should look like, and that's it!</p>
+
+<p>For an example of an formatting extension, look at the Date mix.
+It implements the Ruby/Python formatting specification for Dates.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The formatted string.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+					
+					<div class="code">
+<code>alert(<span class="string">"b{0}{0}a"</span>.format(<span class="string">'an'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"banana"</code>
+</div>
+					
+					<div class="code">
+<code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.2}"</span>.format({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
+</div>
+					
+					<div class="code">
+<code>alert(<span class="string">"The&nbsp;{thing.name}&nbsp;is&nbsp;{thing.desc}."</span>.format({<br/>&nbsp;&nbsp;thing:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;desc:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code>
+</div>
+					
+					<div class="code">
+<code>alert(<span class="string">":-{{"</span>.format());&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;Double&nbsp;{{&nbsp;or&nbsp;}}&nbsp;to&nbsp;escape&nbsp;it.<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;":-{"</code>
+</div>
+					
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
+					
+					<hr />
+				
 					<a name="repeat"> </a>
           <div>
              <a name="repeat"> </a>
@@ -522,55 +517,6 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 <code><span class="keyword">var</span>&nbsp;tourettes&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(word)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;out&nbsp;=&nbsp;<span class="string">""</span>;<br/>&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>,&nbsp;len&nbsp;=&nbsp;word.length;&nbsp;i&nbsp;&lt;&nbsp;len;&nbsp;i++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;+=&nbsp;word.charAt(i).repeat(Math.floor(Math.random()&nbsp;*&nbsp;<span class="string">3</span>)&nbsp;+&nbsp;<span class="string">1</span>);<br/>&nbsp;&nbsp;}<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;out;<br/>};<br/><br/>alert(tourettes(<span class="string">"espresso"</span>));</code>
 </div>
 					
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="toJSON"> </a>
-          <div>
-             <a name="toJSON"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toJSON</b>(key)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Shim for <code>toJSON</code>. Returns the <code>valueOf</code> the String.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>key</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> This.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
 					
 				 
 					   <br />
@@ -675,7 +621,7 @@ forms.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Apr 17 2011 17:09:49 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

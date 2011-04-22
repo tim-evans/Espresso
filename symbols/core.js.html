@@ -31,7 +31,7 @@
 <span class='line'> 24</span>     The version string.
 <span class='line'> 25</span>     @type String
 <span class='line'> 26</span>    */</span><span class="WHIT">
-<span class='line'> 27</span> </span><span class="WHIT">  </span><span class="NAME">VERSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'1.1.0'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">  </span><span class="NAME">VERSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'1.2.0'</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 28</span> 
 <span class='line'> 29</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'> 30</span>     The global variable.
@@ -145,7 +145,7 @@
 <span class='line'>138</span>       // -> true
 <span class='line'>139</span>    */</span><span class="WHIT">
 <span class='line'>140</span> </span><span class="WHIT">  </span><span class="NAME">hasValue</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>141</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">o</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">o</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">o</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>142</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>143</span> 
 <span class='line'>144</span> </span><span class="WHIT">  </span><span class="COMM">/** @function
@@ -188,7 +188,7 @@
 <span class='line'>181</span>     @param {Object} iterable An iterable object with a length and indexing.
 <span class='line'>182</span>     @returns {Array} The object passed in as an Array.
 <span class='line'>183</span>    */</span><span class="WHIT">
-<span class='line'>184</span> </span><span class="WHIT">  </span><span class="NAME">toArray</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">  </span><span class="NAME">A</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>185</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">slice</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Array.prototype.slice</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>186</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">iterable</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>187</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">slice.apply</span><span class="PUNC">(</span><span class="NAME">iterable</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">

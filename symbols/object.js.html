@@ -11,14 +11,14 @@
 <span class='line'>  4</span> 
 <span class='line'>  5</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'>  6</span>     Formats an Object by coercing the Object to a
-<span class='line'>  7</span>     String and calling `__fmt__` on the string with
+<span class='line'>  7</span>     String and calling `__format__` on the string with
 <span class='line'>  8</span>     the format specifier passed in.
 <span class='line'>  9</span> 
 <span class='line'> 10</span>     @param {String} spec The string specification to format the object.
 <span class='line'> 11</span>     @returns {String} The object as a formatted string according to the specification.
 <span class='line'> 12</span>    */</span><span class="WHIT">
-<span class='line'> 13</span> </span><span class="WHIT">  </span><span class="NAME">__fmt__</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 14</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">String</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">__fmt__</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">  </span><span class="NAME">__format__</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">String</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">__format__</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Object.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -37,7 +37,7 @@
 <span class='line'> 30</span> 
 <span class='line'> 31</span> </span><span class="WHIT">    </span><span class="COMM">// 1. If the Type(O) is not Object, throw a TypeError exception.</span><span class="WHIT">
 <span class='line'> 32</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">O</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="STRN">"object"</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 33</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"{} is not an object."</span><span class="PUNC">.</span><span class="NAME">fmt</span><span class="PUNC">(</span><span class="NAME">O</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"{} is not an object."</span><span class="PUNC">.</span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">O</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 34</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 35</span> 
 <span class='line'> 36</span> </span><span class="WHIT">    </span><span class="COMM">// 5. For each own enumerable property of O whose name String is P</span><span class="WHIT">

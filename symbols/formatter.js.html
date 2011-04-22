@@ -24,26 +24,26 @@
 <span class='line'> 17</span>       absolutely name the arguments via the number in the argument
 <span class='line'> 18</span>       list. This means that:
 <span class='line'> 19</span> 
-<span class='line'> 20</span>           alert(Espresso.fmt("Hello, {name}!", { name: "world" }));
+<span class='line'> 20</span>           alert(Espresso.format("Hello, {name}!", { name: "world" }));
 <span class='line'> 21</span> 
 <span class='line'> 22</span>       is equivalent to:
 <span class='line'> 23</span> 
-<span class='line'> 24</span>           alert(Espresso.fmt("Hello, {0.name}!", { name: "world" }));
+<span class='line'> 24</span>           alert(Espresso.format("Hello, {0.name}!", { name: "world" }));
 <span class='line'> 25</span> 
 <span class='line'> 26</span>       For more than one argument you must provide the position of your
 <span class='line'> 27</span>       argument.
 <span class='line'> 28</span> 
-<span class='line'> 29</span>           alert(Espresso.fmt("{0}, {1}!", "hello", "world"));
+<span class='line'> 29</span>           alert(Espresso.format("{0}, {1}!", "hello", "world"));
 <span class='line'> 30</span> 
 <span class='line'> 31</span>       If your arguments and formatter are "as is"- that is, in order,
 <span class='line'> 32</span>       and flat objects as you intend them to be, you can write your
 <span class='line'> 33</span>       template string like so:
 <span class='line'> 34</span> 
-<span class='line'> 35</span>           alert(Espresso.fmt("{}, {}!", "hello", "world"));
+<span class='line'> 35</span>           alert(Espresso.format("{}, {}!", "hello", "world"));
 <span class='line'> 36</span> 
 <span class='line'> 37</span>       To use the literals `{` and `}`, simply double them, like the following:
 <span class='line'> 38</span> 
-<span class='line'> 39</span>           alert(Espresso.fmt("{lang} uses the {{variable}} format too!", {
+<span class='line'> 39</span>           alert(Espresso.format("{lang} uses the {{variable}} format too!", {
 <span class='line'> 40</span>              lang: "Python", variable: "(not used)"
 <span class='line'> 41</span>           }));
 <span class='line'> 42</span>           // => "Python uses the {variable} format too!"
@@ -51,16 +51,16 @@
 <span class='line'> 44</span>       Check out the examples given for some ideas on how to use it.
 <span class='line'> 45</span> 
 <span class='line'> 46</span>       For developers wishing to have their own custom handler for the
-<span class='line'> 47</span>       formatting specifiers, you should write your own  `__fmt__` function
+<span class='line'> 47</span>       formatting specifiers, you should write your own  `__format__` function
 <span class='line'> 48</span>       that takes the specifier in as an argument and returns the formatted
 <span class='line'> 49</span>       object as a string. All formatters are implemented using this pattern,
-<span class='line'> 50</span>       with a fallback to Object's `__fmt__`, which turns said object into
-<span class='line'> 51</span>       a string, then calls `__fmt__` on a string.
+<span class='line'> 50</span>       with a fallback to Object's `__format__`, which turns said object into
+<span class='line'> 51</span>       a string, then calls `__format__` on a string.
 <span class='line'> 52</span> 
 <span class='line'> 53</span>       Consider the following example:
 <span class='line'> 54</span> 
 <span class='line'> 55</span>           Localizer = mix({
-<span class='line'> 56</span>             __fmt__: function (spec) {
+<span class='line'> 56</span>             __format__: function (spec) {
 <span class='line'> 57</span>               return this[spec];
 <span class='line'> 58</span>             }
 <span class='line'> 59</span>           }).into({});
@@ -71,13 +71,13 @@
 <span class='line'> 64</span>             ja: 'こんにちは'
 <span class='line'> 65</span>           });
 <span class='line'> 66</span> 
-<span class='line'> 67</span>           alert(Espresso.fmt("{:en}", _hello));
+<span class='line'> 67</span>           alert(Espresso.format("{:en}", _hello));
 <span class='line'> 68</span>           // => "hello"
 <span class='line'> 69</span> 
-<span class='line'> 70</span>           alert(Espresso.fmt("{:fr}", _hello));
+<span class='line'> 70</span>           alert(Espresso.format("{:fr}", _hello));
 <span class='line'> 71</span>           // => "bonjour"
 <span class='line'> 72</span> 
-<span class='line'> 73</span>           alert(Espresso.fmt("{:ja}", _hello));
+<span class='line'> 73</span>           alert(Espresso.format("{:ja}", _hello));
 <span class='line'> 74</span>           // => "こんにちは"
 <span class='line'> 75</span> 
 <span class='line'> 76</span>         [pep]: http://www.python.org/dev/peps/pep-3101/
@@ -85,7 +85,7 @@
 <span class='line'> 78</span>       @param {String} template The template string to format the arguments with.
 <span class='line'> 79</span>       @returns {String} The template formatted with the given leftover arguments.
 <span class='line'> 80</span>      */</span><span class="WHIT">
-<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="NAME">fmt</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">fmt</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="NAME">format</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 82</span> 
 <span class='line'> 83</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'> 84</span>       The specifier regular expression.
@@ -184,12 +184,12 @@
 <span class='line'>177</span> 
 <span class='line'>178</span>       @type RegExp
 <span class='line'>179</span>      */</span><span class="WHIT">
-<span class='line'>180</span> </span><span class="WHIT">    </span><span class="NAME">FMT_SPECIFIER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="REGX">/((.)?[>&lt;=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">    </span><span class="NAME">FORMAT_SPECIFIER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="REGX">/((.)?[>&lt;=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/</span><span class="WHIT">
 <span class='line'>181</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Espresso</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>182</span> 
 <span class='line'>183</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore */</span><span class="WHIT">  </span><span class="COMM">// Docs are above</span><span class="WHIT">
-<span class='line'>184</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">fmt</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>185</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">args</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>186</span> </span><span class="WHIT">        </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>187</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>188</span> </span><span class="WHIT">        </span><span class="NAME">result</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.length</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">;</span><span class="WHIT">
@@ -282,7 +282,7 @@
 <span class='line'>275</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>276</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>277</span> 
-<span class='line'>278</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res.__fmt__</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">res.__fmt__</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res.__format__</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">res.__format__</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>279</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>280</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>281</span> </span></pre></body></html>

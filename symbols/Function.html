@@ -27,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -204,7 +204,7 @@ arguments.</p>
 standard.</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'nil'</span>,<br/>&nbsp;&nbsp;greet:&nbsp;<span class="keyword">function</span>&nbsp;(greeting)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(greeting.fmt(<span class="keyword">this</span>.name));<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;wash&nbsp;=&nbsp;mix(Person).into({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Hoban&nbsp;Washburne'</span><br/>});<br/><br/><span class="keyword">var</span>&nbsp;mal&nbsp;=&nbsp;mix(Person).into({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Malcolm&nbsp;Reynolds'</span><br/>});<br/><br/>mal.greet(<span class="string">"Hello,&nbsp;{}!"</span>);<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Hello,&nbsp;Malcolm&nbsp;Reynolds!"<br/><br/><span class="keyword">var</span>&nbsp;greet&nbsp;=&nbsp;mal.greet.bind(wash);<br/>greet(<span class="string">"Howdy,&nbsp;{}!"</span>);<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Howdy,&nbsp;Hoban&nbsp;Washburne!"</code>
+<code><span class="keyword">var</span>&nbsp;Person&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'nil'</span>,<br/>&nbsp;&nbsp;greet:&nbsp;<span class="keyword">function</span>&nbsp;(greeting)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(greeting.format(<span class="keyword">this</span>.name));<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;wash&nbsp;=&nbsp;mix(Person).into({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Hoban&nbsp;Washburne'</span><br/>});<br/><br/><span class="keyword">var</span>&nbsp;mal&nbsp;=&nbsp;mix(Person).into({<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Malcolm&nbsp;Reynolds'</span><br/>});<br/><br/>mal.greet(<span class="string">"Hello,&nbsp;{}!"</span>);<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Hello,&nbsp;Malcolm&nbsp;Reynolds!"<br/><br/><span class="keyword">var</span>&nbsp;greet&nbsp;=&nbsp;mal.greet.bind(wash);<br/>greet(<span class="string">"Howdy,&nbsp;{}!"</span>);<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;"Howdy,&nbsp;Hoban&nbsp;Washburne!"</code>
 </div></dd>
                
 						   
@@ -257,7 +257,7 @@ standard.</p>
                
   				       <dt><p>Marks the computed property as cacheable.</p>
 
-<p>Using KVO.get on the function multiple
+<p>Using <a href="../symbols/Espresso.Observable.html#get">Espresso.Observable#get</a> on the function multiple
 times will cache the response until it has been
 set again.</p></dd>
                
@@ -307,13 +307,13 @@ that's being curried.</p>
 atomic calls as follows:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;mult&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Espresso.toArray(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;*&nbsp;x;&nbsp;},&nbsp;<span class="string">1</span>);<br/>};<br/><br/>alert(mult.curry(<span class="string">2</span>,&nbsp;<span class="string">2</span>)());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;4</code>
+<code><span class="keyword">var</span>&nbsp;mult&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Espresso.A(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;*&nbsp;x;&nbsp;},&nbsp;<span class="string">1</span>);<br/>};<br/><br/>alert(mult.curry(<span class="string">2</span>,&nbsp;<span class="string">2</span>)());<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;4</code>
 </div>
 
 <p>Or specify a function that is a subset of the first:</p>
 
 <div class="code">
-<code><span class="keyword">var</span>&nbsp;add&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Espresso.toArray(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;+&nbsp;x;&nbsp;},&nbsp;<span class="string">0</span>);<br/>};<br/><br/><span class="keyword">var</span>&nbsp;inc&nbsp;=&nbsp;add.curry(<span class="string">1</span>);<br/><br/>alert(inc(<span class="string">5</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;6</code>
+<code><span class="keyword">var</span>&nbsp;add&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Espresso.A(arguments).reduce(<span class="keyword">function</span>&nbsp;(E,&nbsp;x)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;E&nbsp;+&nbsp;x;&nbsp;},&nbsp;<span class="string">0</span>);<br/>};<br/><br/><span class="keyword">var</span>&nbsp;inc&nbsp;=&nbsp;add.curry(<span class="string">1</span>);<br/><br/>alert(inc(<span class="string">5</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;6</code>
 </div>
 
 <p>In layman's terms, <code>curry</code> will prepopulate arguments for a function.</p></dd>
@@ -367,7 +367,7 @@ atomic calls as follows:</p>
                
   				       <dt><p>Marks the computed property as idempotent.</p>
 
-<p>Using KVO.set on the function multiple
+<p>Using <a href="../symbols/Espresso.Observable.html#set">Espresso.Observable#set</a> on the function multiple
 times will do act like setting the function once.</p></dd>
                
 						   
@@ -571,7 +571,7 @@ situation.</p>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Apr 17 2011 17:09:48 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

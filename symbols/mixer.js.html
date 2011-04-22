@@ -33,11 +33,11 @@
 <span class='line'> 26</span>       // Simple screenplay reader.
 <span class='line'> 27</span>       var screenplay = {
 <span class='line'> 28</span>         dialogue: function (speaker, dialogue) {
-<span class='line'> 29</span>           alert("{}: {}".fmt(speaker, dialogue));
+<span class='line'> 29</span>           alert("{}: {}".format(speaker, dialogue));
 <span class='line'> 30</span>         },
 <span class='line'> 31</span> 
 <span class='line'> 32</span>         scene: function () {
-<span class='line'> 33</span>           var args = Espresso.toArray(arguments);
+<span class='line'> 33</span>           var args = Espresso.A(arguments);
 <span class='line'> 34</span>           args.forEach(function (line) {
 <span class='line'> 35</span>             this.dialogue.apply(this, line);
 <span class='line'> 36</span>           }, this);
@@ -74,9 +74,9 @@
 <span class='line'> 67</span>   Espresso uses `mix` internally as a shim for ECMAScript 5
 <span class='line'> 68</span>   compatability and creating the core of your library.
 <span class='line'> 69</span> 
-<span class='line'> 70</span>   @param {...} mixins Objects to mixin to the template provided on into.
-<span class='line'> 71</span>   @returns {Object} An object with `into` field, call into with the template
-<span class='line'> 72</span>                     to apply the mixins on. That will return the template
+<span class='line'> 70</span>   @param {...} mixins Objects to mixin to the target provided on into.
+<span class='line'> 71</span>   @returns {Object} An object with `into` field, call into with the target
+<span class='line'> 72</span>                     to apply the mixins on. That will return the target
 <span class='line'> 73</span>                     with the mixins on it.
 <span class='line'> 74</span>  */</span><span class="WHIT">
 <span class='line'> 75</span> </span><span class="NAME">mix</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -84,11 +84,11 @@
 <span class='line'> 77</span> </span><span class="WHIT">      </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixins</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">mixins.length</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 78</span> 
 <span class='line'> 79</span> </span><span class="WHIT">  </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 80</span> </span><span class="WHIT">    </span><span class="NAME">into</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">    </span><span class="NAME">into</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">target</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 81</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mixin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 82</span> </span><span class="WHIT">          </span><span class="NAME">_</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">decorator</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 83</span> 
-<span class='line'> 84</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.hasValue</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.hasValue</span><span class="PUNC">(</span><span class="NAME">target</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 85</span> </span><span class="WHIT">        </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"Cannot mix into null or undefined values."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 86</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 87</span> 
@@ -101,22 +101,22 @@
 <span class='line'> 94</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">Espresso.isCallable</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 95</span> </span><span class="WHIT">            </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">decorator</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">_</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 96</span> </span><span class="WHIT">              </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">decorator</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 97</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_</span><span class="PUNC">[</span><span class="NAME">decorator</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">                </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">_</span><span class="PUNC">[</span><span class="NAME">decorator</span><span class="PUNC">]</span><span class="PUNC">(</span><span class="NAME">target</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 98</span> </span><span class="WHIT">              </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 99</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>100</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>101</span> 
-<span class='line'>102</span> </span><span class="WHIT">          </span><span class="NAME">template</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">          </span><span class="NAME">target</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>103</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>104</span> 
 <span class='line'>105</span> </span><span class="WHIT">        </span><span class="COMM">// Take care of IE clobbering toString and valueOf</span><span class="WHIT">
 <span class='line'>106</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">mixin</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">mixin.toString</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">Object.prototype.toString</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>107</span> </span><span class="WHIT">          </span><span class="NAME">template.toString</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixin.toString</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">          </span><span class="NAME">target.toString</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixin.toString</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>108</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">mixin</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">mixin.valueOf</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">Object.prototype.valueOf</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>109</span> </span><span class="WHIT">          </span><span class="NAME">template.valueOf</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixin.valueOf</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">          </span><span class="NAME">target.valueOf</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">mixin.valueOf</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>110</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>111</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>112</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">template</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">target</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>113</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>114</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>115</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">

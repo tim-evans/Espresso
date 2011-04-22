@@ -51,7 +51,7 @@
 <span class='line'> 44</span> </span><span class="WHIT">  </span><span class="NAME">alias</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 45</span> </span><span class="WHIT">    </span><span class="NAME">this._</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 46</span> 
-<span class='line'> 47</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">aliases</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">aliases</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 48</span> </span><span class="WHIT">        </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">aliases.length</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mixin</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 49</span> 
 <span class='line'> 50</span> </span><span class="WHIT">    </span><span class="COMM">/** @ignore */</span><span class="WHIT">
@@ -103,7 +103,7 @@
 <span class='line'> 96</span> 
 <span class='line'> 97</span> </span><span class="WHIT">      </span><span class="COMM">/** @ignore */</span><span class="WHIT">
 <span class='line'> 98</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">lambda</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 99</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">value.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">base.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">concat</span><span class="PUNC">(</span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">value.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">base.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>100</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>101</span> 
 <span class='line'>102</span> </span><span class="WHIT">      </span><span class="COMM">// Copy over properties on `value`</span><span class="WHIT">
@@ -163,7 +163,7 @@
 <span class='line'>156</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'>157</span>     Marks the computed property as cacheable.
 <span class='line'>158</span> 
-<span class='line'>159</span>     Using {@link KVO.get} on the function multiple
+<span class='line'>159</span>     Using {@link Espresso.Observable#get} on the function multiple
 <span class='line'>160</span>     times will cache the response until it has been
 <span class='line'>161</span>     set again.
 <span class='line'>162</span> 
@@ -179,7 +179,7 @@
 <span class='line'>172</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'>173</span>     Marks the computed property as idempotent.
 <span class='line'>174</span> 
-<span class='line'>175</span>     Using {@link KVO.set} on the function multiple
+<span class='line'>175</span>     Using {@link Espresso.Observable#set} on the function multiple
 <span class='line'>176</span>     times will do act like setting the function once.
 <span class='line'>177</span> 
 <span class='line'>178</span>     @returns {Function} The reciever.
@@ -206,7 +206,7 @@
 <span class='line'>199</span>         var Person = mix({
 <span class='line'>200</span>           name: 'nil',
 <span class='line'>201</span>           greet: function (greeting) {
-<span class='line'>202</span>             alert(greeting.fmt(this.name));
+<span class='line'>202</span>             alert(greeting.format(this.name));
 <span class='line'>203</span>           }
 <span class='line'>204</span>         }).into({});
 <span class='line'>205</span> 
@@ -243,7 +243,7 @@
 <span class='line'>236</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let A be a new (possibly empty) internal list of</span><span class="WHIT">
 <span class='line'>237</span> </span><span class="WHIT">    </span><span class="COMM">//    all argument values provided after self</span><span class="WHIT">
 <span class='line'>238</span> </span><span class="WHIT">    </span><span class="COMM">//    (arg1, arg2, etc), in order</span><span class="WHIT">
-<span class='line'>239</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>239</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>240</span> 
 <span class='line'>241</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>242</span> </span><span class="WHIT">      
@@ -256,7 +256,7 @@
 <span class='line'>249</span> </span><span class="WHIT">        </span><span class="NAME">Type.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Target.prototype</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>250</span> </span><span class="WHIT">        </span><span class="NAME">that</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Type</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>251</span> 
-<span class='line'>252</span> </span><span class="WHIT">        </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">        </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>253</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">that</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>254</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>255</span> </span><span class="WHIT">        </span><span class="COMM">// 15.3.4.5.1 [[Call]]</span><span class="WHIT">
@@ -266,7 +266,7 @@
 <span class='line'>259</span> </span><span class="WHIT">        </span><span class="COMM">// 1. Let boundArgs be the value of F's [[BoundArgs]] internal property.</span><span class="WHIT">
 <span class='line'>260</span> </span><span class="WHIT">        </span><span class="COMM">// 2. Let boundThis be the value of F's [[BoundThis]] internal property.</span><span class="WHIT">
 <span class='line'>261</span> </span><span class="WHIT">        </span><span class="COMM">// 3. Let target be the value of F's [[TargetFunction]] internal property.</span><span class="WHIT">
-<span class='line'>262</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>263</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>264</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>265</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="PUNC">;</span><span class="WHIT">
@@ -283,7 +283,7 @@
 <span class='line'>276</span>     atomic calls as follows:
 <span class='line'>277</span> 
 <span class='line'>278</span>         var mult = function () {
-<span class='line'>279</span>           return Espresso.toArray(arguments).reduce(function (E, x) { return E * x; }, 1);
+<span class='line'>279</span>           return Espresso.A(arguments).reduce(function (E, x) { return E * x; }, 1);
 <span class='line'>280</span>         };
 <span class='line'>281</span> 
 <span class='line'>282</span>         alert(mult.curry(2, 2)());
@@ -292,7 +292,7 @@
 <span class='line'>285</span>     Or specify a function that is a subset of the first:
 <span class='line'>286</span> 
 <span class='line'>287</span>         var add = function () {
-<span class='line'>288</span>           return Espresso.toArray(arguments).reduce(function (E, x) { return E + x; }, 0);
+<span class='line'>288</span>           return Espresso.A(arguments).reduce(function (E, x) { return E + x; }, 0);
 <span class='line'>289</span>         };
 <span class='line'>290</span> 
 <span class='line'>291</span>         var inc = add.curry(1);
@@ -317,10 +317,10 @@
 <span class='line'>310</span> 
 <span class='line'>311</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let A be a new (possibly empty) internal list of</span><span class="WHIT">
 <span class='line'>312</span> </span><span class="WHIT">    </span><span class="COMM">//    all argument values (arg1, arg2, etc), in order</span><span class="WHIT">
-<span class='line'>313</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>313</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>314</span> 
 <span class='line'>315</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>316</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.toArray</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>316</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>317</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>318</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>319</span> 

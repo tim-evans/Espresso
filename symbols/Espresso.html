@@ -29,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Boolean.html">Boolean</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/JSON.html">JSON</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -128,7 +128,7 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 						<tr class="nameDescription">
               <td class="fixedFont right">+</td>
               <td class="fixedFont">
-                <a href="../symbols/Espresso.html#.FMT_SPECIFIER">FMT_SPECIFIER</a>
+                <a href="../symbols/Espresso.html#.FORMAT_SPECIFIER">FORMAT_SPECIFIER</a>
               </td>
             </tr>
 					
@@ -163,7 +163,12 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.html#.fmt">fmt</a></b>(template)</td>
+              + <b><a href="../symbols/Espresso.html#.A">A</a></b>(iterable)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.format">format</a></b>(template)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -181,11 +186,6 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
               + <b><a href="../symbols/Espresso.html#.isCallable">isCallable</a></b>(obj)</td>
             </tr>
 					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.html#.toArray">toArray</a></b>(iterable)</td>
-            </tr>
-					
           </table>
 				
 				
@@ -199,8 +199,8 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 				<h1 class="title">Field Detail</h1>
 				
           <div>
-             <a name=".FMT_SPECIFIER"> </a>
-             <h3><span class="light">(RegExp)</span> Espresso.<b>FMT_SPECIFIER</b></h3>
+             <a name=".FORMAT_SPECIFIER"> </a>
+             <h3><span class="light">(RegExp)</span> Espresso.<b>FORMAT_SPECIFIER</b></h3>
 					</div>
 					<div class="description">
 						<p>The specifier regular expression.</p>
@@ -374,10 +374,59 @@ whether it's <code>window</code> or <code>document</code> in a browser or
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name=".fmt"> </a>
+					<a name=".A"> </a>
           <div>
-             <a name=".fmt"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.<b>fmt</b>(template)</h3>
+             <a name=".A"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Espresso.<b>A</b>(iterable)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Convert an iterable object into an Array.</p>
+
+<p>This is used mostly for the arguments variable
+in functions.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>iterable</b>
+									
+								</dt>
+								<dd>An iterable object with a length and indexing.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The object passed in as an Array.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name=".format"> </a>
+          <div>
+             <a name=".format"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.<b>format</b>(template)</h3>
 
              <div class="description">
                
@@ -395,20 +444,20 @@ absolutely name the arguments via the number in the argument
 list. This means that:</p>
 
 <div class="code">
-<code>alert(Espresso.fmt(<span class="string">"Hello,&nbsp;{name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;}));</code>
+<code>alert(Espresso.format(<span class="string">"Hello,&nbsp;{name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;}));</code>
 </div>
 
 <p>is equivalent to:</p>
 
 <div class="code">
-<code>alert(Espresso.fmt(<span class="string">"Hello,&nbsp;{0.name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;}));</code>
+<code>alert(Espresso.format(<span class="string">"Hello,&nbsp;{0.name}!"</span>,&nbsp;{&nbsp;name:&nbsp;<span class="string">"world"</span>&nbsp;}));</code>
 </div>
 
 <p>For more than one argument you must provide the position of your
 argument.</p>
 
 <div class="code">
-<code>alert(Espresso.fmt(<span class="string">"{0},&nbsp;{1}!"</span>,&nbsp;<span class="string">"hello"</span>,&nbsp;<span class="string">"world"</span>));</code>
+<code>alert(Espresso.format(<span class="string">"{0},&nbsp;{1}!"</span>,&nbsp;<span class="string">"hello"</span>,&nbsp;<span class="string">"world"</span>));</code>
 </div>
 
 <p>If your arguments and formatter are "as is"- that is, in order,
@@ -416,28 +465,28 @@ and flat objects as you intend them to be, you can write your
 template string like so:</p>
 
 <div class="code">
-<code>alert(Espresso.fmt(<span class="string">"{},&nbsp;{}!"</span>,&nbsp;<span class="string">"hello"</span>,&nbsp;<span class="string">"world"</span>));</code>
+<code>alert(Espresso.format(<span class="string">"{},&nbsp;{}!"</span>,&nbsp;<span class="string">"hello"</span>,&nbsp;<span class="string">"world"</span>));</code>
 </div>
 
 <p>To use the literals <code>{</code> and <code>}</code>, simply double them, like the following:</p>
 
 <div class="code">
-<code>alert(Espresso.fmt(<span class="string">"{lang}&nbsp;uses&nbsp;the&nbsp;{{variable}}&nbsp;format&nbsp;too!"</span>,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;lang:&nbsp;<span class="string">"Python"</span>,&nbsp;variable:&nbsp;<span class="string">"(not&nbsp;used)"</span><br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Python&nbsp;uses&nbsp;the&nbsp;{variable}&nbsp;format&nbsp;too!"</code>
+<code>alert(Espresso.format(<span class="string">"{lang}&nbsp;uses&nbsp;the&nbsp;{{variable}}&nbsp;format&nbsp;too!"</span>,&nbsp;{<br/>&nbsp;&nbsp;&nbsp;lang:&nbsp;<span class="string">"Python"</span>,&nbsp;variable:&nbsp;<span class="string">"(not&nbsp;used)"</span><br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Python&nbsp;uses&nbsp;the&nbsp;{variable}&nbsp;format&nbsp;too!"</code>
 </div>
 
 <p>Check out the examples given for some ideas on how to use it.</p>
 
 <p>For developers wishing to have their own custom handler for the
-formatting specifiers, you should write your own  <code>__fmt__</code> function
+formatting specifiers, you should write your own  <code>__format__</code> function
 that takes the specifier in as an argument and returns the formatted
 object as a string. All formatters are implemented using this pattern,
-with a fallback to Object's <code>__fmt__</code>, which turns said object into
-a string, then calls <code>__fmt__</code> on a string.</p>
+with a fallback to Object's <code>__format__</code>, which turns said object into
+a string, then calls <code>__format__</code> on a string.</p>
 
 <p>Consider the following example:</p>
 
 <div class="code">
-<code>Localizer&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;__fmt__:&nbsp;<span class="keyword">function</span>&nbsp;(spec)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>[spec];<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>_hello&nbsp;=&nbsp;mix(Localizer).into({<br/>&nbsp;&nbsp;en:&nbsp;<span class="string">'hello'</span>,<br/>&nbsp;&nbsp;fr:&nbsp;<span class="string">'bonjour'</span>,<br/>&nbsp;&nbsp;ja:&nbsp;<span class="string">'こんにちは'</span><br/>});<br/><br/>alert(Espresso.fmt(<span class="string">"{:en}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"hello"<br/><br/>alert(Espresso.fmt(<span class="string">"{:fr}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"bonjour"<br/><br/>alert(Espresso.fmt(<span class="string">"{:ja}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"こんにちは"</code>
+<code>Localizer&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;__format__:&nbsp;<span class="keyword">function</span>&nbsp;(spec)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>[spec];<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>_hello&nbsp;=&nbsp;mix(Localizer).into({<br/>&nbsp;&nbsp;en:&nbsp;<span class="string">'hello'</span>,<br/>&nbsp;&nbsp;fr:&nbsp;<span class="string">'bonjour'</span>,<br/>&nbsp;&nbsp;ja:&nbsp;<span class="string">'こんにちは'</span><br/>});<br/><br/>alert(Espresso.format(<span class="string">"{:en}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"hello"<br/><br/>alert(Espresso.format(<span class="string">"{:fr}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"bonjour"<br/><br/>alert(Espresso.format(<span class="string">"{:ja}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"こんにちは"</code>
 </div></dd>
                
 						   
@@ -558,7 +607,7 @@ expecially in the case of the arguments Array.</p></dd>
 					<a name=".hasValue"> </a>
           <div>
              <a name=".hasValue"> </a>
-             <h3><span class="light">(<a href="../symbols/Boolean.html">Boolean</a>)</span> Espresso.<b>hasValue</b>(o)</h3>
+             <h3><span class="light">(Boolean)</span> Espresso.<b>hasValue</b>(o)</h3>
 
              <div class="description">
                
@@ -586,7 +635,7 @@ expecially in the case of the arguments Array.</p></dd>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> True if the value is not null and not undefined.</dt>
+								<dt><span class="light fixedFont">(Boolean)</span> True if the value is not null and not undefined.</dt>
 							
 							</dl>
 						
@@ -610,7 +659,7 @@ expecially in the case of the arguments Array.</p></dd>
 					<a name=".isCallable"> </a>
           <div>
              <a name=".isCallable"> </a>
-             <h3><span class="light">(<a href="../symbols/Boolean.html">Boolean</a>)</span> Espresso.<b>isCallable</b>(obj)</h3>
+             <h3><span class="light">(Boolean)</span> Espresso.<b>isCallable</b>(obj)</h3>
 
              <div class="description">
                
@@ -650,56 +699,7 @@ a callable object.</p>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dt><span class="light fixedFont">(<a href="../symbols/Boolean.html">Boolean</a>)</span> True if the Object is callable, otherwise false.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
-				
-					<a name=".toArray"> </a>
-          <div>
-             <a name=".toArray"> </a>
-             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> Espresso.<b>toArray</b>(iterable)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Convert an iterable object into an Array.</p>
-
-<p>This is used mostly for the arguments variable
-in functions.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>iterable</b>
-									
-								</dt>
-								<dd>An iterable object with a length and indexing.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The object passed in as an Array.</dt>
+								<dt><span class="light fixedFont">(Boolean)</span> True if the Object is callable, otherwise false.</dt>
 							
 							</dl>
 						
@@ -726,7 +726,7 @@ in functions.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Sun Apr 17 2011 17:09:48 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

@@ -24,7 +24,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '1.1.0',
+  VERSION: '1.2.0',
 
   /**
     The global variable.
@@ -138,7 +138,7 @@ Espresso = {
       // -> true
    */
   hasValue: function (o) {
-    return (typeof o !== "undefined" && o !== null);
+    return o != null;
   },
 
   /** @function
@@ -181,7 +181,7 @@ Espresso = {
     @param {Object} iterable An iterable object with a length and indexing.
     @returns {Array} The object passed in as an Array.
    */
-  toArray: (function () {
+  A: (function () {
     var slice = Array.prototype.slice;
     return function (iterable) {
       return slice.apply(iterable);

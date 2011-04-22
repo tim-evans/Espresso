@@ -139,13 +139,13 @@ context("String",
   ),
 
   // Tested with Espresso.Formatter
-  should("have an instance function named 'fmt'", function () {
-    assert.kindOf('function', "".fmt);
+  should("have an instance function named 'format'", function () {
+    assert.kindOf('function', "".format);
   }),
 
-  // Tests __fmt__ implementation against PEP 3101
+  // Tests __format__ implementation against PEP 3101
   //   http://www.python.org/dev/peps/pep-3101/
-  context("fmt",
+  context("format",
     // Test minimum width
     formatting("'{:3}' with '\"_\"' should return '  _'"),
     formatting("'{:10}' with '\"_\"' should return '         _'"),

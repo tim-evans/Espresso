@@ -79,14 +79,14 @@ context("Espresso",
     })
   ),
 
-  should("have a class function named 'toArray'", function () {
-    assert.kindOf('function', Espresso.toArray);
+  should("have a class function named 'A'", function () {
+    assert.kindOf('function', Espresso.A);
   }),
 
-  context("toArray",
+  context("A",
     should("turn array-like objects (that have a length and can be indexed by []) into an Array", function () {
       var pseudoArray = { length: 5, 0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e' },
-          arr = Espresso.toArray(pseudoArray);
+          arr = Espresso.A(pseudoArray);
 
       assert.kindOf("array", arr);
       assert.equal(pseudoArray.length, arr.length);

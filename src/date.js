@@ -7,7 +7,7 @@ mix(/** @lends Date# */{
     @returns {String} The ISO 6081 formatted UTC date.
    */
   toISOString: function () {
-    return "{}-{}-{}T{}:{}:{}.{}Z".fmt(
+    return "{}-{}-{}T{}:{}:{}.{}Z".format(
       this.getUTCFullYear(),
       this.getUTCMonth(),
       this.getUTCDate(),
@@ -20,7 +20,7 @@ mix(/** @lends Date# */{
 
   /** @function
     @desc
-    Date Formatting support (for use with `fmt`).
+    Date Formatting support (for use with `format`).
 
     The following flags are acceptable in a format string:
 
@@ -47,16 +47,16 @@ mix(/** @lends Date# */{
 
     For example:
 
-        alert("Today is {:A, B d, Y}.".fmt(new Date()));
+        alert("Today is {:A, B d, Y}.".format(new Date()));
 
-        alert("The time is: {:c}.".fmt(new Date()));
+        alert("The time is: {:c}.".format(new Date()));
 
-    Note: all times used with `fmt` are **NOT** in UTC.
+    Note: all times used with `format` are **NOT** in UTC.
 
     @param {String} spec The specifier to transform the date to a formatted string.
     @returns {String} The Date transformed into a string as specified.
    */
-  __fmt__: (function () {
+  __format__: (function () {
     return function (spec) {
       var result = [], i = 0;
 
@@ -75,53 +75,53 @@ mix(/** @lends Date# */{
           result[result.length] = Date.months[this.getMonth()];
           break;
         case 'c':
-          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".fmt(this, this.getDate());
+          result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".format(this, this.getDate());
           break;
         case 'd':
-          result[result.length] = "{:02}".fmt(this.getDate());
+          result[result.length] = "{:02}".format(this.getDate());
           break;
         case 'H':
-          result[result.length] = "{:02}".fmt(this.getHours());
+          result[result.length] = "{:02}".format(this.getHours());
           break;
         case 'I':
-          result[result.length] = "{:02}".fmt(this.getHours() % 12);
+          result[result.length] = "{:02}".format(this.getHours() % 12);
           break;
         case 'j':
-          result[result.length] = "{:03}".fmt(Math.ceil((this - new Date(this.getFullYear(), 0, 1)) / 86400000));
+          result[result.length] = "{:03}".format(Math.ceil((this - new Date(this.getFullYear(), 0, 1)) / 86400000));
           break;
         case 'm':
-          result[result.length] = "{:02}".fmt(this.getMonth() + 1);
+          result[result.length] = "{:02}".format(this.getMonth() + 1);
           break;
         case 'M':
-          result[result.length] = "{:02}".fmt(this.getMinutes());
+          result[result.length] = "{:02}".format(this.getMinutes());
           break;
         case 'p':
           result[result.length] = this.getHours() > 11 ? "PM" : "AM";
           break;
         case 'S':
-          result[result.length] = "{:02}".fmt(this.getSeconds());
+          result[result.length] = "{:02}".format(this.getSeconds());
           break;
         case 'U':
           // Monday as the first day of the week
           var day = ((this.getDay() + 6) % 7) + 1;
-          result[result.length] = "{:02}".fmt(
+          result[result.length] = "{:02}".format(
             Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + day) / 7) - 1);
           break;
         case 'w':
           result[result.length] = this.getDay();
           break;
         case 'W':
-          result[result.length] = "{:02}".fmt(
+          result[result.length] = "{:02}".format(
             Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + this.getDay() + 1) / 7) - 1);
           break;
         case 'x':
-          result[result.length] = "{:m/d/y}".fmt(this);
+          result[result.length] = "{:m/d/y}".format(this);
           break;
         case 'X':
           result[result.length] = this.toLocaleTimeString();
           break;
         case 'y':
-          result[result.length] = "{:02}".fmt(this.getYear() % 100);
+          result[result.length] = "{:02}".format(this.getYear() % 100);
           break;
         case 'Y':
           result[result.length] = this.getFullYear();

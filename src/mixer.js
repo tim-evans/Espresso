@@ -26,11 +26,11 @@
       // Simple screenplay reader.
       var screenplay = {
         dialogue: function (speaker, dialogue) {
-          alert("{}: {}".fmt(speaker, dialogue));
+          alert("{}: {}".format(speaker, dialogue));
         },
 
         scene: function () {
-          var args = Espresso.toArray(arguments);
+          var args = Espresso.A(arguments);
           args.forEach(function (line) {
             this.dialogue.apply(this, line);
           }, this);
@@ -67,9 +67,9 @@
   Espresso uses `mix` internally as a shim for ECMAScript 5
   compatability and creating the core of your library.
 
-  @param {...} mixins Objects to mixin to the template provided on into.
-  @returns {Object} An object with `into` field, call into with the template
-                    to apply the mixins on. That will return the template
+  @param {...} mixins Objects to mixin to the target provided on into.
+  @returns {Object} An object with `into` field, call into with the target
+                    to apply the mixins on. That will return the target
                     with the mixins on it.
  */
 mix = function () {
@@ -77,11 +77,11 @@ mix = function () {
       i = 0, len = mixins ? mixins.length : 0;
 
   return {
-    into: function (template) {
+    into: function (target) {
       var mixin, key, value,
           _, decorator;
 
-      if (!Espresso.hasValue(template)) {
+      if (!Espresso.hasValue(target)) {
         throw new TypeError("Cannot mix into null or undefined values.");
       }
 
@@ -94,22 +94,22 @@ mix = function () {
           if (Espresso.isCallable(value) && _) {
             for (decorator in _) {
               if (_.hasOwnProperty(decorator)) {
-                value = _[decorator](template, value, key);
+                value = _[decorator](target, value, key);
               }
             }
           }
 
-          template[key] = value;
+          target[key] = value;
         }
 
         // Take care of IE clobbering toString and valueOf
         if (mixin && mixin.toString !== Object.prototype.toString) {
-          template.toString = mixin.toString;
+          target.toString = mixin.toString;
         } else if (mixin && mixin.valueOf !== Object.prototype.valueOf) {
-          template.valueOf = mixin.valueOf;
+          target.valueOf = mixin.valueOf;
         }
       }
-      return template;
+      return target;
     }
   };
 };

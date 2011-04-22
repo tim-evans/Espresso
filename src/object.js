@@ -4,14 +4,14 @@ mix(/** @scope Object.prototype */{
 
   /**
     Formats an Object by coercing the Object to a
-    String and calling `__fmt__` on the string with
+    String and calling `__format__` on the string with
     the format specifier passed in.
 
     @param {String} spec The string specification to format the object.
     @returns {String} The object as a formatted string according to the specification.
    */
-  __fmt__: function (spec) {
-    return String(this).__fmt__(spec);
+  __format__: function (spec) {
+    return String(this).__format__(spec);
   }.inferior()
 
 }).into(Object.prototype);
@@ -30,7 +30,7 @@ mix(/** @scope Object */{
 
     // 1. If the Type(O) is not Object, throw a TypeError exception.
     if (typeof O !== "object") {
-      throw new TypeError("{} is not an object.".fmt(O));
+      throw new TypeError("{} is not an object.".format(O));
     }
 
     // 5. For each own enumerable property of O whose name String is P

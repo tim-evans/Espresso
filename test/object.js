@@ -37,21 +37,21 @@ context("Object",
     })
   ),
 
-  should("have an instance function named __fmt__", function () {
-    assert.isTrue(Object.prototype.__fmt__);
+  should("have an instance function named __format__", function () {
+    assert.isTrue(Object.prototype.__format__);
   }),
 
-  context("__fmt__",
-    should("defer to String.prototype.__fmt__", function () {
+  context("__format__",
+    should("defer to String.prototype.__format__", function () {
       var o = {};
-      assert.equal(Espresso.fmt("{}", o), "[object Object]");
+      assert.equal(Espresso.format("{}", o), "[object Object]");
 
       o = {
         toString: function () {
           return "object"; 
         }
       };
-      assert.equal(Espresso.fmt("{}", o), "object");
+      assert.equal(Espresso.format("{}", o), "object");
     })
   )
 );

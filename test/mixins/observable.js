@@ -106,11 +106,11 @@ context("Espresso.Observable",
           foo: 'bar',
 
           dependentCacheableProperty: function (k, v) {
-            return "{}-{}".fmt(this.get('foo'), callCount++);
+            return "{}-{}".format(this.get('foo'), callCount++);
           }.cacheable().property('foo'),
 
           otherDependentCacheableProperty: function (k, v) {
-            return "{}-{}".fmt(this.get('foo'), callCount++);
+            return "{}-{}".format(this.get('foo'), callCount++);
           }.property('foo').cacheable()
         }).into({});
       }),

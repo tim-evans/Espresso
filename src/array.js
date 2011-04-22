@@ -41,7 +41,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     // 6. Let k be 0.
@@ -104,7 +104,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
 
     while (len-- > 0) {
@@ -312,7 +312,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @returns {Array} The array without the values given.
    */
   without: function () {
-    var without = Espresso.toArray(arguments);
+    var without = Espresso.A(arguments);
 
     return this.reduce(function (complement, v) {
       if (without.indexOf(v) === -1) {

@@ -1,11 +1,11 @@
 /*global context setup should assert Espresso formatting*/
 
 context("Formatter", 
-  should("have a function named fmt", function () {
-    assert.kindOf("function", Espresso.fmt);
+  should("have a function named format", function () {
+    assert.kindOf("function", Espresso.format);
   }),
 
-  context("fmt",
+  context("format",
     // Regular arguments
     formatting("'{}' with '\"espresso\"' should return 'espresso'"),
     formatting("'{}' with '[0, 1, 2]' should return '0,1,2'"),
@@ -30,7 +30,7 @@ context("Formatter",
 
     // Syntax errors
     should("throw an error when encountering unmatched braces", function () {
-      assert.raises(Error, Espresso.fmt.bind(Espresso),
+      assert.raises(Error, Espresso.format.bind(Espresso),
                     "{answer", { answer: 42 });
     }),
 
@@ -38,18 +38,18 @@ context("Formatter",
     should("defer the formatting spec to the object", function () {
       var spec = 'abc', template = "{:" + spec + "}", called = false;
       var obj = {
-        __fmt__: function (s) {
+        __format__: function (s) {
           called = true;
           assert.equal(spec, s);
         }
       };
-      Espresso.fmt(template, obj);
+      Espresso.format(template, obj);
       assert.isTrue(called);
     })
   ),
 
   should("have a field named SPECIFIER", function () {
-    assert.kindOf("regexp", Espresso.FMT_SPECIFIER);
+    assert.kindOf("regexp", Espresso.FORMAT_SPECIFIER);
   })
 
 );

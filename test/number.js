@@ -2,9 +2,9 @@
 
 context("Number",
 
-  // Tests __fmt__ implementation against PEP 3101
+  // Tests __format__ implementation against PEP 3101
   //   http://www.python.org/dev/peps/pep-3101/
-  context("fmt",
+  context("format",
     // Test alignment
     formatting("'{:=3}' with '-1' should return '-  1'"),
 

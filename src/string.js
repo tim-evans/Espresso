@@ -20,7 +20,7 @@ mix(/** @scope String.prototype */{
     var i = 0, len = this.length;
 
     if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".fmt(lambda));
+      throw new TypeError("{} is not callable.".format(lambda));
     }
     for (; i < len; i += 1) {
       lambda.call(that, this.charAt(i), i, this);
@@ -159,7 +159,7 @@ mix(/** @scope String.prototype */{
     by the argument number (which is optional on a single argument).
 
     If you want to tie into this, and want to specify your own
-    format specifier, override __fmt__ on your object, and it will
+    format specifier, override __format__ on your object, and it will
     pass you in the specifier (after the colon). You return the
     string it should look like, and that's it!
 
@@ -168,15 +168,15 @@ mix(/** @scope String.prototype */{
 
     @returns {String} The formatted string.
     @example
-      alert("b{0}{0}a".fmt('an'));
+      alert("b{0}{0}a".format('an'));
       // => "banana"
 
     @example
-      alert("I love {pi:.2}".fmt({ pi: 22 / 7 }));
+      alert("I love {pi:.2}".format({ pi: 22 / 7 }));
       // => "I love 3.14"
 
     @example
-      alert("The {thing.name} is {thing.desc}.".fmt({
+      alert("The {thing.name} is {thing.desc}.".format({
         thing: {
           name: 'cake',
           desc: 'a lie'
@@ -185,26 +185,26 @@ mix(/** @scope String.prototype */{
       // => "The cake is a lie."
 
     @example
-      alert(":-{{".fmt());  // Double {{ or }} to escape it.
+      alert(":-{{".format());  // Double {{ or }} to escape it.
       // => ":-{"
    */
-  fmt: function () {
-    var args = Espresso.toArray(arguments);
+  format: function () {
+    var args = Espresso.A(arguments);
     args.unshift(this.toString());
-    return Espresso.fmt.apply(null, args);
+    return Espresso.format.apply(null, args);
   },
 
   /**
     Formatter for `String`s.
 
-    Don't call this function- It's here for `Espresso.fmt`
+    Don't call this function- It's here for `Espresso.format`
     to take care of buisiness for you.
 
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.
    */
-  __fmt__: function (spec) {
-    var match = spec.match(Espresso.FMT_SPECIFIER),
+  __format__: function (spec) {
+    var match = spec.match(Espresso.FORMAT_SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
         minWidth = match[6] || 0,

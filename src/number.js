@@ -5,19 +5,19 @@ mix(/** @lends Number# */{
   /**
     Formatter for `Number`s.
 
-    Don't call this function- It's here for `Espresso.fmt`
+    Don't call this function- It's here for `Espresso.format`
     to take care of buisiness for you.
 
     @param {String} spec The specifier to format the number as.
     @returns {String} The number formatted as specified.
    */
-  __fmt__: function (spec) {
+  __format__: function (spec) {
     // Don't want Infinity, -Infinity and NaN in here!
     if (!isFinite(this)) {
       return this;
     }
 
-    var match = spec.match(Espresso.FMT_SPECIFIER),
+    var match = spec.match(Espresso.FORMAT_SPECIFIER),
         align = match[1],
         fill = match[2],
         sign = match[3] || '-',
@@ -60,7 +60,7 @@ mix(/** @lends Number# */{
       //  >>> "{.2}".format(math.pi)
       //  "3.1"
       // Which is waaay less intuitive than
-      //  > "{.2}".fmt(Math.PI)
+      //  > "{.2}".format(Math.PI)
       //  "3.14"
       value = +value.toFixed(precision);
       precision++; // make floating point precision work like Python.
@@ -120,7 +120,7 @@ mix(/** @lends Number# */{
       value = String(value).toLowerCase();
       break;
     default:
-      throw new Error('Unrecognized format type: "{0}"'.fmt(type));
+      throw new Error('Unrecognized format type: "{0}"'.format(type));
     }
 
     if (align !== '=') {
@@ -128,7 +128,7 @@ mix(/** @lends Number# */{
     }
 
     spec = (fill || '') + (align || '') + (minWidth || '') + (precision || '') + (type || '');
-    value = String(value).__fmt__(spec);
+    value = String(value).__format__(spec);
 
     if (align === '=') {
       value = sign + value;

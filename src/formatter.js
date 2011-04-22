@@ -17,26 +17,26 @@
       absolutely name the arguments via the number in the argument
       list. This means that:
 
-          alert(Espresso.fmt("Hello, {name}!", { name: "world" }));
+          alert(Espresso.format("Hello, {name}!", { name: "world" }));
 
       is equivalent to:
 
-          alert(Espresso.fmt("Hello, {0.name}!", { name: "world" }));
+          alert(Espresso.format("Hello, {0.name}!", { name: "world" }));
 
       For more than one argument you must provide the position of your
       argument.
 
-          alert(Espresso.fmt("{0}, {1}!", "hello", "world"));
+          alert(Espresso.format("{0}, {1}!", "hello", "world"));
 
       If your arguments and formatter are "as is"- that is, in order,
       and flat objects as you intend them to be, you can write your
       template string like so:
 
-          alert(Espresso.fmt("{}, {}!", "hello", "world"));
+          alert(Espresso.format("{}, {}!", "hello", "world"));
 
       To use the literals `{` and `}`, simply double them, like the following:
 
-          alert(Espresso.fmt("{lang} uses the {{variable}} format too!", {
+          alert(Espresso.format("{lang} uses the {{variable}} format too!", {
              lang: "Python", variable: "(not used)"
           }));
           // => "Python uses the {variable} format too!"
@@ -44,16 +44,16 @@
       Check out the examples given for some ideas on how to use it.
 
       For developers wishing to have their own custom handler for the
-      formatting specifiers, you should write your own  `__fmt__` function
+      formatting specifiers, you should write your own  `__format__` function
       that takes the specifier in as an argument and returns the formatted
       object as a string. All formatters are implemented using this pattern,
-      with a fallback to Object's `__fmt__`, which turns said object into
-      a string, then calls `__fmt__` on a string.
+      with a fallback to Object's `__format__`, which turns said object into
+      a string, then calls `__format__` on a string.
 
       Consider the following example:
 
           Localizer = mix({
-            __fmt__: function (spec) {
+            __format__: function (spec) {
               return this[spec];
             }
           }).into({});
@@ -64,13 +64,13 @@
             ja: 'こんにちは'
           });
 
-          alert(Espresso.fmt("{:en}", _hello));
+          alert(Espresso.format("{:en}", _hello));
           // => "hello"
 
-          alert(Espresso.fmt("{:fr}", _hello));
+          alert(Espresso.format("{:fr}", _hello));
           // => "bonjour"
 
-          alert(Espresso.fmt("{:ja}", _hello));
+          alert(Espresso.format("{:ja}", _hello));
           // => "こんにちは"
 
         [pep]: http://www.python.org/dev/peps/pep-3101/
@@ -78,7 +78,7 @@
       @param {String} template The template string to format the arguments with.
       @returns {String} The template formatted with the given leftover arguments.
      */
-    fmt: fmt,
+    format: format,
 
     /**
       The specifier regular expression.
@@ -177,12 +177,12 @@
 
       @type RegExp
      */
-    FMT_SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
+    FORMAT_SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
   }).into(Espresso);
 
   /** @ignore */  // Docs are above
-  function fmt(template) {
-    var args = Espresso.toArray(arguments).slice(1),
+  function format(template) {
+    var args = Espresso.A(arguments).slice(1),
         prev = '',
         buffer = [],
         result, idx, len = template.length, ch;
@@ -275,6 +275,6 @@
       return res;
     }
 
-    return res.__fmt__ ? res.__fmt__(spec) : res;
+    return res.__format__ ? res.__format__(spec) : res;
   }
 }());

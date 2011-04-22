@@ -27,7 +27,7 @@ assert.kindOf = function (type, o) {
 };
 
 assert.raises = function (err, lambda) {
-  var args = Espresso.toArray(arguments).slice(2),
+  var args = Espresso.A(arguments).slice(2),
       caught = false;
 
   try {
@@ -45,7 +45,7 @@ assert.raises = function (err, lambda) {
 };
 
 assert.mixesIn = function (o) {
-  var mixins = Espresso.toArray(arguments).slice(1);
+  var mixins = Espresso.A(arguments).slice(1);
   for (var i = 0, len = mixins.length; i < len; i++) {
     for (var k in mixins[i]) {
       if (mixins[i].hasOwnProperty(k) && Espresso.isCallable(mixins[i])) {
@@ -56,7 +56,7 @@ assert.mixesIn = function (o) {
 };
 
 var formatting = function (spec) {
-  var fmt = Espresso.fmt.bind(Espresso);
+  var format = Espresso.format.bind(Espresso);
   return should(spec, function () {
     var parts = spec.match(/'([^']+)'( with '(.+)')? should return '([^']+)'/),
         args = parts[2] ? parts[2].match(/'([^']+)'/g): [];
@@ -64,8 +64,8 @@ var formatting = function (spec) {
     for (var i = 0, len = args.length; i < len; i++) {
       args[i] = eval('(' + args[i].slice(1, -1) + ')');
     }
-    assert.equal(fmt.apply(null, [].concat(parts[1]).concat(args)), parts.slice(-1));
+    assert.equal(format.apply(null, [].concat(parts[1]).concat(args)), parts.slice(-1));
 
-    assert.equal(parts[1].fmt.apply(parts[1], args), parts.slice(-1));
+    assert.equal(parts[1].format.apply(parts[1], args), parts.slice(-1));
   });
 };

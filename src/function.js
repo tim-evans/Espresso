@@ -44,7 +44,7 @@ mix(/** @lends Function.prototype */{
   alias: function () {
     this._ = this._ || {};
 
-    var aliases = Espresso.toArray(arguments),
+    var aliases = Espresso.A(arguments),
         idx = aliases.length, mixin;
 
     /** @ignore */
@@ -96,7 +96,7 @@ mix(/** @lends Function.prototype */{
 
       /** @ignore */
       var lambda = function () {
-        return value.apply(this, [base.bind(this)].concat(Espresso.toArray(arguments)));
+        return value.apply(this, [base.bind(this)].concat(Espresso.A(arguments)));
       };
 
       // Copy over properties on `value`
@@ -156,7 +156,7 @@ mix(/** @lends Function.prototype */{
   /**
     Marks the computed property as cacheable.
 
-    Using {@link KVO.get} on the function multiple
+    Using {@link Espresso.Observable#get} on the function multiple
     times will cache the response until it has been
     set again.
 
@@ -172,7 +172,7 @@ mix(/** @lends Function.prototype */{
   /**
     Marks the computed property as idempotent.
 
-    Using {@link KVO.set} on the function multiple
+    Using {@link Espresso.Observable#set} on the function multiple
     times will do act like setting the function once.
 
     @returns {Function} The reciever.
@@ -199,7 +199,7 @@ mix(/** @lends Function.prototype */{
         var Person = mix({
           name: 'nil',
           greet: function (greeting) {
-            alert(greeting.fmt(this.name));
+            alert(greeting.format(this.name));
           }
         }).into({});
 
@@ -236,7 +236,7 @@ mix(/** @lends Function.prototype */{
     // 3. Let A be a new (possibly empty) internal list of
     //    all argument values provided after self
     //    (arg1, arg2, etc), in order
-    A = Espresso.toArray(arguments).slice(1);
+    A = Espresso.A(arguments).slice(1);
 
     var bound = function () {
       
@@ -249,7 +249,7 @@ mix(/** @lends Function.prototype */{
         Type.prototype = Target.prototype;
         that = new Type();
 
-        Target.apply(self, A.concat(Espresso.toArray(arguments)));
+        Target.apply(self, A.concat(Espresso.A(arguments)));
         return that;
       } else {
         // 15.3.4.5.1 [[Call]]
@@ -259,7 +259,7 @@ mix(/** @lends Function.prototype */{
         // 1. Let boundArgs be the value of F's [[BoundArgs]] internal property.
         // 2. Let boundThis be the value of F's [[BoundThis]] internal property.
         // 3. Let target be the value of F's [[TargetFunction]] internal property.
-        return Target.apply(self, A.concat(Espresso.toArray(arguments)));
+        return Target.apply(self, A.concat(Espresso.A(arguments)));
       }
     };
     return bound;
@@ -276,7 +276,7 @@ mix(/** @lends Function.prototype */{
     atomic calls as follows:
 
         var mult = function () {
-          return Espresso.toArray(arguments).reduce(function (E, x) { return E * x; }, 1);
+          return Espresso.A(arguments).reduce(function (E, x) { return E * x; }, 1);
         };
 
         alert(mult.curry(2, 2)());
@@ -285,7 +285,7 @@ mix(/** @lends Function.prototype */{
     Or specify a function that is a subset of the first:
 
         var add = function () {
-          return Espresso.toArray(arguments).reduce(function (E, x) { return E + x; }, 0);
+          return Espresso.A(arguments).reduce(function (E, x) { return E + x; }, 0);
         };
 
         var inc = add.curry(1);
@@ -310,10 +310,10 @@ mix(/** @lends Function.prototype */{
 
     // 3. Let A be a new (possibly empty) internal list of
     //    all argument values (arg1, arg2, etc), in order
-    A = Espresso.toArray(arguments);
+    A = Espresso.A(arguments);
 
     return function () {
-      return Target.apply(this, A.concat(Espresso.toArray(arguments)));
+      return Target.apply(this, A.concat(Espresso.A(arguments)));
     };
   }
 

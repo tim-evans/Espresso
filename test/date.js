@@ -19,7 +19,7 @@ context("Date",
     
   }),
 
-  context("fmt",
+  context("format",
     formatting("'{:a}' with 'window.date' should return 'Thu'"),
     formatting("'{:A}' with 'window.date' should return 'Thursday'"),
     formatting("'{:b}' with 'window.date' should return 'Jan'"),

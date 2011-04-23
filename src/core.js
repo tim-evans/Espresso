@@ -31,7 +31,7 @@ Espresso = {
 
     Used to be independant of what the global `this` is,
     whether it's `window` or `document` in a browser or
-    `global` in NodeJS.
+    `global` in Node.
 
     @type Object
    */
@@ -82,6 +82,7 @@ Espresso = {
    */
   getObjectFor: (function () {
     /** @ignore */
+    // Return the property or `undefined`
     var getProperty = function (property, obj) {
       if (property in obj) {
         obj = obj[property];
@@ -89,14 +90,14 @@ Espresso = {
         obj = void 0;
       }
       return obj;
-    };
+    }, G = this;
 
     return function (key, object) {
-      // Array / Attribute subscript
+      // Attribute (`.`) subscript
       var iattr = key.indexOf('.');
 
       // Use global scope as default
-      object = (arguments.length === 1) ? this.global: object;
+      object = (arguments.length === 1) ? G: object;
 
       // Nothing to look up on undefined or null objects.
       if (!Espresso.hasValue(object)) {
@@ -107,12 +108,12 @@ Espresso = {
         object = getProperty(key.split('.', 1), object);
 
         // Eat up the dot.
-        key = key.slice(key.indexOf('.') + 1);
+        key = key.slice(iattr + 1);
 
         // Recurse
         return Espresso.getObjectFor(key, object);
 
-        // Done!
+      // Done!
       } else if (key === '') {
         return object;
       }

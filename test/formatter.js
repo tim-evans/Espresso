@@ -28,6 +28,9 @@ context("Formatter",
     formatting("'{0.name}' with '{ name: \"Bill Murray\" }' should return 'Bill Murray'"),
     formatting("'{name}' with '{ name: \"Bill Murray\" }' should return 'Bill Murray'"),
 
+    // Clean recursion inside specifiers
+    formatting("'{:{}}' with '5' and '\"_\"' should return '    _'"),
+
     // Syntax errors
     should("throw an error when encountering unmatched braces", function () {
       assert.raises(Error, Espresso.format.bind(Espresso),
@@ -51,5 +54,4 @@ context("Formatter",
   should("have a field named SPECIFIER", function () {
     assert.kindOf("regexp", Espresso.FORMAT_SPECIFIER);
   })
-
 );

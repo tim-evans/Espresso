@@ -78,7 +78,9 @@
       @param {String} template The template string to format the arguments with.
       @returns {String} The template formatted with the given leftover arguments.
      */
-    format: format,
+    format: function (template) {
+      return format(template, Espresso.A(arguments).slice(1));
+    },
 
     /**
       The specifier regular expression.
@@ -181,18 +183,19 @@
   }).into(Espresso);
 
   /** @ignore */  // Docs are above
-  function format(template) {
-    var args = Espresso.A(arguments).slice(1),
-        prev = '',
+  function format(template, args) {
+    var prev = '',
         buffer = [],
-        result, idx, len = template.length, ch;
+        result, idx = 0, len = template.length, ch;
 
-    for (idx = 0; idx < len; idx += 1) {
+    for (; idx < len; idx++) {
       ch = template.charAt(idx);
 
       if (prev === '}') {
         if (ch !== '}') {
           throw new Error("Unmatched closing brace.");
+
+        // Double-escaped closing brace.
         } else {
           buffer[buffer.length] = '}';
           prev = '';
@@ -200,10 +203,13 @@
         }
       }
 
+      // Begin template parsing
       if (ch === '{') {
         result = parseField(template.slice(idx + 1), args);
         buffer[buffer.length] = result[1];
-        idx += result[0];
+        idx += result[0]; // continue after the template.
+
+      // Normal string processing
       } else if (ch !== '}') {
         buffer[buffer.length] = ch;
       }
@@ -218,32 +224,44 @@
 
     @param {String} template The template string to format.
     @param {Array} args The arguments to parse the template string.
-    @returns {String} The formatted template.
+    @returns {Array} A tuple with the length it ate up and the formatted template.
    */
   function parseField(template, args) {
-    var fieldspec = [], result = null, idx = 0, ch, len = template.length;
-
-    for (; idx < len; idx += 1) {
+    var idx = 0, ch, len = template.length,
+        inSpecifier = false, iBrace = 0;
+    for (; idx < len; idx++) {
       ch = template.charAt(idx);
-      if (ch === '{') {
-        if (fieldspec.length === 0) {
-          return [1, '{'];
+      if (!inSpecifier) {
+        if (ch === ':') {
+          inSpecifier = true;
+          continue;
         }
 
-        result = parseField(template.slice(idx + 1), args);
-        if (!result[0]) {
-          return [idx, '{'];
-        } else {
-          idx += result[0];
-          fieldspec[fieldspec.length] = result[1];
+        // Double-escaped opening brace
+        if (ch === '{') {
+          if (idx === 0) {
+            return [1, '{'];
+          }
+        // Done formatting.
+        } else if (ch === '}') {
+          return [idx + 1, formatField(template.slice(0, idx), args)];
         }
-      } else if (ch === '}') {
-        return [idx + 1, formatField(fieldspec.join(''), args)];
+
+      // Format the template's specifier *after* the whole specifier is found.
       } else {
-        fieldspec[fieldspec.length] = ch;
+        if (ch === '{') {
+          iBrace++;
+        } else if (ch === '}') {
+          iBrace--;
+        }
+
+        // Spec is done.
+        if (iBrace === -1) {
+          return [idx + 1, formatField(format(template.slice(0, idx), args), args)];
+        }
       }
     }
-    return [template.length, fieldspec.join('')];
+    return [len, template];
   }
 
   /** @ignore
@@ -261,14 +279,19 @@
     spec = value.slice(iSpec + 1);
     value = value.slice(0, iSpec);
 
-    if (value !== '') {
+    // Got `{}`; shift off the first argument passed in.
+    if (value === '') {
+      res = args.shift();
+
+    // Return the object referenced by the property path given.
+    } else {
       res = Espresso.getObjectFor(value, args);
+
+      // Allow for references to object literals
       if (typeof res === "undefined" &&
           Array.isArray(args) && args.length === 1 && Espresso.hasValue(args[0])) {
         res = args[0].get ? args[0].get(value) : Espresso.getObjectFor(value, args[0]);
       }
-    } else {
-      res = args.shift();
     }
 
     if (!spec) {

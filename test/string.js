@@ -2,22 +2,6 @@
 
 context("String",
 
-  should("have an instance function named 'forEach'", function () {
-    assert.kindOf('function', "".forEach);
-  }),
-
-  context("forEach", 
-    should("iterate through all the characters in the string", function () {
-      var alpha = 'abcdefghijklmnopqrstuvwxyz',
-          i = 0;
-      alpha.forEach(function (chr, idx) {
-        assert.equal(i++, idx);
-        assert.equal(alpha.charAt(idx), chr);
-      });
-      assert.equal(i, alpha.length);
-    })
-  ),
-
   should("have an instance function named 'capitalize'", function () {
     assert.kindOf('function', "".capitalize);
   }),

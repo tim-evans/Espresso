@@ -3,31 +3,6 @@
 mix(/** @scope String.prototype */{
 
   /**
-    Iterates over every character in a string.
-
-    @param {Function} callback The callback to call for each element.
-    @param {Object} that The Object to use as this when executing the callback.
-
-    @returns {void}
-    @example
-      "boom".forEach(alert);
-      // => 'b'
-      // => 'o'
-      // => 'o'
-      // => 'm'
-   */
-  forEach: function (lambda, that) {
-    var i = 0, len = this.length;
-
-    if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".format(lambda));
-    }
-    for (; i < len; i += 1) {
-      lambda.call(that, this.charAt(i), i, this);
-    }
-  },
-
-  /**
     Capitalize a string.
 
     @returns {String} The string, capitalized.
@@ -172,7 +147,7 @@ mix(/** @scope String.prototype */{
       // => "banana"
 
     @example
-      alert("I love {pi:.2}".format({ pi: 22 / 7 }));
+      alert("I love {pi:.{precision}}".format({ pi: 22 / 7, precision: 2 }));
       // => "I love 3.14"
 
     @example
@@ -211,7 +186,7 @@ mix(/** @scope String.prototype */{
         maxWidth = match[7] || null, len, before, after, value;
 
     if (align) {
-      align = align.slice(-1);
+      align.slice(-1);
     }
 
     len = Math.max(minWidth, this.length);
@@ -232,9 +207,7 @@ mix(/** @scope String.prototype */{
     value = this;
     if (Espresso.hasValue(maxWidth)) {
       maxWidth = +maxWidth.slice(1);
-      if (!isNaN(maxWidth)) {
-        value = value.slice(0, maxWidth);
-      }
+      value = isNaN(maxWidth) ? value : value.slice(0, maxWidth);
     }
 
     return fill.repeat(before) + value + fill.repeat(after);

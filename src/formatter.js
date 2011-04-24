@@ -182,18 +182,24 @@
     FORMAT_SPECIFIER: /((.)?[><=\^])?([ +\-])?([#])?(0?)(\d+)?(.\d+)?([bcoxXeEfFG%ngd])?/
   }).into(Espresso);
 
+  // Error strings.
+  var error = "Unmatched {} brace for '{{}}'.",
+      unmatchedOpening = error.format('opening'),
+      unmatchedClosing = error.format('closing');
+
   /** @ignore */  // Docs are above
   function format(template, args) {
-    var prev = '',
+    var prev = '', ch,
         buffer = [],
-        result, idx = 0, len = template.length, ch;
+        result, idx = 0,
+        len = template.length;
 
     for (; idx < len; idx++) {
       ch = template.charAt(idx);
 
       if (prev === '}') {
         if (ch !== '}') {
-          throw new Error("Unmatched closing brace.");
+          throw new Error(unmatchedClosing.format(template.slice(0, idx)));
 
         // Double-escaped closing brace.
         } else {
@@ -241,7 +247,10 @@
         if (ch === '{') {
           if (idx === 0) {
             return [1, '{'];
+          } else {
+            throw new Error(unmatchedOpening.format(template.slice(0, idx)));
           }
+
         // Done formatting.
         } else if (ch === '}') {
           return [idx + 1, formatField(template.slice(0, idx), args)];
@@ -261,7 +270,7 @@
         }
       }
     }
-    return [len, template];
+    throw new Error(unmatchedOpening.format(template));
   }
 
   /** @ignore

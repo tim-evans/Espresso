@@ -35,6 +35,10 @@ context("Formatter",
     should("throw an error when encountering unmatched braces", function () {
       assert.raises(Error, Espresso.format.bind(Espresso),
                     "{answer", { answer: 42 });
+      assert.raises(Error, Espresso.format.bind(Espresso),
+                    "What is the answer to {}, { and {}?", 'life', 'the universe', 'and everything');
+      assert.raises(Error, Espresso.format.bind(Espresso),
+                    "What is the answer to {}, {} and }?", 'life', 'the universe', 'and everything');
     }),
 
     // Deferring specification formatting

@@ -31,7 +31,7 @@ assert.raises = function (err, lambda) {
       caught = false;
 
   try {
-    lambda.apply(args);    
+    lambda.apply(null, args);
   } catch (x) {
     caught = true;
     if (!(x instanceof err)) {
@@ -64,8 +64,8 @@ var formatting = function (spec) {
     for (var i = 0, len = args.length; i < len; i++) {
       args[i] = eval('(' + args[i].slice(1, -1) + ')');
     }
-    assert.equal(format.apply(null, [].concat(parts[1]).concat(args)), parts.slice(-1));
+    assert.equal(parts.slice(-1), format.apply(null, [].concat(parts[1]).concat(args)));
 
-    assert.equal(parts[1].format.apply(parts[1], args), parts.slice(-1));
+    assert.equal(parts.slice(-1), parts[1].format.apply(parts[1], args));
   });
 };

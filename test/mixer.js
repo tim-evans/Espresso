@@ -51,7 +51,7 @@ context("mix",
   ),
 
   should("throw an error when mixing into a null or undefined value", function () {
-    assert.raises(TypeError, mix({}).into, undefined);
+    assert.raises(TypeError, mix({}).into, void 0);
     assert.raises(TypeError, mix({}).into, null);
   }),
 

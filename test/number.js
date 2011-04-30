@@ -21,6 +21,7 @@ context("Number",
 
     // Test precision
     formatting("'{:.2}' with '22/7' should return '3.14'"),
+    formatting("'{:.0}' with '22/7' should return '3'"),
 
     // Test types
     formatting("'{:b}' with '10' should return '1010'"),

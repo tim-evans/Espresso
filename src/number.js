@@ -5,9 +5,6 @@ mix(/** @lends Number# */{
   /**
     Formatter for `Number`s.
 
-    Don't call this function- It's here for `Espresso.format`
-    to take care of buisiness for you.
-
     @param {String} spec The specifier to format the number as.
     @returns {String} The number formatted as specified.
    */
@@ -37,9 +34,7 @@ mix(/** @lends Number# */{
       }
     }
 
-    if (maxWidth) {
-      precision = +maxWidth.slice(1);
-    }
+    precision = maxWidth && +maxWidth.slice(1);
 
     switch (sign) {
     case '+':
@@ -55,15 +50,15 @@ mix(/** @lends Number# */{
       sign = "";
     }
 
-    if (precision && !isNaN(precision)) {
+    if (Espresso.hasValue(precision) && !isNaN(precision)) {
       // Opting to go with a more intuitive approach than Python...
       //  >>> "{.2}".format(math.pi)
       //  "3.1"
       // Which is waaay less intuitive than
-      //  > "{.2}".format(Math.PI)
+      //  >>> "{.2}".format(Math.PI)
       //  "3.14"
       value = +value.toFixed(precision);
-      precision++; // make floating point precision work like Python.
+      precision++;
     } else {
       precision = null;
     }
@@ -71,23 +66,26 @@ mix(/** @lends Number# */{
     value = Math.abs(value);
 
     switch (type) {
+    case 'd':
+      value = Math.round(this - 0.5).toString();
+      break;
     case 'b':
-      base = base ? '0b': '';
+      base = base ? '0b' : '';
       value = base + value.toString(2);
       break;
     case 'c':
       value = String.fromCharCode(value);
       break;
     case 'o':
-      base = base ? '0o': '';
+      base = base ? '0o' : '';
       value = base + value.toString(8);
       break;
     case 'x':
-      base = base ? '0x': '';
+      base = base ? '0x' : '';
       value = base + value.toString(16).toLowerCase();
       break;
     case 'X':
-      base = base ? '0x': '';
+      base = base ? '0x' : '';
       value = base + value.toString(16).toUpperCase();
       break;
     case 'e':
@@ -114,7 +112,6 @@ mix(/** @lends Number# */{
       value = value.toLocaleString();
       break;
     case 'g':
-    case 'd':
     case '':
     case void 0:
       value = String(value).toLowerCase();
@@ -127,6 +124,7 @@ mix(/** @lends Number# */{
       value = sign + value;      
     }
 
+    // Clean up the leftover spec and toss it over to String.prototype.__format__
     spec = (fill || '') + (align || '') + (minWidth || '') + (precision || '') + (type || '');
     value = String(value).__format__(spec);
 

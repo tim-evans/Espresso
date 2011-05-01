@@ -5,27 +5,15 @@ mix(/** @lends Function.prototype */{
   /**
     If the attribute being mixed in exists on the
     Object being mixed in, the function marked as
-    inferior will **not** be mixed in.
-
-    Also, if the base function is inferior, it
-    will be overriden.
+    inferior will **not** be mixed in. If the base
+    function is inferior, it will be overriden.
 
     @param {Function} [condition] If it returns `true`,
       the function is inferior. Otherwise, it isn't.
     @returns {Function} The reciever.
    */
   inferior: function (condition) {
-    this._ = this._ || {};
-    this.isInferior = arguments.length === 1 ?
-      (Espresso.isCallable(condition) ? condition() : condition) : true;
-    if (!this.isInferior) { return this; }
-
-    /** @ignore */
-    this._.inferior = function (template, value, key) {
-      return (!template[key] || template[key].isInferior) ? value: template[key];
-    };
-
-    return this;
+    return Espresso.inferior.apply(null, [].concat(this, Espresso.A(arguments)));
   },
 
   /**
@@ -42,40 +30,31 @@ mix(/** @lends Function.prototype */{
     @returns {Function} The reciever.
    */
   alias: function () {
-    this._ = this._ || {};
-
-    var aliases = Espresso.A(arguments),
-        idx = aliases.length, mixin;
-
-    /** @ignore */
-    this._.alias = function (template, value, key) {
-      delete value._.alias; // Remove this to prevent recursion.
-      while (idx--) {
-        mixin = {};
-        mixin[aliases[idx]] = value;
-        mix(mixin).into(template);
-      }
-      return value;
-    };
-
-    return this;
+    return Espresso.alias.apply(null, [].concat(this, Espresso.A(arguments)));
   },
 
   /**
-    Refine provides `super` functionality to a function.
-    When the decorated function is called, it will have it's
-    first argument bound to the function this one will override.
+    Refine allows for function-by-function refinements that
+    reopens the function implementation without editing the
+    original function's contents. With this, you can implement
+    OO constructs like abstract base classes.
 
-    If this function will not override anything, then the first
-    argument will be an empty function that returns nothing.
+    Refinements to a function recieve a prepended argument to
+    the argument list which is the original function that
+    is being refined (if there isn't an original function that's
+    being refined, a empty function will be provided for consistency).
 
-    The `super` function will always be in the current scope of
-    the function being called at the moment. Since the scope is
-    maintained for you, you **must** make sure that scope that the
-    first in the chain is what you want all down the chain. This
-    is the typical behaviour of `super` in other languages;
-    therefore it is done for you, and forces you into that
-    situation.
+    Calling the refined function should be done like so:
+
+        Machiatto = mix({
+          pull: function (original) {
+            var espresso = original();
+            return espresso + milk;
+          }.refine()
+        }).into(Espresso);
+
+    Provide arguments as-is, omit arguments, or add arguments
+    to the function. It'll be just like it's being called normally.
 
     NOTE: If you try to rebind the property using
           {@link Function#bind}, it will _not_ work.
@@ -99,7 +78,7 @@ mix(/** @lends Function.prototype */{
         return value.apply(this, [base.bind(this)].concat(Espresso.A(arguments)));
       };
 
-      // Copy over properties on `value`
+      // Copy over function properties
       for (var k in value) {
         if (value.hasOwnProperty(k)) {
           lambda[k] = value[k];

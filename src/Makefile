@@ -1,4 +1,4 @@
-SRC =	license.js core.js mixer.js function.js	\
+SRC =	license.js core.js mixer.js decorators/alias.js decorators/inferior.js function.js	\
 	mixins/enumerable.js mixins/subscribable.js mixins/observable.js	\
 	array.js string.js formatter.js number.js date.js object.js
 

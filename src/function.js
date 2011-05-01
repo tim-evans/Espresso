@@ -135,6 +135,9 @@ mix(/** @lends Function.prototype */{
   /**
     Marks the computed property as cacheable.
 
+    This means that the property will have it's value
+    cached for faster lookup.
+
     Using {@link Espresso.Observable#get} on the function multiple
     times will cache the response until it has been
     set again.
@@ -150,6 +153,9 @@ mix(/** @lends Function.prototype */{
 
   /**
     Marks the computed property as idempotent.
+
+    This means that setting the property multiple times with
+    the same value will have the same effect as setting it once.
 
     Using {@link Espresso.Observable#set} on the function multiple
     times will do act like setting the function once.
@@ -175,27 +181,16 @@ mix(/** @lends Function.prototype */{
     This implementation conforms to the ECMAScript 5
     standard.
 
-        var Person = mix({
-          name: 'nil',
-          greet: function (greeting) {
-            alert(greeting.format(this.name));
-          }
-        }).into({});
+        var barista = function (tpl) {
+          alert(tpl.format(this));
+          return arguments.callee.bind(this, "Order up! Your {} is ready!");
+        };
 
-        var wash = mix(Person).into({
-          name: 'Hoban Washburne'
-        });
+        orderUp = barista.call("espresso", "I would like an {}");
+        // -> "I would like an espresso."
 
-        var mal = mix(Person).into({
-          name: 'Malcolm Reynolds'
-        });
-
-        mal.greet("Hello, {}!");
-        // -> "Hello, Malcolm Reynolds!"
-
-        var greet = mal.greet.bind(wash);
-        greet("Howdy, {}!");
-        // -> "Howdy, Hoban Washburne!"
+        orderUp();
+        // -> "Order up! Your espresso is ready!"
 
     @param {Object} thisArg The value to bind `this` to on the function.
     @returns {Function} The function passed in, wrapped to ensure `this`

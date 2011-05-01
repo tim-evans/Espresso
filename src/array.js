@@ -1,4 +1,4 @@
-/*globals mix Enumerable Espresso */
+/*globals mix Espresso */
 
 /** @name Array
   @namespace
@@ -10,14 +10,17 @@
 mix(/** @scope Array */{
 
   /**
-    Returns whether the object passed in is an Array or not.
+    Checks whether the object passed in is an Array or not.
 
     @param {Object} obj The Object to test if it's an Array.
     @returns {Boolean} True if the obj is an array.
    */
-  isArray: function (obj) {
-    return (/array/i).test(Object.prototype.toString.call(obj));
-  }.inferior()
+  isArray: (function () {
+    var toString = Object.prototype.toString;
+    return function (obj) {
+      return toString.call(obj) === '[object Array]';
+    };
+  }()).inferior()
 
 }).into(Array);
 
@@ -34,18 +37,15 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @returns {void}
    */
   forEach: function (lambda, self) {
-    var len, k;
-
     // 3. Let len be ToUint32(lenValue).
-    len = this.length;
+    var len = this.length,
+    // 6. Let k be 0.
+        k = 0;
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".format(lambda));
     }
-
-    // 6. Let k be 0.
-    k = 0;
 
     // 7. Repeat, while k < len
     while (k < len) {
@@ -67,18 +67,17 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Shim for Internet Explorer, which provides no `indexOf` for
-    Array prototypes.
+    Shim for `indexOf`.
 
     @param {Object} o The object to test.
     @param {Number} [fromIndex] The index to start looking at for the element.
-    @returns {Number} The first index of an item.
+    @returns {Number} The first index of an item (or -1 if no matching item was found).
    */
   indexOf: function (o, fromIndex) {
     var i = 0, len = this.length;
     fromIndex = fromIndex || 0;
     i = fromIndex >= 0 ? fromIndex:
-                         Math.max(i, len - Math.abs(fromIndex));
+      Math.max(i, len - Math.abs(fromIndex));
     for (; i < len; i += 1) {
       if (o === this[i]) {
         return i;
@@ -125,17 +124,10 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Shim for Internet Explorer, which provides no reverse for
-    Array prototypes. Note: the Array is reversed in-place.
+    Shim for `reverse`.
+    Note: the Array is reversed in-place.
 
     @returns {Array} The array in reverse order.
-
-    @see ECMA-262 15.4.4.8 Array.prototype.reverse()
-
-    @example
-      var racecar = "racecar".split('');
-      alert(racecar.reverse().join(''));
-      // => 'racecar'
    */
   reverse: function () {
     var O, len, middle,
@@ -192,14 +184,11 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Shim for the last index that the object is found at.
-    Returns -1 if the item is not found.
+    Shim for `lastIndexOf`.
 
     @param searchElement The item to look for.
     @param [fromIndex] The index to begin searching from.
-    @returns {Number} The last index of an item.
-
-    @see ECMA-262 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex ])
+    @returns {Number} The last index of an item (or -1 if not found).
    */
   lastIndexOf: function (searchElement, fromIndex) {
     var k = 0, len = this.length, n;
@@ -245,20 +234,11 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   }.inferior(),
 
   /**
-    Returns a new array that's a one-dimensional flattening of this
-    array (recursively). That is, for every element that's an array,
-    extract its elements into the new array. If the optional level
-    arguments determines the level of recursion to flatten.
+    Returns a single-dimensional array from a
+    muti-dimensional array.
 
     @param {Number} [level] The maximum level of recursion.
     @returns {Array} The flattened array.
-    @example
-      var arr = [1, [2, [3, [4, [5]]]]];
-      alert(arr.flatten());
-      // => [1, 2, 3, 4, 5]
-
-      alert(arr.flatten(2));
-      // => [1, 2, 3, [4, [5]]];
    */
   flatten: function (level) {
     var ret = [], hasLevel = arguments.length !== 0;
@@ -282,13 +262,9 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
   },
 
   /**
-    Returns a new array by removing duplicate values in `this`.
+    Returns a new array by removing duplicate values.
 
     @returns {Array} The array with all duplicates removed.
-    @example
-      var magic = 'abracadabra'.split('').unique().join('');
-      alert(magic);
-      // => 'abrcd'
    */
   unique: function () {
     var o = {}, values = [];
@@ -326,11 +302,6 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     Removes all `undefined` or `null` values.
 
     @returns {Array} The array without any `undefined` or `null` values.
-    @example
-      var nil;
-
-      alert([undefined, null, nil, 'nada'].compact());
-      // => ['nada']
    */
   compact: function () {
     return this.without(null, void(0));

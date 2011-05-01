@@ -2,15 +2,15 @@
 
 (function ()/** @lends Espresso */{
   mix({
-    /** @function
-      @desc
+    /**
       Advanced String Formatting borrowed from the eponymous Python PEP.
-      It provides a flexible and powerful string formatting utility
-      that allows the your string templates to have meaning!
 
       The formatter follows the rules of Python [PEP 3101][pep]
-      (Advanced String Formatting) strictly, but takes into account
-      differences between JavaScript and Python.
+      (Advanced String Formatting) and following most of the
+      ECMAScript Harmony strawman specification for string formatting
+      (found [here][strawman]), with the major ommision being the
+      removal of the bracket `[]` notation for reasons of
+      consitency and performance.
 
       To use literal object notation, just pass in one argument for
       the formatter. This is optional however, as you can always
@@ -43,14 +43,13 @@
 
       Check out the examples given for some ideas on how to use it.
 
-      For developers wishing to have their own custom handler for the
-      formatting specifiers, you should write your own  `__format__` function
-      that takes the specifier in as an argument and returns the formatted
-      object as a string. All formatters are implemented using this pattern,
-      with a fallback to Object's `__format__`, which turns said object into
-      a string, then calls `__format__` on a string.
+      The formatting API uses the special `__format__` function on an
+      object to handle the interpretation of the format specifiers.
 
-      Consider the following example:
+      The default `__format__` handler is on `Object.prototype`.
+
+      For an example of a specialized format schema, consider the
+      following example:
 
           Localizer = mix({
             __format__: function (spec) {
@@ -74,6 +73,7 @@
           // => "こんにちは"
 
         [pep]: http://www.python.org/dev/peps/pep-3101/
+        [strawman]: http://wiki.ecmascript.org/doku.php?id=strawman:string_format_take_two
 
       @param {String} template The template string to format the arguments with.
       @returns {String} The template formatted with the given leftover arguments.

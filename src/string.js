@@ -111,9 +111,6 @@ mix(/** @scope String.prototype */{
     Returns true if the string is contained
     inside of the parent string.
 
-    Overrides the Enumerable contains to be something
-    more intuitive.
-
     @returns {Boolean} true if contained in the other string.
     @example
       alert('restraurant'.contains('aura'));
@@ -186,7 +183,7 @@ mix(/** @scope String.prototype */{
         maxWidth = match[7] || null, len, before, after, value;
 
     if (align) {
-      align.slice(-1);
+      align = align.slice(-1);
     }
 
     len = Math.max(minWidth, this.length);

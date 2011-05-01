@@ -123,5 +123,14 @@ context("mix",
     }).into({});
 
     assert.equal("It's a bird!\nIt's a plane!\nNo, it's Superman!", superman.greet());
+  }),
+
+  // Annotation API
+  should("be able to take annotations from objects", function () {
+    var called = false;
+    mix({
+      object: { _: { foo: function () { called = true; } } }
+    }).into({});
+    assert.isTrue(called);
   })
 );

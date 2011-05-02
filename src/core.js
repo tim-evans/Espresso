@@ -4,19 +4,14 @@
 
   Espresso is a JavaScript library to be used as a
   foundation library to create JavaScript libraries.
-  It also acts as a partial shim to ECMAScript 5,
-  falling back to native browser support when available.
+  This library is made with the to aid in creating
+  code that's pleasant to read, smaller, and
+  consequently, less buggy.
 
-  Espresso's goal is to provide a small library that
-  provides the basics that provide the power to
-  developers to produce sophisticated JavaScript libraries
-  that have clear, concise, and readable code, as well as
-  powerful consumer-facing APIs.
-
-  What does this mean? Less code and robust APIs!
-
-  This library provides the Publish-Subscribe pattern,
-  Key-Value Observing (a la Cocoa), and Ruby-like mixins.
+  Espresso provides a partial shim for ECMAScript 5,
+  falling back to native support when available, and
+  provides support for Enumerables, Observers, mixins,
+  and string formatting.
  */
 Espresso = {
 
@@ -24,18 +19,14 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '1.2.0',
+  VERSION: '1.4.0',
 
   /**
-    The global variable.
-
-    Used to be independant of what the global `this` is,
-    whether it's `window` or `document` in a browser or
-    `global` in Node.
+    The current environment's global variable.
 
     @type Object
    */
-  global: this,
+  G: (function () { return this; }()),
 
   /** @function
     @desc
@@ -56,16 +47,14 @@ Espresso = {
     expecially in the case of the arguments Array.
 
     @example
-      // Properties on the global scope need to be there-
-      // local scoped variables will not be found!
-      window.arthur = {
-        name: 'Arthur Dent',
-        species: 'Human',
-        description: 'Mostly Harmless'
+      // No scope assumes the object has is at the global scope.
+      window.environment = {
+        isBrowser: (function () {
+          return document in this;
+        }())
       };
 
-      alert(Espresso.getObjectFor("arthur.name"));
-      // => 'Arthur Dent'
+      alert(Espresso.getObjectFor("environment.isBrowser"));
 
     @example
       alert(Espresso.getObjectFor("lang.pr._coffee", {
@@ -130,8 +119,8 @@ Espresso = {
     @returns {Boolean} True if the value is not null and not undefined.
 
     @example
-      var unbound; // This variable is very lonely (and very much undefined)
-      undefined = 'all your base belong to us'; // Yes, you can rename undefined, but...
+      var unbound;
+      undefined = 'bwahahaha!';
       alert(Espresso.hasValue(unbound));
       // -> false
 
@@ -145,39 +134,28 @@ Espresso = {
   /** @function
     @desc
 
-    ECMAScript compliant isCallable.
-
-    > The abstract operation IsCallable determines if its argument,
-    > which must be an ECMAScript language value, is a callable function
-    > Object if it's an Object that hass a function called `call`.
-
-    This allows overriding `call` on an object, effectively making it
-    a callable object.
-
-    The one addition is ensuring that the method is also applicable,
-    (having the `apply` being callable too).
+    Check to see if the object has function-like properties.
+    If it's callable, then it's a function or an object with
+    `call` and `apply` functions (which are assumed to work
+    how the same ones work on {@link Function.prototype}).
 
     @param {Object} obj The Object to check whether it is callable or not.
     @returns {Boolean} True if the Object is callable, otherwise false.
    */
   isCallable: (function () {
-    var callable = /[Function|Object]/,
+    var isFunction = '[object Function]',
+        isObject = '[object Object]',
         toString = Object.prototype.toString;
     return function (obj) {
-      return !!(obj && callable.test(toString.call(obj)) &&
-                Espresso.hasValue(obj.call) &&
-                callable.test(toString.call(obj.call)) &&
-                Espresso.hasValue(obj.apply) &&
-                callable.test(toString.call(obj.apply)));
+      return obj && (toString.call(obj) === isFunction ||
+             (obj.call != null && toString.call(obj.call) === isFunction &&
+              obj.apply != null && toString.call(obj.apply) === isFunction));
     };
   }()),
 
   /** @function
     @desc
     Convert an iterable object into an Array.
-
-    This is used mostly for the arguments variable
-    in functions.
 
     @param {Object} iterable An iterable object with a length and indexing.
     @returns {Array} The object passed in as an Array.
@@ -187,8 +165,24 @@ Espresso = {
     return function (iterable) {
       return slice.apply(iterable);
     };
-  }())
+  }()),
+
+  /**
+    Defers execution until a later time (when the ready
+    queue is empty).
+
+    @param {Function} lambda The function to call.
+    @param {Array} args The arguments to apply to the function.
+    @param {Object} that The object to apply as `this`.
+   */
+  defer: function (lambda, args, that) {
+    that = that || lambda;
+    setTimeout(function () {
+      lambda.apply(that, args);
+    }, 0);
+  }
+
 };
 
 // Apply it at the global scope
-Espresso.global.Espresso = Espresso;
+Espresso.G.Espresso = Espresso;

@@ -2,9 +2,9 @@ mix(/** @scope Espresso */{
 
   /**
     If the attribute being mixed in exists on the
-    Object being mixed in, the function marked as
+    Object being mixed in, the object marked as
     inferior will **not** be mixed in. If the base
-    function is inferior, it will be overriden.
+    object is inferior, it will be overriden.
 
     @param {Object} target The target to apply the decorator to.
     @param {Object|Function} [condition] If it returns `true`,

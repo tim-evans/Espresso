@@ -51,7 +51,7 @@ mix(/** @lends Date# */{
 
         alert("The time is: {:c}.".format(new Date()));
 
-    Note: all times used with `format` are **NOT** in UTC.
+    Note: all times used with `format` are **not** in UTC time.
 
     @param {String} spec The specifier to transform the date to a formatted string.
     @returns {String} The Date transformed into a string as specified.

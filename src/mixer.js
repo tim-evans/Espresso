@@ -3,9 +3,9 @@
 /** @function
   @desc
 
-  `mix` provides a way to compose arbritrary objects together.
+  `mix` provides a way to combine arbritrary objects together.
 
-  The composition can be as simple as adding the properties on
+  The combination can be as simple as adding the properties on
   an object onto another:
 
       var Caffeinated = { isCaffeinated: true };
@@ -23,17 +23,20 @@
       caf.isDecaf();
       // -> false
 
-  `mix` takes this a bit furthur, allowing properties on the objects
-  being mixed in to be altered at mixin time using Espresso's decorator API.
+  `mix` takes this a bit furthur, allowing properties on the
+  objects being mixed in to be altered at mixin time using
+  Espresso's decorator API.
 
-  The API hook is adding an underscore (`_`) hash with a function
-  that can change the decorated object in place by returning the new
-  desired value. For examples on how to use the decorator API, look at
-  the `alias` and `inferior` for general purpose decorators and `refine`
-  for a funnction decorator.
+  The API hook is adding an underscore (`_`) hash with a
+  function that can change the decorated object in place by
+  returning the new desired value. For examples on how to use
+  the decorator API, look at the `alias` and `inferior` for
+  general purpose decorators and `refine` for a funnction
+  decorator.
 
-  Using `mix`, you can design an Object-Oriented `Class` object with
-  while still inheriting all of the decorators that `mix` applies:
+  Using `mix`, you can design an Object-Oriented `Class`
+  object with while still inheriting all of the decorators
+  that `mix` applies:
 
       Class = mix({
         extend: (function () {
@@ -108,4 +111,4 @@ mix = function () {
 };
 
 // Apply it at the global scope
-Espresso.global.mix = mix;
+Espresso.G.mix = mix;

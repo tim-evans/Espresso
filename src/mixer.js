@@ -1,4 +1,4 @@
-/*global mix Espresso */
+/*globals mix */
 
 /** @function
   @desc
@@ -87,7 +87,7 @@ mix = function () {
 
           // Function annotation API
           _ = value && value._;
-          if (Espresso.hasValue(_)) {
+          if (_ != null) {
             for (decorator in _) {
               if (_.hasOwnProperty(decorator)) {
                 value = _[decorator](target, value, key);
@@ -111,4 +111,4 @@ mix = function () {
 };
 
 // Apply it at the global scope
-Espresso.G.mix = mix;
+this.mix = mix;

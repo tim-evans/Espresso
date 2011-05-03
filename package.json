@@ -1,0 +1,9 @@
+{
+  "name"        : "espresso",
+  "description" : "A foundation library for writing JavaScript libraries.",
+  "keywords"    : ["foundation", "server", "client", "browser"],
+  "author"      : "Tim Evans <tim.evans@junctionnetworks.com>",
+  "repository"  : { "type": "git", "url": "git://github.com/tim-evans/Espresso.git" },
+  "main"        : "lib/espresso",
+  "version"     : "1.3.0"
+}

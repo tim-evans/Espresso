@@ -1,4 +1,4 @@
-/*global Espresso */
+/*globals Espresso */
 
 /** @namespace
 
@@ -20,13 +20,6 @@ Espresso = {
     @type String
    */
   VERSION: '1.4.0',
-
-  /**
-    The current environment's global variable.
-
-    @type Object
-   */
-  G: (function () { return this; }()),
 
   /** @function
     @desc
@@ -185,4 +178,4 @@ Espresso = {
 };
 
 // Apply it at the global scope
-Espresso.G.Espresso = Espresso;
+this.Espresso = Espresso;

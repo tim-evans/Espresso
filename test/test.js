@@ -58,7 +58,7 @@ assert.mixesIn = function (o) {
 var formatting = function (spec) {
   var format = Espresso.format.bind(Espresso);
   return should(spec, function () {
-    var parts = spec.match(/'([^']+)'( with '(.+)')? should return '([^']+)'/),
+    var parts = spec.match(/'([^']+)'( with '(.+)')? should return '([^']*)'/),
         args = parts[2] ? parts[2].match(/'([^']+)'/g): [];
 
     for (var i = 0, len = args.length; i < len; i++) {

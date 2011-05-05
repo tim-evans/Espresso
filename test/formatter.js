@@ -9,6 +9,8 @@ context("Formatter",
     // Regular arguments
     formatting("'{}' with '\"espresso\"' should return 'espresso'"),
     formatting("'{}' with '[0, 1, 2]' should return '0,1,2'"),
+    formatting("'{}' with 'null' should return ''"),
+    formatting("'{}' with 'void(0)' should return ''"),
 
     // Escaped braces
     formatting("'{{' should return '{'"),

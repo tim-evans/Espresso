@@ -307,6 +307,6 @@
       return res;
     }
 
-    return res.__format__ ? res.__format__(spec) : res;
+    return res != null && res.__format__ ? res.__format__(spec) : res;
   }
 }());

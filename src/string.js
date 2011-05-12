@@ -3,22 +3,6 @@
 mix(/** @scope String.prototype */{
 
   /**
-    Capitalize a string.
-
-    @returns {String} The string, capitalized.
-    @example
-      ['toast', 'cheese', 'wine'].forEach(function (food) {
-        alert(food.capitalize());
-      });
-      // => "Toast"
-      // => "Cheese"
-      // => "Wine"
-   */
-  capitalize: function () {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  },
-
-  /**
     Returns the string repeated the specified number of times.
 
     @param {Number} n The number of times to repeat this string.
@@ -51,59 +35,6 @@ mix(/** @scope String.prototype */{
     var left = /^\s\s*/, right = /\s\s*$/;
     return function () {
       return this.replace(left, '').replace(right, '');
-    };
-  }()).inferior(),
-
-
-  /** @function
-    @desc
-    Unescapes any escaped HTML strings into their readable
-    forms.
-
-    @returns {String} The unescaped string.
-   */
-  unescapeHTML: (function () {
-    // The entity table. It maps entity names to characters.
-    var entity = {
-      quot: '"',
-      lt:   '<',
-      gt:   '>',
-      amp:  '&',
-      apos: "'"
-    }, re = /&([^&;]+);/g;
-
-    // Replaces entity characters with their
-    // more commonplace cousins:
-    //  eg. &quot; => "
-    return function () {
-      return this.replace(re,
-        function (a, b) {
-          var r = entity[b];
-          return typeof r === 'string' ? r : a;
-        }
-      );
-    };
-  }()).inferior(),
-
-  /** @function
-    @desc
-    Replaces any reserved HTML characters into their
-    escaped form.
-
-    @returns {String} The escaped string.
-   */
-  escapeHTML: (function () {
-    var character = {
-      '<': '&lt;',
-      '>': '&gt;',
-      '&': '&amp;',
-      '"': '&quot;',
-      "'": '&apos;'
-    }, re = /[<>&"']/g;
-    return function () {
-      return this.replace(re, function (c) {
-        return character[c];
-      });
     };
   }()).inferior(),
 

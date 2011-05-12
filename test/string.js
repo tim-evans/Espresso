@@ -2,18 +2,6 @@
 
 context("String",
 
-  should("have an instance function named 'capitalize'", function () {
-    assert.kindOf('function', "".capitalize);
-  }),
-
-  context("capitalize",
-    should("capitalize the first character in the string", function () {
-      assert.equal(''.capitalize(), '');
-      assert.equal('a'.capitalize(), 'A');
-      assert.equal('hello, world!'.capitalize(), 'Hello, world!');
-    })
-  ),
-
   should("have an instance function named 'repeat'", function () {
     assert.kindOf('function', "".repeat);
   }),
@@ -49,58 +37,6 @@ context("String",
       assert.equal('  abc\n\t\r'.trim(), 'abc');
       assert.equal('\n\t\r   a b c  \n\t\r'.trim(), 'a b c');
       assert.equal('\n\t\r   a\tb\n\rc  \n\t\r'.trim(), 'a\tb\n\rc');
-    })
-  ),
-
-  should("have an instance function named 'unescapeHTML'", function () {
-    assert.kindOf('function', "".unescapeHTML);
-  }),
-
-  context("unescapeHTML",
-    should("turn &gt; to >", function () {
-      assert.equal("&gt; &gt;".unescapeHTML(), "> >");
-    }),
-
-    should("turn &lt; to <", function () {
-      assert.equal("&lt; &lt;".unescapeHTML(), "< <");
-    }),
-
-    should("turn &amp; to &", function () {
-      assert.equal("&amp; &amp;".unescapeHTML(), "& &");
-    }),
-
-    should("turn &quot; to \"", function () {
-      assert.equal("&quot; &quot;".unescapeHTML(), "\" \"");
-    }),
-
-    should("turn &apos; to '", function () {
-      assert.equal("&apos; &apos;".unescapeHTML(), "' '");
-    })
-  ),
-
-  should("have an instance function named 'escapeHTML'", function () {
-    assert.kindOf('function', "".escapeHTML);
-  }),
-
-  context("escapeHTML",
-    should("turn > to &gt;", function () {
-      assert.equal("> >".escapeHTML(), "&gt; &gt;");
-    }),
-
-    should("turn < to &lt;", function () {
-      assert.equal("< <".escapeHTML(), "&lt; &lt;");
-    }),
-
-    should("turn & to &amp;", function () {
-      assert.equal("& &".escapeHTML(), "&amp; &amp;");
-    }),
-
-    should("turn \" to &quot;", function () {
-      assert.equal("\" \"".escapeHTML(), "&quot; &quot;");
-    }),
-
-    should("turn ' to &apos;", function () {
-      assert.equal("' '".escapeHTML(), "&apos; &apos;");
     })
   ),
 

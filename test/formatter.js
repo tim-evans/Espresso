@@ -47,7 +47,7 @@ context("Formatter",
     should("defer the formatting spec to the object", function () {
       var spec = 'abc', template = "{:" + spec + "}", called = false;
       var obj = {
-        __format__: function (s) {
+        toFormat: function (s) {
           called = true;
           assert.equal(spec, s);
         }

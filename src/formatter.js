@@ -43,16 +43,16 @@
 
       Check out the examples given for some ideas on how to use it.
 
-      The formatting API uses the special `__format__` function on an
+      The formatting API uses the special `toFormat` function on an
       object to handle the interpretation of the format specifiers.
 
-      The default `__format__` handler is on `Object.prototype`.
+      The default `toFormat` handler is on `Object.prototype`.
 
       For an example of a specialized format schema, consider the
       following example:
 
           Localizer = mix({
-            __format__: function (spec) {
+            toFormat: function (spec) {
               return this[spec];
             }
           }).into({});
@@ -307,6 +307,6 @@
       return res;
     }
 
-    return res != null && res.__format__ ? res.__format__(spec) : res;
+    return res != null && res.toFormat ? res.toFormat(spec) : res;
   }
 }());

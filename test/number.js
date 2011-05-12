@@ -2,7 +2,7 @@
 
 context("Number",
 
-  // Tests __format__ implementation against PEP 3101
+  // Tests toFormat implementation against PEP 3101
   //   http://www.python.org/dev/peps/pep-3101/
   context("format",
     // Test alignment

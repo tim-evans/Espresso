@@ -8,7 +8,7 @@ mix(/** @lends Number# */{
     @param {String} spec The specifier to format the number as.
     @returns {String} The number formatted as specified.
    */
-  __format__: function (spec) {
+  toFormat: function (spec) {
     // Don't want Infinity, -Infinity and NaN in here!
     if (!isFinite(this)) {
       return this;
@@ -124,15 +124,15 @@ mix(/** @lends Number# */{
       value = sign + value;      
     }
 
-    // Clean up the leftover spec and toss it over to String.prototype.__format__
+    // Clean up the leftover spec and toss it over to String.prototype.toFormat
     spec = (fill || '') + (align || '') + (minWidth || '') + (precision || '') + (type || '');
-    value = String(value).__format__(spec);
+    value = String(value).toFormat(spec);
 
     if (align === '=') {
       value = sign + value;
     }
 
     return value;
-  }
+  }.inferior()
 
 }).into(Number.prototype);

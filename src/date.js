@@ -56,7 +56,7 @@ mix(/** @lends Date# */{
     @param {String} spec The specifier to transform the date to a formatted string.
     @returns {String} The Date transformed into a string as specified.
    */
-  __format__: (function () {
+  toFormat: (function () {
     return function (spec) {
       var result = [], i = 0;
 
@@ -132,7 +132,8 @@ mix(/** @lends Date# */{
       }
       return result.join('');
     };
-  }())
+  }()).inferior()
+
 }).into(Date.prototype);
 
 mix(/** @lends Date */{

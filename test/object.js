@@ -37,12 +37,12 @@ context("Object",
     })
   ),
 
-  should("have an instance function named __format__", function () {
-    assert.isTrue(Object.prototype.__format__);
+  should("have an instance function named toFormat", function () {
+    assert.isTrue(Object.prototype.toFormat);
   }),
 
-  context("__format__",
-    should("defer to String.prototype.__format__", function () {
+  context("toFormat",
+    should("defer to String.prototype.toFormat", function () {
       var o = {};
       assert.equal(Espresso.format("{}", o), "[object Object]");
 

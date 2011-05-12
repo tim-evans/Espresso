@@ -4,14 +4,14 @@ mix(/** @scope Object.prototype */{
 
   /**
     Formats an Object by coercing the Object to a
-    String and calling `__format__` on the string with
+    String and calling `toFormat` on the string with
     the format specifier passed in.
 
     @param {String} spec The string specification to format the object.
     @returns {String} The object as a formatted string according to the specification.
    */
-  __format__: function (spec) {
-    return String(this).__format__(spec);
+  toFormat: function (spec) {
+    return String(this).toFormat(spec);
   }.inferior()
 
 }).into(Object.prototype);

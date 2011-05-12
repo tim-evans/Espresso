@@ -62,7 +62,7 @@ mix(/** @scope String.prototype */{
     by the argument number (which is optional on a single argument).
 
     If you want to tie into this, and want to specify your own
-    format specifier, override __format__ on your object, and it will
+    format specifier, override toFormat on your object, and it will
     pass you in the specifier (after the colon). You return the
     string it should look like, and that's it!
 
@@ -106,7 +106,7 @@ mix(/** @scope String.prototype */{
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.
    */
-  __format__: function (spec) {
+  toFormat: function (spec) {
     var match = spec.match(Espresso.FORMAT_SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
@@ -139,6 +139,6 @@ mix(/** @scope String.prototype */{
     }
 
     return fill.repeat(before) + value + fill.repeat(after);
-  }
+  }.inferior()
 
 }).into(String.prototype);

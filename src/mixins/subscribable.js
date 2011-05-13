@@ -26,7 +26,7 @@
 
   @example
 
-      var Clock = mix(Espreso.Subscribable, {
+      var Clock = mix(Espresso.Subscribable, {
         tick: function () {
           this.time = Date.now();
         }

@@ -87,86 +87,6 @@ mix(/** @lends Function.prototype */{
       return lambda;
     };
     return this;
-  },
-
-  /**
-    Marks the function as a computed property.
-    You may now use the function for `get` and `set`.
-
-    @param {...} dependentKeys The property paths to be
-      notified when anything gets published to them.
-    @returns {Function} The reciever.
-   */
-  property: function () {
-    this._ = this._ || {};
-
-    this.isProperty = true;
-    this.dependentKeys = Array.prototype.slice.apply(arguments);
-
-    /** @ignore */
-    this._.property = function (template, value, key) {
-      var i = 0, len = value.dependentKeys.length, object, property, iProperty,
-          /** @ignore */
-          notifier = function () {
-            this.set(key);
-          };
-
-      for (i = 0; i < len; i += 1) {
-        property = value.dependentKeys[i];
-        object = template;
-
-        if (property.indexOf('.') !== -1) {
-          iProperty = property.lastIndexOf('.');
-          object = Espresso.getObjectFor(property.slice(0, iProperty));
-          property = property.slice(iProperty + 1);
-        }
-
-        if (object && object.subscribe && object.publish) {
-          object.subscribe(property, notifier, { synchronous: true });
-        }
-      }
-
-      return value;
-    };
-
-    return this;
-  },
-
-  /**
-    Marks the computed property as cacheable.
-
-    This means that the property will have it's value
-    cached for faster lookup.
-
-    Using {@link Espresso.Observable#get} on the function multiple
-    times will cache the response until it has been
-    set again.
-
-    @returns {Function} The reciever.
-   */
-  cacheable: function () {
-    this.isCacheable = true;
-    this.isProperty = true;
-
-    return this;
-  },
-
-  /**
-    Marks the computed property as idempotent.
-
-    This means that setting the property multiple times with
-    the same value will have the same effect as setting it once.
-
-    Using {@link Espresso.Observable#set} on the function multiple
-    times will do act like setting the function once.
-
-    @returns {Function} The reciever.
-   */
-  idempotent: function () {
-    this.isIdempotent = true;
-    this.isProperty = true;
-
-    return this;
   }
 
 }).into(Function.prototype);
@@ -213,7 +133,7 @@ mix(/** @lends Function.prototype */{
     A = Espresso.A(arguments).slice(1);
 
     var bound = function () {
-      
+
       if (this instanceof bound) {
         // 15.3.4.5.2 [[Construct]]
         // When the [[Construct]] internal method of a function object, F,

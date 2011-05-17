@@ -88,6 +88,49 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
   isObservable: true,
 
   /**
+    Initialize the observer. This needs to be explicitly
+    called to activate property observing.
+   */
+  initObservable: function () {
+    if (this.__isObservableInitialized__) { return; }
+    this.__isObservableInitialized__ = true;
+
+    var key, property, i = 0, len, dependents, meta = this.__espmeta__,
+        dependent, iDependent, object, notifier = function (key) {
+          this.set(key);
+        };
+
+    for (key in meta) { // Iterate over all keys
+      if (meta.hasOwnProperty(key) && meta[key].referenceKey) {
+        property = this[key];
+
+        if (Espresso.isCallable(property) &&
+            property.isProperty && property.dependentKeys) {
+
+          dependents = property.dependentKeys;
+          len = dependents.length;
+          for (i = 0; i < len; i += 1) {
+            dependent = dependents[i];
+            object = this;
+
+            // If it's a property path, follow the chain.
+            if (dependent.indexOf('.') !== -1) {
+              iDependent = dependent.lastIndexOf('.');
+              object = Espresso.getObjectFor(dependent.slice(0, iDependent));
+              dependent = dependent.slice(iDependent + 1);
+            }
+
+            // Subscribe to the events.
+            if (object && object.isObservable && object.isSubscribable) {
+              object.subscribe(dependent, notifier.bind(this, key), { synchronous: true });
+            }
+          }
+        }
+      }
+    }
+  },
+
+  /**
     Get a value on an object.
 
     Use this instead of subscript (`[]`) or dot notation
@@ -103,7 +146,8 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
    */
   get: function (k) {
     k = k.toString();
-    var key = k, value, idx = key.lastIndexOf('.'), object;
+    var key = k, value, idx = key.lastIndexOf('.'), object,
+        info, refKey;
     if (idx === -1) {
       object = this;
     } else {
@@ -111,11 +155,23 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
       key = key.slice(idx + 1);
     }
 
+    info = this.__espmeta__[key];
+    refKey = key;
+    if (info) {
+      if (info.closureKey) {
+        key = info.closureKey;
+      }
+
+      if (info.referenceKey) {
+        refKey = info.referenceKey;
+      }
+    }
+
     if (object) {
       value = object[key];
       if (typeof value === "undefined") {
         if (Espresso.isCallable(object.unknownProperty)) {
-          value = object.unknownProperty.call(object, key);
+          value = object.unknownProperty.call(object, refKey);
         } else {
           value = this.unknownProperty(k);
         }
@@ -123,11 +179,11 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         if (value.isCacheable) {
           object.__cache__ = object.__cache__ || {};
           if (!object.__cache__.hasOwnProperty(key)) {
-            object.__cache__[key] = value.call(object, key);
+            object.__cache__[key] = value.call(object, refKey);
           }
           return object.__cache__[key];
         }
-        value = value.call(object, key);
+        value = value.call(object, refKey);
       }
       return value;
     }
@@ -152,12 +208,25 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
   set: function (k, v) {
     k = k.toString();
 
-    var property, key = k, value = v, idx = key.lastIndexOf('.'), object, result, didChange = false;
+    var property, key = k, value = v, idx = key.lastIndexOf('.'), object,
+        result, didChange = false, info, refKey;
     if (idx === -1) {
       object = this;
     } else {
       object = Espresso.getObjectFor(key.slice(0, idx), this);
       key = key.slice(idx + 1);
+    }
+
+    info = this.__espmeta__[key];
+    refKey = key;
+    if (info) {
+      if (info.closureKey) {
+        key = info.closureKey;
+      }
+
+      if (info.referenceKey) {
+        refKey = info.referenceKey;
+      }
     }
 
     if (object) {
@@ -167,12 +236,12 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         if (property.isIdempotent) {
           object.__value__ = object.__value__ || {};
           if (object.__value__[key] !== value) {
-            result = property.call(object, key, value);
+            result = property.call(object, refKey, value);
             didChange = true;
           }
           object.__value__[key] = value;
         } else {
-          result = property.call(object, key, value);
+          result = property.call(object, refKey, value);
           didChange = true;
         }
 
@@ -182,18 +251,18 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         }
       } else if (typeof property === "undefined") {
         if (Espresso.isCallable(object.unknownProperty)) {
-          object.unknownProperty.call(object, key, value);
+          object.unknownProperty.call(object, refKey, value);
         } else {
           this.unknownProperty(k, v);
         }
       } else {
-        object[key] = value;
+        object[refKey] = value;
       }
 
       // Expected behaviour is strange unless publishes
       // are done immediately.
       if (object.publish && !(property && property.isIdempotent && !didChange)) {
-        object.publish(key, value);
+        object.publish(refKey, value);
       }
     } else {
       this.unknownProperty(k, v);

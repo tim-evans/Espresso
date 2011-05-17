@@ -3,7 +3,7 @@
 var observable, callCount;
 context("Espresso.Observable",
   setup(function () {
-    observable = mix(Espresso.Observable).into({
+    observable = mix(Espresso.Observable, {
       property: 'a',
 
       nestedProperty: {
@@ -18,21 +18,22 @@ context("Espresso.Observable",
 
       _value: 'c',
 
-      computedProperty: function (k, v) {
+      computedProperty: Espresso.property(function (k, v) {
         if (arguments.length === 2) {
           this._value = v;
         }
         return this._value;
-      }.property(),
+      }),
 
       _nestedValue: {
         wont: { work: 'd' }
       },
 
-      nestedComputedProperty: function () {
+      nestedComputedProperty: Espresso.property(function () {
         return this._nestedValue;
-      }.property()
-    });
+      })
+    }).into({});
+    observable.initObservable();
   }),
 
   should("be defined", function () {
@@ -88,7 +89,7 @@ context("Espresso.Observable",
           called = true;
         }
       }).into({});
-
+      observable.initObservable();
       o.get('foo');
       assert.isTrue(called);
     }),
@@ -98,21 +99,22 @@ context("Espresso.Observable",
         callCount = 0;
 
         observable = mix(Espresso.Observable, {
-          cacheableProperty: function (k, v) {
+          cacheableProperty: Espresso.property(function (k, v) {
             callCount++;
             return v;
-          }.cacheable(),
+          }).cacheable(),
 
           foo: 'bar',
 
-          dependentCacheableProperty: function (k, v) {
+          dependentCacheableProperty: Espresso.property(function (k, v) {
             return "{}-{}".format(this.get('foo'), callCount++);
-          }.cacheable().property('foo'),
+          }, 'foo').cacheable(),
 
-          otherDependentCacheableProperty: function (k, v) {
+          otherDependentCacheableProperty: Espresso.property(function (k, v) {
             return "{}-{}".format(this.get('foo'), callCount++);
-          }.property('foo').cacheable()
+          }, 'foo').cacheable()
         }).into({});
+        observable.initObservable();
       }),
 
       should("call the property only ONCE for the first `get`", function () {
@@ -200,14 +202,15 @@ context("Espresso.Observable",
         observable = mix(Espresso.Observable, {
           _value: null,
 
-          idempotentProperty: function (k, v) {
+          idempotentProperty: Espresso.property(function (k, v) {
             if (arguments.length === 2) {
               callCount++;
               this._value = v;
             }
             return this._value;
-          }.idempotent()
+          }).idempotent()
         }).into({});
+        observable.initObservable();
       }),
 
       should("call the property only ONCE for the first `set` using the same value", function () {

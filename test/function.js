@@ -150,23 +150,23 @@ context("Function",
     )
   ),
 
-  should("have a function named 'property'", function () {
-    assert.kindOf("function", Function.prototype.property);
+  should("have a decorator named 'property'", function () {
+    assert.kindOf("function", Espresso.property);
   }),
 
   context("property",
     should("annotate the function to mark it as 'isProperty'", function () {
-      var lambda = function () {}.property();
+      var lambda = Espresso.property(function () {});
       assert.isTrue(lambda.isProperty);
     }),
 
     should("annotate the function to mark it's dependentKeys", function () {
-      var lambda = function () {}.property();
+      var lambda = Espresso.property(function () {});
       assert.equal(lambda.dependentKeys.length, 0);
     }),
 
     should("annotate the function to mark it's dependentKeys with arguments provided to property", function () {
-      var lambda = function () {}.property('a', 'b', 'c');
+      var lambda = Espresso.property(function () {}, 'a', 'b', 'c');
       assert.equal(lambda.dependentKeys.length, 3);
       assert.isTrue(lambda.dependentKeys.indexOf('a') !== -1);
       assert.isTrue(lambda.dependentKeys.indexOf('b') !== -1);
@@ -175,17 +175,33 @@ context("Function",
   ),
 
   should("have a function named 'cacheable'", function () {
-    assert.kindOf("function", Function.prototype.cacheable);
+    assert.kindOf("function", Espresso.property(function () {}).cacheable);
   }),
 
   context("cacheable",
     should("annotate the function to mark it as 'isCacheable'", function () {
-      var lambda = function () {}.cacheable();
+      var lambda = Espresso.property(function () {}).cacheable();
       assert.isTrue(lambda.isCacheable);
     }),
 
     should("annotate the function to mark it as 'isProperty'", function () {
-      var lambda = function () {}.cacheable();
+      var lambda = Espresso.property(function () {}).cacheable();
+      assert.isTrue(lambda.isProperty);
+    })
+  ),
+
+  should("have a function named 'idempotent'", function () {
+    assert.kindOf("function", Espresso.property(function () {}).idempotent);
+  }),
+
+  context("idempotent",
+    should("annotate the function to mark it as 'isIdempotent'", function () {
+      var lambda = Espresso.property(function () {}).idempotent();
+      assert.isTrue(lambda.isIdempotent);
+    }),
+
+    should("annotate the function to mark it as 'isProperty'", function () {
+      var lambda = Espresso.property(function () {}).idempotent();
       assert.isTrue(lambda.isProperty);
     })
   ),

@@ -185,7 +185,10 @@
   // Error strings.
   var error = "Unmatched {} brace for '{{}}'.",
       unmatchedOpening = error.format('opening'),
-      unmatchedClosing = error.format('closing');
+      unmatchedClosing = error.format('closing'),
+      openingBrace = '{',
+      closingBrace = '}',
+      specifierSeparator = ':';
 
   /** @ignore */  // Docs are above
   function format(template, args) {
@@ -197,26 +200,26 @@
     for (; idx < len; idx++) {
       ch = template.charAt(idx);
 
-      if (prev === '}') {
-        if (ch !== '}') {
+      if (prev === closingBrace) {
+        if (ch !== closingBrace) {
           throw new Error(unmatchedClosing.format(template.slice(0, idx)));
 
         // Double-escaped closing brace.
         } else {
-          buffer[buffer.length] = '}';
+          buffer[buffer.length] = closingBrace;
           prev = '';
           continue;
         }
       }
 
       // Begin template parsing
-      if (ch === '{') {
+      if (ch === openingBrace) {
         result = parseField(template.slice(idx + 1), args);
         buffer[buffer.length] = result[1];
         idx += result[0]; // continue after the template.
 
       // Normal string processing
-      } else if (ch !== '}') {
+      } else if (ch !== closingBrace) {
         buffer[buffer.length] = ch;
       }
       prev = ch;
@@ -238,29 +241,29 @@
     for (; idx < len; idx++) {
       ch = template.charAt(idx);
       if (!inSpecifier) {
-        if (ch === ':') {
+        if (ch === specifierSeparator) {
           inSpecifier = true;
           continue;
         }
 
         // Double-escaped opening brace
-        if (ch === '{') {
+        if (ch === openingBrace) {
           if (idx === 0) {
-            return [1, '{'];
+            return [1, openingBrace];
           } else {
             throw new Error(unmatchedOpening.format(template.slice(0, idx)));
           }
 
         // Done formatting.
-        } else if (ch === '}') {
+        } else if (ch === closingBrace) {
           return [idx + 1, formatField(template.slice(0, idx), args)];
         }
 
       // Format the template's specifier *after* the whole specifier is found.
       } else {
-        if (ch === '{') {
+        if (ch === openingBrace) {
           iBrace++;
-        } else if (ch === '}') {
+        } else if (ch === closingBrace) {
           iBrace--;
         }
 
@@ -282,7 +285,7 @@
     @returns {String} The formatted template.
    */
   function formatField(value, args) {
-    var iSpec = value.indexOf(':'),
+    var iSpec = value.indexOf(specifierSeparator),
         spec, res;
     iSpec = iSpec === -1 ? value.length : iSpec;
     spec = value.slice(iSpec + 1);

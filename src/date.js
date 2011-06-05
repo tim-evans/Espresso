@@ -58,21 +58,23 @@ mix(/** @lends Date# */{
    */
   toFormat: (function () {
     return function (spec) {
-      var result = [], i = 0;
+      var result = [], i = 0,
+          day = Espresso.days[this.getDay()],
+          month = Espresso.months[this.getMonth()];
 
       for (; i < spec.length; i += 1) {
         switch (spec.charAt(i)) {
         case 'a':
-          result[result.length] = Espresso.days[this.getDay()].slice(0, 3);
+          result[result.length] = day.slice(0, 3);
           break;
         case 'A':
-          result[result.length] = Espresso.days[this.getDay()];
+          result[result.length] = day;
           break;
         case 'b':
-          result[result.length] = Espresso.months[this.getMonth()].slice(0, 3);
+          result[result.length] = month.slice(0, 3);
           break;
         case 'B':
-          result[result.length] = Espresso.months[this.getMonth()];
+          result[result.length] = month;
           break;
         case 'c':
           result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".format(this, this.getDate());
@@ -152,7 +154,9 @@ mix(/** @lends Date */{
 mix(/** @lends Espresso */{
 
   /**
-    Strings for the days of the week.
+    Strings for the days of the week, starting
+    with `'Sunday'`.
+
     If you want to use a different locale,
     set the `days` string to reflect the locale's.
 
@@ -161,7 +165,8 @@ mix(/** @lends Espresso */{
   days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 
   /**
-    Strings for the months of the week.
+    Strings for the months of the year.
+
     If you want to use a different locale,
     set the `months` string to reflect the locale's.
 

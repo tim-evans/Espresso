@@ -128,36 +128,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-    Converts an enumerable into an Array.
-
-    @returns {Array} The enumerable as an Array.
-    @example
-      var range = mix(Espresso.Enumerable, {
-        begin: 0,
-        end: 0,
-
-        forEach: function (lambda, self) {
-          var i = 0;
-          for (var v = this.begin; v <= this.end; v++) {
-            lambda.call(self, v, i++, this);
-          }
-        },
-
-        create: function (begin, end) {
-          return mix(this, { begin: begin, end: end }).into({});
-        }
-      }).into({});
-
-      alert(range.create(0, 200).toArray());
-      // -> [0, 1, 2, 3, 4, 5, ... 198, 199, 200]
-   */
-  toArray: function () {
-    return this.map(function (v) {
-      return v;
-    });
-  }.inferior(),
-
-  /**
     Returns all elements on the Enumerable for which the
     input function returns true for.
 
@@ -221,33 +191,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     return this.reduce(function (every, v, k, t) {
       return every || lambda.call(self, v, k, t);
     }, false);
-  }.inferior(),
-
-  /**
-    Returns the first value for which `lambda` returns `true`.
-    If nothing is found, `find` will return `ifnone`, a default
-    value provided as an optional argument or `undefined` if
-    `ifnone` was not provided.
-
-    @param {Function} lambda The lambda that returns something truthy or falsy.
-      @param {Object} lambda.value The value of the enumerated item.
-      @param {Object} lambda.key The key of the enumerated item.
-      @param {Object} lambda.self The object being enumerated over.
-    @param {Object} [ifnone] The value to return if nothing is found.
-    @returns {Object} The first object to which `lambda` returns something truthy.
-   */
-  find: function (lambda, ifnone) {
-    if (!Espresso.isCallable(lambda)) {
-      throw new TypeError("{} is not callable.".format(lambda));
-    }
-
-    var finished = false;
-    return this.reduce(function (result, v, k, that) {
-      if (!finished && lambda(v, k, that)) {
-        finished = true;
-        result = v;
-      }
-      return result;
-    }, ifnone);
   }.inferior()
+
 };

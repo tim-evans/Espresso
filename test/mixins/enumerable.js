@@ -110,22 +110,6 @@ context("Espresso.Enumerable",
     })
   ),
 
-  should("have a function named 'toArray'", function () {
-    assert.kindOf("function", Espresso.Enumerable.toArray);
-  }),
-
-  context("toArray",
-    should("return the values of the enumerable as an Array", function () {
-      var arr = enumerable.toArray();
-      assert.kindOf("array", arr);
-      assert.equal(10, arr.length);
-
-      for (var i = 0, len = arr.length; i < len; i++) {
-        assert.equal(i, arr[i]);
-      }
-    })
-  ),
-
   should("have a function named 'filter'", function () {
     assert.kindOf("function", Espresso.Enumerable.filter);
   }),
@@ -215,42 +199,6 @@ context("Espresso.Enumerable",
       enumerable.some(function () {
         assert.equal('foo', this.toString());
       }, 'foo');
-    })
-  ),
-
-  should("have a function named 'find'", function () {
-    assert.kindOf("function", Espresso.Enumerable.find);
-  }),
-
-  context("find",
-    should("thow an error if no function is provided", function () {
-      assert.raises(Error, Espresso.Enumerable.find);
-    }),
-
-    should("return an Array", function () {
-      assert.isTrue(Array.isArray(enumerable.filter(function () {})));
-    }),
-
-    should("call the function with 3 arguments", function () {
-      enumerable.find(function () {
-        assert.equal(arguments.length, 3);
-      });
-    }),
-
-    should("return the first element for which the function returns `true`", function () {
-      assert.equal(enumerable.find(function () {
-        return true;
-      }), 0);
-
-      assert.equal(enumerable.find(function (v) {
-        return v == 5;
-      }), 5);
-    }),
-
-    should("have an optional second argument that is the default value (if nothing return strue)", function () {
-      assert.equal(enumerable.find(function () {
-        return false;
-      }, 'foo'), 'foo');
     })
   )
 );

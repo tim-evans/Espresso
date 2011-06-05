@@ -31,19 +31,6 @@ mix(/** @scope String.prototype */{
   }()).inferior(),
 
   /**
-    Returns true if the string is contained
-    inside of the parent string.
-
-    @returns {Boolean} true if contained in the other string.
-    @example
-      alert('restraurant'.contains('aura'));
-      // => true
-   */
-  contains: function (str) {
-    return this.indexOf(str) !== -1;
-  },
-
-  /**
     Format formats a string in the vein of Python's format,
     Ruby #{templates}, and .NET String.Format.
 

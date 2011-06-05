@@ -40,24 +40,6 @@ context("String",
     })
   ),
 
-  should("have an instance function named 'contains'", function () {
-    assert.kindOf('function', "".contains);
-  }),
-
-  context("contains",
-    should("return true when indexOf(X) is not -1", function () {
-      assert.isTrue('abacadabra'.contains('abra'));
-      assert.isTrue('abacadabra'.contains('cad'));
-      assert.isTrue('abacadabra'.contains('abaca'));
-    }),
-
-    should("return false when indexOf(X) is -1", function () {
-      assert.isFalse('abacadabra'.contains('z'));
-      assert.isFalse('abacadabra'.contains('abacab'));
-      assert.isFalse('abacadabra'.contains('y'));
-    })
-  ),
-
   // Tested with Espresso.Formatter
   should("have an instance function named 'format'", function () {
     assert.kindOf('function', "".format);

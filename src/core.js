@@ -138,11 +138,12 @@ Espresso = {
   isCallable: (function () {
     var isFunction = '[object Function]',
         isObject = '[object Object]',
-        toString = Object.prototype.toString;
+        toString = Object.prototype.toString,
+        nil = null;
     return function (obj) {
       return obj && (toString.call(obj) === isFunction ||
-             (obj.call != null && toString.call(obj.call) === isFunction &&
-              obj.apply != null && toString.call(obj.apply) === isFunction));
+             (obj.call != nil && toString.call(obj.call) === isFunction &&
+              obj.apply != nil && toString.call(obj.apply) === isFunction));
     };
   }()),
 

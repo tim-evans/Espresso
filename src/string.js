@@ -23,12 +23,13 @@ mix(/** @scope String.prototype */{
     @returns {String} The string with leading and trailing whitespace removed.
     @see <a href="http://blog.stevenlevithan.com/archives/faster-trim-javascript">Faster JavaScript Trim</a>
    */
-  trim: (function () {
-    var left = /^\s\s*/, right = /\s\s*$/;
-    return function () {
-      return this.replace(left, '').replace(right, '');
-    };
-  }()).inferior(),
+  trim: function () {
+    var s = this.replace(/^\s\s*/, ''),
+        ws = /\s/,
+        idx = this.length;
+    while (ws.test(s.charAt(--idx)));
+    return s.slice(0, i + 1);
+  }.inferior(),
 
   /**
     Format formats a string in the vein of Python's format,

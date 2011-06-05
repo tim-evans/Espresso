@@ -141,7 +141,8 @@ mix(/** @lends Function.prototype */{
     };
   },
 
-  /**
+  /** @function
+    @desc
     Bind the value of `this` on a function before hand,
     with any extra arguments being passed in as initial
     arguments.

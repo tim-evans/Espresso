@@ -218,33 +218,6 @@ context("Espresso.Enumerable",
     })
   ),
 
-  should("have a function named 'extract'", function () {
-    assert.kindOf("function", Espresso.Enumerable.extract);
-  }),
-
-  context("extract",
-    setup(function () {
-      enumerable = mix(Espresso.Enumerable).into({
-        forEach: function (lambda, self) {
-          var values = ['foo', 'bar', 'baz', 'qux', 'quux'];
-          for (var i = 0, len = values.length; i < len; i++) {
-            lambda.call(self || this, values[i], i, this);
-          }
-        }
-      });
-    }),
-
-    should("return all values for the provided keys", function () {
-      var values = enumerable.extract(0, 2, 4, 5);
-      assert.isTrue(values.indexOf('foo') !== -1);
-      assert.isFalse(values.indexOf('bar') !== -1);
-      assert.isTrue(values.indexOf('baz') !== -1);
-      assert.isFalse(values.indexOf('qux') !== -1);
-      assert.isTrue(values.indexOf('quux') !== -1);
-      assert.equal(values.length, 3);
-    })
-  ),
-
   should("have a function named 'find'", function () {
     assert.kindOf("function", Espresso.Enumerable.find);
   }),
@@ -278,31 +251,6 @@ context("Espresso.Enumerable",
       assert.equal(enumerable.find(function () {
         return false;
       }, 'foo'), 'foo');
-    })
-  ),
-
-  should("have a function named 'contains'", function () {
-    assert.kindOf("function", Espresso.Enumerable.contains);
-  }),
-
-  context("contains",
-    should("return 'true' if the item is contained in the enumerable", function () {
-      enumerable.forEach(function (v) {
-        assert.isTrue(enumerable.contains(v));
-      });
-    }),
-
-    should("return 'false' if the item is not contained in the enumerable", function () {
-      var nil;
-      assert.isFalse(enumerable.contains('foo'));
-      assert.isFalse(enumerable.contains(false));
-      assert.isFalse(enumerable.contains(nil));
-      assert.isFalse(enumerable.contains(null));
-    }),
-
-    should("deal with multiple variables", function () {
-      assert.isFalse(enumerable.contains('0', 1, 2, 3, 4, 5));
-      assert.isTrue(enumerable.contains.apply(enumerable, enumerable.toArray()));
     })
   )
 );

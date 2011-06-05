@@ -1,9 +1,13 @@
 /*globals Espresso mix */
 
 /** @namespace
+  This mixin defines an enumerable interface that is
+  based off of the ECMAScript 5 specification.
 
-  The Enumerable mixin provides common operations
-  on enumerations of objects.
+  If any of the functions on this interface are defined
+  by the host object, they will *not* be applied, with the
+  assumption that the host object has a better implementation
+  and the same characteristics.
 
   @requires `forEach`- the enumerator over the collection.
  */
@@ -17,7 +21,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
 
   /** @function
     @desc
-    Iterates over the items on the Enumerable.
+    Iterates over each item on the Enumerable.
 
     The Function `forEach` should follow the specification as
     defined in the ECMAScript 5 standard. All function using
@@ -220,20 +224,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
   }.inferior(),
 
   /**
-    Returns all values for the keys provided.
-
-    @param {...} keys The keys to extract values from.
-    @returns {Object[]} The values for the keys provided (not.
-   */
-  extract: function () {
-    var keys = Espresso.A(arguments);
-    
-    return this.filter(function (v, k) {
-      return keys.indexOf(k) !== -1;
-    });
-  },
-
-  /**
     Returns the first value for which `lambda` returns `true`.
     If nothing is found, `find` will return `ifnone`, a default
     value provided as an optional argument or `undefined` if
@@ -259,26 +249,5 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       }
       return result;
     }, ifnone);
-  },
-
-  /**
-    Whether or not the {@link Espresso.Enumerable} contains
-    the variables.
-
-    @param {...} values The values to check whether they exist
-      on the Enumerable.
-   */
-  contains: function (val) {
-    var args = Espresso.A(arguments);
-
-    if (args.length > 1) {
-      return args.every(function (v, k) {
-        return this.contains(v);
-      }, this);
-    } else {
-      return this.reduce(function (contained, v, k) {
-        return contained || v === val;
-      }, false);
-    }
-  }
+  }.inferior()
 };

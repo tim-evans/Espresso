@@ -219,7 +219,7 @@ context("Function",
     should("properly bind `this` for constructors", function () {
       var that = "foo", K;
       function Class() {
-        assert.equal(that, this);
+        assert.isTrue(this instanceof Class);
       }
       K = Class.bind(that);
       new K();

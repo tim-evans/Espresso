@@ -9,15 +9,7 @@ mix(/** @scope String.prototype */{
     @param {String} [separator] The separator to put between each iteration of the string.
     @returns {String} The string repeated n times.
     @example
-      var tourettes = function (word) {
-        var out = "";
-        for (var i = 0, len = word.length; i < len; i++) {
-          out += word.charAt(i).repeat(Math.floor(Math.random() * 3) + 1);
-        }
-        return out;
-      };
-
-      alert(tourettes("espresso"));
+      alert("Stop hittin' yourself. ".repeat(50));
    */
   repeat: function (n, sep) {
     sep = sep || '';
@@ -92,9 +84,7 @@ mix(/** @scope String.prototype */{
       // => ":-{"
    */
   format: function () {
-    var args = Espresso.A(arguments);
-    args.unshift(this.toString());
-    return Espresso.format.apply(null, args);
+    return Espresso.vformat(this, Espresso.A(arguments));
   },
 
   /**
@@ -111,14 +101,15 @@ mix(/** @scope String.prototype */{
         align = match[1],
         fill = match[2] || ' ',
         minWidth = match[6] || 0,
-        maxWidth = match[7] || null, len, before, after, value;
+        maxWidth = match[7] || null, len, before, after, value,
+        length = this.length;
 
     if (align) {
       align = align.slice(-1);
     }
 
-    len = Math.max(minWidth, this.length);
-    before = len - this.length;
+    len = Math.max(minWidth, length);
+    before = len - length;
     after = 0;
 
     switch (align) {
@@ -133,7 +124,7 @@ mix(/** @scope String.prototype */{
     }
 
     value = this;
-    if (Espresso.hasValue(maxWidth)) {
+    if (maxWidth != null) {
       maxWidth = +maxWidth.slice(1);
       value = isNaN(maxWidth) ? value : value.slice(0, maxWidth);
     }

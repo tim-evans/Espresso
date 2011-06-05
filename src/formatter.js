@@ -83,6 +83,18 @@
     },
 
     /**
+      Same as {@link Espresso.format}, but with an explicit argument list.
+
+      @param {String} template The template string to format the argument list with.
+      @param {Array} argList The argument list to format.
+      @returns {String} The template formatted with the given leftover arguments.
+      @see Espresso.format
+     */
+    vformat: function (template, args) {
+      return format(template, args);
+    },
+
+    /**
       The specifier regular expression.
 
       The groups are:

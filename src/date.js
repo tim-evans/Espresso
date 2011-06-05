@@ -63,16 +63,16 @@ mix(/** @lends Date# */{
       for (; i < spec.length; i += 1) {
         switch (spec.charAt(i)) {
         case 'a':
-          result[result.length] = Date.days[this.getDay()].slice(0, 3);
+          result[result.length] = Espresso.days[this.getDay()].slice(0, 3);
           break;
         case 'A':
-          result[result.length] = Date.days[this.getDay()];
+          result[result.length] = Espresso.days[this.getDay()];
           break;
         case 'b':
-          result[result.length] = Date.months[this.getMonth()].slice(0, 3);
+          result[result.length] = Espresso.months[this.getMonth()].slice(0, 3);
           break;
         case 'B':
-          result[result.length] = Date.months[this.getMonth()];
+          result[result.length] = Espresso.months[this.getMonth()];
           break;
         case 'c':
           result[result.length] = "{0:a b} {1:2} {0:H:M:S Y}".format(this, this.getDate());
@@ -145,7 +145,11 @@ mix(/** @lends Date */{
    */
   now: function () {
     return new Date().getTime();
-  }.inferior(),
+  }.inferior()
+
+}).into(Date);
+
+mix(/** @lends Espresso */{
 
   /**
     Strings for the days of the week.
@@ -165,4 +169,4 @@ mix(/** @lends Date */{
    */
   months: ["January", "February", "March", "April", "May", "June",
            "July", "August", "September", "October", "November", "December"]
-}).into(Date);
+}).into(Espresso);

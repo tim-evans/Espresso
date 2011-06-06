@@ -9,9 +9,11 @@ mix(/** @lends Number# */{
     @returns {String} The number formatted as specified.
    */
   toFormat: function (spec) {
+    var value = this;
+
     // Don't want Infinity, -Infinity and NaN in here!
-    if (!isFinite(this)) {
-      return this;
+    if (!isFinite(value)) {
+      return value;
     }
 
     var match = spec.match(Espresso.FORMAT_SPECIFIER),
@@ -21,7 +23,12 @@ mix(/** @lends Number# */{
         base = !!match[4],
         minWidth = match[6] || 0,
         maxWidth = match[7],
-        type = match[8], value = this, precision;
+        type = match[8], precision;
+
+    // Constants
+    var emptyString = '',
+        plus = '+',
+        minus = '-';
 
     if (align) {
       align = align.slice(-1);
@@ -37,17 +44,17 @@ mix(/** @lends Number# */{
     precision = maxWidth && +maxWidth.slice(1);
 
     switch (sign) {
-    case '+':
-      sign = (value >= 0) ? '+': '-';
+    case plus:
+      sign = (value >= 0) ? plus: minus;
       break;
-    case '-':
-      sign = (value >= 0) ? '': '-';
+    case minus:
+      sign = (value >= 0) ? emptyString: minus;
       break;
     case ' ':
-      sign = (value >= 0) ? ' ': '-';
+      sign = (value >= 0) ? ' ': minus;
       break;
     default:
-      sign = "";
+      sign = emptyString;
     }
 
     if (Espresso.hasValue(precision) && !isNaN(precision)) {
@@ -70,22 +77,22 @@ mix(/** @lends Number# */{
       value = Math.round(this - 0.5).toString();
       break;
     case 'b':
-      base = base ? '0b' : '';
+      base = base ? '0b' : emptyString;
       value = base + value.toString(2);
       break;
     case 'c':
       value = String.fromCharCode(value);
       break;
     case 'o':
-      base = base ? '0o' : '';
+      base = base ? '0o' : emptyString;
       value = base + value.toString(8);
       break;
     case 'x':
-      base = base ? '0x' : '';
+      base = base ? '0x' : emptyString;
       value = base + value.toString(16).toLowerCase();
       break;
     case 'X':
-      base = base ? '0x' : '';
+      base = base ? '0x' : emptyString;
       value = base + value.toString(16).toUpperCase();
       break;
     case 'e':
@@ -112,12 +119,12 @@ mix(/** @lends Number# */{
       value = value.toLocaleString();
       break;
     case 'g':
-    case '':
+    case emptyString:
     case void 0:
       value = String(value).toLowerCase();
       break;
     default:
-      throw new Error('Unrecognized format type: "{0}"'.format(type));
+      throw new Error('Unrecognized format type: "{}"'.format(type));
     }
 
     if (align !== '=') {
@@ -125,7 +132,7 @@ mix(/** @lends Number# */{
     }
 
     // Clean up the leftover spec and toss it over to String.prototype.toFormat
-    spec = (fill || '') + (align || '') + (minWidth || '') + (precision || '') + (type || '');
+    spec = (fill || emptyString) + (align || emptyString) + (minWidth || emptyString) + (precision || emptyString) + (type || emptyString);
     value = String(value).toFormat(spec);
 
     if (align === '=') {

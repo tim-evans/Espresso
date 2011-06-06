@@ -96,9 +96,12 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     this.__isObservableInitialized__ = true;
 
     var key, property, i = 0, len, dependents, meta = this.__espmeta__,
-        dependent, iDependent, object, notifier = function (key) {
-          this.set(key);
-        };
+        dependent, iDependent, object, notifier;
+
+    /** @ignore */
+    notifier = function (key) {
+      this.set(key);
+    };
 
     for (key in meta) { // Iterate over all keys
       if (meta.hasOwnProperty(key) && meta[key].referenceKey) {
@@ -162,7 +165,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         key = info.closureKey;
       }
 
-      if (info.referenceKey) {
+      if (info.referenceKey && info.isComputed) {
         refKey = info.referenceKey;
       }
     }
@@ -209,7 +212,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     k = k.toString();
 
     var property, key = k, value = v, idx = key.lastIndexOf('.'), object,
-        result, didChange = false, info, refKey;
+        result, didChange = false, info, refKey, isComputed = false;
     if (idx === -1) {
       object = this;
     } else {
@@ -227,6 +230,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
       if (info.referenceKey) {
         refKey = info.referenceKey;
       }
+      isComputed = info.isComputed;
     }
 
     if (object) {
@@ -251,12 +255,12 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         }
       } else if (typeof property === "undefined") {
         if (Espresso.isCallable(object.unknownProperty)) {
-          object.unknownProperty.call(object, refKey, value);
+          object.unknownProperty.call(object, key, value);
         } else {
           this.unknownProperty(k, v);
         }
       } else {
-        object[refKey] = value;
+        object[isComputed ? refKey : key] = value;
       }
 
       // Expected behaviour is strange unless publishes

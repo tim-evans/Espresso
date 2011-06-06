@@ -24,29 +24,10 @@ mix(/** @scope Espresso */{
     fn._ = fn._ || {};
     /** @ignore */
     fn._.property = function (template, value, key) {
-      var kvoKey = key, isComputed = Espresso.isCallable(value),
+      var kvoKey = key,
           meta = template.__espmeta__ || {};
 
-      // ECMAScript5 compatible API (no need for get or set!)
-      if ("defineProperty" in Object) {
-        kvoKey = "__kvo__{}__".format(key);
-
-        if (isComputed) {
-          template[kvoKey] = value;
-          meta[key] = { closureKey: kvoKey };
-        }
-        value = void(0);
-
-        Object.defineProperty(template, key, {
-          get: function () { return this.get(kvoKey); },
-          set: function (value) { return this.set(kvoKey, value); },
-          enumerable: true,
-          configurable: true
-        });
-      }
-
-      meta[kvoKey] = { referenceKey: key,
-                       isComputed: isComputed };
+      meta[kvoKey] = { referenceKey: key };
       template.__espmeta__ = meta;
 
       return value;

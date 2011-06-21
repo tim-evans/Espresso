@@ -118,6 +118,7 @@ mix(/** @lends Number# */{
     case 'n':
       value = value.toLocaleString();
       break;
+    case 's':
     case 'g':
     case emptyString:
     case void 0:

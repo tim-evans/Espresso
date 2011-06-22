@@ -19,7 +19,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.5.3',
+  VERSION: '0.5.4',
 
   /** @function
     @desc

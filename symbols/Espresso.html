@@ -29,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -68,19 +68,14 @@ function endResize(e) {
 			<p class="description">
 				<p>Espresso is a JavaScript library to be used as a
 foundation library to create JavaScript libraries.
-It also acts as a partial shim to ECMAScript 5,
-falling back to native browser support when available.</p>
+This library is made with the to aid in creating
+code that's pleasant to read, smaller, and
+consequently, less buggy.</p>
 
-<p>Espresso's goal is to provide a small library that
-provides the basics that provide the power to
-developers to produce sophisticated JavaScript libraries
-that have clear, concise, and readable code, as well as
-powerful consumer-facing APIs.</p>
-
-<p>What does this mean? Less code and robust APIs!</p>
-
-<p>This library provides the Publish-Subscribe pattern,
-Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
+<p>Espresso provides a partial shim for ECMAScript 5,
+falling back to native support when available, and
+provides support for Enumerables, Observers, mixins,
+and string formatting.</p>
 			</p>
       
       
@@ -128,6 +123,13 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 						<tr class="nameDescription">
               <td class="fixedFont right">+</td>
               <td class="fixedFont">
+                <a href="../symbols/Espresso.html#.days">days</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
                 <a href="../symbols/Espresso.html#.FORMAT_SPECIFIER">FORMAT_SPECIFIER</a>
               </td>
             </tr>
@@ -135,7 +137,7 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 						<tr class="nameDescription">
               <td class="fixedFont right">+</td>
               <td class="fixedFont">
-                <a href="../symbols/Espresso.html#.global">global</a>
+                <a href="../symbols/Espresso.html#.months">months</a>
               </td>
             </tr>
 					
@@ -168,6 +170,16 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.alias">alias</a></b>(target, aliases)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.defer">defer</a></b>(lambda, args, that)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.html#.format">format</a></b>(template)</td>
             </tr>
 					
@@ -183,7 +195,22 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.inferior">inferior</a></b>(target, condition)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.html#.isCallable">isCallable</a></b>(obj)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.property">property</a></b>(fn, dependentKeys)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.html#.vformat">vformat</a></b>(template, argList)</td>
             </tr>
 					
           </table>
@@ -197,6 +224,34 @@ Key-Value Observing (a la Cocoa), and Ruby-like mixins.</p>
 <!-- ============================== field details ========================== -->		
 			
 				<h1 class="title">Field Detail</h1>
+				
+          <div>
+             <a name=".days"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>[])</span> Espresso.<b>days</b></h3>
+					</div>
+					<div class="description">
+						<p>Strings for the days of the week, starting
+with <code>'Sunday'</code>.</p>
+
+<p>If you want to use a different locale,
+set the <code>days</code> string to reflect the locale's.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+						
+						
+
+
+					<hr />
 				
           <div>
              <a name=".FORMAT_SPECIFIER"> </a>
@@ -323,15 +378,14 @@ the field content. The precision is ignored for integer conversions.</p>
 					<hr />
 				
           <div>
-             <a name=".global"> </a>
-             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> Espresso.<b>global</b></h3>
+             <a name=".months"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>[])</span> Espresso.<b>months</b></h3>
 					</div>
 					<div class="description">
-						<p>The global variable.</p>
+						<p>Strings for the months of the year.</p>
 
-<p>Used to be independant of what the global <code>this</code> is,
-whether it's <code>window</code> or <code>document</code> in a browser or
-<code>global</code> in NodeJS.</p>
+<p>If you want to use a different locale,
+set the <code>months</code> string to reflect the locale's.</p>
 					</div>
 					
 					
@@ -341,6 +395,9 @@ whether it's <code>window</code> or <code>document</code> in a browser or
 						
 						
 
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
 						
 						
 
@@ -381,10 +438,7 @@ whether it's <code>window</code> or <code>document</code> in a browser or
 
              <div class="description">
                
-  				       <dt><p>Convert an iterable object into an Array.</p>
-
-<p>This is used mostly for the arguments variable
-in functions.</p></dd>
+  				       <dt><p>Convert an iterable object into an Array.</p></dd>
                
 						   
              </div>
@@ -423,6 +477,120 @@ in functions.</p></dd>
 					
 					<hr />
 				
+					<a name=".alias"> </a>
+          <div>
+             <a name=".alias"> </a>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> Espresso.<b>alias</b>(target, aliases)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Provides a mechanism to alias an object with
+using other names.</p>
+
+<p>Any arguments passed in after the target will
+be used as aliases for the target. Each of these
+aliases will be references to the original, meaning
+that all of them will be indistinguishable and if
+one of them is altered in place, then all will be.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>target</b>
+									
+								</dt>
+								<dd>The target to apply this decorator to.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>aliases</b>
+									
+								</dt>
+								<dd>The aliases this object has.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/decorators_alias.js.html">alias.js</a>.
+				 
+					
+					<hr />
+				
+					<a name=".defer"> </a>
+          <div>
+             <a name=".defer"> </a>
+             <h3> Espresso.<b>defer</b>(lambda, args, that)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Defers execution until a later time (when the ready
+queue is empty).</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
+									
+								</dt>
+								<dd>The function to call.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> <b>args</b>
+									
+								</dt>
+								<dd>The arguments to apply to the function.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>that</b>
+									
+								</dt>
+								<dd>The object to apply as `this`.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
 					<a name=".format"> </a>
           <div>
              <a name=".format"> </a>
@@ -430,13 +598,14 @@ in functions.</p></dd>
 
              <div class="description">
                
-  				       <dt><p>Advanced String Formatting borrowed from the eponymous Python PEP.
-It provides a flexible and powerful string formatting utility
-that allows the your string templates to have meaning!</p>
+  				       <dt><p>Advanced String Formatting borrowed from the eponymous Python PEP.</p>
 
 <p>The formatter follows the rules of Python <a href="http://www.python.org/dev/peps/pep-3101/">PEP 3101</a>
-(Advanced String Formatting) strictly, but takes into account
-differences between JavaScript and Python.</p>
+(Advanced String Formatting) and following most of the
+ECMAScript Harmony strawman specification for string formatting
+(found <a href="http://wiki.ecmascript.org/doku.php?id=strawman:string_format_take_two">here</a>), with the major ommision being the
+removal of the bracket <code>[]</code> notation for reasons of
+consitency and performance.</p>
 
 <p>To use literal object notation, just pass in one argument for
 the formatter. This is optional however, as you can always
@@ -476,17 +645,16 @@ template string like so:</p>
 
 <p>Check out the examples given for some ideas on how to use it.</p>
 
-<p>For developers wishing to have their own custom handler for the
-formatting specifiers, you should write your own  <code>__format__</code> function
-that takes the specifier in as an argument and returns the formatted
-object as a string. All formatters are implemented using this pattern,
-with a fallback to Object's <code>__format__</code>, which turns said object into
-a string, then calls <code>__format__</code> on a string.</p>
+<p>The formatting API uses the special <code>toFormat</code> function on an
+object to handle the interpretation of the format specifiers.</p>
 
-<p>Consider the following example:</p>
+<p>The default <code>toFormat</code> handler is on <code>Object.prototype</code>.</p>
+
+<p>For an example of a specialized format schema, consider the
+following example:</p>
 
 <div class="code">
-<code>Localizer&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;__format__:&nbsp;<span class="keyword">function</span>&nbsp;(spec)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>[spec];<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>_hello&nbsp;=&nbsp;mix(Localizer).into({<br/>&nbsp;&nbsp;en:&nbsp;<span class="string">'hello'</span>,<br/>&nbsp;&nbsp;fr:&nbsp;<span class="string">'bonjour'</span>,<br/>&nbsp;&nbsp;ja:&nbsp;<span class="string">'こんにちは'</span><br/>});<br/><br/>alert(Espresso.format(<span class="string">"{:en}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"hello"<br/><br/>alert(Espresso.format(<span class="string">"{:fr}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"bonjour"<br/><br/>alert(Espresso.format(<span class="string">"{:ja}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"こんにちは"</code>
+<code>Localizer&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;toFormat:&nbsp;<span class="keyword">function</span>&nbsp;(spec)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">this</span>[spec];<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>_hello&nbsp;=&nbsp;mix(Localizer).into({<br/>&nbsp;&nbsp;en:&nbsp;<span class="string">'hello'</span>,<br/>&nbsp;&nbsp;fr:&nbsp;<span class="string">'bonjour'</span>,<br/>&nbsp;&nbsp;ja:&nbsp;<span class="string">'こんにちは'</span><br/>});<br/><br/>alert(Espresso.format(<span class="string">"{:en}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"hello"<br/><br/>alert(Espresso.format(<span class="string">"{:fr}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"bonjour"<br/><br/>alert(Espresso.format(<span class="string">"{:ja}"</span>,&nbsp;_hello));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"こんにちは"</code>
 </div></dd>
                
 						   
@@ -592,7 +760,7 @@ expecially in the case of the arguments Array.</p></dd>
 					
 					
 					<div class="code">
-<code><span class="single-line-comment">//</span>&nbsp;Properties&nbsp;on&nbsp;the&nbsp;global&nbsp;scope&nbsp;need&nbsp;to&nbsp;be&nbsp;there-<br/><span class="single-line-comment">//</span>&nbsp;local&nbsp;scoped&nbsp;variables&nbsp;will&nbsp;not&nbsp;be&nbsp;found!<br/>window.arthur&nbsp;=&nbsp;{<br/>&nbsp;&nbsp;name:&nbsp;<span class="string">'Arthur&nbsp;Dent'</span>,<br/>&nbsp;&nbsp;species:&nbsp;<span class="string">'Human'</span>,<br/>&nbsp;&nbsp;description:&nbsp;<span class="string">'Mostly&nbsp;Harmless'</span><br/>};<br/><br/>alert(Espresso.getObjectFor(<span class="string">"arthur.name"</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'Arthur&nbsp;Dent'</code>
+<code><span class="single-line-comment">//</span>&nbsp;No&nbsp;scope&nbsp;assumes&nbsp;the&nbsp;object&nbsp;has&nbsp;is&nbsp;at&nbsp;the&nbsp;global&nbsp;scope.<br/>window.environment&nbsp;=&nbsp;{<br/>&nbsp;&nbsp;isBrowser:&nbsp;(<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;document&nbsp;<span class="keyword">in</span>&nbsp;<span class="keyword">this</span>;<br/>&nbsp;&nbsp;}())<br/>};<br/><br/>alert(Espresso.getObjectFor(<span class="string">"environment.isBrowser"</span>));</code>
 </div>
 					
 					<div class="code">
@@ -648,10 +816,69 @@ expecially in the case of the arguments Array.</p></dd>
 					
 					
 					<div class="code">
-<code><span class="keyword">var</span>&nbsp;unbound;&nbsp;<span class="single-line-comment">//</span>&nbsp;This&nbsp;variable&nbsp;is&nbsp;very&nbsp;lonely&nbsp;(and&nbsp;very&nbsp;much&nbsp;undefined)<br/><span class="value">undefined</span>&nbsp;=&nbsp;<span class="string">'all&nbsp;your&nbsp;base&nbsp;belong&nbsp;to&nbsp;us'</span>;&nbsp;<span class="single-line-comment">//</span>&nbsp;Yes,&nbsp;you&nbsp;can&nbsp;rename&nbsp;undefined,&nbsp;but...<br/>alert(Espresso.hasValue(unbound));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;false<br/><br/>alert(Espresso.hasValue(<span class="value">undefined</span>));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;true</code>
+<code><span class="keyword">var</span>&nbsp;unbound;<br/><span class="value">undefined</span>&nbsp;=&nbsp;<span class="string">'bwahahaha!'</span>;<br/>alert(Espresso.hasValue(unbound));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;false<br/><br/>alert(Espresso.hasValue(<span class="value">undefined</span>));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;true</code>
 </div>
 					
 					
+				 
+					
+					<hr />
+				
+					<a name=".inferior"> </a>
+          <div>
+             <a name=".inferior"> </a>
+             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> Espresso.<b>inferior</b>(target, condition)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>If the attribute being mixed in exists on the
+Object being mixed in, the object marked as
+inferior will <strong>not</strong> be mixed in. If the base
+object is inferior, it will be overriden.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>target</b>
+									
+								</dt>
+								<dd>The target to apply the decorator to.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>|<a href="../symbols/Function.html">Function</a>)</span> <b>condition</b>
+									<i>Optional</i>
+								</dt>
+								<dd>If it returns `true`,
+      the function is inferior. Otherwise, it isn't.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/decorators_inferior.js.html">inferior.js</a>.
 				 
 					
 					<hr />
@@ -663,19 +890,10 @@ expecially in the case of the arguments Array.</p></dd>
 
              <div class="description">
                
-  				       <dt><p>ECMAScript compliant isCallable.</p>
-
-<blockquote>
-  <p>The abstract operation IsCallable determines if its argument,
-  which must be an ECMAScript language value, is a callable function
-  Object if it's an Object that hass a function called <code>call</code>.</p>
-</blockquote>
-
-<p>This allows overriding <code>call</code> on an object, effectively making it
-a callable object.</p>
-
-<p>The one addition is ensuring that the method is also applicable,
-(having the <code>apply</code> being callable too).</p></dd>
+  				       <dt><p>Check to see if the object has function-like properties.
+If it's callable, then it's a function or an object with
+<code>call</code> and <code>apply</code> functions (which are assumed to work
+how the same ones work on Function.prototype).</p></dd>
                
 						   
              </div>
@@ -712,6 +930,127 @@ a callable object.</p>
 					
 				 
 					
+					<hr />
+				
+					<a name=".property"> </a>
+          <div>
+             <a name=".property"> </a>
+             <h3><span class="light">(<a href="../symbols/Espresso.Property.html">Espresso.Property</a>)</span> Espresso.<b>property</b>(fn, dependentKeys)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Marks a function as a computed property, where the
+getter and setter functions are the same function.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>fn</b>
+									
+								</dt>
+								<dd>The function to be called when
+      the property should be computed.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(...)</span> <b>dependentKeys</b>
+									
+								</dt>
+								<dd>The dependent keys that
+      this property has. When any of these keys get
+      updated via KVO, the property will be notified.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Espresso.Property.html">Espresso.Property</a>)</span> The function as a Espresso.property.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/decorators_property.js.html">property.js</a>.
+				 
+					
+					<hr />
+				
+					<a name=".vformat"> </a>
+          <div>
+             <a name=".vformat"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> Espresso.<b>vformat</b>(template, argList)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Same as <a href="../symbols/Espresso.html#.format">Espresso.format</a>, but with an explicit argument list.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>template</b>
+									
+								</dt>
+								<dd>The template string to format the argument list with.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> <b>argList</b>
+									
+								</dt>
+								<dd>The argument list to format.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The template formatted with the given leftover arguments.</dt>
+							
+							</dl>
+						
+						
+
+						
+							<dl class="detailList">
+							<dt class="heading">See:</dt>
+							
+								<dt><a href="../symbols/Espresso.html#.format">Espresso.format</a></dt>
+							
+							</dl>
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/formatter.js.html">formatter.js</a>.
+				 
+					
 					
 				
 			
@@ -726,7 +1065,7 @@ a callable object.</p>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:10 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

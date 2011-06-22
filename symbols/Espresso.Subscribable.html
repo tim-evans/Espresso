@@ -29,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -66,15 +66,28 @@ function endResize(e) {
       <h1 class="title">Overview</h1>
       
 			<p class="description">
-				<p>Publish-Subscribe is a design pattern that allows
-event broadcasting to subscribed handlers. When an
-event is published to a node, the event is broadcasted
-to all subscribed handlers.</p>
+				<p>Implements the Observer / Publish-Subscribe pattern.</p>
 
-<p>Events can be filtered at runtime, which can tell
-PubSub whether or not it should publish events to
-that handler, and they can be sent either synchronously
-or asynchronously (the default is asynchronous).</p>
+<p>Subscribe to events that are published to objects that
+mixin this, and you'll be notified when the events come
+in. If something is published and there are no handlers
+for that specific event, there is a <code>unpublishedEvent</code>
+function that will be called whenever an event doesn't
+have any subscribers.</p>
+
+<p>Publishing an event will use the first argument as the
+event to trigger, and call all the subscription handlers
+with all of the arguments passed into that <code>publish</code>.</p>
+
+<p>Subscribing to an event requires the event that it would
+like to recieve events from and the callback at minimum.</p>
+
+<p>If extra configuration is wanted, the <code>options</code> hash
+provides a way to dynamically have events delivered or
+ignored beforehand (possibly providing lint-checking before
+the event is delivered), and whether the event should
+be delivered synchronously or asynchronously. (By default,
+it's asynchronous).</p>
 			</p>
       
       
@@ -84,7 +97,7 @@ or asynchronously (the default is asynchronous).</p>
 			
 			
 		  <div class="code">
-<code><span class="keyword">var</span>&nbsp;ship&nbsp;=&nbsp;mix(Espresso.Subscribable,&nbsp;{<br/>&nbsp;&nbsp;sailors:&nbsp;[],<br/><br/>&nbsp;&nbsp;add:&nbsp;<span class="keyword">function</span>&nbsp;(sailor,&nbsp;sync)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.sailors.push(sailor);<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"Added&nbsp;{name}"</span>.fmt(sailor));<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.publish(<span class="string">"add"</span>,&nbsp;sailor);<br/>&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.subscribe(<span class="string">"add"</span>,&nbsp;sailor.ahoy.bind(sailor),&nbsp;{&nbsp;synchronous:&nbsp;!!sync&nbsp;});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;ahab&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Captain&nbsp;Ahab"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;daveyJones&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Davey&nbsp;Jones"</span>&nbsp;}).into({}),<br/>&nbsp;&nbsp;&nbsp;&nbsp;flapjack&nbsp;=&nbsp;mix(sailor,&nbsp;{&nbsp;name:&nbsp;<span class="string">"Flapjack"</span>&nbsp;}).into({});<br/><br/>ship.add(ahab,&nbsp;<span class="keyword">true</span>);<br/>ship.add(daveyJones);<br/>ship.add(flapjack);</code>
+<code>&nbsp;<br/><span class="keyword">var</span>&nbsp;Clock&nbsp;=&nbsp;mix(Espresso.Subscribable,&nbsp;{<br/>&nbsp;&nbsp;tick:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.time&nbsp;=&nbsp;Date.now();<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>Clock.subscribe(<span class="string">"tick"</span>,&nbsp;Clock.tick);<br/>setInterval(Clock.publish.bind(Clock,&nbsp;<span class="string">"tick"</span>),&nbsp;<span class="string">1000</span>);</code>
 </div>
 			
 			
@@ -128,7 +141,7 @@ or asynchronously (the default is asynchronous).</p>
 						<tr class="nameDescription">
               <td class="fixedFont right">+</td>
               <td class="fixedFont">
-                <a href="../symbols/Espresso.Subscribable.html#_subscriptions">_subscriptions</a>
+                <a href="../symbols/Espresso.Subscribable.html#__subscriptions__">__subscriptions__</a>
               </td>
             </tr>
 					
@@ -187,8 +200,8 @@ or asynchronously (the default is asynchronous).</p>
 				<h1 class="title">Field Detail</h1>
 				
           <div>
-             <a name="_subscriptions"> </a>
-             <h3> <b>_subscriptions</b></h3>
+             <a name="__subscriptions__"> </a>
+             <h3> <b>__subscriptions__</b></h3>
 					</div>
 					<div class="description">
 						
@@ -363,8 +376,8 @@ or asynchronously (the default is asynchronous).</p>
 (There are no subscribers for an event.)</p>
 
 <p>Any parameters passed to the event are also passed into
-the function. All unpublished events are <code>invoke</code>d rather
-than <code>defer</code>red.</p></dd>
+the function. All unpublished events are invoked immediately
+rather than <code>defer</code>red.</p></dd>
                
 						   
              </div>
@@ -467,7 +480,7 @@ than <code>defer</code>red.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:11 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

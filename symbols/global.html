@@ -27,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -105,35 +105,33 @@ function endResize(e) {
 
              <div class="description">
                
-  				       <dt><p>Mix in functionality to a pre-existing object.</p>
+  				       <dt><p><code>mix</code> provides a way to combine arbritrary objects together.</p>
 
-<p>At the base level, <code>mix</code> will add the properties
-given on <code>mix</code> to the object passed in on <code>into</code>.</p>
-
-<p>Function decorators are told to alter the function
-on mixin time, rather than at decoration time.
-Function decorators do things like subscribe to
-events, tell <code>mix</code> to ignore it, ask to be sent
-the super class from the base object, and so on.</p>
-
-<p>Using the decorator interface to inject your own
-library's custom work in is fairly simple. The
-guidelines are that decorators <strong>should</strong> propagate
-through inheritance and mixins. Decorators should
-also not interfere with other decorator's behaviour.</p>
-
-<p>If you would like to mixin functionality to
-preexisting objects, use <code>mix</code> to do so, using the
-Object as the second parameter, like so:</p>
+<p>The combination can be as simple as adding the properties on
+an object onto another:</p>
 
 <div class="code">
-<code><span class="single-line-comment">//</span>&nbsp;Simple&nbsp;screenplay&nbsp;reader.<br/><span class="keyword">var</span>&nbsp;screenplay&nbsp;=&nbsp;{<br/>&nbsp;&nbsp;dialogue:&nbsp;<span class="keyword">function</span>&nbsp;(speaker,&nbsp;dialogue)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;alert(<span class="string">"{}:&nbsp;{}"</span>.format(speaker,&nbsp;dialogue));<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;scene:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;args&nbsp;=&nbsp;Espresso.A(arguments);<br/>&nbsp;&nbsp;&nbsp;&nbsp;args.forEach(<span class="keyword">function</span>&nbsp;(line)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.dialogue.apply(<span class="keyword">this</span>,&nbsp;line);<br/>&nbsp;&nbsp;&nbsp;&nbsp;},&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;}<br/>};<br/><br/><span class="single-line-comment">//</span>&nbsp;Add&nbsp;the&nbsp;Spanish&nbsp;Inquisition.<br/>mix({<br/>&nbsp;&nbsp;dialogue:&nbsp;<span class="keyword">function</span>&nbsp;(original,&nbsp;speaker,&nbsp;dialogue)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;original(speaker,&nbsp;dialogue);<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(dialogue.indexOf(<span class="string">"Spanish&nbsp;Inquisition"</span>)&nbsp;!==&nbsp;<span class="string">-1</span>)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;original(<span class="string">"Cardinal&nbsp;Ximinez"</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"Nobody&nbsp;Expects&nbsp;the&nbsp;Spanish&nbsp;Inquisition!"</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;}.refine()<br/>}).into(screenplay);<br/><br/>screenplay.scene(<br/>&nbsp;&nbsp;[<span class="string">"Chapman"</span>,&nbsp;&nbsp;&nbsp;<span class="string">"Trouble&nbsp;at&nbsp;the&nbsp;mill."</span>],<br/>&nbsp;&nbsp;[<span class="string">"Cleveland"</span>,&nbsp;<span class="string">"Oh&nbsp;no-&nbsp;what&nbsp;kind&nbsp;of&nbsp;trouble?"</span>],<br/>&nbsp;&nbsp;[<span class="string">"Chapman"</span>,&nbsp;&nbsp;&nbsp;<span class="string">"One&nbsp;on't&nbsp;cross&nbsp;beams&nbsp;gone&nbsp;owt&nbsp;askew&nbsp;on&nbsp;treadle."</span>],<br/>&nbsp;&nbsp;[<span class="string">"Cleveland"</span>,&nbsp;<span class="string">"Pardon?"</span>],<br/>&nbsp;&nbsp;[<span class="string">"Chapman"</span>,&nbsp;&nbsp;&nbsp;<span class="string">"One&nbsp;on't&nbsp;cross&nbsp;beams&nbsp;gone&nbsp;owt&nbsp;askew&nbsp;on&nbsp;treadle."</span>],<br/>&nbsp;&nbsp;[<span class="string">"Cleveland"</span>,&nbsp;<span class="string">"I&nbsp;don't&nbsp;understand&nbsp;what&nbsp;you're&nbsp;saying."</span>],<br/>&nbsp;&nbsp;[<span class="string">"Chapman"</span>,&nbsp;&nbsp;&nbsp;<span class="string">"One&nbsp;of&nbsp;the&nbsp;cross&nbsp;beams&nbsp;gone&nbsp;out&nbsp;askew&nbsp;on&nbsp;the&nbsp;treadle."</span>],<br/>&nbsp;&nbsp;[<span class="string">"Cleveland"</span>,&nbsp;<span class="string">"Well,&nbsp;what&nbsp;on&nbsp;earth&nbsp;does&nbsp;that&nbsp;mean?"</span>],<br/>&nbsp;&nbsp;[<span class="string">"Chapman"</span>,&nbsp;&nbsp;&nbsp;<span class="string">"I&nbsp;don't&nbsp;know-&nbsp;Mr.&nbsp;Wentworth&nbsp;just&nbsp;told&nbsp;me&nbsp;to&nbsp;come&nbsp;in&nbsp;here&nbsp;"</span>&nbsp;+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"and&nbsp;say&nbsp;that&nbsp;there&nbsp;was&nbsp;trouble&nbsp;at&nbsp;the&nbsp;mill,&nbsp;that's&nbsp;all-&nbsp;"</span>&nbsp;+<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="string">"I&nbsp;didn't&nbsp;expect&nbsp;a&nbsp;kind&nbsp;of&nbsp;Spanish&nbsp;Inquisition!"</span>]<br/>);</code>
+<code><span class="keyword">var</span>&nbsp;Caffeinated&nbsp;=&nbsp;{&nbsp;isCaffeinated:&nbsp;<span class="keyword">true</span>&nbsp;};<br/><span class="keyword">var</span>&nbsp;Coffee&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;isDecaf:&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;!!<span class="keyword">this</span>.isCaffeinated;<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>decaf&nbsp;=&nbsp;mix(Coffee).into({});<br/>decaf.isDecaf();<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;true<br/><br/>caf&nbsp;=&nbsp;mix(Caffeinated,&nbsp;Coffee).into({});<br/>caf.isDecaf();<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;false</code>
 </div>
 
-<p>Using <code>mix</code>, it's possible to create whatever types
-of objects you want, without polluting it's namespace.
-Espresso uses <code>mix</code> internally as a shim for ECMAScript 5
-compatability and creating the core of your library.</p></dd>
+<p><code>mix</code> takes this a bit furthur, allowing properties on the
+objects being mixed in to be altered at mixin time using
+Espresso's decorator API.</p>
+
+<p>The API hook is adding an underscore (<code>_</code>) hash with a
+function that can change the decorated object in place by
+returning the new desired value. For examples on how to use
+the decorator API, look at the <code>alias</code> and <code>inferior</code> for
+general purpose decorators and <code>refine</code> for a funnction
+decorator.</p>
+
+<p>Using <code>mix</code>, you can design an Object-Oriented <code>Class</code>
+object with while still inheriting all of the decorators
+that <code>mix</code> applies:</p>
+
+<div class="code">
+<code>Class&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;extend:&nbsp;(<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;initializing&nbsp;=&nbsp;<span class="keyword">false</span>;<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;<span class="keyword">function</span>&nbsp;()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializing&nbsp;=&nbsp;<span class="keyword">true</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;prototype&nbsp;=&nbsp;<span class="keyword">new</span>&nbsp;<span class="keyword">this</span>();<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;initializing&nbsp;=&nbsp;<span class="keyword">false</span>;<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mix.apply(<span class="value">null</span>,&nbsp;Espresso.A(arguments)).into(prototype);<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">function</span>&nbsp;Class()&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span>&nbsp;(!initializing&nbsp;&&&nbsp;Espresso.isCallable(<span class="keyword">this</span>.init))&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">this</span>.init.apply(<span class="keyword">this</span>,&nbsp;arguments);<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class.prototype&nbsp;=&nbsp;prototype;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class.constructor&nbsp;=&nbsp;Class;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class.extend&nbsp;=&nbsp;arguments.callee;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;Class;<br/>&nbsp;&nbsp;&nbsp;&nbsp;};<br/>&nbsp;&nbsp;}())<br/>}).into(<span class="keyword">function</span>&nbsp;()&nbsp;{});</code>
+</div></dd>
                
 						   
              </div>
@@ -189,7 +187,7 @@ compatability and creating the core of your library.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:00 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:10 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

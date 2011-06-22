@@ -27,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -68,32 +68,6 @@ function endResize(e) {
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-        
-          <h1 class="title">Field Summary</h1>
-        
-				
-          <table>
-					
-						<tr class="nameDescription">
-              <td class="fixedFont right">+</td>
-              <td class="fixedFont">
-                <a href="../symbols/Date.html#.days">days</a>
-              </td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td class="fixedFont right">+</td>
-              <td class="fixedFont">
-                <a href="../symbols/Date.html#.months">months</a>
-              </td>
-            </tr>
-					
-          </table>
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
@@ -106,12 +80,12 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Date.html#__format__">__format__</a></b>(spec)</td>
+              + <b><a href="../symbols/Date.html#.now">now</a></b>()</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Date.html#.now">now</a></b>()</td>
+              + <b><a href="../symbols/Date.html#toFormat">toFormat</a></b>(spec)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -129,70 +103,53 @@ function endResize(e) {
 
 <!-- ============================== field details ========================== -->		
 			
-				<h1 class="title">Field Detail</h1>
-				
-          <div>
-             <a name=".days"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>[])</span> Date.<b>days</b></h3>
-					</div>
-					<div class="description">
-						<p>Strings for the days of the week.
-If you want to use a different locale,
-set the <code>days</code> string to reflect the locale's.</p>
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
-						
-						
-
-
-					<hr />
-				
-          <div>
-             <a name=".months"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>[])</span> Date.<b>months</b></h3>
-					</div>
-					<div class="description">
-						<p>Strings for the months of the week.
-If you want to use a different locale,
-set the <code>months</code> string to reflect the locale's.</p>
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
-						
-						
-
-
-					
-				
-			
 
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
 				
-					<a name="__format__"> </a>
+					<a name=".now"> </a>
           <div>
-             <a name="__format__"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__format__</b>(spec)</h3>
+             <a name=".now"> </a>
+             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> Date.<b>now</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Shim for <code>now</code>.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The current time.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="toFormat"> </a>
+          <div>
+             <a name="toFormat"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toFormat</b>(spec)</h3>
 
              <div class="description">
                
@@ -229,7 +186,7 @@ set the <code>months</code> string to reflect the locale's.</p>
 <code>alert(<span class="string">"Today&nbsp;is&nbsp;{:A,&nbsp;B&nbsp;d,&nbsp;Y}."</span>.format(<span class="keyword">new</span>&nbsp;Date()));<br/><br/>alert(<span class="string">"The&nbsp;time&nbsp;is:&nbsp;{:c}."</span>.format(<span class="keyword">new</span>&nbsp;Date()));</code>
 </div>
 
-<p>Note: all times used with <code>format</code> are <strong>NOT</strong> in UTC.</p></dd>
+<p>Note: all times used with <code>format</code> are <strong>not</strong> in UTC time.</p></dd>
                
 						   
              </div>
@@ -254,44 +211,6 @@ set the <code>months</code> string to reflect the locale's.</p>
 							<dt class="heading">Returns:</dt>
 							
 								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The Date transformed into a string as specified.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/date.js.html">date.js</a>.
-				 
-					
-					<hr />
-				
-					<a name=".now"> </a>
-          <div>
-             <a name=".now"> </a>
-             <h3><span class="light">(<a href="../symbols/Number.html">Number</a>)</span> Date.<b>now</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Shim for <code>now</code>.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Number.html">Number</a>)</span> The current time.</dt>
 							
 							</dl>
 						
@@ -359,7 +278,7 @@ set the <code>months</code> string to reflect the locale's.</p>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:10 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

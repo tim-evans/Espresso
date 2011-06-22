@@ -29,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -175,7 +175,7 @@ that you would like to be notified on.</p>
 				
 				
 				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a>: </dt><dd><a href="../symbols/Espresso.Subscribable.html#_subscriptions">_subscriptions</a>, <a href="../symbols/Espresso.Subscribable.html#isSubscribable">isSubscribable</a></dd>
+				<dt>Fields borrowed from class <a href="../symbols/Espresso.Subscribable.html">Espresso.Subscribable</a>: </dt><dd><a href="../symbols/Espresso.Subscribable.html#__subscriptions__">__subscriptions__</a>, <a href="../symbols/Espresso.Subscribable.html#isSubscribable">isSubscribable</a></dd>
 				</dl>
 				
 			
@@ -196,7 +196,22 @@ that you would like to be notified on.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Observable.html#getPath">getPath</a></b>(key)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Observable.html#initObservable">initObservable</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.Observable.html#set">set</a></b>(key, value)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Observable.html#setPath">setPath</a></b>(key, value)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -301,6 +316,96 @@ don't exist- it will return undefined in that case.</p></dd>
 					
 					<hr />
 				
+					<a name="getPath"> </a>
+          <div>
+             <a name="getPath"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>getPath</b>(key)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Get a value on an object that is a property path.</p>
+
+<p>This function will return the value given the
+property path using <code>get</code> when necessary.</p>
+
+<p>This means you should write:</p>
+
+<div class="code">
+<code>zombie.getPath(<span class="string">'brain.isDelicious'</span>);</code>
+</div>
+
+<p>instead of:</p>
+
+<div class="code">
+<code>zombie.get(<span class="string">'brain.isDelicious'</span>);</code>
+</div></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>key</b>
+									
+								</dt>
+								<dd>The property path to lookup on the object.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The value of the key.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="initObservable"> </a>
+          <div>
+             <a name="initObservable"> </a>
+             <h3> <b>initObservable</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Initialize the observer. This needs to be explicitly
+called to activate property observing.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
 					<a name="set"> </a>
           <div>
              <a name="set"> </a>
@@ -330,6 +435,73 @@ don't exist- it will ignore your attempt in that case.</p></dd>
 									
 								</dt>
 								<dd>The key to lookup on the object.</dd>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>value</b>
+									
+								</dt>
+								<dd>The value to set the object at the key's path to.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The reciever.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="setPath"> </a>
+          <div>
+             <a name="setPath"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>setPath</b>(key, value)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Set a value that is a property path.</p>
+
+<p>This function will return the value given the
+property path using <code>set</code> and <code>get</code> when necessary.</p>
+
+<p>This means you should write:</p>
+
+<div class="code">
+<code>zombie.setPath(<span class="string">'brain.isDelicious'</span>,&nbsp;<span class="keyword">true</span>);</code>
+</div>
+
+<p>instead of:</p>
+
+<div class="code">
+<code>zombie.set(<span class="string">'brain.isDelicious'</span>,&nbsp;<span class="keyword">true</span>);</code>
+</div></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>key</b>
+									
+								</dt>
+								<dd>The property path to lookup on the object.</dd>
 							
 								<dt>
 									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>value</b>
@@ -429,7 +601,7 @@ intercept general gets and sets, making use out of them.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:11 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

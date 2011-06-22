@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="JsDoc Toolkit" />
+
+	<title>JsDoc Reference - Espresso.Property</title>
+	
+  <link rel="stylesheet" type="text/css" href="../static/default.css"></link>
+  <link rel="stylesheet" type="text/css" href="../static/doc.css"></link>
+  <script type="text/javascript" src="../../bin/espresso.js"></script>
+</head>
+
+<body class="doc">
+  <div id="header">
+  <h1><a href="../">Espresso</a></h1>
+  <span class="caption">A pick-me up for JavaScript Library authors.</span>
+</div>
+
+  <div id="module">
+		<h1>
+				
+		  Namespace Espresso.Property
+    </h1>
+    
+      <span class="src"><a href="../symbols/src/mixins_property.js.html">property.js</a></span>
+    
+  </div>
+	<div id="index">
+		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<script type="text/javascript">
+function beginResize(e) {
+  document.addEventListener('mousemove', resize, true);
+  document.addEventListener('mouseup', endResize, true);
+}
+
+function resize(e) {
+  var index = document.getElementById('index'),
+      content = document.getElementById('content'),
+      x = e.pageX || e.clientX + 15;
+
+  if (x <= 225) {
+    x = 225;
+  } else if (x >= 400) {
+    x = 400;
+  }
+  index.setAttribute('style', 'width: ' + x + "px");
+  content.setAttribute('style', 'left: ' + x + "px");
+
+  e.returnValue = false;
+  return false;
+}
+
+function endResize(e) {
+  document.removeEventListener('mousemove', resize, true);
+}
+</script>
+
+	</div>
+  <div id="content">
+
+<!-- ============================== class summary ========================== -->
+    
+      <h1 class="title">Overview</h1>
+      
+			<p class="description">
+				<p>A mixin to apply to callable objects that
+want to be a computed property. This means
+that the property will act like a getter /
+setter, but with notifications via KVO.</p>
+			</p>
+      
+      
+			
+      
+			
+			
+			
+    
+
+
+<!-- ============================== constructor summary ====================
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Espresso.Property.">
+				<caption>Namespace Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/Espresso.Property.html">Espresso.Property</a></b>
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			-->
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+        
+          <h1 class="title">Field Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Property.html#dependentKeys">dependentKeys</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Property.html#isCacheable">isCacheable</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Property.html#isIdempotent">isIdempotent</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Property.html#isProperty">isProperty</a>
+              </td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+				
+				
+        <h1 class="title">Method Summary</h1>
+        
+				
+          <table>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Property.html#cacheable">cacheable</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/Espresso.Property.html#idempotent">idempotent</a></b>()</td>
+            </tr>
+					
+          </table>
+				
+				
+				
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<h1 class="title">Field Detail</h1>
+				
+          <div>
+             <a name="dependentKeys"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>dependentKeys</b></h3>
+					</div>
+					<div class="description">
+						<p>The keys that this property depends on.
+If any of these keys change, the property
+should be notified it did so.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name="isCacheable"> </a>
+             <h3><span class="light">(Boolean)</span> <b>isCacheable</b></h3>
+					</div>
+					<div class="description">
+						<p>Whether or not the property should be
+cached when it gets recalculated.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dt>
+								false
+							</dt>
+							</dl>
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name="isIdempotent"> </a>
+             <h3><span class="light">(Boolean)</span> <b>isIdempotent</b></h3>
+					</div>
+					<div class="description">
+						<p>Whether the property is volatile or not.
+Defaults to being a volatile property.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dt>
+								false
+							</dt>
+							</dl>
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name="isProperty"> </a>
+             <h3><span class="light">(Boolean)</span> <b>isProperty</b></h3>
+					</div>
+					<div class="description">
+						<p>Walk like a duck.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dt>
+								true
+							</dt>
+							</dl>
+						
+
+						
+						
+
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
+				
+					<a name="cacheable"> </a>
+          <div>
+             <a name="cacheable"> </a>
+             <h3><span class="light">(<a href="../symbols/Espresso.Property.html">Espresso.Property</a>)</span> <b>cacheable</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Marks the property as cacheable.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Espresso.Property.html">Espresso.Property</a>)</span> The property.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					<hr />
+				
+					<a name="idempotent"> </a>
+          <div>
+             <a name="idempotent"> </a>
+             <h3><span class="light">(<a href="../symbols/Espresso.Property.html">Espresso.Property</a>)</span> <b>idempotent</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Marks the property as idempotent.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/Espresso.Property.html">Espresso.Property</a>)</span> The property.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
+					
+				 
+					
+					
+				
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:11 GMT-0400 (EDT)
+		</div>
+	</body>
+</html>

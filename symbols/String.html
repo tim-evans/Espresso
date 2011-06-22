@@ -27,7 +27,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -80,31 +80,6 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#__format__">__format__</a></b>(spec)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#capitalize">capitalize</a></b>()</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#contains">contains</a></b>(str)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#escapeHTML">escapeHTML</a></b>()</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#forEach">forEach</a></b>(callback, that)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/String.html#format">format</a></b>()</td>
             </tr>
 					
@@ -115,12 +90,12 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#trim">trim</a></b>()</td>
+              + <b><a href="../symbols/String.html#toFormat">toFormat</a></b>(spec)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#unescapeHTML">unescapeHTML</a></b>()</td>
+              + <b><a href="../symbols/String.html#trim">trim</a></b>()</td>
             </tr>
 					
           </table>
@@ -137,261 +112,6 @@ function endResize(e) {
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
-				
-					<a name="__format__"> </a>
-          <div>
-             <a name="__format__"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>__format__</b>(spec)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Formatter for <code>String</code>s.</p>
-
-<p>Don't call this function- It's here for <code>Espresso.format</code>
-to take care of buisiness for you.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
-									
-								</dt>
-								<dd>The specifier string.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The string formatted using the format specifier.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="capitalize"> </a>
-          <div>
-             <a name="capitalize"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>capitalize</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Capitalize a string.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The string, capitalized.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code>[<span class="string">'toast'</span>,&nbsp;<span class="string">'cheese'</span>,&nbsp;<span class="string">'wine'</span>].forEach(<span class="keyword">function</span>&nbsp;(food)&nbsp;{<br/>&nbsp;&nbsp;alert(food.capitalize());<br/>});<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Toast"<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Cheese"<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"Wine"</code>
-</div>
-					
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="contains"> </a>
-          <div>
-             <a name="contains"> </a>
-             <h3><span class="light">(Boolean)</span> <b>contains</b>(str)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns true if the string is contained
-inside of the parent string.</p>
-
-<p>Overrides the Enumerable contains to be something
-more intuitive.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>str</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(Boolean)</span> true if contained in the other string.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code>alert(<span class="string">'restraurant'</span>.contains(<span class="string">'aura'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;true</code>
-</div>
-					
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="escapeHTML"> </a>
-          <div>
-             <a name="escapeHTML"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>escapeHTML</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Replaces any reserved HTML characters into their
-escaped form.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The escaped string.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="forEach"> </a>
-          <div>
-             <a name="forEach"> </a>
-             <h3><span class="light">(void)</span> <b>forEach</b>(callback, that)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Iterates over every character in a string.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>callback</b>
-									
-								</dt>
-								<dd>The callback to call for each element.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>that</b>
-									
-								</dt>
-								<dd>The Object to use as this when executing the callback.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(void)</span> </dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code><span class="string">"boom"</span>.forEach(alert);<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'b'<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'o'<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'o'<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;'m'</code>
-</div>
-					
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
-					<hr />
 				
 					<a name="format"> </a>
           <div>
@@ -410,7 +130,7 @@ you'll end up with a single one.</p>
 by the argument number (which is optional on a single argument).</p>
 
 <p>If you want to tie into this, and want to specify your own
-format specifier, override <strong>format</strong> on your object, and it will
+format specifier, override toFormat on your object, and it will
 pass you in the specifier (after the colon). You return the
 string it should look like, and that's it!</p>
 
@@ -445,7 +165,7 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 </div>
 					
 					<div class="code">
-<code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.2}"</span>.format({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
+<code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.{precision}}"</span>.format({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>,&nbsp;precision:&nbsp;<span class="string">2</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
 </div>
 					
 					<div class="code">
@@ -514,9 +234,61 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 					
 					
 					<div class="code">
-<code><span class="keyword">var</span>&nbsp;tourettes&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(word)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;out&nbsp;=&nbsp;<span class="string">""</span>;<br/>&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>,&nbsp;len&nbsp;=&nbsp;word.length;&nbsp;i&nbsp;&lt;&nbsp;len;&nbsp;i++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;out&nbsp;+=&nbsp;word.charAt(i).repeat(Math.floor(Math.random()&nbsp;*&nbsp;<span class="string">3</span>)&nbsp;+&nbsp;<span class="string">1</span>);<br/>&nbsp;&nbsp;}<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;out;<br/>};<br/><br/>alert(tourettes(<span class="string">"espresso"</span>));</code>
+<code>alert(<span class="string">"Stop&nbsp;hittin'&nbsp;yourself.&nbsp;"</span>.repeat(<span class="string">50</span>));</code>
 </div>
 					
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="toFormat"> </a>
+          <div>
+             <a name="toFormat"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toFormat</b>(spec)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Formatter for <code>String</code>s.</p>
+
+<p>Don't call this function- It's here for <code>Espresso.format</code>
+to take care of buisiness for you.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
+									
+								</dt>
+								<dd>The specifier string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The string formatted using the format specifier.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
 					
 				 
 					   <br />
@@ -568,45 +340,6 @@ It implements the Ruby/Python formatting specification for Dates.</p></dd>
 					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
 				 
 					
-					<hr />
-				
-					<a name="unescapeHTML"> </a>
-          <div>
-             <a name="unescapeHTML"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>unescapeHTML</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Unescapes any escaped HTML strings into their readable
-forms.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The unescaped string.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-				 
-					
 					
 				
 			
@@ -621,7 +354,7 @@ forms.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:11 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

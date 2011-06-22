@@ -29,7 +29,7 @@
   </div>
 	<div id="index">
 		<span class="banner">Class Index<img class="handle" src="../static/dot.gif" onmousedown="beginResize()" /></span>
-<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Scheduler.html">Scheduler</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
+<span class="class-list"><ul><li><a href="../symbols/global.html">global</a></li><li><a href="../symbols/Array.html">Array</a></li><li><a href="../symbols/Date.html">Date</a></li><li><a href="../symbols/Espresso.html">Espresso</a></li><ul><li><a href="../symbols/Espresso.Enumerable.html">Enumerable</a></li><li><a href="../symbols/Espresso.Observable.html">Observable</a></li><li><a href="../symbols/Espresso.Property.html">Property</a></li><li><a href="../symbols/Espresso.Subscribable.html">Subscribable</a></li></ul><li><a href="../symbols/Function.html">Function</a></li><li><a href="../symbols/Number.html">Number</a></li><li><a href="../symbols/Object.html">Object</a></li><li><a href="../symbols/String.html">String</a></li></ul></span>
 <script type="text/javascript">
 function beginResize(e) {
   document.addEventListener('mousemove', resize, true);
@@ -66,8 +66,13 @@ function endResize(e) {
       <h1 class="title">Overview</h1>
       
 			<p class="description">
-				<p>The Enumerable mixin provides common operations
-on enumerations of objects.</p>
+				<p>This mixin defines an enumerable interface that is
+based off of the ECMAScript 5 specification.</p>
+
+<p>If any of the functions on this interface are defined
+by the host object, they will <em>not</em> be applied, with the
+assumption that the host object has a better implementation
+and the same characteristics.</p>
 			</p>
       
       
@@ -143,27 +148,12 @@ on enumerations of objects.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#contains">contains</a></b>(values)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.Enumerable.html#every">every</a></b>(lambda, self)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#extract">extract</a></b>(keys)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.Enumerable.html#filter">filter</a></b>(lambda, self)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#find">find</a></b>(lambda, ifnone)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -184,11 +174,6 @@ on enumerations of objects.</p>
 						<tr class="nameDescription">
               <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.Enumerable.html#some">some</a></b>(lambda, self)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#toArray">toArray</a></b>()</td>
             </tr>
 					
           </table>
@@ -229,47 +214,6 @@ on enumerations of objects.</p>
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
-				
-					<a name="contains"> </a>
-          <div>
-             <a name="contains"> </a>
-             <h3> <b>contains</b>(values)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Whether or not the <a href="../symbols/Espresso.Enumerable.html">Espresso.Enumerable</a> contains
-the variables.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(...)</span> <b>values</b>
-									
-								</dt>
-								<dd>The values to check whether they exist
-      on the Enumerable.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
 				
 					<a name="every"> </a>
           <div>
@@ -328,52 +272,6 @@ in the Enumerable, otherwise, it returns <code>false</code>.</p></dd>
 							<dt class="heading">Returns:</dt>
 							
 								<dt><span class="light fixedFont">(Boolean)</span> `true` if `lambda` returns `true` for every iteration.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
-				
-					<a name="extract"> </a>
-          <div>
-             <a name="extract"> </a>
-             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>[])</span> <b>extract</b>(keys)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns all values for the keys provided.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(...)</span> <b>keys</b>
-									
-								</dt>
-								<dd>The keys to extract values from.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>[])</span> The values for the keys provided (not.</dt>
 							
 							</dl>
 						
@@ -459,79 +357,6 @@ input function returns true for.</p></dd>
 					
 					<hr />
 				
-					<a name="find"> </a>
-          <div>
-             <a name="find"> </a>
-             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>find</b>(lambda, ifnone)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns the first value for which <code>lambda</code> returns <code>true</code>.
-If nothing is found, <code>find</code> will return <code>ifnone</code>, a default
-value provided as an optional argument or <code>undefined</code> if
-<code>ifnone</code> was not provided.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
-									
-								</dt>
-								<dd>The lambda that returns something truthy or falsy.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
-									
-								</dt>
-								<dd>The value of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
-									
-								</dt>
-								<dd>The key of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
-									
-								</dt>
-								<dd>The object being enumerated over.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>ifnone</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The value to return if nothing is found.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The first object to which `lambda` returns something truthy.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
-				
 					<a name="forEach"> </a>
           <div>
              <a name="forEach"> </a>
@@ -539,7 +364,7 @@ value provided as an optional argument or <code>undefined</code> if
 
              <div class="description">
                
-  				       <dt><p>Iterates over the items on the Enumerable.</p>
+  				       <dt><p>Iterates over each item on the Enumerable.</p>
 
 <p>The Function <code>forEach</code> should follow the specification as
 defined in the ECMAScript 5 standard. All function using
@@ -751,7 +576,7 @@ is mutated by the lambda function.</p></dd>
 					
 					
 					<div class="code">
-<code><span class="keyword">var</span>&nbsp;range&nbsp;=&nbsp;mix(Espresso.Enumerable,&nbsp;{<br/>&nbsp;&nbsp;begin:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;end:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;forEach:&nbsp;<span class="keyword">function</span>&nbsp;(lambda,&nbsp;self)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">this</span>.begin;&nbsp;v&nbsp;&lt;=&nbsp;<span class="keyword">this</span>.end;&nbsp;v++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lambda.call(self,&nbsp;v,&nbsp;i++,&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;create:&nbsp;<span class="keyword">function</span>&nbsp;(begin,&nbsp;end)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;mix(<span class="keyword">this</span>,&nbsp;{&nbsp;begin:&nbsp;begin,&nbsp;end:&nbsp;end&nbsp;}).into({});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;multiply&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(a,&nbsp;b)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;a&nbsp;*&nbsp;b;&nbsp;};<br/><span class="keyword">var</span>&nbsp;factorial&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;range.create(<span class="string">1</span>,&nbsp;n).reduce(multiply);<br/>}<br/><br/>alert(<span class="string">"5!&nbsp;is&nbsp;{}"</span>.fmt(factorial(<span class="string">5</span>)));<br/>alert(<span class="string">"120!&nbsp;is&nbsp;{}"</span>.fmt(factorial(<span class="string">120</span>)));</code>
+<code><span class="keyword">var</span>&nbsp;range&nbsp;=&nbsp;mix(Espresso.Enumerable,&nbsp;{<br/>&nbsp;&nbsp;begin:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;end:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;forEach:&nbsp;<span class="keyword">function</span>&nbsp;(lambda,&nbsp;self)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">this</span>.begin;&nbsp;v&nbsp;&lt;=&nbsp;<span class="keyword">this</span>.end;&nbsp;v++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lambda.call(self,&nbsp;v,&nbsp;i++,&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;create:&nbsp;<span class="keyword">function</span>&nbsp;(begin,&nbsp;end)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;mix(<span class="keyword">this</span>,&nbsp;{&nbsp;begin:&nbsp;begin,&nbsp;end:&nbsp;end&nbsp;}).into({});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;multiply&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(a,&nbsp;b)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;a&nbsp;*&nbsp;b;&nbsp;};<br/><span class="keyword">var</span>&nbsp;factorial&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;range.create(<span class="string">1</span>,&nbsp;n).reduce(multiply);<br/>}<br/><br/>alert(<span class="string">"5!&nbsp;is&nbsp;{}"</span>.format(factorial(<span class="string">5</span>)));<br/>alert(<span class="string">"120!&nbsp;is&nbsp;{}"</span>.format(factorial(<span class="string">120</span>)));</code>
 </div>
 					
 					
@@ -828,47 +653,6 @@ element in the Enumerable, otherwise, it returns <code>false</code>.</p></dd>
 					
 				 
 					
-					<hr />
-				
-					<a name="toArray"> </a>
-          <div>
-             <a name="toArray"> </a>
-             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>toArray</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Converts an enumerable into an Array.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The enumerable as an Array.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code><span class="keyword">var</span>&nbsp;range&nbsp;=&nbsp;mix(Espresso.Enumerable,&nbsp;{<br/>&nbsp;&nbsp;begin:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;end:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;forEach:&nbsp;<span class="keyword">function</span>&nbsp;(lambda,&nbsp;self)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">this</span>.begin;&nbsp;v&nbsp;&lt;=&nbsp;<span class="keyword">this</span>.end;&nbsp;v++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lambda.call(self,&nbsp;v,&nbsp;i++,&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;create:&nbsp;<span class="keyword">function</span>&nbsp;(begin,&nbsp;end)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;mix(<span class="keyword">this</span>,&nbsp;{&nbsp;begin:&nbsp;begin,&nbsp;end:&nbsp;end&nbsp;}).into({});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/>alert(range.create(<span class="string">0</span>,&nbsp;<span class="string">200</span>).toArray());<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;[0,&nbsp;1,&nbsp;2,&nbsp;3,&nbsp;4,&nbsp;5,&nbsp;...&nbsp;198,&nbsp;199,&nbsp;200]</code>
-</div>
-					
-					
-				 
-					
 					
 				
 			
@@ -883,7 +667,7 @@ element in the Enumerable, otherwise, it returns <code>false</code>.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Apr 21 2011 23:38:01 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:10 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

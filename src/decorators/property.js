@@ -29,26 +29,28 @@ mix(/** @scope Espresso */{
           meta = template.__espmeta__ || {};
 
       // ECMAScript5 compatible API (no need for get or set!)
-      if ("defineProperty" in Object) {
-        kvoKey = "__kvo__{}__".format(key);
+      try { // IE burps on this
+        if ("defineProperty" in Object) {
+          kvoKey = "__kvo__{}__".format(key);
 
-        if (meta[kvoKey]) { delete template[key]; }
+          if (meta[kvoKey]) { delete template[key]; }
 
-        if (isComputed) {
-          template[kvoKey] = value;
-          meta[key] = { closureKey: kvoKey };
+          if (isComputed) {
+            template[kvoKey] = value;
+            meta[key] = { closureKey: kvoKey };
+          }
+
+          Object.defineProperty(template, key, {
+            get: function () { return this.get(kvoKey); },
+            set: function (value) { return this.set(kvoKey, value); },
+            enumerable: true,
+            configurable: true
+          });
+
+          kvoKey.name = key;
+          value = void(0);
         }
-
-        Object.defineProperty(template, key, {
-          get: function () { return this.get(kvoKey); },
-          set: function (value) { return this.set(kvoKey, value); },
-          enumerable: true,
-          configurable: true
-        });
-
-        kvoKey.name = key;
-        value = void(0);
-      }
+      } catch (e) {}
 
       meta[kvoKey] = { referenceKey: key,
                        isComputed: isComputed };

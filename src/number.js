@@ -57,7 +57,7 @@ mix(/** @lends Number# */{
       sign = emptyString;
     }
 
-    if (Espresso.hasValue(precision) && !isNaN(precision)) {
+    if (precision != null && precision !== "" && !isNaN(precision)) {
       // Opting to go with a more intuitive approach than Python...
       //  >>> "{.2}".format(math.pi)
       //  "3.1"
@@ -129,11 +129,13 @@ mix(/** @lends Number# */{
     }
 
     if (align !== '=') {
-      value = sign + value;      
+      value = sign + value;
     }
 
     // Clean up the leftover spec and toss it over to String.prototype.toFormat
-    spec = (fill || emptyString) + (align || emptyString) + (minWidth || emptyString) + (precision || emptyString) + (type || emptyString);
+    spec = (fill || emptyString) + (align || emptyString) + (minWidth || emptyString);
+    if (precision) spec += "." + (precision + 1);
+    spec += (type || emptyString);
     value = String(value).toFormat(spec);
 
     if (align === '=') {

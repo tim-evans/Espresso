@@ -189,8 +189,10 @@ context("Espresso.Observable",
       if ("defineProperty" in Object) return;
 
       var called = false;
+      observable.unknownProperty = function () { called = true; };
       observable.set('nestedComputedProperty.wont.work', 'plop');
-      assert.equal(void(0), observable.getPath('nestedComputedProperty.wont.work'));
+      assert.equal('d', observable.getPath('nestedComputedProperty.wont.work'));
+      assert.isTrue(called);
     }),
 
     should("work with nested properties returned by a computed property", function () {

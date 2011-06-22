@@ -30,7 +30,7 @@ mix(/** @scope Object */{
     var array = [], key;
 
     // 1. If the Type(O) is not Object, throw a TypeError exception.
-    if (typeof O !== "object") {
+    if (typeof O !== "object" || O == null) {
       throw new TypeError("{} is not an object.".format(O));
     }
 

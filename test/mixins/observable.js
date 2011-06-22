@@ -66,7 +66,14 @@ context("Espresso.Observable",
     }),
 
     should("NOT work with nested properties returned by a computed property", function () {
+      // shouldn't apply to ECMAScript5 properties
+      if ("defineProperty" in Object) return;
+
       assert.equal(observable.get('nestedComputedProperty.wont.work'), void(0));
+    }),
+
+    should("NOT work with nested properties returned by a computed property", function () {
+      assert.equal(observable.getPath('nestedComputedProperty.wont.work'), 'd');
     }),
 
     should("be tolerant of unknown namespaces", function () {
@@ -178,13 +185,18 @@ context("Espresso.Observable",
     }),
 
     should("NOT work with nested properties returned by a computed property", function () {
+      // shouldn't apply to ECMAScript5 properties
+      if ("defineProperty" in Object) return;
+
       var called = false;
-      observable.unknownProperty = function (k, v) {
-        called = true;
-      };
       observable.set('nestedComputedProperty.wont.work', 'plop');
-      assert.equal(void(0), observable.get('nestedComputedProperty.wont.work'));
-      assert.isTrue(called);
+      assert.equal(void(0), observable.getPath('nestedComputedProperty.wont.work'));
+    }),
+
+    should("work with nested properties returned by a computed property", function () {
+      var called = false;
+      observable.setPath('nestedComputedProperty.wont.work', 'plop');
+      assert.equal('plop', observable.getPath('nestedComputedProperty.wont.work'));
     }),
 
     should("be tolerant of unknown namespaces (and call unknownProperty)", function () {

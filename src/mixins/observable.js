@@ -134,6 +134,36 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
   },
 
   /**
+    Get a value on an object that is a property path.
+
+    This function will return the value given the
+    property path using `get` when necessary.
+
+    This means you should write:
+
+        zombie.getPath('brain.isDelicious');
+
+    instead of:
+
+        zombie.get('brain.isDelicious');
+
+    @param {String} key The property path to lookup on the object.
+    @returns {Object} The value of the key.
+   */
+  getPath: function (k) {
+    k = k.toString();
+
+    var result = this, key = k, idx;
+    while (result != null && k.length > 0) {
+      idx = k.indexOf('.');
+      key = (idx === -1) ? k : k.slice(0, idx);
+      k = (idx === -1) ? "" : k.slice(idx + 1);
+      result = result.get ? result.get(key) : result[key];
+    }
+    return result;
+  },
+
+  /**
     Get a value on an object.
 
     Use this instead of subscript (`[]`) or dot notation
@@ -149,48 +179,72 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
    */
   get: function (k) {
     k = k.toString();
-    var key = k, value, idx = key.lastIndexOf('.'), object,
-        info, refKey;
-    if (idx === -1) {
-      object = this;
-    } else {
-      object = Espresso.getObjectFor(key.slice(0, idx), this);
-      key = key.slice(idx + 1);
-    }
+    var object = this, value, info, refKey;
 
-    info = this.__espmeta__[key];
-    refKey = key;
+    // Retrieve metadata about this property
+    info = this.__espmeta__[k];
+    refKey = k;
     if (info) {
       if (info.closureKey) {
-        key = info.closureKey;
+        k = info.closureKey;
       }
 
-      if (info.referenceKey) {
+      if (info.referenceKey && info.isComputed) {
         refKey = info.referenceKey;
       }
     }
 
-    if (object) {
-      value = object[key];
-      if (typeof value === "undefined") {
-        if (Espresso.isCallable(object.unknownProperty)) {
-          value = object.unknownProperty.call(object, refKey);
-        } else {
-          value = this.unknownProperty(k);
+    value = object[k];
+    // Deal with properties
+    if (value && value.isProperty) {
+      // If the value of the property is cached,
+      // retrieve it from the cache and return it.
+      if (value.isCacheable) {
+        object.__cache__ = object.__cache__ || {};
+        if (!object.__cache__.hasOwnProperty(k)) {
+          object.__cache__[k] = value.call(object, refKey);
         }
-      } else if (value && value.isProperty) {
-        if (value.isCacheable) {
-          object.__cache__ = object.__cache__ || {};
-          if (!object.__cache__.hasOwnProperty(key)) {
-            object.__cache__[key] = value.call(object, refKey);
-          }
-          return object.__cache__[key];
-        }
+        value = object.__cache__[k];
+
+      // Otherwise, we need to retrieve the value
+      } else {
         value = value.call(object, refKey);
       }
-      return value;
+
+    // Unknown properties
+    } else if (typeof value === "undefined") {
+      value = object.unknownProperty(k);
     }
-    return this.unknownProperty(k);
+    return value;
+  },
+
+  /**
+    Set a value that is a property path.
+
+    This function will return the value given the
+    property path using `set` and `get` when necessary.
+
+    This means you should write:
+
+        zombie.setPath('brain.isDelicious', true);
+
+    instead of:
+
+        zombie.set('brain.isDelicious', true);
+
+    @param {String} key The property path to lookup on the object.
+    @param {Object} value The value to set the object at the key's path to.
+    @returns {Object} The reciever.
+   */
+  setPath: function (k, v) {
+    k = k.toString();
+
+    var idx = k.lastIndexOf('.'),
+        object = idx === -1 ? this : this.getPath(k.slice(0, idx));
+
+    if (idx !== -1) k = k.slice(idx + 1);
+    object && object.set ? object.set(k, v) : object[k] = v;
+    return this;
   },
 
   /**
@@ -211,15 +265,10 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
   set: function (k, v) {
     k = k.toString();
 
-    var property, key = k, value = v, idx = key.lastIndexOf('.'), object,
-        result, didChange = false, info, refKey;
-    if (idx === -1) {
-      object = this;
-    } else {
-      object = Espresso.getObjectFor(key.slice(0, idx), this);
-      key = key.slice(idx + 1);
-    }
+    var property, key = k, value = v, idx = key.lastIndexOf('.'), object = this,
+        result, didChange = false, info, refKey, isComputed = false;
 
+    // Retrieve metadata about this property
     info = this.__espmeta__[key];
     refKey = key;
     if (info) {
@@ -230,46 +279,52 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
       if (info.referenceKey) {
         refKey = info.referenceKey;
       }
+      isComputed = info.isComputed;
     }
 
-    if (object) {
-      property = object[key];
+    property = object[key];
 
-      if (property && property.isProperty) {
-        if (property.isIdempotent) {
-          object.__value__ = object.__value__ || {};
-          if (object.__value__[key] !== value) {
-            result = property.call(object, refKey, value);
-            didChange = true;
-          }
-          object.__value__[key] = value;
-        } else {
+    // Properties first.
+    if (property && property.isProperty) {
+      // If setting it multiple times with the same
+      // value does nothing, check to see if we should
+      // set it again.
+      if (property.isIdempotent) {
+        object.__value__ = object.__value__ || {};
+        if (object.__value__[key] !== value) {
           result = property.call(object, refKey, value);
           didChange = true;
         }
+        object.__value__[key] = value;
 
-        if (property.isCacheable && didChange) {
-          object.__cache__ = object.__cache__ || {};
-          object.__cache__[key] = result;
-        }
-      } else if (typeof property === "undefined") {
-        if (Espresso.isCallable(object.unknownProperty)) {
-          object.unknownProperty.call(object, refKey, value);
-        } else {
-          this.unknownProperty(k, v);
-        }
+      // Otherwise, call the property with the key and value.
       } else {
-        object[refKey] = value;
+        result = property.call(object, refKey, value);
+        didChange = true;
       }
 
-      // Expected behaviour is strange unless publishes
-      // are done immediately.
-      if (object.publish && !(property && property.isIdempotent && !didChange)) {
-        object.publish(refKey, value);
+      // Cache the new return from the function
+      // so we don't have to waste another lookup later.
+      if (property.isCacheable && didChange) {
+        object.__cache__ = object.__cache__ || {};
+        object.__cache__[key] = result;
       }
-    } else {
+
+    // Unknown property
+    } else if (typeof property === "undefined") {
       this.unknownProperty(k, v);
+
+    // Simply set it (taking into account computed ECMAScript5 properties).
+    } else {
+      object[isComputed ? refKey : key] = value;
     }
+
+    // Expected behaviour is strange unless publishes
+    // are done immediately.
+    if (object.publish && !(property && property.isIdempotent && !didChange)) {
+      object.publish(refKey, value);
+    }
+
     return this;
   },
 
@@ -293,17 +348,21 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         o = root.get ? root.get(part) : Espresso.getObjectFor(part, root);
 
         // Don't mess with existing objects.
-        if (typeof o === "undefined") {
+        if (typeof o !== "undefined") {
+          root = o;
+
+        // Create new Objects when they don't exist
+        } else {
           root[part] = {};
           root = root[part];
-        } else {
-          root = o;
         }
       }
 
-      o = root.get ? root.get(parts[len]) : Espresso.getObjectFor(parts[len], root);
-      if (typeof o === "undefined") {
-        root[parts[len]] = value;
+      part = parts[len];
+      if (root[part] != null && root.set) {
+        root.set(part, value);
+      } else {
+        root[part] = value;
       }
     }
     return Espresso.getObjectFor(key, this);

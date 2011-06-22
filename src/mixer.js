@@ -94,8 +94,7 @@ mix = function () {
               }
             }
           }
-
-          target[key] = value;
+          if (typeof value !== "undefined") target[key] = value;
         }
 
         // Take care of IE clobbering `toString` and `valueOf`

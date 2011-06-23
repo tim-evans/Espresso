@@ -36,7 +36,7 @@
         }
       });
 
-      alert(Beatles.get('Paul.instruments.0'));
+      alert(Beatles.getPath('Paul.instruments.0'));
       // => 'vocals'
 
   Using `get` provides optimizations such as caching on an Object.
@@ -62,9 +62,9 @@
         height: 0,
         depth: 0,
 
-        volume: function () {
+        volume: Espresso.property(function () {
           return this.get('width') * this.get('height') * this.get('depth');
-        }.property('width', 'height', 'depth').cacheable()
+        }, 'width', 'height', 'depth').cacheable()
       });
 
   The `volume` property will get recomputed every single time the
@@ -90,6 +90,20 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
   /**
     Initialize the observer. This needs to be explicitly
     called to activate property observing.
+
+    When creating your base object for your library, you
+    should use the following boilerplate to make property
+    observing automatically initialize (with the following
+    boilerplate assuming your constructor is called `init`):
+
+        mix({
+          init: function (original) {
+            this.initObservable();
+            return original.apply(null, Espresso.A(arguments).slice(1));
+          }.refine()
+        }).into(Espresso.Observable);
+
+    @returns {void}
    */
   initObservable: function () {
     if (this.__isObservableInitialized__) { return; }
@@ -182,7 +196,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     var object = this, value, info, refKey;
 
     // Retrieve metadata about this property
-    info = this.__espmeta__[k];
+    info = this.__espmeta__ ? this.__espmeta__[k] : null;
     refKey = k;
     if (info) {
       if (info.closureKey) {
@@ -269,7 +283,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
         result, didChange = false, info, refKey, isComputed = false;
 
     // Retrieve metadata about this property
-    info = this.__espmeta__[key];
+    info = this.__espmeta__ ? this.__espmeta__[k] : null;
     refKey = key;
     if (info) {
       if (info.closureKey) {

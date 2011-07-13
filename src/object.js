@@ -1,22 +1,5 @@
 /*globals mix */
 
-mix(/** @scope Object.prototype */{
-
-  /**
-    Formats an Object by coercing the Object to a
-    String and calling `toFormat` on the string with
-    the format specifier passed in.
-
-    @param {String} spec The string specification to format the object.
-    @returns {String} The object as a formatted string according to the specification.
-   */
-  toFormat: function (spec) {
-    return String(this).toFormat(spec);
-  }.inferior()
-
-}).into(Object.prototype);
-
-
 mix(/** @scope Object */{
 
   /**

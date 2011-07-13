@@ -322,6 +322,6 @@
       return res;
     }
 
-    return res != null && res.toFormat ? res.toFormat(spec) : res;
+    return res != null && res.toFormat ? res.toFormat(spec) : String(res).toFormat(spec);
   }
 }());

@@ -37,8 +37,8 @@ context("Object",
     })
   ),
 
-  should("have an instance function named toFormat", function () {
-    assert.isTrue(Object.prototype.toFormat);
+  should("NOT have an instance function named toFormat", function () {
+    assert.isFalse(!!Object.prototype.toFormat);
   }),
 
   context("toFormat",

@@ -1,4 +1,4 @@
-/*globals Espresso */
+/*globals ESP Espresso */
 
 /** @namespace
 
@@ -19,7 +19,7 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.5.5',
+  VERSION: '0.5.6',
 
   /** @function
     @desc

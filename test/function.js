@@ -2,62 +2,62 @@
 
 context("Function",
   should("have a function named 'inferior'", function () {
-    assert.kindOf("function", Function.prototype.inferior);
+    assert.kindOf("function", Espresso.inferior);
   }),
 
   context("inferior",
     should("ignore the function if mixed into another object with the slot filled on mixin time", function () {
-      var lambda = function () {}.inferior(),
+      var lambda = Espresso.inferior(function () {}),
           o = { k: "Superior" };
       mix({ k: lambda }).into(o);
       assert.equal(o.k, "Superior");
     }),
 
     should("mixin the function if the slot is not filled", function () {
-      var lambda = function () {}.inferior(),
+      var lambda = Espresso.inferior(function () {}),
           o = {};
       mix({ k: lambda }).into(o);
       assert.equal(o.k, lambda);
     }),
 
     should("mixin the slot conditionally depending on the value passed in", function () {
-      var lambda = function () {}.inferior(true),
+      var lambda = Espresso.inferior(function () {}, true),
           o = { k: "Superior" };
       mix({ k: lambda }).into(o);
       assert.equal(o.k, "Superior");
 
-      lambda = function () {}.inferior(false);
+      lambda = Espresso.inferior(function () {}, false);
       mix({ k: lambda }).into(o);
       assert.equal(o.k, lambda);
     })
   ),
 
   should("have a function named 'alias'", function () {
-    assert.kindOf("function", Function.prototype.alias);
+    assert.kindOf("function", Espresso.alias);
   }),
 
   context("alias",
     should("add slots with the same function given the names on alias on mixin time", function () {
-      var lambda = function () {}.alias('George Orwell'),
+      var lambda = Espresso.alias(function () {}, 'George Orwell'),
           orwell = mix({ 'Eric Blair': lambda }).into({});
       assert.equal(orwell['Eric Blair'], orwell['George Orwell']);
     })
   ),
 
   should("have a function named 'refine'", function () {
-    assert.kindOf("function", Function.prototype.refine);
+    assert.kindOf("function", Espresso.refine);
   }),
 
   context("refine",
     should("prepend an argument to the argument list of the function when called", function () {
       var called = false;
       var o = mix({
-        lambda: function () {
+        lambda: Espresso.refine(function () {
           called = true;
           assert.equal(arguments.length, 3);
           assert.equal(arguments[1], 'a');
           assert.equal(arguments[2], 'b');
-        }.refine()
+        })
       }).into({});
 
       o.lambda('a', 'b');
@@ -68,9 +68,9 @@ context("Function",
       should("should be prepended to the argument list", function () {
         var called = false;
         var o = mix({
-          lambda: function ($super) {
+          lambda: Espresso.refine(function ($super) {
             $super('a', 'b');
-          }.refine()
+          })
         }).into({
           lambda: function () {
             called = true;
@@ -87,10 +87,10 @@ context("Function",
       should("should be a function", function () {
         var called = false;
         var o = mix({
-          lambda: function ($super) {
+          lambda: Espresso.refine(function ($super) {
             called = true;
             assert.kindOf("function", $super);
-          }.refine()
+          })
         }).into({});
 
         o.lambda();
@@ -100,9 +100,9 @@ context("Function",
       should("call the base function when invoked", function () {
         var called = false;
         var o = mix({
-          lambda: function ($super) {
+          lambda: Espresso.refine(function ($super) {
             $super('a', 'b');
-          }.refine()
+          })
         }).into({
           lambda: function () {
             called = true;
@@ -119,10 +119,10 @@ context("Function",
       should("not throw an error if no base function exists when invoked", function () {
         var called = false;
         var o = mix({
-          lambda: function ($super) {
+          lambda: Espresso.refine(function ($super) {
             called = true;
             $super('a', 'b');
-          }.refine()
+          })
         }).into({});
 
         o.lambda();
@@ -133,10 +133,10 @@ context("Function",
         var called = false,
             self = "Self should be 'this'";
         var o = mix({
-          lambda: function ($super) {
+          lambda: Espresso.refine(function ($super) {
             assert.equal(self, this);
             $super();
-          }.refine()
+          })
         }).into({
           lambda: function () {
             assert.equal(self, this);

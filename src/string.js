@@ -24,10 +24,10 @@ mix(/** @scope String.prototype */{
     @see <a href="http://blog.stevenlevithan.com/archives/faster-trim-javascript">Faster JavaScript Trim</a>
     @see <a href="http://jsperf.com/mega-trim-test">Mega Trim Test</a>
    */
-  trim: function () {
+  trim: Espresso.inferior(function () {
    var s = this.match(/\S+(?:\s+\S+)*/);
    return s ? s[0] : '';
-  }.inferior(false),
+  }),
 
   /**
     Format formats a string in the vein of Python's format,
@@ -69,9 +69,9 @@ mix(/** @scope String.prototype */{
       alert(":-{{".format());  // Double {{ or }} to escape it.
       // => ":-{"
    */
-  format: function () {
+  format: Espresso.inferior(function () {
     return Espresso.vformat(this, Espresso.A(arguments));
-  },
+  }),
 
   /**
     Formatter for `String`s.
@@ -82,7 +82,7 @@ mix(/** @scope String.prototype */{
     @param {String} spec The specifier string.
     @returns {String} The string formatted using the format specifier.
    */
-  toFormat: function (spec) {
+  toFormat: Espresso.inferior(function (spec) {
     var match = spec.match(Espresso.FORMAT_SPECIFIER),
         align = match[1],
         fill = match[2] || ' ',
@@ -116,6 +116,6 @@ mix(/** @scope String.prototype */{
     }
 
     return fill.repeat(before) + value + fill.repeat(after);
-  }.inferior()
+  })
 
 }).into(String.prototype);

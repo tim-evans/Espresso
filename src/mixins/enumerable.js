@@ -34,10 +34,10 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @param {Object} [self] The Object to use as this when executing the callback.
     @returns {void}
    */
-  forEach: function (lambda, that) {
+  forEach: Espresso.inferior(function (lambda, that) {
     throw new Error("You MUST override Espresso.Enumerable.forEach to be able " +
                     "to use the Enumerable mixin.");
-  }.inferior(),
+  }),
 
   /**
     Returns an array where each value on the enumerable
@@ -54,7 +54,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       alert([1, 2, 3, 4].map(cube));
       // -> [1, 8, 27, 64]
    */
-  map: function (lambda, self) {
+  map: Espresso.inferior(function (lambda, self) {
     var arr = [];
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
@@ -66,7 +66,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       arr.push(lambda.call(self, k, v, this));
     }, this);
     return arr;
-  }.inferior(),
+  }),
 
   /**
     Reduce the content of an enumerable down to a single value.
@@ -102,7 +102,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       alert("5! is {}".format(factorial(5)));
       alert("120! is {}".format(factorial(120)));
    */
-  reduce: function (lambda, seed) {
+  reduce: Espresso.inferior(function (lambda, seed) {
     var shouldSeed = (arguments.length === 1),
         self = this;
 
@@ -125,7 +125,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       throw new TypeError("There was nothing to reduce!");
     }
     return seed;
-  }.inferior(),
+  }),
 
   /**
     Returns all elements on the Enumerable for which the
@@ -138,7 +138,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @param {Object} [self] The value of `this` inside the lambda.
     @returns {Object[]} An array with the values for which `lambda` returns `true`
    */
-  filter: function (lambda, self) {
+  filter: Espresso.inferior(function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".format(lambda));
     }
@@ -149,7 +149,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
       }
       return seive;
     }, []);
-  }.inferior(),
+  }),
 
   /**
     Returns `true` if `lambda` returns `true` for every element
@@ -162,7 +162,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @param {Object} [self] The value of `this` inside the lambda.
     @returns {Boolean} `true` if `lambda` returns `true` for every iteration.
   */
-  every: function (lambda, self) {
+  every: Espresso.inferior(function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".format(lambda));
     }
@@ -170,7 +170,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     return this.reduce(function (every, v, k, t) {
       return every && lambda.call(self, v, k, t);
     }, true);
-  }.inferior(),
+  }),
 
   /**
     Returns `true` if `lambda` returns `true` for at least one
@@ -183,7 +183,7 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     @param {Object} [self] The value of `this` inside the lambda.
     @returns {Boolean} `true` if `lambda` returns `true` at least once.
    */
-  some: function (lambda, self) {
+  some: Espresso.inferior(function (lambda, self) {
     if (!Espresso.isCallable(lambda)) {
       throw new TypeError("{} is not callable.".format(lambda));
     }
@@ -191,6 +191,6 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     return this.reduce(function (every, v, k, t) {
       return every || lambda.call(self, v, k, t);
     }, false);
-  }.inferior()
+  })
 
 };

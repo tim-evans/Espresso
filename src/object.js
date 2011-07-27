@@ -9,7 +9,7 @@ mix(/** @scope Object */{
     @returns {Array} A list of all keys on the object passed in.
     @throws {TypeError} When `O` is not an object.
    */
-  keys: function (O) {
+  keys: Espresso.inferior(function (O) {
     var array = [], key;
 
     // 1. If the Type(O) is not Object, throw a TypeError exception.
@@ -26,6 +26,6 @@ mix(/** @scope Object */{
 
     // 6. Return array.
     return array;
-  }.inferior()
+  })
 
 }).into(Object);

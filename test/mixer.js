@@ -63,9 +63,9 @@ context("mix",
 
   should("make a function alias when annotated as such", function () {
     var result = mix({
-      coffee: function () {
+      coffee: Espresso.alias(function () {
         return "caffeine";
-      }.alias('cafe', 'koffie')
+      }, 'cafe', 'koffie')
     }).into({});
 
     assert.equal("caffeine", result.coffee());
@@ -82,9 +82,9 @@ context("mix",
     assert.equal("Just a teaspoon", coffee.sugar());
 
     mix({
-      sugar: function () {
+      sugar: Espresso.inferior(function () {
         return "Yes, please";
-      }.inferior()
+      })
     }).into(coffee);
     assert.equal("Just a teaspoon", coffee.sugar());
   }),
@@ -113,13 +113,13 @@ context("mix",
         return "No, it's Superman!";
       }
     }, {
-      greet: function ($super) {
+      greet: Espresso.refine(function ($super) {
         return "It's a plane!" + "\n" + $super();
-      }.refine()
+      })
     }, {
-      greet: function ($super) {
+      greet: Espresso.refine(function ($super) {
         return "It's a bird!" + "\n" + $super();
-      }.refine()
+      })
     }).into({});
 
     assert.equal("It's a bird!\nIt's a plane!\nNo, it's Superman!", superman.greet());

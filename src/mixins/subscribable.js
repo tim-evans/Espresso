@@ -70,7 +70,10 @@ Espresso.Subscribable = /** @lends Espresso.Subscribable# */{
     if (options && options.condition && !Espresso.isCallable(options.condition)) {
       delete options.condition;
     }
-    options = mix({ condition: function () { return true; }.inferior() }).into(options || {});
+
+    options = mix({
+      condition: Espresso.inferior(function () { return true; })
+    }).into(options || {});
 
     subscriptions[event].push(mix(options, {
       subscriber: handler

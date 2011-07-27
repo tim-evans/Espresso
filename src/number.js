@@ -8,7 +8,7 @@ mix(/** @lends Number# */{
     @param {String} spec The specifier to format the number as.
     @returns {String} The number formatted as specified.
    */
-  toFormat: function (spec) {
+  toFormat: Espresso.inferior(function (spec) {
     var value = this;
 
     // Don't want Infinity, -Infinity and NaN in here!
@@ -143,6 +143,6 @@ mix(/** @lends Number# */{
     }
 
     return value;
-  }.inferior()
+  })
 
 }).into(Number.prototype);

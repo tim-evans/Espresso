@@ -12,7 +12,7 @@ mix(/** @scope Espresso */{
 
     @param {Object} target The target to apply this decorator to.
     @param {...} aliases The aliases this object has.
-    @returns {Function} The reciever.
+    @returns {Object} The reciever.
    */
   alias: function (target) {
     target._ = target._ || {};

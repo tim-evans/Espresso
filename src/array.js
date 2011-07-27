@@ -15,12 +15,12 @@ mix(/** @scope Array */{
     @param {Object} obj The Object to test if it's an Array.
     @returns {Boolean} True if the obj is an array.
    */
-  isArray: (function () {
+  isArray: Espresso.inferior(function () {
     var toString = Object.prototype.toString;
     return function (obj) {
       return toString.call(obj) === '[object Array]';
     };
-  }()).inferior()
+  }())
 
 }).into(Array);
 
@@ -36,7 +36,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @param {Object} [self] The Object to use as this when executing the callback.
     @returns {void}
    */
-  forEach: function (lambda, self) {
+  forEach: Espresso.inferior(function (lambda, self) {
     // 3. Let len be ToUint32(lenValue).
     var len = this.length,
     // 6. Let k be 0.
@@ -64,7 +64,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     }
 
     // 8. Return
-  }.inferior(),
+  }),
 
   /**
     Shim for `indexOf`.
@@ -73,7 +73,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @param {Number} [fromIndex] The index to start looking at for the element.
     @returns {Number} The first index of an item (or -1 if no matching item was found).
    */
-  indexOf: function (o, fromIndex) {
+  indexOf: Espresso.inferior(function (o, fromIndex) {
     var i = 0, len = this.length;
     fromIndex = fromIndex || 0;
     i = fromIndex >= 0 ? fromIndex:
@@ -84,7 +84,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       }
     }
     return -1;
-  }.inferior(),
+  }),
 
   /**
     Reduce the content of an array down to a single
@@ -97,7 +97,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @param {Object} [seed] The seed value to provide for the first time.
     @returns {Object} The reduced output.
    */
-  reduceRight: function (lambda, seed) {
+  reduceRight: Espresso.inferior(function (lambda, seed) {
     var shouldSeed = (arguments.length === 1),
         len = this.length, v;
 
@@ -121,7 +121,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       throw new TypeError("There was nothing to reduce!");
     }
     return seed;
-  }.inferior(),
+  }),
 
   /**
     Shim for `reverse`.
@@ -129,7 +129,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
     @returns {Array} The array in reverse order.
    */
-  reverse: function () {
+  reverse: Espresso.inferior(function () {
     var O, len, middle,
         lower, upper,
         lowerP, upperP,
@@ -181,7 +181,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
     // 7. Return 0.
     return O;
-  }.inferior(),
+  }),
 
   /**
     Shim for `lastIndexOf`.
@@ -190,7 +190,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     @param [fromIndex] The index to begin searching from.
     @returns {Number} The last index of an item (or -1 if not found).
    */
-  lastIndexOf: function (searchElement, fromIndex) {
+  lastIndexOf: Espresso.inferior(function (searchElement, fromIndex) {
     var k = 0, len = this.length, n;
 
     // 4. If len is 0, return -1.
@@ -231,6 +231,6 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       k -= 1;
     }
     return -1;
-  }.inferior()
+  })
 
 }).into(Array.prototype);

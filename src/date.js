@@ -6,7 +6,7 @@ mix(/** @lends Date# */{
 
     @returns {String} The ISO 6081 formatted UTC date.
    */
-  toISOString: function () {
+  toISOString: Espresso.inferior(function () {
     return "{}-{}-{}T{}:{}:{}.{}Z".format(
       this.getUTCFullYear(),
       this.getUTCMonth(),
@@ -16,7 +16,7 @@ mix(/** @lends Date# */{
       this.getUTCSeconds(),
       this.getUTCMilliseconds()
     );
-  }.inferior(),
+  }),
 
   /** @function
     @desc
@@ -56,7 +56,7 @@ mix(/** @lends Date# */{
     @param {String} spec The specifier to transform the date to a formatted string.
     @returns {String} The Date transformed into a string as specified.
    */
-  toFormat: (function () {
+  toFormat: Espresso.inferior(function () {
     return function (spec) {
       var result = [], i = 0,
           day = Espresso.days[this.getDay()],
@@ -105,7 +105,7 @@ mix(/** @lends Date# */{
           break;
         case 'U':
           // Monday as the first day of the week
-          var day = ((this.getDay() + 6) % 7) + 1;
+          day = ((this.getDay() + 6) % 7) + 1;
           result[result.length] = "{:02}".format(
             Math.ceil((((this - new Date(this.getFullYear(), 0, 1)) / 86400000) + day) / 7) - 1);
           break;
@@ -134,7 +134,7 @@ mix(/** @lends Date# */{
       }
       return result.join('');
     };
-  }()).inferior()
+  }())
 
 }).into(Date.prototype);
 
@@ -145,9 +145,9 @@ mix(/** @lends Date */{
 
     @returns {Number} The current time.
    */
-  now: function () {
+  now: Espresso.inferior(function () {
     return new Date().getTime();
-  }.inferior()
+  })
 
 }).into(Date);
 

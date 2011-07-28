@@ -68,32 +68,6 @@ function endResize(e) {
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-        
-          <h1 class="title">Field Summary</h1>
-        
-				
-          <table>
-					
-						<tr class="nameDescription">
-              <td class="fixedFont right">+</td>
-              <td class="fixedFont">
-                <a href="../symbols/String.html#format">format</a>
-              </td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td class="fixedFont right">+</td>
-              <td class="fixedFont">
-                <a href="../symbols/String.html#toFormat">toFormat</a>
-              </td>
-            </tr>
-					
-          </table>
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
@@ -106,7 +80,17 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/String.html#repeat">repeat</a></b>(n, separator)</td>
+              + <b><a href="../symbols/String.html#format">format</a></b>()</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/String.html#repeat">repeat</a></b>(n)</td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td><span class="fixedFont">
+              + <b><a href="../symbols/String.html#toFormat">toFormat</a></b>(spec)</td>
             </tr>
 					
 						<tr class="nameDescription">
@@ -124,14 +108,19 @@ function endResize(e) {
 
 <!-- ============================== field details ========================== -->		
 			
-				<h1 class="title">Field Detail</h1>
+
+<!-- ============================== method details ========================= -->		
+			
+				<h1 class="title">Method Detail</h1>
 				
+					<a name="format"> </a>
           <div>
              <a name="format"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>format</b></h3>
-					</div>
-					<div class="description">
-						<p>Format formats a string in the vein of Python's format,
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>format</b>()</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Format formats a string in the vein of Python's format,
 Ruby #{templates}, and .NET String.Format.</p>
 
 <p>To write { or } in your Strings, just double them, and
@@ -146,80 +135,59 @@ pass you in the specifier (after the colon). You return the
 string it should look like, and that's it!</p>
 
 <p>For an example of an formatting extension, look at the Date mix.
-It implements the Ruby/Python formatting specification for Dates.</p>
+It implements the Ruby/Python formatting specification for Dates.</p></dd>
+               
+						   
+             </div>
+
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The formatted string.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
 					</div>
 					
 					
-					
-          <div class="code">
+					<div class="code">
 <code>alert(<span class="string">"b{0}{0}a"</span>.format(<span class="string">'an'</span>));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"banana"</code>
 </div>
 					
-          <div class="code">
+					<div class="code">
 <code>alert(<span class="string">"I&nbsp;love&nbsp;{pi:.{precision}}"</span>.format({&nbsp;pi:&nbsp;<span class="string">22</span>&nbsp;/&nbsp;<span class="string">7</span>,&nbsp;precision:&nbsp;<span class="string">2</span>&nbsp;}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"I&nbsp;love&nbsp;3.14"</code>
 </div>
 					
-          <div class="code">
+					<div class="code">
 <code>alert(<span class="string">"The&nbsp;{thing.name}&nbsp;is&nbsp;{thing.desc}."</span>.format({<br/>&nbsp;&nbsp;thing:&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;<span class="string">'cake'</span>,<br/>&nbsp;&nbsp;&nbsp;&nbsp;desc:&nbsp;<span class="string">'a&nbsp;lie'</span><br/>&nbsp;&nbsp;}<br/>}));<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;"The&nbsp;cake&nbsp;is&nbsp;a&nbsp;lie."</code>
 </div>
 					
-          <div class="code">
+					<div class="code">
 <code>alert(<span class="string">":-{{"</span>.format());&nbsp;&nbsp;<span class="single-line-comment">//</span>&nbsp;Double&nbsp;{{&nbsp;or&nbsp;}}&nbsp;to&nbsp;escape&nbsp;it.<br/><span class="single-line-comment">//</span>&nbsp;=&gt;&nbsp;":-{"</code>
 </div>
 					
 					
-
-						
-						
-						
-						
-
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-						
-						
-
-
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
+					
 					<hr />
-				
-          <div>
-             <a name="toFormat"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toFormat</b></h3>
-					</div>
-					<div class="description">
-						<p>Formatter for <code>String</code>s.</p>
-
-<p>Don't call this function- It's here for <code>Espresso.format</code>
-to take care of buisiness for you.</p>
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
-						
-						
-
-
-					
-				
-			
-
-<!-- ============================== method details ========================= -->		
-			
-				<h1 class="title">Method Detail</h1>
 				
 					<a name="repeat"> </a>
           <div>
              <a name="repeat"> </a>
-             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>repeat</b>(n, separator)</h3>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>repeat</b>(n)</h3>
 
              <div class="description">
                
@@ -237,12 +205,6 @@ to take care of buisiness for you.</p>
 									
 								</dt>
 								<dd>The number of times to repeat this string.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>separator</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The separator to put between each iteration of the string.</dd>
 							
 							</dl>
 						
@@ -269,6 +231,58 @@ to take care of buisiness for you.</p>
 <code>alert(<span class="string">"Stop&nbsp;hittin'&nbsp;yourself.&nbsp;"</span>.repeat(<span class="string">50</span>));</code>
 </div>
 					
+					
+				 
+					   <br />
+					   <i>Defined in: </i> <a href="../symbols/src/string.js.html">string.js</a>.
+				 
+					
+					<hr />
+				
+					<a name="toFormat"> </a>
+          <div>
+             <a name="toFormat"> </a>
+             <h3><span class="light">(<a href="../symbols/String.html">String</a>)</span> <b>toFormat</b>(spec)</h3>
+
+             <div class="description">
+               
+  				       <dt><p>Formatter for <code>String</code>s.</p>
+
+<p>Don't call this function- It's here for <code>Espresso.format</code>
+to take care of buisiness for you.</p></dd>
+               
+						   
+             </div>
+
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> <b>spec</b>
+									
+								</dt>
+								<dd>The specifier string.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dt><span class="light fixedFont">(<a href="../symbols/String.html">String</a>)</span> The string formatted using the format specifier.</dt>
+							
+							</dl>
+						
+						
+
+						
+					
+
+					</div>
 					
 				 
 					   <br />
@@ -336,7 +350,7 @@ to take care of buisiness for you.</p>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Jul 28 2011 13:56:54 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Jul 28 2011 14:19:42 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

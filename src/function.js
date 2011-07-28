@@ -2,58 +2,6 @@
 
 mix(/** @lends Function.prototype */{
 
-  /**
-    Currying transforms a function by transforming by composing it into
-    functions that each take a subset of the arguments of the whole.
-    The aggregate of all of the arguments passed into curried function
-    and the actual function call is what will be provided to the function
-    that's being curried.
-
-    This effectively means that you can transform a very simple call into
-    atomic calls as follows:
-
-        var mult = function () {
-          return Espresso.A(arguments).reduce(function (E, x) { return E * x; }, 1);
-        };
-
-        alert(mult.curry(2, 2)());
-        // => 4
-
-    Or specify a function that is a subset of the first:
-
-        var add = function () {
-          return Espresso.A(arguments).reduce(function (E, x) { return E + x; }, 0);
-        };
-
-        var inc = add.curry(1);
-
-        alert(inc(5));
-        // => 6
-
-    In layman's terms, `curry` will prepopulate arguments for a function.
-    @param {...} args Arguments that will be curried to the function.
-    @returns {Function} The function with the arguments provided saved for later.
-   */
-  curry: function () {
-    var Target, A;
-
-    // 1. Let Target be the this value.
-    Target = this;
-
-    // 2. If IsCallable(Target) is false, throw a TypeError exception
-    if (!Espresso.isCallable(Target)) {
-      throw new TypeError("The Target is not callable.");
-    }
-
-    // 3. Let A be a new (possibly empty) internal list of
-    //    all argument values (arg1, arg2, etc), in order
-    A = Espresso.A(arguments);
-
-    return function () {
-      return Target.apply(this, A.concat(Espresso.A(arguments)));
-    };
-  },
-
   /** @function
     @desc
     Bind the value of `this` on a function before hand,

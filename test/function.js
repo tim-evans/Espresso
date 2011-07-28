@@ -232,23 +232,5 @@ context("Function",
                                                       assert.equal(that, this); };
       lambda.bind(that, 'a', 'b')('c');
     })
-  ),
-
-  should("have a function named 'curry'", function () {
-    assert.kindOf("function", Function.prototype.curry);
-  }),
-
-  context("curry",
-    should("pass extra arguments along for the ride", function () {
-      var lambda = function (a, b, c) { assert.equal(a, 'a');
-                                        assert.equal(b, 'b');
-                                        assert.equal(c, 'c'); };
-      lambda.curry('a', 'b')('c');
-    }),
-
-    should("dynamically compute `this` via the this provided", function () {
-      var that = "foo", lambda = function () { assert.equal(that, this); };
-      lambda.curry().apply(that);
-    })
   )
 );

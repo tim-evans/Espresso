@@ -127,7 +127,42 @@ and the same characteristics.</p>
 						<tr class="nameDescription">
               <td class="fixedFont right">+</td>
               <td class="fixedFont">
+                <a href="../symbols/Espresso.Enumerable.html#every">every</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Enumerable.html#filter">filter</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
                 <a href="../symbols/Espresso.Enumerable.html#isEnumerable">isEnumerable</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Enumerable.html#map">map</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a>
+              </td>
+            </tr>
+					
+						<tr class="nameDescription">
+              <td class="fixedFont right">+</td>
+              <td class="fixedFont">
+                <a href="../symbols/Espresso.Enumerable.html#some">some</a>
               </td>
             </tr>
 					
@@ -148,32 +183,7 @@ and the same characteristics.</p>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#every">every</a></b>(lambda, self)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#filter">filter</a></b>(lambda, self)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Espresso.Enumerable.html#forEach">forEach</a></b>(lambda, self)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#map">map</a></b>(lambda, self)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#reduce">reduce</a></b>(lambda, seed)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Espresso.Enumerable.html#some">some</a></b>(lambda, self)</td>
             </tr>
 					
           </table>
@@ -187,6 +197,50 @@ and the same characteristics.</p>
 <!-- ============================== field details ========================== -->		
 			
 				<h1 class="title">Field Detail</h1>
+				
+          <div>
+             <a name="every"> </a>
+             <h3><span class="light">(Boolean)</span> <b>every</b></h3>
+					</div>
+					<div class="description">
+						<p>Returns <code>true</code> if <code>lambda</code> returns <code>true</code> for every element
+in the Enumerable, otherwise, it returns <code>false</code>.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name="filter"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>[])</span> <b>filter</b></h3>
+					</div>
+					<div class="description">
+						<p>Returns all elements on the Enumerable for which the
+input function returns true for.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					<hr />
 				
           <div>
              <a name="isEnumerable"> </a>
@@ -207,6 +261,83 @@ and the same characteristics.</p>
 						
 
 
+					<hr />
+				
+          <div>
+             <a name="map"> </a>
+             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>map</b></h3>
+					</div>
+					<div class="description">
+						<p>Returns an array where each value on the enumerable
+is mutated by the lambda function.</p>
+					</div>
+					
+					
+					
+          <div class="code">
+<code><span class="keyword">var</span>&nbsp;cube&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;n&nbsp;*&nbsp;n&nbsp;*&nbsp;n&nbsp;};<br/>alert([<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">4</span>].map(cube));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;[1,&nbsp;8,&nbsp;27,&nbsp;64]</code>
+</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name="reduce"> </a>
+             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>reduce</b></h3>
+					</div>
+					<div class="description">
+						<p>Reduce the content of an enumerable down to a single value.</p>
+					</div>
+					
+					
+					
+          <div class="code">
+<code><span class="keyword">var</span>&nbsp;range&nbsp;=&nbsp;mix(Espresso.Enumerable,&nbsp;{<br/>&nbsp;&nbsp;begin:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;end:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;forEach:&nbsp;<span class="keyword">function</span>&nbsp;(lambda,&nbsp;self)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">this</span>.begin;&nbsp;v&nbsp;&lt;=&nbsp;<span class="keyword">this</span>.end;&nbsp;v++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lambda.call(self,&nbsp;v,&nbsp;i++,&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;create:&nbsp;<span class="keyword">function</span>&nbsp;(begin,&nbsp;end)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;mix(<span class="keyword">this</span>,&nbsp;{&nbsp;begin:&nbsp;begin,&nbsp;end:&nbsp;end&nbsp;}).into({});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;multiply&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(a,&nbsp;b)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;a&nbsp;*&nbsp;b;&nbsp;};<br/><span class="keyword">var</span>&nbsp;factorial&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;range.create(<span class="string">1</span>,&nbsp;n).reduce(multiply);<br/>}<br/><br/>alert(<span class="string">"5!&nbsp;is&nbsp;{}"</span>.format(factorial(<span class="string">5</span>)));<br/>alert(<span class="string">"120!&nbsp;is&nbsp;{}"</span>.format(factorial(<span class="string">120</span>)));</code>
+</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
+					<hr />
+				
+          <div>
+             <a name="some"> </a>
+             <h3><span class="light">(Boolean)</span> <b>some</b></h3>
+					</div>
+					<div class="description">
+						<p>Returns <code>true</code> if <code>lambda</code> returns <code>true</code> for at least one
+element in the Enumerable, otherwise, it returns <code>false</code>.</p>
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+						
+						
+
+
 					
 				
 			
@@ -214,148 +345,6 @@ and the same characteristics.</p>
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
-				
-					<a name="every"> </a>
-          <div>
-             <a name="every"> </a>
-             <h3><span class="light">(Boolean)</span> <b>every</b>(lambda, self)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns <code>true</code> if <code>lambda</code> returns <code>true</code> for every element
-in the Enumerable, otherwise, it returns <code>false</code>.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
-									
-								</dt>
-								<dd>The lambda that transforms an element in the enumerable.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
-									
-								</dt>
-								<dd>The value of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
-									
-								</dt>
-								<dd>The key of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
-									
-								</dt>
-								<dd>The object being enumerated over.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>self</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The value of `this` inside the lambda.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(Boolean)</span> `true` if `lambda` returns `true` for every iteration.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
-				
-					<a name="filter"> </a>
-          <div>
-             <a name="filter"> </a>
-             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>[])</span> <b>filter</b>(lambda, self)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns all elements on the Enumerable for which the
-input function returns true for.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
-									
-								</dt>
-								<dd>The function to filter the Enumerable.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
-									
-								</dt>
-								<dd>The value of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
-									
-								</dt>
-								<dd>The key of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
-									
-								</dt>
-								<dd>The object being enumerated over.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>self</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The value of `this` inside the lambda.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>[])</span> An array with the values for which `lambda` returns `true`</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
-					<hr />
 				
 					<a name="forEach"> </a>
           <div>
@@ -429,230 +418,6 @@ defined in the ECMAScript 5 standard. All function using
 					
 				 
 					
-					<hr />
-				
-					<a name="map"> </a>
-          <div>
-             <a name="map"> </a>
-             <h3><span class="light">(<a href="../symbols/Array.html">Array</a>)</span> <b>map</b>(lambda, self)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns an array where each value on the enumerable
-is mutated by the lambda function.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
-									
-								</dt>
-								<dd>The lambda that transforms an element in the enumerable.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
-									
-								</dt>
-								<dd>The value of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
-									
-								</dt>
-								<dd>The key of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
-									
-								</dt>
-								<dd>The object being enumerated over.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>self</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The value of `this` inside the lambda.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Array.html">Array</a>)</span> The collection of results from the map function.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code><span class="keyword">var</span>&nbsp;cube&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;n&nbsp;*&nbsp;n&nbsp;*&nbsp;n&nbsp;};<br/>alert([<span class="string">1</span>,&nbsp;<span class="string">2</span>,&nbsp;<span class="string">3</span>,&nbsp;<span class="string">4</span>].map(cube));<br/><span class="single-line-comment">//</span>&nbsp;-&gt;&nbsp;[1,&nbsp;8,&nbsp;27,&nbsp;64]</code>
-</div>
-					
-					
-				 
-					
-					<hr />
-				
-					<a name="reduce"> </a>
-          <div>
-             <a name="reduce"> </a>
-             <h3><span class="light">(<a href="../symbols/Object.html">Object</a>)</span> <b>reduce</b>(lambda, seed)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Reduce the content of an enumerable down to a single value.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
-									
-								</dt>
-								<dd>The lambda that performs the reduction.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
-									
-								</dt>
-								<dd>The value of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
-									
-								</dt>
-								<dd>The key of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
-									
-								</dt>
-								<dd>The object being enumerated over.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>seed</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The seed value to provide for the first time.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> The reduced output.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-					
-					<div class="code">
-<code><span class="keyword">var</span>&nbsp;range&nbsp;=&nbsp;mix(Espresso.Enumerable,&nbsp;{<br/>&nbsp;&nbsp;begin:&nbsp;<span class="string">0</span>,<br/>&nbsp;&nbsp;end:&nbsp;<span class="string">0</span>,<br/><br/>&nbsp;&nbsp;forEach:&nbsp;<span class="keyword">function</span>&nbsp;(lambda,&nbsp;self)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;i&nbsp;=&nbsp;<span class="string">0</span>;<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">for</span>&nbsp;(<span class="keyword">var</span>&nbsp;v&nbsp;=&nbsp;<span class="keyword">this</span>.begin;&nbsp;v&nbsp;&lt;=&nbsp;<span class="keyword">this</span>.end;&nbsp;v++)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lambda.call(self,&nbsp;v,&nbsp;i++,&nbsp;<span class="keyword">this</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;}<br/>&nbsp;&nbsp;},<br/><br/>&nbsp;&nbsp;create:&nbsp;<span class="keyword">function</span>&nbsp;(begin,&nbsp;end)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;mix(<span class="keyword">this</span>,&nbsp;{&nbsp;begin:&nbsp;begin,&nbsp;end:&nbsp;end&nbsp;}).into({});<br/>&nbsp;&nbsp;}<br/>}).into({});<br/><br/><span class="keyword">var</span>&nbsp;multiply&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(a,&nbsp;b)&nbsp;{&nbsp;<span class="keyword">return</span>&nbsp;a&nbsp;*&nbsp;b;&nbsp;};<br/><span class="keyword">var</span>&nbsp;factorial&nbsp;=&nbsp;<span class="keyword">function</span>&nbsp;(n)&nbsp;{<br/>&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;range.create(<span class="string">1</span>,&nbsp;n).reduce(multiply);<br/>}<br/><br/>alert(<span class="string">"5!&nbsp;is&nbsp;{}"</span>.format(factorial(<span class="string">5</span>)));<br/>alert(<span class="string">"120!&nbsp;is&nbsp;{}"</span>.format(factorial(<span class="string">120</span>)));</code>
-</div>
-					
-					
-				 
-					
-					<hr />
-				
-					<a name="some"> </a>
-          <div>
-             <a name="some"> </a>
-             <h3><span class="light">(Boolean)</span> <b>some</b>(lambda, self)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Returns <code>true</code> if <code>lambda</code> returns <code>true</code> for at least one
-element in the Enumerable, otherwise, it returns <code>false</code>.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>lambda</b>
-									
-								</dt>
-								<dd>The lambda that transforms an element in the enumerable.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.value</b>
-									
-								</dt>
-								<dd>The value of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.key</b>
-									
-								</dt>
-								<dd>The key of the enumerated item.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>lambda.self</b>
-									
-								</dt>
-								<dd>The object being enumerated over.</dd>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Object.html">Object</a>)</span> <b>self</b>
-									<i>Optional</i>
-								</dt>
-								<dd>The value of `this` inside the lambda.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(Boolean)</span> `true` if `lambda` returns `true` at least once.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					
 					
 				
 			
@@ -667,7 +432,7 @@ element in the Enumerable, otherwise, it returns <code>false</code>.</p></dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:10 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Jul 28 2011 13:56:54 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

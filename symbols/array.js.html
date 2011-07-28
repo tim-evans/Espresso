@@ -22,12 +22,12 @@
 <span class='line'> 15</span>     @param {Object} obj The Object to test if it's an Array.
 <span class='line'> 16</span>     @returns {Boolean} True if the obj is an array.
 <span class='line'> 17</span>    */</span><span class="WHIT">
-<span class='line'> 18</span> </span><span class="WHIT">  </span><span class="NAME">isArray</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">  </span><span class="NAME">isArray</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 19</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">toString</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Object.prototype.toString</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 20</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 21</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">toString.call</span><span class="PUNC">(</span><span class="NAME">obj</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">'[object Array]'</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 22</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 23</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'> 24</span> 
 <span class='line'> 25</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Array</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 26</span> 
@@ -43,7 +43,7 @@
 <span class='line'> 36</span>     @param {Object} [self] The Object to use as this when executing the callback.
 <span class='line'> 37</span>     @returns {void}
 <span class='line'> 38</span>    */</span><span class="WHIT">
-<span class='line'> 39</span> </span><span class="WHIT">  </span><span class="NAME">forEach</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">lambda</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">self</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">  </span><span class="NAME">forEach</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">lambda</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">self</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 40</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let len be ToUint32(lenValue).</span><span class="WHIT">
 <span class='line'> 41</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.length</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 42</span> </span><span class="WHIT">    </span><span class="COMM">// 6. Let k be 0.</span><span class="WHIT">
@@ -71,7 +71,7 @@
 <span class='line'> 64</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 65</span> 
 <span class='line'> 66</span> </span><span class="WHIT">    </span><span class="COMM">// 8. Return</span><span class="WHIT">
-<span class='line'> 67</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 68</span> 
 <span class='line'> 69</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'> 70</span>     Shim for `indexOf`.
@@ -80,7 +80,7 @@
 <span class='line'> 73</span>     @param {Number} [fromIndex] The index to start looking at for the element.
 <span class='line'> 74</span>     @returns {Number} The first index of an item (or -1 if no matching item was found).
 <span class='line'> 75</span>    */</span><span class="WHIT">
-<span class='line'> 76</span> </span><span class="WHIT">  </span><span class="NAME">indexOf</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">  </span><span class="NAME">indexOf</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">o</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 77</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.length</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 78</span> </span><span class="WHIT">    </span><span class="NAME">fromIndex</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 79</span> </span><span class="WHIT">    </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="PUNC">:</span><span class="WHIT">
@@ -91,7 +91,7 @@
 <span class='line'> 84</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 85</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 86</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 87</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 88</span> 
 <span class='line'> 89</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'> 90</span>     Reduce the content of an array down to a single
@@ -104,7 +104,7 @@
 <span class='line'> 97</span>     @param {Object} [seed] The seed value to provide for the first time.
 <span class='line'> 98</span>     @returns {Object} The reduced output.
 <span class='line'> 99</span>    */</span><span class="WHIT">
-<span class='line'>100</span> </span><span class="WHIT">  </span><span class="NAME">reduceRight</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">lambda</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">seed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">  </span><span class="NAME">reduceRight</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">lambda</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">seed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>101</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">shouldSeed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">arguments.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>102</span> </span><span class="WHIT">        </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.length</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">v</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>103</span> 
@@ -128,7 +128,7 @@
 <span class='line'>121</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"There was nothing to reduce!"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>122</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>123</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">seed</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>124</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>125</span> 
 <span class='line'>126</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'>127</span>     Shim for `reverse`.
@@ -136,7 +136,7 @@
 <span class='line'>129</span> 
 <span class='line'>130</span>     @returns {Array} The array in reverse order.
 <span class='line'>131</span>    */</span><span class="WHIT">
-<span class='line'>132</span> </span><span class="WHIT">  </span><span class="NAME">reverse</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">  </span><span class="NAME">reverse</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>133</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">O</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">middle</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>134</span> </span><span class="WHIT">        </span><span class="NAME">lower</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">upper</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>135</span> </span><span class="WHIT">        </span><span class="NAME">lowerP</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">upperP</span><span class="PUNC">,</span><span class="WHIT">
@@ -188,7 +188,7 @@
 <span class='line'>181</span> 
 <span class='line'>182</span> </span><span class="WHIT">    </span><span class="COMM">// 7. Return 0.</span><span class="WHIT">
 <span class='line'>183</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">O</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>184</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'>185</span> 
 <span class='line'>186</span> </span><span class="WHIT">  </span><span class="COMM">/**
 <span class='line'>187</span>     Shim for `lastIndexOf`.
@@ -197,7 +197,7 @@
 <span class='line'>190</span>     @param [fromIndex] The index to begin searching from.
 <span class='line'>191</span>     @returns {Number} The last index of an item (or -1 if not found).
 <span class='line'>192</span>    */</span><span class="WHIT">
-<span class='line'>193</span> </span><span class="WHIT">  </span><span class="NAME">lastIndexOf</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">  </span><span class="NAME">lastIndexOf</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">searchElement</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">fromIndex</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>194</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">k</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.length</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">n</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>195</span> 
 <span class='line'>196</span> </span><span class="WHIT">    </span><span class="COMM">// 4. If len is 0, return -1.</span><span class="WHIT">
@@ -238,7 +238,7 @@
 <span class='line'>231</span> </span><span class="WHIT">      </span><span class="NAME">k</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>232</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>233</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>234</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">.</span><span class="NAME">inferior</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'>235</span> 
 <span class='line'>236</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Array.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>237</span> </span></pre></body></html>

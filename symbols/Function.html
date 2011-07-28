@@ -80,27 +80,12 @@ function endResize(e) {
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#alias">alias</a></b>(aliases)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
               + <b><a href="../symbols/Function.html#bind">bind</a></b>(thisArg)</td>
             </tr>
 					
 						<tr class="nameDescription">
               <td><span class="fixedFont">
               + <b><a href="../symbols/Function.html#curry">curry</a></b>(args)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#inferior">inferior</a></b>(condition)</td>
-            </tr>
-					
-						<tr class="nameDescription">
-              <td><span class="fixedFont">
-              + <b><a href="../symbols/Function.html#refine">refine</a></b>()</td>
             </tr>
 					
           </table>
@@ -117,62 +102,6 @@ function endResize(e) {
 <!-- ============================== method details ========================= -->		
 			
 				<h1 class="title">Method Detail</h1>
-				
-					<a name="alias"> </a>
-          <div>
-             <a name="alias"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>alias</b>(aliases)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Provides a mechanism to alias a function with
-other names on the object.</p>
-
-<p>Any arguments passed in will be used as aliases
-for the function. Each of these aliases will be
-references to the original, meaning that all of
-them will be indistinguishable and if one is
-altered in place, then all will be.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(...)</span> <b>aliases</b>
-									
-								</dt>
-								<dd>The aliases this function has.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-				 
-					
-					<hr />
 				
 					<a name="bind"> </a>
           <div>
@@ -299,117 +228,6 @@ atomic calls as follows:</p>
 					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
 				 
 					
-					<hr />
-				
-					<a name="inferior"> </a>
-          <div>
-             <a name="inferior"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>inferior</b>(condition)</h3>
-
-             <div class="description">
-               
-  				       <dt><p>If the attribute being mixed in exists on the
-Object being mixed in, the function marked as
-inferior will <strong>not</strong> be mixed in. If the base
-function is inferior, it will be overriden.</p></dd>
-               
-						   
-             </div>
-
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> <b>condition</b>
-									<i>Optional</i>
-								</dt>
-								<dd>If it returns `true`,
-      the function is inferior. Otherwise, it isn't.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-				 
-					
-					<hr />
-				
-					<a name="refine"> </a>
-          <div>
-             <a name="refine"> </a>
-             <h3><span class="light">(<a href="../symbols/Function.html">Function</a>)</span> <b>refine</b>()</h3>
-
-             <div class="description">
-               
-  				       <dt><p>Refine allows for function-by-function refinements that
-reopens the function implementation without editing the
-original function's contents. With this, you can implement
-OO constructs like abstract base classes.</p>
-
-<p>Refinements to a function recieve a prepended argument to
-the argument list which is the original function that
-is being refined (if there isn't an original function that's
-being refined, a empty function will be provided for consistency).</p>
-
-<p>Calling the refined function should be done like so:</p>
-
-<div class="code">
-<code>Machiatto&nbsp;=&nbsp;mix({<br/>&nbsp;&nbsp;pull:&nbsp;<span class="keyword">function</span>&nbsp;(original)&nbsp;{<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">var</span>&nbsp;espresso&nbsp;=&nbsp;original();<br/>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span>&nbsp;espresso&nbsp;+&nbsp;milk;<br/>&nbsp;&nbsp;}.refine()<br/>}).into(Espresso);</code>
-</div>
-
-<p>Provide arguments as-is, omit arguments, or add arguments
-to the function. It'll be just like it's being called normally.</p>
-
-<p>NOTE: If you try to rebind the property using
-      <a href="../symbols/Function.html#bind">Function#bind</a>, it will <em>not</em> work.</p></dd>
-               
-						   
-             </div>
-
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dt><span class="light fixedFont">(<a href="../symbols/Function.html">Function</a>)</span> The reciever.</dt>
-							
-							</dl>
-						
-						
-
-						
-					
-
-					</div>
-					
-				 
-					   <br />
-					   <i>Defined in: </i> <a href="../symbols/src/function.js.html">function.js</a>.
-				 
-					
 					
 				
 			
@@ -424,7 +242,7 @@ to the function. It'll be just like it's being called normally.</p>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Jun 21 2011 22:19:11 GMT-0400 (EDT)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Thu Jul 28 2011 13:56:54 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

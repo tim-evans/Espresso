@@ -10,216 +10,129 @@
 <span class='line'>  3</span> </span><span class="NAME">mix</span><span class="PUNC">(</span><span class="COMM">/** @lends Function.prototype */</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  4</span> 
 <span class='line'>  5</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'>  6</span>     If the attribute being mixed in exists on the
-<span class='line'>  7</span>     Object being mixed in, the function marked as
-<span class='line'>  8</span>     inferior will **not** be mixed in. If the base
-<span class='line'>  9</span>     function is inferior, it will be overriden.
-<span class='line'> 10</span> 
-<span class='line'> 11</span>     @param {Function} [condition] If it returns `true`,
-<span class='line'> 12</span>       the function is inferior. Otherwise, it isn't.
-<span class='line'> 13</span>     @returns {Function} The reciever.
-<span class='line'> 14</span>    */</span><span class="WHIT">
-<span class='line'> 15</span> </span><span class="WHIT">  </span><span class="NAME">inferior</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">condition</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 16</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">concat</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 17</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>  6</span>     Currying transforms a function by transforming by composing it into
+<span class='line'>  7</span>     functions that each take a subset of the arguments of the whole.
+<span class='line'>  8</span>     The aggregate of all of the arguments passed into curried function
+<span class='line'>  9</span>     and the actual function call is what will be provided to the function
+<span class='line'> 10</span>     that's being curried.
+<span class='line'> 11</span> 
+<span class='line'> 12</span>     This effectively means that you can transform a very simple call into
+<span class='line'> 13</span>     atomic calls as follows:
+<span class='line'> 14</span> 
+<span class='line'> 15</span>         var mult = function () {
+<span class='line'> 16</span>           return Espresso.A(arguments).reduce(function (E, x) { return E * x; }, 1);
+<span class='line'> 17</span>         };
 <span class='line'> 18</span> 
-<span class='line'> 19</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'> 20</span>     Provides a mechanism to alias a function with
-<span class='line'> 21</span>     other names on the object.
-<span class='line'> 22</span> 
-<span class='line'> 23</span>     Any arguments passed in will be used as aliases
-<span class='line'> 24</span>     for the function. Each of these aliases will be
-<span class='line'> 25</span>     references to the original, meaning that all of
-<span class='line'> 26</span>     them will be indistinguishable and if one is
-<span class='line'> 27</span>     altered in place, then all will be.
-<span class='line'> 28</span> 
-<span class='line'> 29</span>     @param {...} aliases The aliases this function has.
-<span class='line'> 30</span>     @returns {Function} The reciever.
-<span class='line'> 31</span>    */</span><span class="WHIT">
-<span class='line'> 32</span> </span><span class="WHIT">  </span><span class="NAME">alias</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 33</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Espresso.alias.apply</span><span class="PUNC">(</span><span class="KEYW">null</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">concat</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 34</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 35</span> 
-<span class='line'> 36</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'> 37</span>     Refine allows for function-by-function refinements that
-<span class='line'> 38</span>     reopens the function implementation without editing the
-<span class='line'> 39</span>     original function's contents. With this, you can implement
-<span class='line'> 40</span>     OO constructs like abstract base classes.
-<span class='line'> 41</span> 
-<span class='line'> 42</span>     Refinements to a function recieve a prepended argument to
-<span class='line'> 43</span>     the argument list which is the original function that
-<span class='line'> 44</span>     is being refined (if there isn't an original function that's
-<span class='line'> 45</span>     being refined, a empty function will be provided for consistency).
-<span class='line'> 46</span> 
-<span class='line'> 47</span>     Calling the refined function should be done like so:
-<span class='line'> 48</span> 
-<span class='line'> 49</span>         Machiatto = mix({
-<span class='line'> 50</span>           pull: function (original) {
-<span class='line'> 51</span>             var espresso = original();
-<span class='line'> 52</span>             return espresso + milk;
-<span class='line'> 53</span>           }.refine()
-<span class='line'> 54</span>         }).into(Espresso);
-<span class='line'> 55</span> 
-<span class='line'> 56</span>     Provide arguments as-is, omit arguments, or add arguments
-<span class='line'> 57</span>     to the function. It'll be just like it's being called normally.
-<span class='line'> 58</span> 
-<span class='line'> 59</span>     NOTE: If you try to rebind the property using
-<span class='line'> 60</span>           {@link Function#bind}, it will _not_ work.
-<span class='line'> 61</span> 
-<span class='line'> 62</span>     @returns {Function} The reciever.
-<span class='line'> 63</span>    */</span><span class="WHIT">
-<span class='line'> 64</span> </span><span class="WHIT">  </span><span class="NAME">refine</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 65</span> </span><span class="WHIT">    </span><span class="NAME">this._</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 66</span> 
-<span class='line'> 67</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">empty</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 68</span> 
-<span class='line'> 69</span> </span><span class="WHIT">    </span><span class="COMM">/** @ignore */</span><span class="WHIT">
-<span class='line'> 70</span> </span><span class="WHIT">    </span><span class="NAME">this._.refine</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">key</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 71</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">base</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template</span><span class="PUNC">[</span><span class="NAME">key</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NAME">empty</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 72</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.isCallable</span><span class="PUNC">(</span><span class="NAME">base</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 74</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 75</span> 
-<span class='line'> 76</span> </span><span class="WHIT">      </span><span class="COMM">/** @ignore */</span><span class="WHIT">
-<span class='line'> 77</span> </span><span class="WHIT">      </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">lambda</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 78</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">value.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">base.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 79</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 80</span> 
-<span class='line'> 81</span> </span><span class="WHIT">      </span><span class="COMM">// Copy over function properties</span><span class="WHIT">
-<span class='line'> 82</span> </span><span class="WHIT">      </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">k</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 83</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">value.hasOwnProperty</span><span class="PUNC">(</span><span class="NAME">k</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 84</span> </span><span class="WHIT">          </span><span class="NAME">lambda</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">[</span><span class="NAME">k</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 85</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 86</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 87</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">lambda</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 89</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 90</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 19</span>         alert(mult.curry(2, 2)());
+<span class='line'> 20</span>         // => 4
+<span class='line'> 21</span> 
+<span class='line'> 22</span>     Or specify a function that is a subset of the first:
+<span class='line'> 23</span> 
+<span class='line'> 24</span>         var add = function () {
+<span class='line'> 25</span>           return Espresso.A(arguments).reduce(function (E, x) { return E + x; }, 0);
+<span class='line'> 26</span>         };
+<span class='line'> 27</span> 
+<span class='line'> 28</span>         var inc = add.curry(1);
+<span class='line'> 29</span> 
+<span class='line'> 30</span>         alert(inc(5));
+<span class='line'> 31</span>         // => 6
+<span class='line'> 32</span> 
+<span class='line'> 33</span>     In layman's terms, `curry` will prepopulate arguments for a function.
+<span class='line'> 34</span>     @param {...} args Arguments that will be curried to the function.
+<span class='line'> 35</span>     @returns {Function} The function with the arguments provided saved for later.
+<span class='line'> 36</span>    */</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">  </span><span class="NAME">curry</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Target</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 39</span> 
+<span class='line'> 40</span> </span><span class="WHIT">    </span><span class="COMM">// 1. Let Target be the this value.</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">    </span><span class="NAME">Target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> 
+<span class='line'> 43</span> </span><span class="WHIT">    </span><span class="COMM">// 2. If IsCallable(Target) is false, throw a TypeError exception</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.isCallable</span><span class="PUNC">(</span><span class="NAME">Target</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"The Target is not callable."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 47</span> 
+<span class='line'> 48</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let A be a new (possibly empty) internal list of</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">    </span><span class="COMM">//    all argument values (arg1, arg2, etc), in order</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> 
+<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 56</span> 
+<span class='line'> 57</span> </span><span class="WHIT">  </span><span class="COMM">/** @function
+<span class='line'> 58</span>     @desc
+<span class='line'> 59</span>     Bind the value of `this` on a function before hand,
+<span class='line'> 60</span>     with any extra arguments being passed in as initial
+<span class='line'> 61</span>     arguments.
+<span class='line'> 62</span> 
+<span class='line'> 63</span>     This implementation conforms to the ECMAScript 5
+<span class='line'> 64</span>     standard.
+<span class='line'> 65</span> 
+<span class='line'> 66</span>         var barista = function (tpl) {
+<span class='line'> 67</span>           alert(tpl.format(this));
+<span class='line'> 68</span>           return arguments.callee.bind(this, "Order up! Your {} is ready!");
+<span class='line'> 69</span>         };
+<span class='line'> 70</span> 
+<span class='line'> 71</span>         orderUp = barista.call("espresso", "I would like an {}");
+<span class='line'> 72</span>         // -> "I would like an espresso."
+<span class='line'> 73</span> 
+<span class='line'> 74</span>         orderUp();
+<span class='line'> 75</span>         // -> "Order up! Your espresso is ready!"
+<span class='line'> 76</span> 
+<span class='line'> 77</span>     @param {Object} thisArg The value to bind `this` to on the function.
+<span class='line'> 78</span>     @returns {Function} The function passed in, wrapped to ensure `this`
+<span class='line'> 79</span>       is the correct scope.
+<span class='line'> 80</span>    */</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">  </span><span class="NAME">bind</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Target</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> 
+<span class='line'> 84</span> </span><span class="WHIT">    </span><span class="COMM">// 1. Let Target be the this value.</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">    </span><span class="NAME">Target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> 
+<span class='line'> 87</span> </span><span class="WHIT">    </span><span class="COMM">// 2. If IsCallable(Target) is false, throw a TypeError exception</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.isCallable</span><span class="PUNC">(</span><span class="NAME">Target</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"The Target is not callable."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 91</span> 
-<span class='line'> 92</span> </span><span class="WHIT">  </span><span class="COMM">/**
-<span class='line'> 93</span>     Currying transforms a function by transforming by composing it into
-<span class='line'> 94</span>     functions that each take a subset of the arguments of the whole.
-<span class='line'> 95</span>     The aggregate of all of the arguments passed into curried function
-<span class='line'> 96</span>     and the actual function call is what will be provided to the function
-<span class='line'> 97</span>     that's being curried.
+<span class='line'> 92</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let A be a new (possibly empty) internal list of</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="COMM">//    all argument values provided after self</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">    </span><span class="COMM">//    (arg1, arg2, etc), in order</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> 
+<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 98</span> 
-<span class='line'> 99</span>     This effectively means that you can transform a very simple call into
-<span class='line'>100</span>     atomic calls as follows:
-<span class='line'>101</span> 
-<span class='line'>102</span>         var mult = function () {
-<span class='line'>103</span>           return Espresso.A(arguments).reduce(function (E, x) { return E * x; }, 1);
-<span class='line'>104</span>         };
-<span class='line'>105</span> 
-<span class='line'>106</span>         alert(mult.curry(2, 2)());
-<span class='line'>107</span>         // => 4
-<span class='line'>108</span> 
-<span class='line'>109</span>     Or specify a function that is a subset of the first:
-<span class='line'>110</span> 
-<span class='line'>111</span>         var add = function () {
-<span class='line'>112</span>           return Espresso.A(arguments).reduce(function (E, x) { return E + x; }, 0);
-<span class='line'>113</span>         };
-<span class='line'>114</span> 
-<span class='line'>115</span>         var inc = add.curry(1);
-<span class='line'>116</span> 
-<span class='line'>117</span>         alert(inc(5));
-<span class='line'>118</span>         // => 6
-<span class='line'>119</span> 
-<span class='line'>120</span>     In layman's terms, `curry` will prepopulate arguments for a function.
-<span class='line'>121</span>     @param {...} args Arguments that will be curried to the function.
-<span class='line'>122</span>     @returns {Function} The function with the arguments provided saved for later.
-<span class='line'>123</span>    */</span><span class="WHIT">
-<span class='line'>124</span> </span><span class="WHIT">  </span><span class="NAME">curry</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>125</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Target</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>126</span> 
-<span class='line'>127</span> </span><span class="WHIT">    </span><span class="COMM">// 1. Let Target be the this value.</span><span class="WHIT">
-<span class='line'>128</span> </span><span class="WHIT">    </span><span class="NAME">Target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">this</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">        </span><span class="COMM">// 15.3.4.5.2 [[Construct]]</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">        </span><span class="COMM">// When the [[Construct]] internal method of a function object, F,</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">        </span><span class="COMM">// that was created using the bind function is called with a list of</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">        </span><span class="COMM">// arguments ExtraArgs, the following steps are taken:</span><span class="WHIT">
+<span class='line'>104</span> 
+<span class='line'>105</span> </span><span class="WHIT">        </span><span class="COMM">// 1. Let the target be the value of F's [[TargetFunction]] internal property.</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">        </span><span class="COMM">// 2. If target has no [[Construct]] internal method, a TypeError exception is thrown.</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">        </span><span class="COMM">// 3. Let boundArgs be the value of F's [[BoundArgs]] internal property.</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">        </span><span class="COMM">// 4. Left args be a new list containing the same values as the list boundArgs in the same order followed by the same values as the list ExtraArgs in the same order.</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">        </span><span class="COMM">// 5. Return the result of calling the [[Construct]] internal method of target providing args as the arguments.</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">        </span><span class="NAME">Type.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Target.prototype</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>112</span> </span><span class="WHIT">        </span><span class="NAME">that</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Type</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>113</span> 
+<span class='line'>114</span> </span><span class="WHIT">        </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">that</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">that</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">        </span><span class="COMM">// 15.3.4.5.1 [[Call]]</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">        </span><span class="COMM">// When the [[Call]] internal method of a function object, F,</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">        </span><span class="COMM">// which was created using the bind function is called with a this</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">        </span><span class="COMM">// value and a list of arguments ExtraArgs, the following steps are taken:</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">        </span><span class="COMM">// 1. Let boundArgs be the value of F's [[BoundArgs]] internal property.</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">        </span><span class="COMM">// 2. Let boundThis be the value of F's [[BoundThis]] internal property.</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">        </span><span class="COMM">// 3. Let target be the value of F's [[TargetFunction]] internal property.</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="WHIT">
 <span class='line'>129</span> 
-<span class='line'>130</span> </span><span class="WHIT">    </span><span class="COMM">// 2. If IsCallable(Target) is false, throw a TypeError exception</span><span class="WHIT">
-<span class='line'>131</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.isCallable</span><span class="PUNC">(</span><span class="NAME">Target</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>132</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"The Target is not callable."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>133</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>134</span> 
-<span class='line'>135</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let A be a new (possibly empty) internal list of</span><span class="WHIT">
-<span class='line'>136</span> </span><span class="WHIT">    </span><span class="COMM">//    all argument values (arg1, arg2, etc), in order</span><span class="WHIT">
-<span class='line'>137</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>138</span> 
-<span class='line'>139</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>140</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>141</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>142</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>143</span> 
-<span class='line'>144</span> </span><span class="WHIT">  </span><span class="COMM">/** @function
-<span class='line'>145</span>     @desc
-<span class='line'>146</span>     Bind the value of `this` on a function before hand,
-<span class='line'>147</span>     with any extra arguments being passed in as initial
-<span class='line'>148</span>     arguments.
-<span class='line'>149</span> 
-<span class='line'>150</span>     This implementation conforms to the ECMAScript 5
-<span class='line'>151</span>     standard.
-<span class='line'>152</span> 
-<span class='line'>153</span>         var barista = function (tpl) {
-<span class='line'>154</span>           alert(tpl.format(this));
-<span class='line'>155</span>           return arguments.callee.bind(this, "Order up! Your {} is ready!");
-<span class='line'>156</span>         };
-<span class='line'>157</span> 
-<span class='line'>158</span>         orderUp = barista.call("espresso", "I would like an {}");
-<span class='line'>159</span>         // -> "I would like an espresso."
-<span class='line'>160</span> 
-<span class='line'>161</span>         orderUp();
-<span class='line'>162</span>         // -> "Order up! Your espresso is ready!"
-<span class='line'>163</span> 
-<span class='line'>164</span>     @param {Object} thisArg The value to bind `this` to on the function.
-<span class='line'>165</span>     @returns {Function} The function passed in, wrapped to ensure `this`
-<span class='line'>166</span>       is the correct scope.
-<span class='line'>167</span>    */</span><span class="WHIT">
-<span class='line'>168</span> </span><span class="WHIT">  </span><span class="NAME">bind</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.inferior</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>169</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Target</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>170</span> 
-<span class='line'>171</span> </span><span class="WHIT">    </span><span class="COMM">// 1. Let Target be the this value.</span><span class="WHIT">
-<span class='line'>172</span> </span><span class="WHIT">    </span><span class="NAME">Target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>173</span> 
-<span class='line'>174</span> </span><span class="WHIT">    </span><span class="COMM">// 2. If IsCallable(Target) is false, throw a TypeError exception</span><span class="WHIT">
-<span class='line'>175</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">Espresso.isCallable</span><span class="PUNC">(</span><span class="NAME">Target</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>176</span> </span><span class="WHIT">      </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">TypeError</span><span class="PUNC">(</span><span class="STRN">"The Target is not callable."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>177</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>178</span> 
-<span class='line'>179</span> </span><span class="WHIT">    </span><span class="COMM">// 3. Let A be a new (possibly empty) internal list of</span><span class="WHIT">
-<span class='line'>180</span> </span><span class="WHIT">    </span><span class="COMM">//    all argument values provided after self</span><span class="WHIT">
-<span class='line'>181</span> </span><span class="WHIT">    </span><span class="COMM">//    (arg1, arg2, etc), in order</span><span class="WHIT">
-<span class='line'>182</span> </span><span class="WHIT">    </span><span class="NAME">A</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>183</span> 
-<span class='line'>184</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>185</span> 
-<span class='line'>186</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">this</span><span class="WHIT"> </span><span class="KEYW">instanceof</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>187</span> </span><span class="WHIT">        </span><span class="COMM">// 15.3.4.5.2 [[Construct]]</span><span class="WHIT">
-<span class='line'>188</span> </span><span class="WHIT">        </span><span class="COMM">// When the [[Construct]] internal method of a function object, F,</span><span class="WHIT">
-<span class='line'>189</span> </span><span class="WHIT">        </span><span class="COMM">// that was created using the bind function is called with a list of</span><span class="WHIT">
-<span class='line'>190</span> </span><span class="WHIT">        </span><span class="COMM">// arguments ExtraArgs, the following steps are taken:</span><span class="WHIT">
-<span class='line'>191</span> 
-<span class='line'>192</span> </span><span class="WHIT">        </span><span class="COMM">// 1. Let the target be the value of F's [[TargetFunction]] internal property.</span><span class="WHIT">
-<span class='line'>193</span> </span><span class="WHIT">        </span><span class="COMM">// 2. If target has no [[Construct]] internal method, a TypeError exception is thrown.</span><span class="WHIT">
-<span class='line'>194</span> </span><span class="WHIT">        </span><span class="COMM">// 3. Let boundArgs be the value of F's [[BoundArgs]] internal property.</span><span class="WHIT">
-<span class='line'>195</span> </span><span class="WHIT">        </span><span class="COMM">// 4. Left args be a new list containing the same values as the list boundArgs in the same order followed by the same values as the list ExtraArgs in the same order.</span><span class="WHIT">
-<span class='line'>196</span> </span><span class="WHIT">        </span><span class="COMM">// 5. Return the result of calling the [[Construct]] internal method of target providing args as the arguments.</span><span class="WHIT">
-<span class='line'>197</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">that</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>198</span> </span><span class="WHIT">        </span><span class="NAME">Type.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Target.prototype</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>199</span> </span><span class="WHIT">        </span><span class="NAME">that</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Type</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>200</span> 
-<span class='line'>201</span> </span><span class="WHIT">        </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">that</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>202</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">that</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>203</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>204</span> </span><span class="WHIT">        </span><span class="COMM">// 15.3.4.5.1 [[Call]]</span><span class="WHIT">
-<span class='line'>205</span> </span><span class="WHIT">        </span><span class="COMM">// When the [[Call]] internal method of a function object, F,</span><span class="WHIT">
-<span class='line'>206</span> </span><span class="WHIT">        </span><span class="COMM">// which was created using the bind function is called with a this</span><span class="WHIT">
-<span class='line'>207</span> </span><span class="WHIT">        </span><span class="COMM">// value and a list of arguments ExtraArgs, the following steps are taken:</span><span class="WHIT">
-<span class='line'>208</span> </span><span class="WHIT">        </span><span class="COMM">// 1. Let boundArgs be the value of F's [[BoundArgs]] internal property.</span><span class="WHIT">
-<span class='line'>209</span> </span><span class="WHIT">        </span><span class="COMM">// 2. Let boundThis be the value of F's [[BoundThis]] internal property.</span><span class="WHIT">
-<span class='line'>210</span> </span><span class="WHIT">        </span><span class="COMM">// 3. Let target be the value of F's [[TargetFunction]] internal property.</span><span class="WHIT">
-<span class='line'>211</span> </span><span class="WHIT">        </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Target.apply</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">A.concat</span><span class="PUNC">(</span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>212</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>213</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>214</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">bound</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>215</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="WHIT">
-<span class='line'>216</span> 
-<span class='line'>217</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Function.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>218</span> </span></pre></body></html>
+<span class='line'>130</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Function.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>131</span> </span></pre></body></html>

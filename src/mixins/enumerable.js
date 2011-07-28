@@ -39,7 +39,8 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
                     "to use the Enumerable mixin.");
   }),
 
-  /**
+  /** @function
+    @desc
     Returns an array where each value on the enumerable
     is mutated by the lambda function.
 
@@ -68,7 +69,8 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     return arr;
   }),
 
-  /**
+  /** @function
+    @desc
     Reduce the content of an enumerable down to a single value.
 
     @param {Function} lambda The lambda that performs the reduction.
@@ -127,7 +129,8 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     return seed;
   }),
 
-  /**
+  /** @function
+    @desc
     Returns all elements on the Enumerable for which the
     input function returns true for.
 
@@ -151,7 +154,8 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, []);
   }),
 
-  /**
+  /** @function
+    @desc
     Returns `true` if `lambda` returns `true` for every element
     in the Enumerable, otherwise, it returns `false`.
 
@@ -172,7 +176,8 @@ Espresso.Enumerable = /** @lends Espresso.Enumerable# */{
     }, true);
   }),
 
-  /**
+  /** @function
+    @desc
     Returns `true` if `lambda` returns `true` for at least one
     element in the Enumerable, otherwise, it returns `false`.
 

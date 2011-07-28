@@ -2,7 +2,8 @@
 
 mix(/** @lends Number# */{
 
-  /**
+  /** @function
+    @desc
     Formatter for `Number`s.
 
     @param {String} spec The specifier to format the number as.

@@ -25,7 +25,6 @@
   it's asynchronous).
 
   @example
-
       var Clock = mix(Espresso.Subscribable, {
         tick: function () {
           this.time = Date.now();

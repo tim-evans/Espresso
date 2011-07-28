@@ -1,7 +1,8 @@
 /*globals mix */
 mix(/** @lends Date# */{
 
-  /**
+  /** @function
+    @desc
     Shim for `toISOString`.
 
     @returns {String} The ISO 6081 formatted UTC date.
@@ -140,7 +141,8 @@ mix(/** @lends Date# */{
 
 mix(/** @lends Date */{
 
-  /**
+  /** @function
+    @desc
     Shim for `now`.
 
     @returns {Number} The current time.

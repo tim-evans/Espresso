@@ -2,7 +2,8 @@
 
 mix(/** @scope Object */{
 
-  /**
+  /** @function
+    @desc
     Returns all iterable keys on the passed Object.
 
     @param {Object} O The object to return the keys of.

@@ -9,7 +9,8 @@
  */
 mix(/** @scope Array */{
 
-  /**
+  /** @function
+    @desc
     Checks whether the object passed in is an Array or not.
 
     @param {Object} obj The Object to test if it's an Array.
@@ -26,7 +27,8 @@ mix(/** @scope Array */{
 
 mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
-  /**
+  /** @function
+    @desc
     Iterator over the Array.
 
     Implemented to be in conformance with ECMA-262 Edition 5,
@@ -66,7 +68,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     // 8. Return
   }),
 
-  /**
+  /** @function
+    @desc
     Shim for `indexOf`.
 
     @param {Object} o The object to test.
@@ -86,7 +89,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     return -1;
   }),
 
-  /**
+  /** @function
+    @desc
     Reduce the content of an array down to a single
     value (starting from the end and working backwards).
 
@@ -123,7 +127,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     return seed;
   }),
 
-  /**
+  /** @function
+    @desc
     Shim for `reverse`.
     Note: the Array is reversed in-place.
 
@@ -183,7 +188,8 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     return O;
   }),
 
-  /**
+  /** @function
+    @desc
     Shim for `lastIndexOf`.
 
     @param searchElement The item to look for.

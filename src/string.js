@@ -2,7 +2,8 @@
 
 mix(/** @scope String.prototype */{
 
-  /**
+  /** @function
+    @desc
     Returns the string repeated the specified number of times.
 
     @param {Number} n The number of times to repeat this string.
@@ -29,7 +30,8 @@ mix(/** @scope String.prototype */{
    return s ? s[0] : '';
   }),
 
-  /**
+  /** @function
+    @desc
     Format formats a string in the vein of Python's format,
     Ruby #{templates}, and .NET String.Format.
 
@@ -73,7 +75,8 @@ mix(/** @scope String.prototype */{
     return Espresso.vformat(this, Espresso.A(arguments));
   }),
 
-  /**
+  /** @function
+    @desc
     Formatter for `String`s.
 
     Don't call this function- It's here for `Espresso.format`

@@ -7,15 +7,13 @@ mix(/** @scope String.prototype */{
     Returns the string repeated the specified number of times.
 
     @param {Number} n The number of times to repeat this string.
-    @param {String} [separator] The separator to put between each iteration of the string.
     @returns {String} The string repeated n times.
     @example
       alert("Stop hittin' yourself. ".repeat(50));
    */
-  repeat: function (n, sep) {
-    sep = sep || '';
-    return n < 1 ? '': (new Array(n)).join(this + sep) + this;
-  },
+  repeat: Espresso.inferior(function (n) {
+    return n < 1 ? '': (new Array(n)).join(this + '') + this;
+  }),
 
   /** @function
     @desc

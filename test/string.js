@@ -13,12 +13,6 @@ context("String",
       assert.equal('a'.repeat(5), 'aaaaa');
       assert.equal('nom'.repeat(2), 'nomnom');
       assert.equal('test'.repeat(100).length, 400);
-    }),
-
-    should("use the provided character as a separator", function () {
-      assert.equal('^'.repeat(2, '_'), '^_^');
-      assert.equal('.'.repeat(1, '   '), '.');
-      assert.equal('a'.repeat(3, '  '), 'a  a  a');
     })
   ),
 

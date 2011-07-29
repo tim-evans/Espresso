@@ -93,6 +93,12 @@ Espresso = {
           object = getProperty(key.slice(0, iarr), object);
           key = key.slice(iarr + 1);
           idx += iarr;
+
+          // Stop here if object has no value
+          if (object == null) {
+            idx = 0;
+            return object;
+          }
         }
 
         iarr = key.indexOf(']');

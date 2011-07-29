@@ -13,323 +13,321 @@
 <span class='line'>  6</span>       Advanced String Formatting borrowed from the eponymous Python PEP.
 <span class='line'>  7</span> 
 <span class='line'>  8</span>       The formatter follows the rules of Python [PEP 3101][pep]
-<span class='line'>  9</span>       (Advanced String Formatting) and following most of the
-<span class='line'> 10</span>       ECMAScript Harmony strawman specification for string formatting
-<span class='line'> 11</span>       (found [here][strawman]), with the major ommision being the
-<span class='line'> 12</span>       removal of the bracket `[]` notation for reasons of
-<span class='line'> 13</span>       consitency and performance.
-<span class='line'> 14</span> 
-<span class='line'> 15</span>       To use literal object notation, just pass in one argument for
-<span class='line'> 16</span>       the formatter. This is optional however, as you can always
-<span class='line'> 17</span>       absolutely name the arguments via the number in the argument
-<span class='line'> 18</span>       list. This means that:
+<span class='line'>  9</span>       (Advanced String Formatting) and following the ECMAScript
+<span class='line'> 10</span>       Harmony strawman specification for string formatting
+<span class='line'> 11</span>       (found [here][strawman]).
+<span class='line'> 12</span> 
+<span class='line'> 13</span>       To use literal object notation, just pass in one argument for
+<span class='line'> 14</span>       the formatter. This is optional however, as you can always
+<span class='line'> 15</span>       absolutely name the arguments via the number in the argument
+<span class='line'> 16</span>       list. This means that:
+<span class='line'> 17</span> 
+<span class='line'> 18</span>           alert(Espresso.format("Hello, {name}!", { name: "world" }));
 <span class='line'> 19</span> 
-<span class='line'> 20</span>           alert(Espresso.format("Hello, {name}!", { name: "world" }));
+<span class='line'> 20</span>       is equivalent to:
 <span class='line'> 21</span> 
-<span class='line'> 22</span>       is equivalent to:
+<span class='line'> 22</span>           alert(Espresso.format("Hello, {0.name}!", { name: "world" }));
 <span class='line'> 23</span> 
-<span class='line'> 24</span>           alert(Espresso.format("Hello, {0.name}!", { name: "world" }));
-<span class='line'> 25</span> 
-<span class='line'> 26</span>       For more than one argument you must provide the position of your
-<span class='line'> 27</span>       argument.
+<span class='line'> 24</span>       For more than one argument you must provide the position of your
+<span class='line'> 25</span>       argument.
+<span class='line'> 26</span> 
+<span class='line'> 27</span>           alert(Espresso.format("{0}, {1}!", "hello", "world"));
 <span class='line'> 28</span> 
-<span class='line'> 29</span>           alert(Espresso.format("{0}, {1}!", "hello", "world"));
-<span class='line'> 30</span> 
-<span class='line'> 31</span>       If your arguments and formatter are "as is"- that is, in order,
-<span class='line'> 32</span>       and flat objects as you intend them to be, you can write your
-<span class='line'> 33</span>       template string like so:
+<span class='line'> 29</span>       If your arguments and formatter are "as is"- that is, in order,
+<span class='line'> 30</span>       and flat objects as you intend them to be, you can write your
+<span class='line'> 31</span>       template string like so:
+<span class='line'> 32</span> 
+<span class='line'> 33</span>           alert(Espresso.format("{}, {}!", "hello", "world"));
 <span class='line'> 34</span> 
-<span class='line'> 35</span>           alert(Espresso.format("{}, {}!", "hello", "world"));
+<span class='line'> 35</span>       To use the literals `{` and `}`, simply double them, like the following:
 <span class='line'> 36</span> 
-<span class='line'> 37</span>       To use the literals `{` and `}`, simply double them, like the following:
-<span class='line'> 38</span> 
-<span class='line'> 39</span>           alert(Espresso.format("{lang} uses the {{variable}} format too!", {
-<span class='line'> 40</span>              lang: "Python", variable: "(not used)"
-<span class='line'> 41</span>           }));
-<span class='line'> 42</span>           // => "Python uses the {variable} format too!"
+<span class='line'> 37</span>           alert(Espresso.format("{lang} uses the {{variable}} format too!", {
+<span class='line'> 38</span>              lang: "Python", variable: "(not used)"
+<span class='line'> 39</span>           }));
+<span class='line'> 40</span>           // => "Python uses the {variable} format too!"
+<span class='line'> 41</span> 
+<span class='line'> 42</span>       Check out the examples given for some ideas on how to use it.
 <span class='line'> 43</span> 
-<span class='line'> 44</span>       Check out the examples given for some ideas on how to use it.
-<span class='line'> 45</span> 
-<span class='line'> 46</span>       The formatting API uses the special `toFormat` function on an
-<span class='line'> 47</span>       object to handle the interpretation of the format specifiers.
+<span class='line'> 44</span>       The formatting API uses the special `toFormat` function on an
+<span class='line'> 45</span>       object to handle the interpretation of the format specifiers.
+<span class='line'> 46</span> 
+<span class='line'> 47</span>       The default `toFormat` handler is on `Object.prototype`.
 <span class='line'> 48</span> 
-<span class='line'> 49</span>       The default `toFormat` handler is on `Object.prototype`.
-<span class='line'> 50</span> 
-<span class='line'> 51</span>       For an example of a specialized format schema, consider the
-<span class='line'> 52</span>       following example:
-<span class='line'> 53</span> 
-<span class='line'> 54</span>           Localizer = mix({
-<span class='line'> 55</span>             toFormat: function (spec) {
-<span class='line'> 56</span>               return this[spec];
-<span class='line'> 57</span>             }
-<span class='line'> 58</span>           }).into({});
-<span class='line'> 59</span> 
-<span class='line'> 60</span>           _hello = mix(Localizer).into({
-<span class='line'> 61</span>             en: 'hello',
-<span class='line'> 62</span>             fr: 'bonjour',
-<span class='line'> 63</span>             ja: 'こんにちは'
-<span class='line'> 64</span>           });
-<span class='line'> 65</span> 
-<span class='line'> 66</span>           alert(Espresso.format("{:en}", _hello));
-<span class='line'> 67</span>           // => "hello"
-<span class='line'> 68</span> 
-<span class='line'> 69</span>           alert(Espresso.format("{:fr}", _hello));
-<span class='line'> 70</span>           // => "bonjour"
-<span class='line'> 71</span> 
-<span class='line'> 72</span>           alert(Espresso.format("{:ja}", _hello));
-<span class='line'> 73</span>           // => "こんにちは"
-<span class='line'> 74</span> 
-<span class='line'> 75</span>         [pep]: http://www.python.org/dev/peps/pep-3101/
-<span class='line'> 76</span>         [strawman]: http://wiki.ecmascript.org/doku.php?id=strawman:string_format_take_two
-<span class='line'> 77</span> 
-<span class='line'> 78</span>       @param {String} template The template string to format the arguments with.
-<span class='line'> 79</span>       @returns {String} The template formatted with the given leftover arguments.
-<span class='line'> 80</span>      */</span><span class="WHIT">
-<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="NAME">format</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 82</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 83</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 84</span> 
-<span class='line'> 85</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 86</span>       Same as {@link Espresso.format}, but with an explicit argument list.
-<span class='line'> 87</span> 
-<span class='line'> 88</span>       @param {String} template The template string to format the argument list with.
-<span class='line'> 89</span>       @param {Array} argList The argument list to format.
-<span class='line'> 90</span>       @returns {String} The template formatted with the given leftover arguments.
-<span class='line'> 91</span>       @see Espresso.format
-<span class='line'> 92</span>      */</span><span class="WHIT">
-<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="NAME">vformat</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 94</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 96</span> 
-<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'> 98</span>       The specifier regular expression.
+<span class='line'> 49</span>       For an example of a specialized format schema, consider the
+<span class='line'> 50</span>       following example:
+<span class='line'> 51</span> 
+<span class='line'> 52</span>           Localizer = mix({
+<span class='line'> 53</span>             toFormat: function (spec) {
+<span class='line'> 54</span>               return this[spec];
+<span class='line'> 55</span>             }
+<span class='line'> 56</span>           }).into({});
+<span class='line'> 57</span> 
+<span class='line'> 58</span>           _hello = mix(Localizer).into({
+<span class='line'> 59</span>             en: 'hello',
+<span class='line'> 60</span>             fr: 'bonjour',
+<span class='line'> 61</span>             ja: 'こんにちは'
+<span class='line'> 62</span>           });
+<span class='line'> 63</span> 
+<span class='line'> 64</span>           alert(Espresso.format("{:en}", _hello));
+<span class='line'> 65</span>           // => "hello"
+<span class='line'> 66</span> 
+<span class='line'> 67</span>           alert(Espresso.format("{:fr}", _hello));
+<span class='line'> 68</span>           // => "bonjour"
+<span class='line'> 69</span> 
+<span class='line'> 70</span>           alert(Espresso.format("{:ja}", _hello));
+<span class='line'> 71</span>           // => "こんにちは"
+<span class='line'> 72</span> 
+<span class='line'> 73</span>         [pep]: http://www.python.org/dev/peps/pep-3101/
+<span class='line'> 74</span>         [strawman]: http://wiki.ecmascript.org/doku.php?id=strawman:string_format_take_two
+<span class='line'> 75</span> 
+<span class='line'> 76</span>       @param {String} template The template string to format the arguments with.
+<span class='line'> 77</span>       @returns {String} The template formatted with the given leftover arguments.
+<span class='line'> 78</span>      */</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">    </span><span class="NAME">format</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Espresso.A</span><span class="PUNC">(</span><span class="NAME">arguments</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">slice</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 82</span> 
+<span class='line'> 83</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 84</span>       Same as {@link Espresso.format}, but with an explicit argument list.
+<span class='line'> 85</span> 
+<span class='line'> 86</span>       @param {String} template The template string to format the argument list with.
+<span class='line'> 87</span>       @param {Array} argList The argument list to format.
+<span class='line'> 88</span>       @returns {String} The template formatted with the given leftover arguments.
+<span class='line'> 89</span>       @see Espresso.format
+<span class='line'> 90</span>      */</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">    </span><span class="NAME">vformat</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 94</span> 
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 96</span>       The specifier regular expression.
+<span class='line'> 97</span> 
+<span class='line'> 98</span>       The groups are:
 <span class='line'> 99</span> 
-<span class='line'>100</span>       The groups are:
+<span class='line'>100</span>         `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
 <span class='line'>101</span> 
-<span class='line'>102</span>         `[[fill]align][sign][#][0][minimumwidth][.precision][type]`
+<span class='line'>102</span>       The brackets (`[]`) indicates an optional element.
 <span class='line'>103</span> 
-<span class='line'>104</span>       The brackets (`[]`) indicates an optional element.
-<span class='line'>105</span> 
-<span class='line'>106</span>       The `fill` is the character to fill the rest of the minimum width
-<span class='line'>107</span>       of the string.
+<span class='line'>104</span>       The `fill` is the character to fill the rest of the minimum width
+<span class='line'>105</span>       of the string.
+<span class='line'>106</span> 
+<span class='line'>107</span>       The `align` is one of:
 <span class='line'>108</span> 
-<span class='line'>109</span>       The `align` is one of:
-<span class='line'>110</span> 
-<span class='line'>111</span>         - `^` Forces the field to be centered within the available space.
-<span class='line'>112</span>         - `&lt;` Forces the field to be left-aligned within the available
-<span class='line'>113</span>               space. This is the default.
-<span class='line'>114</span>         - `>` Forces the field to be right-aligned within the available space.
-<span class='line'>115</span>         - `=` Forces the padding to be placed after the sign (if any)
-<span class='line'>116</span>               but before the digits. This alignment option is only valid
-<span class='line'>117</span>               for numeric types.
-<span class='line'>118</span> 
-<span class='line'>119</span>       Unless the minimum field width is defined, the field width
-<span class='line'>120</span>       will always be the same size as the data to fill it, so that
-<span class='line'>121</span>       the alignment option has no meaning in this case.
-<span class='line'>122</span> 
-<span class='line'>123</span>       The `sign` is only valid for numeric types, and can be one of
-<span class='line'>124</span>       the following:
-<span class='line'>125</span> 
-<span class='line'>126</span>         - `+` Indicates that a sign shoulb be used for both positive
-<span class='line'>127</span>               as well as negative numbers.
-<span class='line'>128</span>         - `-` Indicates that a sign shoulb be used only for as negative
-<span class='line'>129</span>               numbers. This is the default.
-<span class='line'>130</span>         - ` ` Indicates that a leading space should be used on positive
-<span class='line'>131</span>               numbers.
-<span class='line'>132</span> 
-<span class='line'>133</span>       If the `#` character is present, integers use the 'alternate form'
-<span class='line'>134</span>       for formatting. This means that binary, octal, and hexadecimal
-<span class='line'>135</span>       output will be prefixed with '0b', '0o', and '0x', respectively.
-<span class='line'>136</span> 
-<span class='line'>137</span>       `width` is a decimal integer defining the minimum field width. If
-<span class='line'>138</span>       not specified, then the field width will be determined by the
-<span class='line'>139</span>       content.
-<span class='line'>140</span> 
-<span class='line'>141</span>       If the width field is preceded by a zero (`0`) character, this enables
-<span class='line'>142</span>       zero-padding. This is equivalent to an alignment type of `=` and a
-<span class='line'>143</span>       fill character of `0`.
-<span class='line'>144</span> 
-<span class='line'>145</span>       The 'precision' is a decimal number indicating how many digits
-<span class='line'>146</span>       should be displayed after the decimal point in a floating point
-<span class='line'>147</span>       conversion. For non-numeric types the field indicates the maximum
-<span class='line'>148</span>       field size- in other words, how many characters will be used from
-<span class='line'>149</span>       the field content. The precision is ignored for integer conversions.
+<span class='line'>109</span>         - `^` Forces the field to be centered within the available space.
+<span class='line'>110</span>         - `&lt;` Forces the field to be left-aligned within the available
+<span class='line'>111</span>               space. This is the default.
+<span class='line'>112</span>         - `>` Forces the field to be right-aligned within the available space.
+<span class='line'>113</span>         - `=` Forces the padding to be placed after the sign (if any)
+<span class='line'>114</span>               but before the digits. This alignment option is only valid
+<span class='line'>115</span>               for numeric types.
+<span class='line'>116</span> 
+<span class='line'>117</span>       Unless the minimum field width is defined, the field width
+<span class='line'>118</span>       will always be the same size as the data to fill it, so that
+<span class='line'>119</span>       the alignment option has no meaning in this case.
+<span class='line'>120</span> 
+<span class='line'>121</span>       The `sign` is only valid for numeric types, and can be one of
+<span class='line'>122</span>       the following:
+<span class='line'>123</span> 
+<span class='line'>124</span>         - `+` Indicates that a sign shoulb be used for both positive
+<span class='line'>125</span>               as well as negative numbers.
+<span class='line'>126</span>         - `-` Indicates that a sign shoulb be used only for as negative
+<span class='line'>127</span>               numbers. This is the default.
+<span class='line'>128</span>         - ` ` Indicates that a leading space should be used on positive
+<span class='line'>129</span>               numbers.
+<span class='line'>130</span> 
+<span class='line'>131</span>       If the `#` character is present, integers use the 'alternate form'
+<span class='line'>132</span>       for formatting. This means that binary, octal, and hexadecimal
+<span class='line'>133</span>       output will be prefixed with '0b', '0o', and '0x', respectively.
+<span class='line'>134</span> 
+<span class='line'>135</span>       `width` is a decimal integer defining the minimum field width. If
+<span class='line'>136</span>       not specified, then the field width will be determined by the
+<span class='line'>137</span>       content.
+<span class='line'>138</span> 
+<span class='line'>139</span>       If the width field is preceded by a zero (`0`) character, this enables
+<span class='line'>140</span>       zero-padding. This is equivalent to an alignment type of `=` and a
+<span class='line'>141</span>       fill character of `0`.
+<span class='line'>142</span> 
+<span class='line'>143</span>       The 'precision' is a decimal number indicating how many digits
+<span class='line'>144</span>       should be displayed after the decimal point in a floating point
+<span class='line'>145</span>       conversion. For non-numeric types the field indicates the maximum
+<span class='line'>146</span>       field size- in other words, how many characters will be used from
+<span class='line'>147</span>       the field content. The precision is ignored for integer conversions.
+<span class='line'>148</span> 
+<span class='line'>149</span>       Finally, the 'type' determines how the data should be presented.
 <span class='line'>150</span> 
-<span class='line'>151</span>       Finally, the 'type' determines how the data should be presented.
+<span class='line'>151</span>       The available integer presentation types are:
 <span class='line'>152</span> 
-<span class='line'>153</span>       The available integer presentation types are:
-<span class='line'>154</span> 
-<span class='line'>155</span>         - `b` Binary. Outputs the number in base 2.
-<span class='line'>156</span>         - `c` Character. Converts the integer to the corresponding
-<span class='line'>157</span>               Unicode character before printing.
-<span class='line'>158</span>         - `d` Decimal Integer. Outputs the number in base 10.
-<span class='line'>159</span>         - `o` Octal format. Outputs the number in base 8.
-<span class='line'>160</span>         - `x` Hex format. Outputs the number in base 16, using lower-
+<span class='line'>153</span>         - `b` Binary. Outputs the number in base 2.
+<span class='line'>154</span>         - `c` Character. Converts the integer to the corresponding
+<span class='line'>155</span>               Unicode character before printing.
+<span class='line'>156</span>         - `d` Decimal Integer. Outputs the number in base 10.
+<span class='line'>157</span>         - `o` Octal format. Outputs the number in base 8.
+<span class='line'>158</span>         - `x` Hex format. Outputs the number in base 16, using lower-
+<span class='line'>159</span>               case letters for the digits above 9.
+<span class='line'>160</span>         - `X` Hex format. Outputs the number in base 16, using upper-
 <span class='line'>161</span>               case letters for the digits above 9.
-<span class='line'>162</span>         - `X` Hex format. Outputs the number in base 16, using upper-
-<span class='line'>163</span>               case letters for the digits above 9.
-<span class='line'>164</span>         - `n` Number. This is the same as `d`, except that it uses the
-<span class='line'>165</span>               current locale setting to insert the appropriate
-<span class='line'>166</span>               number separator characters.
-<span class='line'>167</span>         - ` ` (None) the same as `d`
+<span class='line'>162</span>         - `n` Number. This is the same as `d`, except that it uses the
+<span class='line'>163</span>               current locale setting to insert the appropriate
+<span class='line'>164</span>               number separator characters.
+<span class='line'>165</span>         - ` ` (None) the same as `d`
+<span class='line'>166</span> 
+<span class='line'>167</span>       The available floating point presentation types are:
 <span class='line'>168</span> 
-<span class='line'>169</span>       The available floating point presentation types are:
-<span class='line'>170</span> 
-<span class='line'>171</span>         - `e` Exponent notation. Prints the number in scientific
-<span class='line'>172</span>               notation using the letter `e` to indicate the exponent.
-<span class='line'>173</span>         - `E` Exponent notation. Same as `e` except it converts the
-<span class='line'>174</span>               number to uppercase.
-<span class='line'>175</span>         - `f` Fixed point. Displays the number as a fixed-point
-<span class='line'>176</span>               number.
-<span class='line'>177</span>         - `F` Fixed point. Same as `f` except it converts the number
-<span class='line'>178</span>               to uppercase.
-<span class='line'>179</span>         - `g` General format. This prints the number as a fixed-point
-<span class='line'>180</span>               number, unless the number is too large, in which case
-<span class='line'>181</span>               it switches to `e` exponent notation.
-<span class='line'>182</span>         - `G` General format. Same as `g` except switches to `E`
-<span class='line'>183</span>               if the number gets to large.
-<span class='line'>184</span>         - `n` Number. This is the same as `g`, except that it uses the
-<span class='line'>185</span>               current locale setting to insert the appropriate
-<span class='line'>186</span>               number separator characters.
-<span class='line'>187</span>         - `%` Percentage. Multiplies the number by 100 and displays
-<span class='line'>188</span>               in fixed (`f`) format, followed by a percent sign.
-<span class='line'>189</span>         - ` ` (None) similar to `g`, except that it prints at least one
-<span class='line'>190</span>               digit after the decimal point.
-<span class='line'>191</span> 
-<span class='line'>192</span>       @type RegExp
-<span class='line'>193</span>      */</span><span class="WHIT">
-<span class='line'>194</span> </span><span class="WHIT">    </span><span class="NAME">FORMAT_SPECIFIER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="REGX">/((.)?[>&lt;=\^])?([ +\-])?([#])?(0?)(\d+)?(\.\d+)?([bcoxXeEfFG%ngd])?/</span><span class="WHIT">
-<span class='line'>195</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Espresso</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>196</span> 
-<span class='line'>197</span> </span><span class="WHIT">  </span><span class="COMM">// Error strings.</span><span class="WHIT">
-<span class='line'>198</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"Unmatched {} brace for '{{}}'."</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>199</span> </span><span class="WHIT">      </span><span class="NAME">unmatchedOpening</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error.format</span><span class="PUNC">(</span><span class="STRN">'opening'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>200</span> </span><span class="WHIT">      </span><span class="NAME">unmatchedClosing</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error.format</span><span class="PUNC">(</span><span class="STRN">'closing'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>201</span> </span><span class="WHIT">      </span><span class="NAME">openingBrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'{'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>202</span> </span><span class="WHIT">      </span><span class="NAME">closingBrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'}'</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>203</span> </span><span class="WHIT">      </span><span class="NAME">specifierSeparator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">':'</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>204</span> 
-<span class='line'>205</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore */</span><span class="WHIT">  </span><span class="COMM">// Docs are above</span><span class="WHIT">
-<span class='line'>206</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>207</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>208</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>209</span> </span><span class="WHIT">        </span><span class="NAME">result</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>210</span> </span><span class="WHIT">        </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.length</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>211</span> 
-<span class='line'>212</span> </span><span class="WHIT">    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>213</span> </span><span class="WHIT">      </span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.charAt</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>214</span> 
-<span class='line'>215</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>216</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>217</span> </span><span class="WHIT">          </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">unmatchedClosing.format</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>218</span> 
-<span class='line'>219</span> </span><span class="WHIT">        </span><span class="COMM">// Double-escaped closing brace.</span><span class="WHIT">
-<span class='line'>220</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>221</span> </span><span class="WHIT">          </span><span class="NAME">buffer</span><span class="PUNC">[</span><span class="NAME">buffer.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>222</span> </span><span class="WHIT">          </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>223</span> </span><span class="WHIT">          </span><span class="KEYW">continue</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>224</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>225</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>226</span> 
-<span class='line'>227</span> </span><span class="WHIT">      </span><span class="COMM">// Begin template parsing</span><span class="WHIT">
-<span class='line'>228</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>229</span> </span><span class="WHIT">        </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parseField</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>230</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="PUNC">[</span><span class="NAME">buffer.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>231</span> </span><span class="WHIT">        </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// continue after the template.</span><span class="WHIT">
-<span class='line'>232</span> 
-<span class='line'>233</span> </span><span class="WHIT">      </span><span class="COMM">// Normal string processing</span><span class="WHIT">
-<span class='line'>234</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>235</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="PUNC">[</span><span class="NAME">buffer.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>236</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>237</span> </span><span class="WHIT">      </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>238</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>239</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">buffer.join</span><span class="PUNC">(</span><span class="STRN">''</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>240</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>241</span> 
-<span class='line'>242</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore
-<span class='line'>243</span>     Parses the template with the arguments provided,
-<span class='line'>244</span>     parsing any nested templates.
-<span class='line'>245</span> 
-<span class='line'>246</span>     @param {String} template The template string to format.
-<span class='line'>247</span>     @param {Array} args The arguments to parse the template string.
-<span class='line'>248</span>     @returns {Array} A tuple with the length it ate up and the formatted template.
-<span class='line'>249</span>    */</span><span class="WHIT">
-<span class='line'>250</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">parseField</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>251</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.length</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>252</span> </span><span class="WHIT">        </span><span class="NAME">inSpecifier</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">iBrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>253</span> </span><span class="WHIT">    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>254</span> </span><span class="WHIT">      </span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.charAt</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>255</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">inSpecifier</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>256</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">specifierSeparator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>257</span> </span><span class="WHIT">          </span><span class="NAME">inSpecifier</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>258</span> </span><span class="WHIT">          </span><span class="KEYW">continue</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>259</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>260</span> 
-<span class='line'>261</span> </span><span class="WHIT">        </span><span class="COMM">// Double-escaped opening brace</span><span class="WHIT">
-<span class='line'>262</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>263</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>264</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>265</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>266</span> </span><span class="WHIT">            </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">unmatchedOpening.format</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>267</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>268</span> 
-<span class='line'>269</span> </span><span class="WHIT">        </span><span class="COMM">// Done formatting.</span><span class="WHIT">
-<span class='line'>270</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>271</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">formatField</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>272</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>273</span> 
-<span class='line'>274</span> </span><span class="WHIT">      </span><span class="COMM">// Format the template's specifier *after* the whole specifier is found.</span><span class="WHIT">
-<span class='line'>275</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>276</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>277</span> </span><span class="WHIT">          </span><span class="NAME">iBrace</span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>278</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>279</span> </span><span class="WHIT">          </span><span class="NAME">iBrace</span><span class="PUNC">--</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>280</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>281</span> 
-<span class='line'>282</span> </span><span class="WHIT">        </span><span class="COMM">// Spec is done.</span><span class="WHIT">
-<span class='line'>283</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">iBrace</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>284</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">formatField</span><span class="PUNC">(</span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>285</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>286</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>287</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>288</span> </span><span class="WHIT">    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">unmatchedOpening.format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>289</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>290</span> 
-<span class='line'>291</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore
-<span class='line'>292</span>     Returns the value of the template string formatted with the
-<span class='line'>293</span>     given arguments.
-<span class='line'>294</span> 
-<span class='line'>295</span>     @param {String} value The template string and format specifier.
-<span class='line'>296</span>     @param {Array} args An Array of arguments to use to format the template string.
-<span class='line'>297</span>     @returns {String} The formatted template.
-<span class='line'>298</span>    */</span><span class="WHIT">
-<span class='line'>299</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">formatField</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>300</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.indexOf</span><span class="PUNC">(</span><span class="NAME">specifierSeparator</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>301</span> </span><span class="WHIT">        </span><span class="NAME">spec</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>302</span> </span><span class="WHIT">    </span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">value.length</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>303</span> </span><span class="WHIT">    </span><span class="NAME">spec</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.slice</span><span class="PUNC">(</span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>304</span> </span><span class="WHIT">    </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>305</span> 
-<span class='line'>306</span> </span><span class="WHIT">    </span><span class="COMM">// Got `{}`; shift off the first argument passed in.</span><span class="WHIT">
-<span class='line'>307</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>308</span> </span><span class="WHIT">      </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args.shift</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>309</span> 
-<span class='line'>310</span> </span><span class="WHIT">    </span><span class="COMM">// Return the object referenced by the property path given.</span><span class="WHIT">
-<span class='line'>311</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>312</span> </span><span class="WHIT">      </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.getObjectFor</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>313</span> 
-<span class='line'>314</span> </span><span class="WHIT">      </span><span class="COMM">// Allow for references to object literals</span><span class="WHIT">
-<span class='line'>315</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
-<span class='line'>316</span> </span><span class="WHIT">          </span><span class="NAME">Array.isArray</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">args.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">Espresso.hasValue</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>317</span> </span><span class="WHIT">        </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">get</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">get</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.getObjectFor</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>318</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>319</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>320</span> 
-<span class='line'>321</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>322</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>323</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>324</span> 
-<span class='line'>325</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">res.toFormat</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">res.toFormat</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">String</span><span class="PUNC">(</span><span class="NAME">res</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">toFormat</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>326</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>327</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>328</span> </span></pre></body></html>
+<span class='line'>169</span>         - `e` Exponent notation. Prints the number in scientific
+<span class='line'>170</span>               notation using the letter `e` to indicate the exponent.
+<span class='line'>171</span>         - `E` Exponent notation. Same as `e` except it converts the
+<span class='line'>172</span>               number to uppercase.
+<span class='line'>173</span>         - `f` Fixed point. Displays the number as a fixed-point
+<span class='line'>174</span>               number.
+<span class='line'>175</span>         - `F` Fixed point. Same as `f` except it converts the number
+<span class='line'>176</span>               to uppercase.
+<span class='line'>177</span>         - `g` General format. This prints the number as a fixed-point
+<span class='line'>178</span>               number, unless the number is too large, in which case
+<span class='line'>179</span>               it switches to `e` exponent notation.
+<span class='line'>180</span>         - `G` General format. Same as `g` except switches to `E`
+<span class='line'>181</span>               if the number gets to large.
+<span class='line'>182</span>         - `n` Number. This is the same as `g`, except that it uses the
+<span class='line'>183</span>               current locale setting to insert the appropriate
+<span class='line'>184</span>               number separator characters.
+<span class='line'>185</span>         - `%` Percentage. Multiplies the number by 100 and displays
+<span class='line'>186</span>               in fixed (`f`) format, followed by a percent sign.
+<span class='line'>187</span>         - ` ` (None) similar to `g`, except that it prints at least one
+<span class='line'>188</span>               digit after the decimal point.
+<span class='line'>189</span> 
+<span class='line'>190</span>       @type RegExp
+<span class='line'>191</span>      */</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">    </span><span class="NAME">FORMAT_SPECIFIER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="REGX">/((.)?[>&lt;=\^])?([ +\-])?([#])?(0?)(\d+)?(\.\d+)?([bcoxXeEfFG%ngd])?/</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">into</span><span class="PUNC">(</span><span class="NAME">Espresso</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>194</span> 
+<span class='line'>195</span> </span><span class="WHIT">  </span><span class="COMM">// Error strings.</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">  </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"Unmatched {} brace for '{{}}'."</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">      </span><span class="NAME">unmatchedOpening</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error.format</span><span class="PUNC">(</span><span class="STRN">'opening'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">      </span><span class="NAME">unmatchedClosing</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">error.format</span><span class="PUNC">(</span><span class="STRN">'closing'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">      </span><span class="NAME">openingBrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'{'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">      </span><span class="NAME">closingBrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'}'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">      </span><span class="NAME">specifierSeparator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">':'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>202</span> 
+<span class='line'>203</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore */</span><span class="WHIT">  </span><span class="COMM">// Docs are above</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">        </span><span class="NAME">result</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">        </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.length</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>209</span> 
+<span class='line'>210</span> </span><span class="WHIT">    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">      </span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.charAt</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>212</span> 
+<span class='line'>213</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">          </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">unmatchedClosing.format</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>216</span> 
+<span class='line'>217</span> </span><span class="WHIT">        </span><span class="COMM">// Double-escaped closing brace.</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">          </span><span class="NAME">buffer</span><span class="PUNC">[</span><span class="NAME">buffer.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">          </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> </span><span class="WHIT">          </span><span class="KEYW">continue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>223</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>224</span> 
+<span class='line'>225</span> </span><span class="WHIT">      </span><span class="COMM">// Begin template parsing</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">        </span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parseField</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="PUNC">[</span><span class="NAME">buffer.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">        </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// continue after the template.</span><span class="WHIT">
+<span class='line'>230</span> 
+<span class='line'>231</span> </span><span class="WHIT">      </span><span class="COMM">// Normal string processing</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>233</span> </span><span class="WHIT">        </span><span class="NAME">buffer</span><span class="PUNC">[</span><span class="NAME">buffer.length</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="WHIT">      </span><span class="NAME">prev</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>236</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>237</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">buffer.join</span><span class="PUNC">(</span><span class="STRN">''</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>238</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>239</span> 
+<span class='line'>240</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore
+<span class='line'>241</span>     Parses the template with the arguments provided,
+<span class='line'>242</span>     parsing any nested templates.
+<span class='line'>243</span> 
+<span class='line'>244</span>     @param {String} template The template string to format.
+<span class='line'>245</span>     @param {Array} args The arguments to parse the template string.
+<span class='line'>246</span>     @returns {Array} A tuple with the length it ate up and the formatted template.
+<span class='line'>247</span>    */</span><span class="WHIT">
+<span class='line'>248</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">parseField</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">ch</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.length</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="WHIT">        </span><span class="NAME">inSpecifier</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">iBrace</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">    </span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">      </span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">template.charAt</span><span class="PUNC">(</span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">inSpecifier</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">specifierSeparator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>255</span> </span><span class="WHIT">          </span><span class="NAME">inSpecifier</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="WHIT">          </span><span class="KEYW">continue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>257</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>258</span> 
+<span class='line'>259</span> </span><span class="WHIT">        </span><span class="COMM">// Double-escaped opening brace</span><span class="WHIT">
+<span class='line'>260</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>261</span> </span><span class="WHIT">          </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">            </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">            </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">unmatchedOpening.format</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>265</span> </span><span class="WHIT">          </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>266</span> 
+<span class='line'>267</span> </span><span class="WHIT">        </span><span class="COMM">// Done formatting.</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>269</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">formatField</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>270</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>271</span> 
+<span class='line'>272</span> </span><span class="WHIT">      </span><span class="COMM">// Format the template's specifier *after* the whole specifier is found.</span><span class="WHIT">
+<span class='line'>273</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>274</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">openingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>275</span> </span><span class="WHIT">          </span><span class="NAME">iBrace</span><span class="PUNC">++</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">closingBrace</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>277</span> </span><span class="WHIT">          </span><span class="NAME">iBrace</span><span class="PUNC">--</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>279</span> 
+<span class='line'>280</span> </span><span class="WHIT">        </span><span class="COMM">// Spec is done.</span><span class="WHIT">
+<span class='line'>281</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">iBrace</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>282</span> </span><span class="WHIT">          </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">idx</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">formatField</span><span class="PUNC">(</span><span class="NAME">format</span><span class="PUNC">(</span><span class="NAME">template.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">idx</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>283</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>284</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>285</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>286</span> </span><span class="WHIT">    </span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Error</span><span class="PUNC">(</span><span class="NAME">unmatchedOpening.format</span><span class="PUNC">(</span><span class="NAME">template</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>287</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>288</span> 
+<span class='line'>289</span> </span><span class="WHIT">  </span><span class="COMM">/** @ignore
+<span class='line'>290</span>     Returns the value of the template string formatted with the
+<span class='line'>291</span>     given arguments.
+<span class='line'>292</span> 
+<span class='line'>293</span>     @param {String} value The template string and format specifier.
+<span class='line'>294</span>     @param {Array} args An Array of arguments to use to format the template string.
+<span class='line'>295</span>     @returns {String} The formatted template.
+<span class='line'>296</span>    */</span><span class="WHIT">
+<span class='line'>297</span> </span><span class="WHIT">  </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">formatField</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>298</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.indexOf</span><span class="PUNC">(</span><span class="NAME">specifierSeparator</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>299</span> </span><span class="WHIT">        </span><span class="NAME">spec</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>300</span> </span><span class="WHIT">    </span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">value.length</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">    </span><span class="NAME">spec</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.slice</span><span class="PUNC">(</span><span class="NAME">iSpec</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>302</span> </span><span class="WHIT">    </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value.slice</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">iSpec</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>303</span> 
+<span class='line'>304</span> </span><span class="WHIT">    </span><span class="COMM">// Got `{}`; shift off the first argument passed in.</span><span class="WHIT">
+<span class='line'>305</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">''</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>306</span> </span><span class="WHIT">      </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args.shift</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>307</span> 
+<span class='line'>308</span> </span><span class="WHIT">    </span><span class="COMM">// Return the object referenced by the property path given.</span><span class="WHIT">
+<span class='line'>309</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="WHIT">      </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Espresso.getObjectFor</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>311</span> 
+<span class='line'>312</span> </span><span class="WHIT">      </span><span class="COMM">// Allow for references to object literals</span><span class="WHIT">
+<span class='line'>313</span> </span><span class="WHIT">      </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">typeof</span><span class="WHIT"> </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="STRN">"undefined"</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT">
+<span class='line'>314</span> </span><span class="WHIT">          </span><span class="NAME">Array.isArray</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">args.length</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">Espresso.hasValue</span><span class="PUNC">(</span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>315</span> </span><span class="WHIT">        </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">get</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">get</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">Espresso.getObjectFor</span><span class="PUNC">(</span><span class="NAME">value</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">args</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>316</span> </span><span class="WHIT">      </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>317</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>318</span> 
+<span class='line'>319</span> </span><span class="WHIT">    </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>320</span> </span><span class="WHIT">      </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>321</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>322</span> 
+<span class='line'>323</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">res</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">res.toFormat</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">res.toFormat</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">String</span><span class="PUNC">(</span><span class="NAME">res</span><span class="PUNC">)</span><span class="PUNC">.</span><span class="NAME">toFormat</span><span class="PUNC">(</span><span class="NAME">spec</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>324</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>325</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>326</span> </span></pre></body></html>

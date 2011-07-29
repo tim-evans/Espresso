@@ -41,6 +41,22 @@ context("Espresso",
     should("follow . delimited property paths", function () {
       var o = { a: { b: { c: 'd' } } };
       assert.equal(Espresso.getObjectFor("a.b.c", o), "d");
+    }),
+
+    should("follow [] delimited property paths", function () {
+      var o = { a: ['b'] };
+      assert.equal(Espresso.getObjectFor("a[0]", o), "b");
+    }),
+
+    should("follow delimited property paths with [] and . notation", function () {
+      var o = { a: [{ b: 'c' }] };
+      assert.equal(Espresso.getObjectFor("a[0].b", o), "c");
+    }),
+
+    should("throw an error when encountering a malformed property path", function () {
+      assert.raises(Error, Espresso.getObjectFor, "a..b");
+      assert.raises(Error, Espresso.getObjectFor, "a.[0]");
+      assert.raises(Error, Espresso.getObjectFor, "a[0]bar");
     })
   ),
 

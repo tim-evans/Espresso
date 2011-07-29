@@ -6,11 +6,9 @@
       Advanced String Formatting borrowed from the eponymous Python PEP.
 
       The formatter follows the rules of Python [PEP 3101][pep]
-      (Advanced String Formatting) and following most of the
-      ECMAScript Harmony strawman specification for string formatting
-      (found [here][strawman]), with the major ommision being the
-      removal of the bracket `[]` notation for reasons of
-      consitency and performance.
+      (Advanced String Formatting) and following the ECMAScript
+      Harmony strawman specification for string formatting
+      (found [here][strawman]).
 
       To use literal object notation, just pass in one argument for
       the formatter. This is optional however, as you can always

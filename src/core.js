@@ -19,25 +19,14 @@ Espresso = {
     The version string.
     @type String
    */
-  VERSION: '0.5.6',
+  VERSION: '0.5.7',
 
   /** @function
     @desc
 
     Lookup a variable's value given its Object notation.
-    This requires absolute queries to the Object, only using
-    the `.` notation.
-
-    The most effort that is performed on behalf of the
-    lookup when it fails is when it's an array AND it's the
-    only element in the array, THEN it will unpack the element
-    and make that the argument.
-
-    This does not mean that absolute notation does not
-    work in these cases; it just means that it's optional.
-
-    This prevents unnecessary indexing by the user,
-    expecially in the case of the arguments Array.
+    This requires absolute queries to the Object, using
+    idiomatic JavaScript notation.
 
     @example
       // No scope assumes the object has is at the global scope.
@@ -58,6 +47,12 @@ Espresso = {
       }));
       // -> "cafe"
 
+    @example
+      alert(Espresso.getObjectFor("options[0]", {
+        options: ["espresso", "coffee", "tea"]
+      }));
+      // -> "espresso"
+
     @param {String} key The key to get on the target.
     @param {Object} [object] The target object to get a value from.
     @returns {Object} The referenced value in the args passed in.
@@ -72,25 +67,70 @@ Espresso = {
         obj = void 0;
       }
       return obj;
-    }, G = this;
+    }, G = this,
+    arrError = "Expected EOS, '.', or '[' as the next character in the property path, but got '{}'\n{}\n{: >{}}",
+    pathError = "Expected non-delimiter character (anything but '[' or '.')  in the property path, but got '{}'\n{}\n{: >{}}";
 
     return function (key, object) {
-      // Attribute (`.`) subscript
-      var iattr = key.indexOf('.');
+      var iattr = key.indexOf('.'),
+          iarr = key.indexOf('['),
+          fullKey = key, idx, chr;
 
       // Use global scope as default
       object = (arguments.length === 1) ? G: object;
 
       // Nothing to look up on undefined or null objects.
-      if (!Espresso.hasValue(object)) {
+      if (object == null) {
         return object;
       }
 
-      if (iattr > -1) {
+      // Array accessor (`[]`) access
+      if ((iarr < iattr || iattr === -1) && iarr > -1) {
+
+        // Found something that looks like `ingredients[0]`
+        // Unpack the first part, then deal with the array subscript.
+        if (iarr !== 0) {
+          object = getProperty(key.slice(0, iarr), object);
+          key = key.slice(iarr + 1);
+          idx = iarr;
+        }
+
+        iarr = key.indexOf(']');
+
+        // Unpack the property
+        object = getProperty(key.slice(0, iarr), object);
+
+        // Eat the rest of the descriptor
+        key = key.slice(iarr + 1);
+        idx += iarr + 2;
+
+        chr = key.charAt(0);
+        // Malformed property path
+        if (!(chr === "" || chr === '.' || chr === '[')) {
+          throw new Error(Espresso.format(arrError, chr, fullKey, idx + 1, '^'));
+        }
+
+        // Eat up the dot.
+        if (key.length && chr === '.') {
+          key = key.slice(1);
+        }
+
+        // Recurse
+        return Espresso.getObjectFor(key, object);
+
+      // Attribute (`.`) subscript
+      } else if ((iattr < iarr || iarr === -1) && iattr > -1) {
         object = getProperty(key.split('.', 1), object);
+        idx = iattr + 1;
 
         // Eat up the dot.
         key = key.slice(iattr + 1);
+
+        chr = key.charAt(0);
+        // Malformed property path
+        if (chr === "." || chr === '[') {
+          throw new Error(Espresso.format(pathError, chr, fullKey, idx + 1, '^'));
+        }
 
         // Recurse
         return Espresso.getObjectFor(key, object);

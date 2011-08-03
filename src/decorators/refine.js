@@ -14,10 +14,10 @@ mix(/** @scope Espresso */{
     Calling the refined function should be done like so:
 
         Machiatto = mix({
-          pull: function (original) {
+          pull: Espresso.refine(function (original) {
             var espresso = original();
             return espresso + milk;
-          }.refine()
+          })
         }).into(Espresso);
 
     Provide arguments as-is, omit arguments, or add arguments

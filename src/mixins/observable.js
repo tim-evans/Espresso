@@ -36,7 +36,8 @@
         }
       });
 
-      alert(Beatles.getPath('Paul.instruments.0'));
+      Beatles.initObservable();
+      alert(Beatles.getPath('Paul.instruments[0]'));
       // => 'vocals'
 
   Using `get` provides optimizations such as caching on an Object.
@@ -97,10 +98,10 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     boilerplate assuming your constructor is called `init`):
 
         mix({
-          init: function (original) {
+          init: Espresso.refine(function (original) {
             this.initObservable();
             return original.apply(null, Espresso.A(arguments).slice(1));
-          }.refine()
+          })
         }).into(Espresso.Observable);
 
     @returns {void}

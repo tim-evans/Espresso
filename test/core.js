@@ -51,6 +51,7 @@ context("Espresso",
     should("follow delimited property paths with [] and . notation", function () {
       var o = { a: [{ b: 'c' }] };
       assert.equal(Espresso.getObjectFor("a[0].b", o), "c");
+      assert.equal(Espresso.getObjectFor("a[0][b]", o), "c");
     }),
 
     should("throw an error when encountering a malformed property path", function () {
@@ -59,6 +60,7 @@ context("Espresso",
       assert.raises(SyntaxError, Espresso.getObjectFor, "a.[0]", o);
       assert.raises(SyntaxError, Espresso.getObjectFor, "a[0]bar", o);
       assert.raises(SyntaxError, Espresso.getObjectFor, "a[", o);
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a]", o);
       assert.raises(SyntaxError, Espresso.getObjectFor, "a[]", o);
       assert.raises(SyntaxError, Espresso.getObjectFor, "a.", o);
     })

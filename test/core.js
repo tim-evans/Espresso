@@ -54,10 +54,10 @@ context("Espresso",
     }),
 
     should("throw an error when encountering a malformed property path", function () {
-      var o = { a: 'foo' };
-      assert.raises(Error, Espresso.getObjectFor, "a..b", o);
-      assert.raises(Error, Espresso.getObjectFor, "a.[0]", o);
-      assert.raises(Error, Espresso.getObjectFor, "a[0]bar", o);
+      var o = { a: ['foo'] };
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a..b", o);
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a.[0]", o);
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a[0]bar", o);
     })
   ),
 

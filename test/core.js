@@ -58,6 +58,9 @@ context("Espresso",
       assert.raises(SyntaxError, Espresso.getObjectFor, "a..b", o);
       assert.raises(SyntaxError, Espresso.getObjectFor, "a.[0]", o);
       assert.raises(SyntaxError, Espresso.getObjectFor, "a[0]bar", o);
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a[", o);
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a[]", o);
+      assert.raises(SyntaxError, Espresso.getObjectFor, "a.", o);
     })
   ),
 

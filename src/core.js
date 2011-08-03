@@ -58,24 +58,39 @@ Espresso = {
     @returns {Object} The referenced value in the args passed in.
    */
   getObjectFor: (function () {
-    /** @ignore */
     // Return the property or `undefined`
-    var getProperty = function (property, obj) {
+    var get, getPath,
+        G = this, idx = 0, fullKey;
+        baseError = "Malformed property path:\n",
+        unmatchedError = baseError + "{}:\n{0}\n{3: >{1}}{3: >{2}}",
+        endingDotError = baseError + "Property paths cannot end in '.':\n{}\n{: >{}}",
+        unexpectedTokenError = baseError + "Expected {} as the next character, but got '{}'\n{}\n{: >{}}";
+
+    /** @ignore */
+    get = function (property, obj) {
       if (property in obj) {
         obj = obj[property];
       } else {
         obj = void 0;
       }
       return obj;
-    },
+    };
+
+
     /** @ignore */
-    getObjectFor = function (key, object) {
+    getPath = function (key, object) {
       var iattr = key.indexOf('.'),
-          iarr = key.indexOf('['), chr, msg;
+          iarr = key.indexOf('['), chr;
 
       // Nothing to look up on undefined or null objects.
       if (object == null) {
         return object;
+      }
+
+      if (iarr === 0 || iattr === 0) {
+        throw new SyntaxError(Espresso.format(
+          unmatchedError, "Expected a property, but got '" + key.charAt(0) + "'",
+          fullKey, idx, 1, '^'));
       }
 
       // Array accessor (`[]`) access
@@ -84,7 +99,7 @@ Espresso = {
         // Found something that looks like `ingredients[0]`
         // Unpack the first part, then deal with the array subscript.
         if (iarr !== 0) {
-          object = getProperty(key.slice(0, iarr), object);
+          object = get(key.slice(0, iarr), object);
           key = key.slice(iarr + 1);
           idx += iarr;
 
@@ -99,12 +114,17 @@ Espresso = {
         // No closing brace; bail.
         if (iarr === -1) {
           throw new SyntaxError(Espresso.format(
-            "Malformed property path:\nUnmatched opening brace:\n{0}\n{3: >{1}}{3: >{2}}",
+            unmatchedError, "Unmatched opening brace",
             fullKey, idx + 1, fullKey.length - idx, '^'));
+        // No property to parse
+        } else if (iarr === 0) {
+          throw new SyntaxError(Espresso.format(
+            unmatchedError, "Expected a property, but got ']'",
+            fullKey, idx + 1, 1, '^'));
         }
 
         // Unpack the property
-        object = getProperty(key.slice(0, iarr), object);
+        object = get(key.slice(0, iarr), object);
 
         // Eat the rest of the descriptor
         key = key.slice(iarr + 1);
@@ -114,45 +134,46 @@ Espresso = {
         // Malformed property path
         if (!(chr === "" || chr === '.' || chr === '[')) {
           throw new SyntaxError(Espresso.format(
-            "Malformed property path:\nExpected EOS, '.', or '[' as the next character, but got '{}'\n{}\n{: >{}}",
+            unexpectedTokenError, "EOS, '.', or '['",
             chr, fullKey, idx + 1, '^'));
         }
 
         // Eat up the dot.
         if (key.length && chr === '.') {
           key = key.slice(1);
+          if (!key.length) {
+            throw new SyntaxError(Espresso.format(
+              endingDotError, fullKey, fullKey.length, '^'));
+          }
         }
 
         // Recurse
-        return getObjectFor(key, object);
+        return getPath(key, object);
 
       // Attribute (`.`) subscript
       } else if ((iattr < iarr || iarr === -1) && iattr > -1) {
-        object = getProperty(key.split('.', 1), object);
+        object = get(key.split('.', 1), object);
         idx += iattr + 1;
 
         // Eat up the dot.
         key = key.slice(iattr + 1);
 
-        chr = key.charAt(0);
-        // Malformed property path
-        if (chr === "." || chr === '[') {
+        if (!key.length) {
           throw new SyntaxError(Espresso.format(
-            "Malformed property path:\nExpected non-delimiter character (anything but '[' or '.') as the next character, but got '{}'\n{}\n{: >{}}",
-            chr, fullKey, idx + 1, '^'));
+            endingDotError, fullKey, fullKey.length, '^'));
         }
 
         // Recurse
-        return getObjectFor(key, object);
+        return getPath(key, object);
 
       // Done!
       } else if (key === '') {
         return object;
       }
 
-      // Plain 'ol getObjectFor
-      return getProperty(key, object);
-    }, G = this, idx = 0, fullKey;
+      // Plain 'ol get
+      return get(key, object);
+    };
 
     return function (key, object) {
       // Reset debugging helpers
@@ -162,7 +183,7 @@ Espresso = {
       // Use global scope as default
       object = (arguments.length === 1) ? G: object;
 
-      return getObjectFor(key, object);
+      return getPath(key, object);
     };
   }()),
 

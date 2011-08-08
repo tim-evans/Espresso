@@ -193,9 +193,8 @@
   }).into(Espresso);
 
   // Error strings.
-  var error = "Unmatched {} brace for '{{}}'.",
-      unmatchedOpening = error.format('opening'),
-      unmatchedClosing = error.format('closing'),
+  var unmatchedOpening = "Unmatched opening brace:\n{}\n{:->{}}",
+      unmatchedClosing = "Unmatched closing brace:\n{}\n{:->{}}",
       openingBrace = '{',
       closingBrace = '}',
       specifierSeparator = ':';
@@ -212,7 +211,7 @@
 
       if (prev === closingBrace) {
         if (ch !== closingBrace) {
-          throw new Error(unmatchedClosing.format(template.slice(0, idx)));
+          throw new Error(format(unmatchedClosing, [template, idx, '^']));
 
         // Double-escaped closing brace.
         } else {
@@ -224,7 +223,7 @@
 
       // Begin template parsing
       if (ch === openingBrace) {
-        result = parseField(template.slice(idx + 1), args);
+        result = parseField(template, idx, template.slice(idx + 1), args);
         buffer[buffer.length] = result[1];
         idx += result[0]; // continue after the template.
 
@@ -233,6 +232,11 @@
         buffer[buffer.length] = ch;
       }
       prev = ch;
+    }
+
+    // Can't end with an unclosed closing brace
+    if (ch === closingBrace && template.charAt(idx - 2) !== closingBrace) {
+      throw new Error(format(unmatchedClosing, [template, idx, '^']));
     }
     return buffer.join('');
   }
@@ -245,7 +249,7 @@
     @param {Array} args The arguments to parse the template string.
     @returns {Array} A tuple with the length it ate up and the formatted template.
    */
-  function parseField(template, args) {
+  function parseField(fullTemplate, fullIdx, template, args) {
     var idx = 0, ch, len = template.length,
         inSpecifier = false, iBrace = 0;
     for (; idx < len; idx++) {
@@ -261,7 +265,7 @@
           if (idx === 0) {
             return [1, openingBrace];
           } else {
-            throw new Error(unmatchedOpening.format(template.slice(0, idx)));
+            throw new Error(format(unmatchedOpening, [fullTemplate, fullIdx + 1,  '^']));
           }
 
         // Done formatting.
@@ -283,7 +287,7 @@
         }
       }
     }
-    throw new Error(unmatchedOpening.format(template));
+    throw new Error(format(unmatchedOpening, [fullTemplate, fullIdx + 1, '^']));
   }
 
   /** @ignore

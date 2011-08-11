@@ -138,8 +138,42 @@ mix(/** @scope Espresso */{
     return object;
   },
 
+  /** @function
+    @desc
+    Set a value on an object.
+
+    Use this instead of subscript (`[]`) or dot notation
+    for public variables. Otherwise, you won't reap benefits
+    of being notified when they are set, or if the property
+    is computed.
+
+    Set is tolerant of when trying to access objects that
+    don't exist- it will ignore your attempt in that case.
+
+    @param {String} key The key to lookup on the object.
+    @param {Object} value The value to set the object at the key's path to.
+    @returns {Object} The reciever.
+   */
   set: set,
 
+  /**
+    Set a value that is a property path.
+
+    This function will return the value given the
+    property path using `set` and `get` when necessary.
+
+    This means you should write:
+
+        zombie.setPath('brain.isDelicious', true);
+
+    instead of:
+
+        zombie.set('brain.isDelicious', true);
+
+    @param {String} key The property path to lookup on the object.
+    @param {Object} value The value to set the object at the key's path to.
+    @returns {Object} The reciever.
+   */
   setPath: function (object, path, value) {
     var tokens = tokenize(path);
 

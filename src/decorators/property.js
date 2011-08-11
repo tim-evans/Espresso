@@ -79,6 +79,18 @@ function mkSetter(key, desc) {
 
 mix(/** @scope Espresso */{
 
+  /** @function
+    @desc
+    Internal method for returning description of
+    properties that are created by Espresso.
+
+    Note: This is modeled after SC2.
+    @param {Object} o The object to get the information of.
+    @param {Boolean} create Whether the meta information
+      should be created upon calling this method.
+    @returns {Object} A object with the information about
+      the passed object
+   */
   meta: meta,
 
   /**

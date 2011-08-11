@@ -1,4 +1,4 @@
-/*globals ESP Espresso */
+/*globals Espresso */
 
 /** @namespace
 

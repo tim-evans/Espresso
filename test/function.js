@@ -158,19 +158,6 @@ context("Function",
     should("annotate the function to mark it as 'isProperty'", function () {
       var lambda = Espresso.property(function () {});
       assert.isTrue(lambda.isProperty);
-    }),
-
-    should("annotate the function to mark it's dependentKeys", function () {
-      var lambda = Espresso.property(function () {});
-      assert.equal(lambda.dependentKeys.length, 0);
-    }),
-
-    should("annotate the function to mark it's dependentKeys with arguments provided to property", function () {
-      var lambda = Espresso.property(function () {}, 'a', 'b', 'c');
-      assert.equal(lambda.dependentKeys.length, 3);
-      assert.isTrue(lambda.dependentKeys.indexOf('a') !== -1);
-      assert.isTrue(lambda.dependentKeys.indexOf('b') !== -1);
-      assert.isTrue(lambda.dependentKeys.indexOf('c') !== -1);
     })
   ),
 

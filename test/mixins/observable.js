@@ -58,7 +58,7 @@ context("Espresso.Observable",
     }),
 
     should("use the `.` notation to get nested properties", function () {
-      assert.equal(observable.get('nestedProperty.inside.a.nestedProperty.is'), 'b');
+      assert.equal(observable.getPath('nestedProperty.inside.a.nestedProperty.is'), 'b');
     }),
 
     should("return values that are decorated with `property()`", function () {
@@ -222,7 +222,7 @@ context("Espresso.Observable",
               this._value = v;
             }
             return this._value;
-          }).idempotent()
+          }).idempotent().cacheable()
         }).into({});
         observable.initObservable();
       }),
@@ -255,9 +255,8 @@ context("Espresso.Observable",
       }),
 
       should("set the value on nested object", function () {
-        observable.set("nestedProperty.foo.bar", "baz");
-        assert.equal(observable.get('nestedProperty.foo.bar'), "baz");
-        assert.equal(observable.get('nestedProperty.inside.a.nestedProperty.is'), "b");
+        observable.setPath("nestedProperty.inside.b", "baz");
+        assert.equal(observable.getPath('nestedProperty.inside.b'), "baz");
       }),
 
       should("use preexisting computed properties", function () {

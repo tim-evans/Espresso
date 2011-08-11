@@ -23,49 +23,6 @@ context("Espresso",
     })
   ),
 
-  should("have a function named getObjectFor", function () {
-    assert.kindOf('function', Espresso.getObjectFor);
-  }),
-
-  context("getObjectFor",
-    should("be able to find global objects (with no reference)", function () {
-      window.greeting = "hello";
-      assert.equal(Espresso.getObjectFor("greeting"), "hello");
-    }),
-
-    should("be able to find local objects", function () {
-      var o = { greeting: "konnichiwa" };
-      assert.equal(Espresso.getObjectFor("greeting", o), "konnichiwa");
-    }),
-
-    should("follow . delimited property paths", function () {
-      var o = { a: { b: { c: 'd' } } };
-      assert.equal(Espresso.getObjectFor("a.b.c", o), "d");
-    }),
-
-    should("follow [] delimited property paths", function () {
-      var o = { a: ['b'] };
-      assert.equal(Espresso.getObjectFor("a[0]", o), "b");
-    }),
-
-    should("follow delimited property paths with [] and . notation", function () {
-      var o = { a: [{ b: 'c' }] };
-      assert.equal(Espresso.getObjectFor("a[0].b", o), "c");
-      assert.equal(Espresso.getObjectFor("a[0][b]", o), "c");
-    }),
-
-    should("throw an error when encountering a malformed property path", function () {
-      var o = { a: ['foo'] };
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a..b", o);
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a.[0]", o);
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a[0]bar", o);
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a[", o);
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a]", o);
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a[]", o);
-      assert.raises(SyntaxError, Espresso.getObjectFor, "a.", o);
-    })
-  ),
-
   should("have a function named hasValue", function () {
     assert.kindOf('function', Espresso.hasValue);
   }),

@@ -8,5 +8,5 @@
     "url": "git://github.com/tim-evans/Espresso.git"
   },
   "main"        : "lib/espresso",
-  "version"     : "0.5.7"
+  "version"     : "0.5.8"
 }

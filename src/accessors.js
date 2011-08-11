@@ -1,249 +1,98 @@
 (function () {
 
-var fullKey, idx,
-    delimiters = ['[', ']', '.'],
-    fmt = Espresso.format,
-    baseError = "Malformed property path:\n{}\n{:->{}}\n",
-    emptyPropertyError = baseError +
-     "Expected a property, but got '{}'.",
-    unexpectedTokenError = baseError +
-     "Expected {} as the next token, but got '{}'.";
+var get, set, meta = Espresso.meta,
+    tokenize = Espresso.tokensForPropertyPath,
+    isCallable = Espresso.isCallable,
+    hasES5Properties = !!Object.defineProperty;
 
-function meta(o, k) {
-  return mix(o.__espmeta__ && o.__espmeta__[k]).into({
-    closureKey: k,
-    referenceKey: k,
-    isComputed: false
-  });
-}
+// Handle ES5 compliant JavaScript implementations here.
 
-/** @ignore
-  Returns the index of the next delimiter character.
- */
-function nextDelimiterFor(path, idx) {
-  idx = idx || 0;
-
-  var next = -1, iDelimiter = -1,
-      i = 0, len = delimiters.length;
-
-  for (; i < len; i++) {
-    iDelimiter = path.indexOf(delimiters[i], idx);
-    if (iDelimiter !== -1) {
-      next = (iDelimiter < next || next === -1) ?
-        iDelimiter : next;
-    }
+/** @ignore */
+get = function (object, key) {
+  // If there is no path, assume we're trying to get on Espresso.
+  if (arguments.length === 1) {
+    key = object;
+    object = Espresso;
   }
 
-  return next;
-}
-
-function getPath(object, path) {
-  var nextDelimiter = nextDelimiterFor(path), tuple;
-
-  // Nothing to look up on undefined or null objects.
-  if (object == null) {
-    return object;
-  }
-  
-  if (nextDelimiter >= 0) {
-    if (nextDelimiter !== 0) {
-      object = get(object, path.slice(0, nextDelimiter));
-      path = path.slice(nextDelimiter);
-      idx += nextDelimiter;
-    }
-
-    nextDelimiter = path.charAt(0);
-    tuple = (['[', ']'].indexOf(nextDelimiter) !== -1) ?
-      getIndexedProperty(path) : getProperty(path);
-
-    path = path.slice(tuple[1]);
-    object = get(object, tuple[0]);
-    idx += tuple[1];
-
-    return path.length ?
-      getPath(object, path) : object;
-  }
-
-  return get(object, path);
-}
-
-function get(object, key) {
-  if (key === "") {
-    throw new Error(
-      fmt(emptyPropertyError,
-          fullKey, idx + 2, '^',
-          fullKey.charAt(idx + 1)));
-  }
-
-  var value = (key in object) ? object[key] : void 0,
-      m = meta(object, key);
-
-  // Deal with properties
-  if (value != null && value.isProperty) {
-    // If the value of the property is cached,
-    // retrieve it from the cache and return it.
-    if (value.isCacheable) {
-      object.__cache__ = object.__cache__ || {};
-      if (!object.__cache__.hasOwnProperty(m.closureKey)) {
-        object.__cache__[m.closureKey] = value.call(object, m.referenceKey);
-      }
-      value = object.__cache__[m.closureKey];
-
-    // Otherwise, we need to retrieve the value
-    } else {
-      value = value.call(object, m.referenceKey);
-    }
-
-  // Unknown properties
-  } else if (typeof value === "undefined" && object.unknownProperty) {
+  if (object == null) return void 0;
+  var value = object[key];
+  if (typeof value === "undefined" &&
+      isCallable(object.unknownProperty)) {
     value = object.unknownProperty(key);
+    }
+  return value;
+};
+
+/** @ignore */
+set = function (object, key, value) {
+  // Unknown Properties
+  if (object != null && !(key in object) &&
+      isCallable(object.unknownProperty)) {
+    object.unknownProperty(key, value);
+  } else {
+    object[key] = value;
+    if (object && object.publish) {
+      object.publish(key, value);
+    }
   }
   return value;
+};
+
+// Fallback on looking up information on the meta hash here.
+if (!hasES5Properties) {
+  var o_get = get, o_set = set;
+
+  /** @ignore */
+  get = function (object, key) {
+    if (arguments.length === 1) {
+      key = object;
+      object = Espresso;
+    }
+
+    if (object == null) return void 0;
+    var desc = meta(object, false);
+    desc = desc && desc.desc[key];
+    return desc ? desc.get.call(object) :
+      o_get(object, key);
+  };
+
+  /** @ignore */
+  set = function (object, key, value) {
+    var desc = meta(object, false);
+    desc = desc && desc.desc[key];
+    if (desc) {
+      desc.set.call(object, value);
+    } else {
+      o_set(object, key, value);
+    }
+    return value;
+  };
 }
 
-
-function setPath(object, path, value) {
-  var nextDelimiter = nextDelimiterFor(path), tuple;
-
-  // Nothing to look up on undefined or null objects.
-  if (object == null) {
-    return object;
-  }
-  
-  if (nextDelimiter >= 0) {
-    if (nextDelimiter !== 0) {
-      object = get(object, path.slice(0, nextDelimiter));
-      path = path.slice(nextDelimiter);
-      idx += nextDelimiter;
-    }
-
-    nextDelimiter = path.charAt(0);
-    tuple = (['[', ']'].indexOf(nextDelimiter) !== -1) ?
-      getIndexedProperty(path) : getProperty(path);
-
-    path = path.slice(tuple[1]);
-    if (path.length) {
-      object = get(object, path);
-      idx += tuple[1];
-    }
-    return path.length ?
-      setPath(object, path, value) : set(object, tuple[0], value);
-  }
-
-  return set(object, path, value);
-}
-
-
-/** @ignore
-  Returns the property that starts with a '.'.
-
-  This will return a tuple with the key and the amount
-  of characters that were eaten by this method.
- */
-function getProperty(path) {
-  // Assume the path starts with '.'
-  var endProperty = nextDelimiterFor(path, 1),
-      property;
-
-  if (endProperty === -1) endProperty = path.length;
-  property = path.slice(1, endProperty);
-
-  // Should hold to native JavaScript variable naming conditions
-  // (sans reserved words)
-  if (!/^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(property)) {
-    throw new Error(fmt(unexpectedTokenError,
-      fullKey, idx + 2, '^',
-      "a string", property));
-  }
-
-  return [property, endProperty];
-}
-
-/** @ignore
-  Returns the property that starts with a '[' or ']'.
-
-  This will return a tuple with the key and the amount
-  of characters that were eaten by this method.
- */
-function getIndexedProperty(path) {
-  if (path.charAt(0) === ']') {
-    throw new Error(fmt(unexpectedTokenError,
-                        fullKey, idx + 1, '^',
-                        "'['", ']'));
-  }
-
-  // Assume the path starts with '[' or ']'
-  var startBrace = 1, endBrace, quote, chr;
-
-  quote = !/^\[\d+\]/.test(path) || "";
-
-  if (quote) {
-    quote = path.charAt(startBrace);
-    if (quote !== '"' && quote !== "'") {
-      throw new Error(fmt(unexpectedTokenError,
-                          fullKey, idx + 2, '^',
-                          "''', '\"', or a number", quote));
-    }
-    startBrace += 1;
-  }
-
-  // Look for quote first
-  if (quote) {
-    endBrace = path.indexOf(quote, startBrace);
-
-    // Check to see if the quote was escaped, if so, keep looking.
-    while (path.charAt(endBrace - 1) === '\\') {
-      endBrace = path.indexOf(quote, endBrace + 1);
-      if (endBrace === -1) break;
-    }
-
-    // No ending quote
-    if (endBrace === -1) {
-      throw new Error(fmt(unexpectedTokenError,
-                          fullKey, idx + 2, '^',
-                          quote, path));
-
-    // Ending quote is not immediately preceded by ']'
-    } else if (path.charAt(endBrace + 1) !== ']') {
-      throw new Error(fmt(unexpectedTokenError,
-                          fullKey, idx + endBrace + 2, '^',
-                          ']', path.charAt(endBrace + 1)));
-    }
-  } else {
-    endBrace = path.indexOf(']', startBrace);
-    if (endBrace === -1) {
-      throw new Error(fmt(unexpectedTokenError,
-                          fullKey, idx + 2, '^',
-                          ']', path));
-    }
-  }
-
-  chr = path.charAt(endBrace + quote.length + 1);
-  if (chr !== "" && chr !== "[" && chr !== ".") {
-    throw new Error(fmt(unexpectedTokenError,
-                        fullKey, idx + 2, '^',
-                        "'[', '.', or EOS", chr));
-  }
-
-  return [path.slice(startBrace, endBrace), endBrace + quote.length + 1];
-}
-
-mix({
-
-  get: function (object, path) {
-    // Initialize debugging variables
-    fullKey = path;
-    idx = 0;
-
-    return get(object, path);
-  },
+mix(/** @scope Espresso */{
 
   /** @function
     @desc
+    Returns the property for a given value.
 
+    This brings backwards-compatability to ES5 properties.
+
+    If no property with the given name is found on the object,
+    `unknownProperty` will be attempted to be invoked.
+
+    @param {Object} [object] The object to lookup the key on.
+      If no object is provided, it will fallback on `Espresso`.
+    @param {String} key The key to lookup on the object.
+    @returns {Object} The value of the property on the object.
+   */
+  get: get,
+
+  /**
     Lookup a variable's value given its Object notation.
     This requires absolute queries to the Object, using
-    idiomatic JavaScript notation.
+    idiomatic JavaScript notation. If no second argument
+    is given, it will look up the object on `Espresso`.
 
     @example
       // No scope assumes the object has is at the global scope.
@@ -253,21 +102,21 @@ mix({
         }())
       };
 
-      alert(Espresso.getPath("environment.isBrowser"));
+      alert(Espresso.getPath(window, "environment.isBrowser"));
 
     @example
-      alert(Espresso.getPath("lang.pr._coffee", {
+      alert(Espresso.getPath({
         lang: {
           en: { _coffee: "coffee" },
           pr: { _coffee: "cafe" }
         }
-      }));
+      }, "lang.pr._coffee"));
       // -> "cafe"
 
     @example
-      alert(Espresso.getPath("options[0]", {
+      alert(Espresso.getPath({
         options: ["espresso", "coffee", "tea"]
-      }));
+      }, "options[0]"));
       // -> "espresso"
 
     @param {Object} object The target object to get a value from.
@@ -275,11 +124,31 @@ mix({
     @returns {Object} The referenced value in the args passed in.
    */
   getPath: function (object, path) {
-    // Initialize debugging variables
-    fullKey = path;
-    idx = 0;
+    // If there is no path, assume we're trying to get on Espresso.
+    if (arguments.length === 1) {
+      path = object;
+      object = Espresso;
+    }
 
-    return getPath(object, path);
+    var tokens = tokenize(path);
+
+    while (tokens.length) {
+      object = get(object, tokens.shift());
+    }
+    return object;
+  },
+
+  set: set,
+
+  setPath: function (object, path, value) {
+    var tokens = tokenize(path);
+
+    while (tokens.length > 1) {
+      object = get(object, tokens.shift());
+    }
+
+    return (object == null) ? value :
+      set(object, tokens.shift(), value);
   }
 
 }).into(Espresso);

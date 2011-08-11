@@ -1,4 +1,85 @@
+(function () {
+
+var META_KEY = "__esp__" + Date.now() + "__meta__",
+    hasES5Properties = !!Object.defineProperty;
+
+/** @ignore
+  Returns meta-info about an object's contents.
+  This contains things like the cache, and ES5
+  descriptors.
+ */
+function meta(o, create) {
+  var info = o && o[META_KEY];
+  if (create && info == null) {
+    info = o[META_KEY] = {
+      desc: {},
+      cache: {},
+      lastSetCache: {}
+    };
+  }
+  return info;
+}
+
+/** @ignore
+  Creates a getter that will return what's
+  in the cache if
+ */
+function mkGetter(key, desc) {
+  var cacheable = desc.isCacheable,
+      fun = desc;
+
+  if (cacheable) {
+    return function () {
+      var value, cache = meta(this).cache;
+      if (key in cache) return cache[key];
+      value = cache[key] = fun.call(this, key);
+      return value;
+    };
+  } else {
+    return function () {
+      return fun.call(this, key);
+    };
+  }
+}
+
+function mkSetter(key, desc) {
+  var idempotent = desc.isIdempotent,
+      cacheable = desc.isCacheable,
+      fun = desc;
+
+  if (idempotent) {
+    return function (value) {
+      var m = meta(this, cacheable),
+          ret, cache = m.lastSetCache;
+
+      // Fast path for idempotent properties
+      if (key in cache && cache[key] === value && cacheable) {
+        return m.cache[key];
+      }
+
+      cache[key] = value;
+      if (cacheable) delete m.cache[key];
+      ret = fun.call(this, key, value);
+      if (cacheable) m.cache[key] = ret;
+      return ret;
+    };
+  } else {
+    return function (value) {
+      var m = meta(this, cacheable),
+          ret;
+
+      if (cacheable) delete m.cache[key];
+      ret = fun.call(this, key, value);
+      if (cacheable) m.cache[key] = ret;
+      return ret;
+    };
+  }
+}
+
+
 mix(/** @scope Espresso */{
+
+  meta: meta,
 
   /**
     Marks a function as a computed property, where the
@@ -48,10 +129,9 @@ mix(/** @scope Espresso */{
     @returns {Espresso.Property} The function as a Espresso.property.
    */
   property: function (fn, dependentKeys) {
+    dependentKeys = Espresso.A(arguments).slice(1);
     if (Espresso.isCallable(fn)) {
-      mix(Espresso.Property, {
-        dependentKeys: Espresso.A(arguments).slice(1)
-      }).into(fn);
+      mix(Espresso.Property).into(fn);
     } else {
       fn = {};
     }
@@ -60,38 +140,24 @@ mix(/** @scope Espresso */{
     fn._ = fn._ || {};
     /** @ignore */
     fn._.property = function (template, value, key) {
-      var kvoKey = key,
-          isComputed = Espresso.isCallable(value),
-          meta = template.__espmeta__ || {};
+      var m = meta(template, true);
+
+      m.desc[key] = { watching: dependentKeys };
+      m.desc[key].get = mkGetter(key, value);
+      m.desc[key].set = mkSetter(key, value);
 
       // ECMAScript5 compatible API (no need for get or set!)
-      try { // IE burps on this
-        if ("defineProperty" in Object) {
-          kvoKey = "__kvo__{}__".format(key);
+      if (hasES5Properties) {
+        Object.defineProperty(template, key, {
+          get: m.desc[key].get,
+          set: m.desc[key].set,
+          enumerable: true,
+          configurable: true
+        });
 
-          if (meta[kvoKey]) { delete template[key]; }
-
-          if (isComputed) {
-            template[kvoKey] = value;
-            meta[key] = { closureKey: kvoKey };
-          }
-
-          Object.defineProperty(template, key, {
-            get: function () { return this.get(kvoKey); },
-            set: function (value) { return this.set(kvoKey, value); },
-            enumerable: true,
-            configurable: true
-          });
-
-          kvoKey.name = key;
-          value = void(0);
-        }
-      } catch (e) {}
-
-      meta[kvoKey] = { referenceKey: key,
-                       isComputed: isComputed };
-      template.__espmeta__ = meta;
-
+        // Don't return anything...
+        value = void(0);
+      }
       return value;
     };
 
@@ -99,3 +165,5 @@ mix(/** @scope Espresso */{
   }
 
 }).into(Espresso);
+
+}());

@@ -1,4 +1,5 @@
 /*globals Espresso */
+
 /** @namespace
 
   [Key-Value Observing][kvo] (KVO) is a mechanism that allows
@@ -110,38 +111,35 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     if (this.__isObservableInitialized__) { return; }
     this.__isObservableInitialized__ = true;
 
-    var key, property, i = 0, len, dependents, meta = this.__espmeta__,
-        dependent, iDependent, object, notifier;
+    var key, property, i = 0, len, dependents,
+        meta = Espresso.meta(this, true),
+        dependent, iDependent, object, notifier, tokens;
 
     /** @ignore */
     notifier = function (key) {
       this.set(key);
     };
 
-    for (key in meta) { // Iterate over all keys
-      if (meta.hasOwnProperty(key) && meta[key].referenceKey) {
-        property = this[key];
+    for (key in meta.desc) { // Iterate over all keys
+      property = meta.desc[key];
 
-        if (Espresso.isCallable(property) &&
-            property.isProperty && property.dependentKeys) {
+      if (property.watching) {
+        dependents = property.watching;
+        len = dependents.length;
+        for (i = 0; i < len; i += 1) {
+          dependent = dependents[i];
+          object = this;
 
-          dependents = property.dependentKeys;
-          len = dependents.length;
-          for (i = 0; i < len; i += 1) {
-            dependent = dependents[i];
-            object = this;
+          // If it's a property path, follow the chain.
+          tokens = Espresso.tokensForPropertyPath(dependent);
+          if (tokens.length > 1) {
+            object = Espresso.getPath(tokens.slice(0, -2).join('.'));
+            dependent = tokens[tokens.length - 1];
+          }
 
-            // If it's a property path, follow the chain.
-            if (dependent.indexOf('.') !== -1) {
-              iDependent = dependent.lastIndexOf('.');
-              object = Espresso.getObjectFor(dependent.slice(0, iDependent));
-              dependent = dependent.slice(iDependent + 1);
-            }
-
-            // Subscribe to the events.
-            if (object && object.isObservable && object.isSubscribable) {
-              object.subscribe(dependent, notifier.bind(this, key), { synchronous: true });
-            }
+          // Subscribe to the events.
+          if (object && object.isObservable && object.isSubscribable) {
+            object.subscribe(dependent, notifier.bind(this, key), { synchronous: true });
           }
         }
       }
@@ -166,16 +164,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     @returns {Object} The value of the key.
    */
   getPath: function (k) {
-    k = k.toString();
-
-    var result = this, key = k, idx;
-    while (result != null && k.length > 0) {
-      idx = k.indexOf('.');
-      key = (idx === -1) ? k : k.slice(0, idx);
-      k = (idx === -1) ? "" : k.slice(idx + 1);
-      result = result.get ? result.get(key) : result[key];
-    }
-    return result;
+    return Espresso.getPath(this, k);
   },
 
   /**
@@ -193,44 +182,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     @returns {Object} The value of the key.
    */
   get: function (k) {
-    k = k.toString();
-    var object = this, value, info, refKey;
-
-    // Retrieve metadata about this property
-    info = this.__espmeta__ ? this.__espmeta__[k] : null;
-    refKey = k;
-    if (info) {
-      if (info.closureKey) {
-        k = info.closureKey;
-      }
-
-      if (info.referenceKey && info.isComputed) {
-        refKey = info.referenceKey;
-      }
-    }
-
-    value = object[k];
-    // Deal with properties
-    if (value && value.isProperty) {
-      // If the value of the property is cached,
-      // retrieve it from the cache and return it.
-      if (value.isCacheable) {
-        object.__cache__ = object.__cache__ || {};
-        if (!object.__cache__.hasOwnProperty(k)) {
-          object.__cache__[k] = value.call(object, refKey);
-        }
-        value = object.__cache__[k];
-
-      // Otherwise, we need to retrieve the value
-      } else {
-        value = value.call(object, refKey);
-      }
-
-    // Unknown properties
-    } else if (typeof value === "undefined") {
-      value = object.unknownProperty(k);
-    }
-    return value;
+    return Espresso.get(this, k);
   },
 
   /**
@@ -252,13 +204,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     @returns {Object} The reciever.
    */
   setPath: function (k, v) {
-    k = k.toString();
-
-    var idx = k.lastIndexOf('.'),
-        object = idx === -1 ? this : this.getPath(k.slice(0, idx));
-
-    if (idx !== -1) k = k.slice(idx + 1);
-    object && object.set ? object.set(k, v) : object[k] = v;
+    Espresso.setPath(this, k, v);
     return this;
   },
 
@@ -278,68 +224,7 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
     @returns {Object} The reciever.
    */
   set: function (k, v) {
-    k = k.toString();
-
-    var property, key = k, value = v, idx = key.lastIndexOf('.'), object = this,
-        result, didChange = false, info, refKey, isComputed = false;
-
-    // Retrieve metadata about this property
-    info = this.__espmeta__ ? this.__espmeta__[k] : null;
-    refKey = key;
-    if (info) {
-      if (info.closureKey) {
-        key = info.closureKey;
-      }
-
-      if (info.referenceKey) {
-        refKey = info.referenceKey;
-      }
-      isComputed = info.isComputed;
-    }
-
-    property = object[key];
-
-    // Properties first.
-    if (property && property.isProperty) {
-      // If setting it multiple times with the same
-      // value does nothing, check to see if we should
-      // set it again.
-      if (property.isIdempotent) {
-        object.__value__ = object.__value__ || {};
-        if (object.__value__[key] !== value) {
-          result = property.call(object, refKey, value);
-          didChange = true;
-        }
-        object.__value__[key] = value;
-
-      // Otherwise, call the property with the key and value.
-      } else {
-        result = property.call(object, refKey, value);
-        didChange = true;
-      }
-
-      // Cache the new return from the function
-      // so we don't have to waste another lookup later.
-      if (property.isCacheable && didChange) {
-        object.__cache__ = object.__cache__ || {};
-        object.__cache__[key] = result;
-      }
-
-    // Unknown property
-    } else if (typeof property === "undefined") {
-      this.unknownProperty(k, v);
-
-    // Simply set it (taking into account computed ECMAScript5 properties).
-    } else {
-      object[isComputed ? refKey : key] = value;
-    }
-
-    // Expected behaviour is strange unless publishes
-    // are done immediately.
-    if (object.publish && !(property && property.isIdempotent && !didChange)) {
-      object.publish(refKey, value);
-    }
-
+    Espresso.set(this, k, v);
     return this;
   },
 
@@ -356,31 +241,8 @@ Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observ
    */
   unknownProperty: function (key, value) {
     if (arguments.length === 2) {
-      var parts = key.split('.'), part, root = this,
-          len = parts.length - 1, i = 0, o;
-      for (; i < len; i++) {
-        part = parts[i];
-        o = root.get ? root.get(part) : Espresso.getObjectFor(part, root);
-
-        // Don't mess with existing objects.
-        if (typeof o !== "undefined") {
-          root = o;
-
-        // Create new Objects when they don't exist
-        } else {
-          root[part] = {};
-          root = root[part];
-        }
-      }
-
-      part = parts[len];
-      if (root[part] != null && root.set) {
-        root.set(part, value);
-      } else {
-        root[part] = value;
-      }
+      this[key] = value;
     }
-    return Espresso.getObjectFor(key, this);
+    return void(0);
   }
-
 });

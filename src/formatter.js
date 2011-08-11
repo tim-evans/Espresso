@@ -193,8 +193,9 @@
   }).into(Espresso);
 
   // Error strings.
-  var unmatchedOpening = "Unmatched opening brace:\n{}\n{:->{}}",
-      unmatchedClosing = "Unmatched closing brace:\n{}\n{:->{}}",
+  var baseError = "Malformed format template:\n{}\n{:->{}}\n",
+      unmatchedOpening = baseError + "Unmatched opening brace.",
+      unmatchedClosing = baseError + "Unmatched closing brace.",
       openingBrace = '{',
       closingBrace = '}',
       specifierSeparator = ':';
@@ -311,12 +312,13 @@
 
     // Return the object referenced by the property path given.
     } else {
-      res = Espresso.getObjectFor(value, args);
+      // First, try to get the value by absolute paths
+      res = Espresso.getPath(args, value);
 
       // Allow for references to object literals
       if (typeof res === "undefined" &&
-          Array.isArray(args) && args.length === 1 && Espresso.hasValue(args[0])) {
-        res = args[0].getPath ? args[0].getPath(value) : Espresso.getObjectFor(value, args[0]);
+          Array.isArray(args) && args.length === 1 && args[0] != null) {
+        res = Espresso.getPath(args[0], value);
       }
     }
 

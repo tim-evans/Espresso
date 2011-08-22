@@ -1,7 +1,8 @@
 SRC =	license.js core.js mixer.js decorators/alias.js decorators/inferior.js	\
 	decorators/refine.js function.js	\
-	mixins/enumerable.js mixins/subscribable.js decorators/property.js mixins/observable.js mixins/property.js	\
-	array.js string.js formatter.js number.js date.js object.js property_path.js accessors.js
+	mixins/enumerable.js mixins/subscribable.js	\
+	array.js string.js formatter.js number.js date.js object.js	\
+	property_path.js accessors.js decorators/property.js mixins/property.js mixins/observable.js
 
 DOCDIR = ../docs
 

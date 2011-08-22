@@ -5,6 +5,10 @@ context("Formatter",
     assert.kindOf("function", Espresso.format);
   }),
 
+  should("have a function named vformat", function () {
+    assert.kindOf("function", Espresso.vformat);
+  }),
+
   context("format",
     // Regular arguments
     formatting("'{}' with '\"espresso\"' should return 'espresso'"),
@@ -36,13 +40,13 @@ context("Formatter",
 
     // Syntax errors
     should("throw an error when encountering unmatched braces", function () {
-      assert.raises(Error, Espresso.format.bind(Espresso),
+      assert.raises(Error, Espresso.format,
                     "{answer", { answer: 42 });
-      assert.raises(Error, Espresso.format.bind(Espresso),
+      assert.raises(Error, Espresso.format,
                     "answer}", { answer: 42 });
-      assert.raises(Error, Espresso.format.bind(Espresso),
+      assert.raises(Error, Espresso.format,
                     "What is the answer to {}, { and {}?", 'life', 'the universe', 'and everything');
-      assert.raises(Error, Espresso.format.bind(Espresso),
+      assert.raises(Error, Espresso.format,
                     "What is the answer to {}, {} and }?", 'life', 'the universe', 'and everything');
     }),
 

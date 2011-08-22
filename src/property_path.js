@@ -14,8 +14,21 @@ mix(/** @scope Espresso */{
 
         Espresso.tokensForPropertyPath("foo.bar.baz");
         // ["foo", "bar", "baz"]
+
         Espresso.tokensForPropertyPath("foo['bar']['baz']");
         // ["foo", "bar", "baz"]
+
+    Property strings enclosed inside braces (`[]`) can have
+    any character set except for an unescaped ending quote.
+    This means Unicode values, spaces, etc. are all valid:
+
+        Espresso.tokensForPropertyPath("what.is['the answer'].to['life, the universe, and everything?']");
+        // ["what", "is", "the answer", "to", "life, the universe, and everything?"]
+
+    On the other hand, property paths delimited by a dot (`.`)
+    can only be valid JavaScript variable values. The exception
+    to this rule is the first parameter which can start with
+    a numeric value.
 
     @param {String} path The property path to parse into tokens
     @returns {Array} The tokens that make up the property path.

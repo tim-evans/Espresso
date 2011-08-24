@@ -90,7 +90,59 @@ Espresso = {
     setTimeout(function () {
       lambda.apply(that, args);
     }, 0);
-  }
+  },
+
+  /** @function
+    @desc
+    Identical to `Object.defineProperty`.
+    If not available natively, this is null.
+
+    @param {Object} obj The object ot modify.
+    @param {String} key The property name to modify.
+    @param {Object} desc The descriptor hash.
+    @returns {void}
+   */
+  defineProperty: (function () {
+    var defineProperty = Object.defineProperty;
+
+    // Catch IE8 where Object.defineProperty exists but only works on DOM elements.
+    if (defineProperty) {
+      try {
+        defineProperty({}, 'a', { get: function () {} });
+      } catch (x) {
+        defineProperty = void(0);
+      }
+    }
+
+    return defineProperty;
+  }()),
+
+  /** @function
+    @desc
+    Internal method for returning description of
+    properties that are created by Espresso.
+
+    Note: This is modeled after SC2.
+    @param {Object} o The object to get the information of.
+    @param {Boolean} create Whether the meta information
+      should be created upon calling this method.
+    @returns {Object} A object with the information about
+      the passed object
+   */
+  meta: (function () {
+    var META_KEY = "__esp__" + Date.now() + "__meta__";
+    return function (o, create) {
+      var info = o && o[META_KEY];
+      if (create && info == null) {
+        info = o[META_KEY] = {
+          desc: {},
+          cache: {},
+          lastSetCache: {}
+        };
+      }
+      return info;
+    };
+  }())
 
 };
 

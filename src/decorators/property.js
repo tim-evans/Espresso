@@ -1,24 +1,7 @@
 (function () {
 
-var META_KEY = "__esp__" + Date.now() + "__meta__",
-    hasES5Properties = !!Object.defineProperty;
-
-/** @ignore
-  Returns meta-info about an object's contents.
-  This contains things like the cache, and ES5
-  descriptors.
- */
-function meta(o, create) {
-  var info = o && o[META_KEY];
-  if (create && info == null) {
-    info = o[META_KEY] = {
-      desc: {},
-      cache: {},
-      lastSetCache: {}
-    };
-  }
-  return info;
-}
+var meta = Espresso.meta,
+    defineProperty = Espresso.defineProperty;
 
 /** @ignore
   Creates a getter that will return what's
@@ -78,20 +61,6 @@ function mkSetter(key, desc) {
 
 
 mix(/** @scope Espresso */{
-
-  /** @function
-    @desc
-    Internal method for returning description of
-    properties that are created by Espresso.
-
-    Note: This is modeled after SC2.
-    @param {Object} o The object to get the information of.
-    @param {Boolean} create Whether the meta information
-      should be created upon calling this method.
-    @returns {Object} A object with the information about
-      the passed object
-   */
-  meta: meta,
 
   /**
     Marks a function as a computed property, where the
@@ -159,8 +128,8 @@ mix(/** @scope Espresso */{
       m.desc[key].set = mkSetter(key, value);
 
       // ECMAScript5 compatible API (no need for get or set!)
-      if (hasES5Properties) {
-        Object.defineProperty(template, key, {
+      if (defineProperty) {
+        defineProperty(template, key, {
           get: m.desc[key].get,
           set: m.desc[key].set,
           enumerable: true,

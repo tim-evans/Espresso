@@ -2,8 +2,7 @@
 
 var get, set, meta = Espresso.meta,
     tokenize = Espresso.tokensForPropertyPath,
-    isCallable = Espresso.isCallable,
-    hasES5Properties = !!Object.defineProperty;
+    isCallable = Espresso.isCallable;
 
 // Handle ES5 compliant JavaScript implementations here.
 
@@ -20,7 +19,7 @@ get = function (object, key) {
   if (typeof value === "undefined" &&
       isCallable(object.unknownProperty)) {
     value = object.unknownProperty(key);
-    }
+  }
   return value;
 };
 
@@ -40,7 +39,7 @@ set = function (object, key, value) {
 };
 
 // Fallback on looking up information on the meta hash here.
-if (!hasES5Properties) {
+if (!Espresso.defineProperty) {
   var o_get = get, o_set = set;
 
   /** @ignore */

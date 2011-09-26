@@ -130,7 +130,7 @@ Espresso = {
       the passed object
    */
   meta: (function () {
-    var META_KEY = "__esp__" + Date.now() + "__meta__";
+    var META_KEY = "__esp__" + (new Date()).getTime() + "__meta__";
     return function (o, create) {
       var info = o && o[META_KEY];
       if (create && info == null) {

@@ -77,21 +77,6 @@ Espresso = {
     };
   }()),
 
-  /**
-    Defers execution until a later time (when the ready
-    queue is empty).
-
-    @param {Function} lambda The function to call.
-    @param {Array} args The arguments to apply to the function.
-    @param {Object} that The object to apply as `this`.
-   */
-  defer: function (lambda, args, that) {
-    that = that || lambda;
-    setTimeout(function () {
-      lambda.apply(that, args);
-    }, 0);
-  },
-
   /** @function
     @desc
     Identical to `Object.defineProperty`.

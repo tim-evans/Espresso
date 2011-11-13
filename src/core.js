@@ -127,6 +127,45 @@ Espresso = {
       }
       return info;
     };
+  }()),
+
+
+  guidFor: (function () {
+    var uuid = 0,
+        nil = void 0,
+        T_STRING = '[object String]',
+        T_NUMBER = '[object Number]',
+        T_BOOLEAN = '[object Boolean]',
+        st = {},
+        toString = Object.prototype.toString;
+
+    return function (o) {
+      if (o === null) return "(null)";
+      if (o === nil) return "(undefined)";
+
+      var cache, result, meta,
+          type = toString.call(o);
+
+      switch(type) {
+      case T_NUMBER:
+        result = 'nu' + o;
+        break;
+      case T_STRING:
+        result = st[o];
+        if (!result) result = st[o] = 'st' + (uuid++);
+        break;
+      case T_BOOLEAN:
+        result = o ? '(true)' : '(false)';
+        break;
+      default:
+        if (o === Object) return '{}';
+        if (o === Array) return '[]';
+        meta = Espresso.meta(o, true);
+        result = meta.guid;
+        if (!result) result = meta.guid = 'esp' + (uuid++);
+      }
+      return result;
+    };
   }())
 
 };

@@ -78,10 +78,8 @@
   that you would like to be notified on.
 
     [kvo]: http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html
-
-  @extends Espresso.Subscribable
  */
-Espresso.Observable = mix(Espresso.Subscribable).into(/** @lends Espresso.Observable# */{
+Espresso.Observable = /** @lends Espresso.Observable# */{
 
   /**
     Walk like a duck.

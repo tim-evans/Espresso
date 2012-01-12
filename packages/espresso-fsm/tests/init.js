@@ -3,8 +3,12 @@ module('FSM/init');
 test('calling Espresso.init should call `initStates`', function () {
   var fsm, isCalled;
   fsm = mix(Espresso.FSM, {
+    currentStateName: 'A',
     initStates: function () {
       isCalled = true;
+    },
+    states: {
+      A: {}
     }
   }).into({});
 

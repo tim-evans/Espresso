@@ -34,7 +34,7 @@ function applyStateProperties(fsm) {
   Enters a state on the FSM.
  */
 function enter(fsm, stateName) {
-  var state = Espresso.get(Espresso.get(fsm, 'states'), state);
+  var state = Espresso.get(Espresso.get(fsm, 'states'), stateName);
 
   if (state != null) {
     Espresso.set(fsm, 'currentState', state);

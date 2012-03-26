@@ -98,99 +98,99 @@ var Property = {
 };
 
 
-mix(/** @scope Espresso */{
+/**
+  Marks a function as a computed property, where the
+  getter and setter functions are the same function.
 
-  /**
-    Marks a function as a computed property, where the
-    getter and setter functions are the same function.
+      var set = Espresso.set,
+          get = Espresso.get;
 
-    If you're in an ECMAScript5 supported environment,
-    you may use normal object accessors on properties,
-    which will call `get` and `set` for you:
+      Greeter = mix({
+        L10N: {
+          hello: {
+            en: "Hello",
+            ja: "こんにちは",
+            fr: "Bonjour"
+          }
+        },
 
-        var set = Espresso.set,
-            get = Espresso.get;
-        Greeter = mix({
-          L10N: {
-            hello: {
-              en: "Hello",
-              ja: "こんにちは",
-              fr: "Bonjour"
-            }
-          },
+        language: Espresso.property(),
 
-          language: Espresso.property(),
+        greeting: Espresso.property(function () {
+          return this.L10N.hello[get(this, 'language')];
+        }, 'language').cacheable()
+      }).into({});
+      Espresso.init(Greeter);
 
-          greeting: Espresso.property(function () {
-            return this.L10N.hello[get(this, 'language')];
-          }, 'language').cacheable()
-        }).into({});
-        Espresso.init(Greeter);
+      set(Greeter, 'language', 'en');
+      alert(get(Greeter, 'greeting'));
+      // -> "Hello"
 
-        set(Greeter, 'language', 'en');
-        alert(get(Greeter, 'greeting'));
-        // -> "Hello"
+      set(Greeter, 'language', 'fr');
+      alert(get(Greeter, 'greeting'));
+      // -> "Bonjour"
 
-        set(Greeter, 'language', 'fr');
-        alert(get(Greeter, 'greeting'));
-        // -> "Bonjour"
+  Keep in mind that everything that needs property observing
+  has to be an {@link Espresso.Property}. For instance
+  if the example above didn't have `language` as
+  {@link Espresso.property}, you would have to explicitly
+  `set` `language` to have `greeting` be notified of the
+  property changes.
 
-    Keep in mind that everything that needs property observing
-    has to be an {@link Espresso.Property}. For instance
-    if the example above didn't have `language` as
-    {@link Espresso.property}, you would have to explicitly
-    `set` `language` to have `greeting` be notified of the
-    property changes.
+  @param {Function} fn The function to be called when
+    the property should be computed.
+  @param {...} dependantKeys The dependant keys that
+    this property has. When any of these keys get
+    updated via KVO, the property will be notified.
+  @returns {Espresso.Property} The function as a Espresso.property.
+ */
+Espresso.property = Espresso.Decorator.create({
 
-    @param {Function} fn The function to be called when
-      the property should be computed.
-    @param {...} dependentKeys The dependent keys that
-      this property has. When any of these keys get
-      updated via KVO, the property will be notified.
-    @returns {Espresso.Property} The function as a Espresso.property.
-   */
-  property: function (target, dependentKeys) {
-    dependentKeys = slice.call(arguments, 1);
+  name: 'property',
+
+  preprocess: function (target, dependantKeys) {
     if (Espresso.isCallable(target)) {
       mix(Property).into(target);
     } else {
       target = {};
     }
 
-    // Init API
-    metaPath(target, ['init', 'property'], function (target, value, key) {
-      metaPath(target, ['desc', key], {
-        get: mkGetter(key, value),
-        set: mkSetter(key, value),
-        writable: false,
-        enumerable: true,
-        configurable: true
-      });
+    var m = meta(target, true);
+    m["dependants:change"] = (m["dependants:change"] || []).concat(slice.call(arguments, 1));
+    return target;
+  },
 
-      // Setup local object caches
-      meta(target).lastSetCache = {};
-      meta(target).cache = {};
+  init: function (target, value, key) {
+    var dependants = meta(value)["dependants:change"];
 
-      // Register dependent keys
-      var dependent, tokens, o;
-
-      for (var i = 0, len = dependentKeys.length; i < len; i++) {
-        o = target;
-        dependent = dependentKeys[i];
-
-        // If it's a property path, follow the chain.
-        tokens = tokenize(dependent);
-        if (tokens.length > 1) {
-          o = getPath(tokens.slice(0, -2).join('.'));
-          dependent = tokens[tokens.length - 1];
-        }
-
-        Espresso.addObserver(o, dependent, target, mkNotifier(target, key, value));
-      }
-      return target;
+    metaPath(target, ['desc', key], {
+      get: mkGetter(key, value),
+      set: mkSetter(key, value),
+      writable: false,
+      enumerable: true,
+      configurable: true
     });
 
+    // Setup local object caches
+    meta(target).lastSetCache = {};
+    meta(target).cache = {};
+
+    // Register dependant keys
+    var dependant, tokens, o;
+
+    for (var i = 0, len = dependants.length; i < len; i++) {
+      o = target;
+      dependant = dependants[i];
+
+      // If it's a property path, follow the chain.
+      tokens = tokenize(dependant);
+      if (tokens.length > 1) {
+        o = getPath(tokens.slice(0, -2).join('.'));
+        dependant = tokens[tokens.length - 1];
+      }
+
+      Espresso.addObserver(o, dependant, target, mkNotifier(target, key, value));
+    }
     return target;
   }
-
-}).into(Espresso);
+});

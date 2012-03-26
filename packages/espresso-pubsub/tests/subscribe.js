@@ -13,7 +13,7 @@ test('`subscribe` throws an error when the host object is null or undefined', fu
   }, TypeError, 'should throw an error for `null`');
 });
 
-test('`subscribe` throws an error when the method isn't callable', function () {
+test("`subscribe` throws an error when the method isn't callable", function () {
   raises(function () {
     subscribe({}, 'espresso:error', null, null);
   }, TypeError);

@@ -145,3 +145,14 @@ test('will call init on initialization time', function () {
   Espresso.init(o);
   ok(didCall);
 });
+
+module('hasDecorator');
+
+test("returns true when the object has the given decoration", function () {
+  var o = {};
+  event.init = Espresso.K;
+  dEvent(o);
+
+  ok(Espresso.hasDecorator(o, event.name));
+  ok(!Espresso.hasDecorator({}, event.name));
+});

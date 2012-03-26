@@ -1,14 +1,7 @@
-require('espresso-crema/core');
+require('espresso-crema/decorator');
 
 var metaPath = Espresso.metaPath,
     isCallable = Espresso.isCallable;
-
-/** @ignore */
-function inferior(template, value, key) {
-  var original = template[key];
-  return (original == null ||
-          metaPath(original, ['decorators', 'inferior'])) ? value : original;
-};
 
 /**
   If the attribute being mixed in exists on the
@@ -21,10 +14,20 @@ function inferior(template, value, key) {
     the function is inferior. Otherwise, it isn't.
   @returns {Function} The reciever.
  */
-Espresso.inferior = function (target, condition) {
-  if (arguments.length === 2 ?
-      (isCallable(condition) ? condition() : condition) : true) {
-    metaPath(target, ['decorators', 'inferior'], inferior);
+Espresso.inferior = Espresso.Decorator.create({
+
+  name: 'inferior',
+
+  precondition: function (target, condition) {
+    return (arguments.length === 2 ?
+            (isCallable(condition) ? condition() : condition) : true);
+  },
+
+  process: function (template, value, key) {
+    var original = template[key];
+    return (original == null || Espresso.hasDecorator(original, 'inferior'))
+            ? value
+            : original;
   }
-  return target;
-};
+
+});

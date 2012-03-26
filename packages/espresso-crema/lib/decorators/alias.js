@@ -1,26 +1,8 @@
-require('espresso-crema/core');
+require('espresso-crema/decorator');
 
 var meta = Espresso.meta,
     metaPath = Espresso.metaPath,
     slice = Array.prototype.slice;
-
-/** @ignore */
-function alias(template, value, key) {
-  var aliases = metaPath(value, ['aliases']),
-      len, mixin;
-
-  if (aliases) {
-    len = aliases.length;
-
-    delete meta(value).aliases; // Remove aliases to prevent recursion
-    while (len--) {
-      mixin = {};
-      mixin[aliases[len]] = value;
-      mix(mixin).into(template);
-    }
-  }
-  return value;
-};
 
 /**
   Provides a mechanism to alias an object with
@@ -36,11 +18,30 @@ function alias(template, value, key) {
   @param {...} aliases The aliases this object has.
   @returns {Object} The reciever.
  */
-Espresso.alias = function (target) {
-  var m = meta(target, true);
+Espresso.alias = Espresso.Decorator.create({
 
-  m.aliases = (m.aliases || []).concat(slice.call(arguments, 1));
-  metaPath(target, ['decorators', 'alias'], alias);
+  name: 'alias',
 
-  return target;
-};
+  preprocess: function (target) {
+    var m = meta(target, true);
+    m.aliases = (m.aliases || []).concat(slice.call(arguments, 1));
+    return target;
+  },
+
+  process: function (target, value, key) {
+    var aliases = metaPath(value, ['aliases']),
+        len, mixin;
+
+    if (aliases) {
+      len = aliases.length;
+
+      delete meta(value).aliases; // Remove aliases to prevent recursion
+      while (len--) {
+        mixin = {};
+        mixin[aliases[len]] = value;
+        mix(mixin).into(target);
+      }
+    }
+    return value;
+  }
+});

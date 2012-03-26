@@ -1,33 +1,8 @@
-require('espresso-crema/core');
+require('espresso-crema/decorator');
 
-var metaPath = Espresso.metaPath,
-    K = Espresso.K,
+var K = Espresso.K,
     slice = Array.prototype.slice,
     isCallable = Espresso.isCallable;
-
-/** @ignore */
-function refine(template, value, key) {
-  var base = template[key] || K;
-  if (!isCallable(base)) {
-    return value;
-  }
-
-  /** @ignore */
-  var lambda = function () {
-    var that = this;
-    return value.apply(that, [function () {
-      return base.apply(that, arguments);
-    }].concat(slice.call(arguments)));
-  };
-
-  // Copy over function properties
-  for (var k in value) {
-    if (value.hasOwnProperty(k)) {
-      lambda[k] = value[k];
-    }
-  }
-  return lambda;
-};
 
 /**
   Refine allows for function-by-function refinements that
@@ -58,10 +33,34 @@ function refine(template, value, key) {
   @param {Function} target The target to apply this decorator to.
   @returns {Function} The reciever.
  */
-Espresso.refine = function (target) {
-  if (isCallable(target)) {
-    metaPath(target, ['decorators', 'refine'], refine);
-  }
+Espresso.refine = Espresso.Decorator.create({
 
-  return target;
-};
+  name: 'refine',
+
+  precondition: function (target) {
+    return isCallable(target);
+  },
+
+  process: function (template, value, key) {
+    var base = template[key] || K;
+    if (!isCallable(base)) {
+      return value;
+    }
+
+    /** @ignore */
+    var lambda = function () {
+      var that = this;
+      return value.apply(that, [function () {
+        return base.apply(that, arguments);
+      }].concat(slice.call(arguments)));
+    };
+
+    // Copy over function properties
+    for (var k in value) {
+      if (value.hasOwnProperty(k)) {
+        lambda[k] = value[k];
+      }
+    }
+    return lambda;
+  }
+});

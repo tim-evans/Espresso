@@ -1,5 +1,4 @@
-var metaPath = Espresso.metaPath,
-    meta = Espresso.meta,
+var meta = Espresso.meta,
     getPath = Espresso.getPath,
     tokenize = Espresso.tokensForPropertyPath,
     slice = Array.prototype.slice;
@@ -23,7 +22,7 @@ Espresso.observes = Espresso.Decorator.create({
   },
 
   init: function (target, value, key) {
-    var dependants = meta(target)["dependants:change"],
+    var dependants = meta(value)["dependants:change"],
         dependant, o, tokens;
 
     for (var i = 0, len = dependants.length; i < len; i++) {
@@ -52,7 +51,7 @@ Espresso.observes = Espresso.Decorator.create({
     trigger a notification to the function.
   @returns {Function} The reciever.
  */
-Espresso.observes = Espresso.Decorator.create({
+Espresso.observesBefore = Espresso.Decorator.create({
 
   name: 'observesBefore',
 
@@ -63,7 +62,7 @@ Espresso.observes = Espresso.Decorator.create({
   },
 
   init: function (target, value, key) {
-    var dependants = meta(target)["dependants:before"],
+    var dependants = meta(value)["dependants:before"],
         dependant, o, tokens;
 
     for (var i = 0, len = dependants.length; i < len; i++) {

@@ -38,11 +38,11 @@ test('will set a property defined using computed properties', function () {
   equals(called[1], 'value');
 });
 
-test('notifies subscribers to `key:before` right before the key changes (regular properties)', function () {
+test('notifies subscribers to `key` right before the key changes (regular properties)', function () {
   var didChange = false,
       o = {};
 
-  Espresso.subscribe(o, 'key:before', null, function () {
+  Espresso.addBeforeObserver(o, 'key', null, function () {
     equals(o.value, null);
     didChange = true;
   });
@@ -51,7 +51,7 @@ test('notifies subscribers to `key:before` right before the key changes (regular
   ok(didChange);
 });
 
-test('notifies subscribers to `key:before` right before the key changes (computed properties)', function () {
+test('notifies subscribers to `key` right before the key changes (computed properties)', function () {
   var didChange = false,
       o = mix({
         _v: null,
@@ -62,8 +62,9 @@ test('notifies subscribers to `key:before` right before the key changes (compute
       }).into({});
   Espresso.init(o);
 
-  Espresso.subscribe(o, 'key:before', null, function () {
+  Espresso.addBeforeObserver(o, 'key', null, function () {
     equals(Espresso.get(o, 'key'), null);
+    equals(o._v, null);
     didChange = true;
   });
 
@@ -71,11 +72,11 @@ test('notifies subscribers to `key:before` right before the key changes (compute
   ok(didChange);
 });
 
-test('notifies subscribers to `key:change` when the key changes (regular properties)', function () {
+test('notifies subscribers to `key` when the key changes (regular properties)', function () {
   var didChange = false,
       o = {};
 
-  Espresso.subscribe(o, 'key:change', null, function () {
+  Espresso.addObserver(o, 'key', null, function () {
     equals(o.key, 'value');
     didChange = true;
   });
@@ -84,7 +85,7 @@ test('notifies subscribers to `key:change` when the key changes (regular propert
   ok(didChange);
 });
 
-test('notifies subscribers to `key:change` when the key changes (computed properties)', function () {
+test('notifies subscribers to `key` when the key changes (computed properties)', function () {
   var didChange = false,
       o = mix({
         _v: null,
@@ -95,11 +96,50 @@ test('notifies subscribers to `key:change` when the key changes (computed proper
       }).into({});
   Espresso.init(o);
 
-  Espresso.subscribe(o, 'key:change', null, function () {
+  Espresso.addObserver(o, 'key', null, function () {
     equals(Espresso.get(o, 'key'), 'value');
     didChange = true;
   });
 
   set(o, 'key', 'value');
+  ok(didChange);
+});
+
+test('notifies computed properties when any dependant keys change', function () {
+  var didChange = false,
+      willChange = false,
+      beforeName = 'Bob Parr',
+      afterName = 'Helen Parr',
+      o = mix({
+        firstName: 'Bob',
+        lastName: 'Parr',
+        fullName: Espresso.property(function (k, v) {
+          return this.firstName + ' ' + this.lastName;
+        }, 'firstName', 'lastName')
+      }).into({});
+  Espresso.init(o);
+
+  Espresso.addBeforeObserver(o, 'fullName', null, function () {
+    ok(!didChange);
+    equals(Espresso.get(o, 'fullName'), beforeName);
+    willChange = true;
+  });
+
+  Espresso.addObserver(o, 'fullName', null, function () {
+    ok(willChange);
+    equals(Espresso.get(o, 'fullName'), afterName);
+    didChange = true;
+  });
+
+  set(o, 'firstName', 'Helen');
+  ok(willChange);
+  ok(didChange);
+
+  willChange = didChange = false;
+  beforeName = afterName;
+  afterName = 'Helen Mirren';
+
+  set(o, 'lastName', 'Mirren');
+  ok(willChange);
   ok(didChange);
 });

@@ -2,7 +2,7 @@ var meta = Espresso.meta,
     metaPath = Espresso.metaPath,
     subscribe = Espresso.subscribe,
     willChange = Espresso.propertyWillChange,
-    didChange = Espresso.propertyWillChange,
+    didChange = Espresso.propertyDidChange,
     tokenize = Espresso.tokensForPropertyPath,
     slice = Array.prototype.slice;
 
@@ -62,6 +62,12 @@ function mkSetter(key, desc) {
   }
 }
 
+function mkBeforeNotifier(target, key, value) {
+  return function () {
+    willChange(target, key);
+  };
+}
+
 function mkNotifier(target, key, value) {
   var cacheable = value.isCacheable,
       m = meta(target);
@@ -70,7 +76,6 @@ function mkNotifier(target, key, value) {
     return function () {
       var ret;
 
-      willChange(target, key);
       delete m.cache[key];
       ret = value.apply(target, arguments);
       m.cache[key] = ret;
@@ -79,9 +84,7 @@ function mkNotifier(target, key, value) {
     };
   } else {
     return function () {
-      willChange(target, key);
-      didChange(target, key, fun.call(this, key, value));
-      return ret;
+      didChange(target, key, value.apply(target, arguments));
     };
   }  
 }
@@ -189,6 +192,7 @@ Espresso.property = Espresso.Decorator.create({
         dependant = tokens[tokens.length - 1];
       }
 
+      Espresso.addBeforeObserver(o, dependant, target, mkBeforeNotifier(target, key, value));
       Espresso.addObserver(o, dependant, target, mkNotifier(target, key, value));
     }
     return target;

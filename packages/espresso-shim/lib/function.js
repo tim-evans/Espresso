@@ -1,7 +1,7 @@
 /*globals mix Espresso */
 var slice = Array.prototype.slice;
 
-mix(/** @lends Function.prototype */{
+mix(/** @scope Function.prototype */{
 
   /** @function
     @desc

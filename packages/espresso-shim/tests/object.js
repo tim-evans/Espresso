@@ -1,4 +1,4 @@
-module('Object.keys');
+module('Object/keys');
 
 test("return the keys on the object instance.", function () {
   var keys = Object.keys({ a: 'a', b: 'b' });

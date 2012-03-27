@@ -1,4 +1,4 @@
-module('Function.bind');
+module('Function/bind');
 
 test("`this` is bound for functions", function () {
   var that = "foo", lambda = function () { equals(that, this); };

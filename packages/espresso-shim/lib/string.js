@@ -37,20 +37,45 @@ mix(/** @scope String.prototype */{
    return s ? s[0] : '';
   }),
 
+  /** @function
+    @desc
+    @param {String} s The prefix to test against.
+    @returns {Boolean} `true` when the string starts with the given prefix.
+    @see http://wiki.ecmascript.org/doku.php?id=harmony:string_extras
+    @see https://jsperf.com/js-startswith/6
+   */
   startsWith: inferior(function (s) {
-    return this.indexOf(s) === 0;
+    return this.slice(0, s.length) === s;
   }),
 
+  /** @function
+    @desc
+    @param {String} s The prefix to test against.
+    @returns {Boolean} `true` when the string ends with the given prefix.
+    @see http://wiki.ecmascript.org/doku.php?id=harmony:string_extras
+   */
   endsWith: inferior(function (s) {
     var t = String(s),
         idx = this.lastIndexOf(t);
     return idx >= 0 && idx === this.length - t.length;
   }),
 
+
+  /** @function
+    @desc
+    @param {String} s The string to test whether it's a substring of the other.
+    @returns {Boolean} `true` when the string contains the other string.
+    @see http://wiki.ecmascript.org/doku.php?id=harmony:string_extras
+   */
   contains: inferior(function (s) {
     return this.indexOf(s) !== -1;
   }),
 
+  /** @function
+    @desc
+    @returns {String[]} The string as an Array of characters.
+    @see http://wiki.ecmascript.org/doku.php?id=harmony:string_extras
+   */
   toArray: inferior(function () {
     return this.split('');
   })

@@ -4,3 +4,5 @@ docs/
 bin/
 .bpm
 assets/
+dist/
+tmp/

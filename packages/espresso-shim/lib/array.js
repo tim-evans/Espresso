@@ -1,5 +1,6 @@
 /*globals mix Espresso */
 var inferior = Espresso.inferior,
+    isCallable = Espresso.isCallable,
     toString = Object.prototype.toString,
     T_ARRAY = '[object Array]';
 
@@ -7,8 +8,6 @@ var inferior = Espresso.inferior,
   @namespace
 
   Shim for the native Array object.
-
-  @extends Espresso.Enumerable
  */
 mix(/** @scope Array */{
 
@@ -25,7 +24,7 @@ mix(/** @scope Array */{
 
 }).into(Array);
 
-mix(Espresso.Enumerable, /** @scope Array.prototype */{
+mix(/** @scope Array.prototype */{
 
   /** @function
     @desc
@@ -35,17 +34,17 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
     so you will use the native `forEach` where it exists.
 
     @param {Function} lambda The callback to call for each element.
-    @param {Object} [self] The Object to use as this when executing the callback.
+    @param {Object} [scope] The Object to use as this when executing the callback.
     @returns {void}
    */
-  forEach: inferior(function (lambda, self) {
+  forEach: inferior(function (lambda, scope) {
     // 3. Let len be ToUint32(lenValue).
     var len = this.length,
     // 6. Let k be 0.
         k = 0;
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
-    if (!Espresso.isCallable(lambda)) {
+    if (!isCallable(lambda)) {
       throw new TypeError(lambda + " is not callable.");
     }
 
@@ -58,7 +57,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
         // ii. Call the [[Call]] internal method of lambda
         //     with T as the this value and argument list
         //     containing kValue, k, and O.
-        lambda.call(self, this[k], k, this);
+        lambda.call(scope, this[k], k, this);
       }
 
       // d. Increase k by 1.
@@ -93,6 +92,83 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
 
   /** @function
     @desc
+    Returns an array where each value on the array
+    is mutated by the lambda function.
+
+    @param {Function} lambda The lambda that transforms an element in the array.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [scope] The value of `this` inside the lambda.
+    @returns {Array} The collection of results from the map function.
+    @example
+      var cube = function (n) { return n * n * n };
+      alert([1, 2, 3, 4].map(cube));
+      // -> [1, 8, 27, 64]
+   */
+  map: inferior(function (lambda, scope) {
+    var arr = [],
+        i = 0, len = this.length;
+
+    // 4. If IsCallable(lambda) is false, throw a TypeError exception
+    if (!isCallable(lambda)) {
+      throw new TypeError(lambda + " is not callable.");
+    }
+
+    for (; i < len; i++) {
+      arr.push(lambda.call(scope, i, this[i], this));
+    }
+    return arr;
+  }),
+
+  /** @function
+    @desc
+    Reduce the content of down to a single value.
+
+    @param {Function} lambda The lambda that performs the reduction.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [seed] The seed value to provide for the first time.
+    @returns {Object} The reduced output.
+    @example
+      var multiply = function (a, b) { return a * b; };
+      var factorial = function (n) {
+        var arr = new Array(n);
+        for (var i = 1; i <= n; i++) arr[i] = i;
+        return arr.reduce(multiply);
+      }
+
+      alert("5! is " + factorial(5));
+      alert("120! is " + factorial(120));
+   */
+  reduce: inferior(function (lambda, seed) {
+    var shouldSeed = (arguments.length === 1),
+        i = 0, len = this.length;
+
+    // 4. If IsCallable(lambda) is false, throw a TypeError exception
+    if (!isCallable(lambda)) {
+      throw new TypeError(lambda + " is not callable.");
+    }
+
+    for (; i < len; i++) {
+      if (shouldSeed) {
+        seed = this[i];
+        shouldSeed = false;
+      } else {
+        seed = lambda(seed, this[i], i, this);
+      }
+    }
+
+    // 5. If len is 0 and seed is not present, throw a TypeError exception.
+    if (shouldSeed) {
+      throw new TypeError("There was nothing to reduce!");
+    }
+    return seed;
+  }),
+
+  /** @function
+    @desc
     Reduce the content of an array down to a single
     value (starting from the end and working backwards).
 
@@ -108,7 +184,7 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
         len = this.length, v;
 
     // 4. If IsCallable(lambda) is false, throw a TypeError exception
-    if (!Espresso.isCallable(lambda)) {
+    if (!isCallable(lambda)) {
       throw new TypeError(lamda + " is not callable.");
     }
 
@@ -127,6 +203,86 @@ mix(Espresso.Enumerable, /** @scope Array.prototype */{
       throw new TypeError("There was nothing to reduce!");
     }
     return seed;
+  }),
+
+  /** @function
+    @desc
+    Returns all elements on for which the input
+    function returns `true` for.
+
+    @param {Function} lambda The function to filter the Array.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [scope] The value of `this` inside the lambda.
+    @returns {Object[]} An array with the values for which `lambda` returns `true`
+   */
+  filter: inferior(function (lambda, scope) {
+    var i, len = this.length,
+        seive = [];
+
+    if (!isCallable(lambda)) {
+      throw new TypeError(lambda + " is not callable.");
+    }
+
+    for (i = 0; i < len; i++) {
+      if (lambda.call(scope, this[i], i, this)) {
+        seive.push(this[i]);
+      }
+    }
+    return seive;
+  }),
+
+  /** @function
+    @desc
+    Returns `true` if `lambda` returns `true` for every element
+    in the array, otherwise, it returns `false`.
+
+    @param {Function} lambda The lambda that transforms an element in the array.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [scope] The value of `this` inside the lambda.
+    @returns {Boolean} `true` if `lambda` returns `true` for every iteration.
+  */
+  every: inferior(function (lambda, scope) {
+    var i, len = this.length;
+    if (!isCallable(lambda)) {
+      throw new TypeError(lambda + " is not callable.");
+    }
+
+    for (i = 0; i < len; i++) {
+      if (!lambda.call(scope, this[i], i, this)) {
+        return false;
+      }
+    }
+    return true;
+  }),
+
+  /** @function
+    @desc
+    Returns `true` if `lambda` returns `true` for at least one
+    element in the array, otherwise, it returns `false`.
+
+    @param {Function} lambda The lambda that transforms an element in the array.
+      @param {Object} lambda.value The value of the enumerated item.
+      @param {Object} lambda.key The key of the enumerated item.
+      @param {Object} lambda.self The object being enumerated over.
+    @param {Object} [scope] The value of `this` inside the lambda.
+    @returns {Boolean} `true` if `lambda` returns `true` at least once.
+   */
+  some: inferior(function (lambda, scope) {
+    var i, len = this.length;
+    if (!isCallable(lambda)) {
+      throw new TypeError(lambda + " is not callable.");
+    }
+
+    for (i = 0; i < len; i++) {
+      if (lambda.call(scope, this[i], i, this)) {
+        return true;
+      }
+    }
+    return false;
   }),
 
   /** @function

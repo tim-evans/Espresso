@@ -33,8 +33,8 @@ mix(/** @scope String.prototype */{
     @see <a href="http://jsperf.com/mega-trim-test">Mega Trim Test</a>
    */
   trim: inferior(function () {
-   var s = this.match(/\S+(?:\s+\S+)*/);
-   return s ? s[0] : '';
+    var s = this.match(/\S+(?:\s+\S+)*/);
+    return s ? s[0] : '';
   }),
 
   /** @function

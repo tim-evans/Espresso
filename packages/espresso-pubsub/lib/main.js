@@ -61,10 +61,36 @@ function publish(object, event) {
 
 mix(/** @scope Espresso */{
 
+  /**
+    Subscribe to an events published to any object.
+
+    To do any preprocessing of events, provide an `xform`
+    which will be passed the `target`, `method`, and an
+    arguments array. The xform can then decide whether the
+    event should be delivered or rearrange the parameters
+    to better suit the subscriber.
+
+    @param {Object} object
+    @param {String} event The event to subscribe to.
+    @param {Object} target The scope that the method should be called with.
+    @param {Function} method The method that should be called on publishes.
+    @param {Function} [xform]
+   */
   subscribe: subscribe,
 
+  /**
+    @param {Object} object
+    @param {String} event
+    @param {Object} target
+    @param {Function} method
+   */
   unsubscribe: unsubscribe,
 
+
+  /**
+    @param {Object} object
+    @param {String} event
+   */
   publish: publish
 
 }).into(Espresso);

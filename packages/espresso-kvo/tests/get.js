@@ -24,3 +24,21 @@ test('returns the result of a property defined using the computed properties', f
 
   equals(get(o, 'key'), 'value');
 });
+
+test('cacheable properties are only invoked once', function () {
+  var cInvoke = 0,
+      o = mix({
+    key: Espresso.property(function () {
+      cInvoke++;
+      return 'value';
+    }).cacheable()
+  }).into({});
+  Espresso.init(o);
+
+  equals(cInvoke, 0);
+  equals(get(o, 'key'), 'value');
+  equals(cInvoke, 1);
+
+  equals(get(o, 'key'), 'value');
+  equals(cInvoke, 1);
+});

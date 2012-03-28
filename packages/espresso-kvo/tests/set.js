@@ -143,3 +143,21 @@ test('notifies computed properties when any dependant keys change', function () 
   ok(willChange);
   ok(didChange);
 });
+
+test('idempotent properties are only invoked once when the same value is used to set it', function () {
+  var cInvoke = 0,
+      o = mix({
+    key: Espresso.property(function (k, v) {
+      cInvoke++;
+      return 'value';
+    }).idempotent()
+  }).into({});
+  Espresso.init(o);
+
+  equals(cInvoke, 0);
+  equals(set(o, 'key', 'value'), o);
+  equals(cInvoke, 1);
+
+  equals(set(o, 'key', 'value'), o);
+  equals(cInvoke, 1);
+});

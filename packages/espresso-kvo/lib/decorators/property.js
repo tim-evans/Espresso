@@ -39,7 +39,7 @@ function mkSetter(key, desc) {
           ret, cache = m.lastSetCache;
 
       // Fast path for idempotent properties
-      if (key in cache && cache[key] === value && cacheable) {
+      if (key in cache && cache[key] === value && idempotent) {
         return cache[key];
       }
 

@@ -106,7 +106,7 @@ function exit(fsm) {
      // door.currentStateName == null
 
  */
-Espresso.FiniteStateMachine = Espresso.FSM = {
+Espresso.FSM = {
 
   /**
     The name of the state machine for debugging purposes.

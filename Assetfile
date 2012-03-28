@@ -12,7 +12,7 @@ class EspressoProductionFilter < Rake::Pipeline::Filter
 end
 
 distros = {
-  :core => %w(espresso-crema)
+  :crema => %w(espresso-crema)
 }
 
 output "dist"
@@ -52,7 +52,7 @@ input "packages" do
 end
 
 distros.each do |name, modules|
-  name = "espresso"
+  name = name == :full ? "espresso" : "espresso-#{name}"
 
   input "dist/modules" do
     module_paths = modules.map{ |m| "#{m}.js" }

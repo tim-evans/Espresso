@@ -1,7 +1,7 @@
 {
   "name": "espresso-kvo",
-  "description" : "Property accessors",
-  "summary": "Property accessors",
+  "description" : "Key Value Coding and Observing support",
+  "summary": "KVC and KVO support a lá Cocoa and SproutCore (http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html)",
   "version": "0.5.8",
 
   "directories": {

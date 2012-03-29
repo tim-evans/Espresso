@@ -5,7 +5,7 @@ var subscribe = Espresso.subscribe,
     publish = Espresso.publish;
 
 test('unsubscribing from a non-existing event will do nothing', function () {
-  unsubscribe({}, 'espresso:event', null, Espresso.K);
+  unsubscribe({}, 'espresso:event', Espresso.K);
   ok(true, 'no error should have been thrown');  
 });
 
@@ -14,11 +14,11 @@ test('unsubscribing from the handler will stop it from being notified', function
       o = {},
       fun = function () { called++; };
 
-  subscribe(o, 'espresso:event', null, fun);
+  subscribe(o, 'espresso:event', fun);
   publish(o, 'espresso:event');
   equals(called, 1, 'the callback should be called once');
 
-  unsubscribe(o, 'espresso:event', null, fun);
+  unsubscribe(o, 'espresso:event', fun);
   publish(o, 'espresso:event');
   equals(called, 1, 'the callback should be called once');
 });
@@ -28,25 +28,25 @@ test('unsubscribing from the handler / target pair will stop it from being notif
       o = {},
       fun = function () { called += this; };
 
-  subscribe(o, 'espresso:event', 'a', fun);
-  subscribe(o, 'espresso:event', 'b', fun);
-  subscribe(o, 'espresso:event', 'c', fun);
+  subscribe(o, 'espresso:event', fun, 'a');
+  subscribe(o, 'espresso:event', fun, 'b');
+  subscribe(o, 'espresso:event', fun, 'c');
 
   publish(o, 'espresso:event');
   equals(called, 'abc', 'the callback should be called by all subscribers');
 
   called = '';
-  unsubscribe(o, 'espresso:event', 'c', fun);
+  unsubscribe(o, 'espresso:event', fun, 'c');
   publish(o, 'espresso:event');
   equals(called, 'ab');
 
   called = '';
-  unsubscribe(o, 'espresso:event', 'b', fun);
+  unsubscribe(o, 'espresso:event', fun, 'b');
   publish(o, 'espresso:event');
   equals(called, 'a');
 
   called = '';
-  unsubscribe(o, 'espresso:event', 'a', fun);
+  unsubscribe(o, 'espresso:event', fun, 'a');
   publish(o, 'espresso:event');
   equals(called, '');
 });

@@ -33,8 +33,8 @@ function didChangeXForm(target, method, params) {
 }
 
 /** @ignore */
-function addObserver(object, key, target, fn) {
-  return subscribe(object, key + CHANGE, target, fn, didChangeXForm);
+function addObserver(object, key, fn, target) {
+  return subscribe(object, key + CHANGE, fn, target, didChangeXForm);
 }
 
 /** @ignore */
@@ -46,18 +46,18 @@ function willChangeXForm(target, method, params) {
 }
 
 /** @ignore */
-function addBeforeObserver(object, key, target, fn) {
-  return subscribe(object, key + WILL_CHANGE, target, fn, didChangeXForm);
+function addBeforeObserver(object, key, fn, target) {
+  return subscribe(object, key + WILL_CHANGE, fn, target, didChangeXForm);
 }
 
 /** @ignore */
-function removeObserver(object, key, fn) {
-  return unsubscribe(object, key + CHANGE, fn);
+function removeObserver(object, key, fn, target) {
+  return unsubscribe(object, key + CHANGE, fn, target);
 }
 
 /** @ignore */
-function removeBeforeObserver(object, key, fn) {
-  return unsubscribe(object, key + WILL_CHANGE, fn);
+function removeBeforeObserver(object, key, fn, target) {
+  return unsubscribe(object, key + WILL_CHANGE, fn, target);
 }
 
 mix(/** @scope Espresso */{

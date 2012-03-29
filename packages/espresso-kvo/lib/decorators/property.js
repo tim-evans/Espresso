@@ -192,8 +192,8 @@ Espresso.property = Espresso.Decorator.create({
         dependant = tokens[tokens.length - 1];
       }
 
-      Espresso.addBeforeObserver(o, dependant, target, mkBeforeNotifier(target, key, value));
-      Espresso.addObserver(o, dependant, target, mkNotifier(target, key, value));
+      Espresso.addBeforeObserver(o, dependant, mkBeforeNotifier(target, key, value), target);
+      Espresso.addObserver(o, dependant, mkNotifier(target, key, value), target);
     }
     return target;
   }

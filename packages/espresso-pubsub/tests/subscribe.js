@@ -5,17 +5,17 @@ var subscribe = Espresso.subscribe,
 
 test('`subscribe` throws an error when the host object is null or undefined', function () {
   raises(function () {
-    subscribe(undefined, 'espresso:error', null, null);
+    subscribe(undefined, 'espresso:error');
   }, TypeError, 'should throw an error for `undefined`');
 
   raises(function () {
-    subscribe(null, 'espresso:error', null, null);
+    subscribe(null, 'espresso:error');
   }, TypeError, 'should throw an error for `null`');
 });
 
 test("`subscribe` throws an error when the method isn't callable", function () {
   raises(function () {
-    subscribe({}, 'espresso:error', null, null);
+    subscribe({}, 'espresso:error');
   }, TypeError);
 });
 
@@ -23,7 +23,7 @@ test('subscribing to an event and publishing the event name on the object will n
   var called = false,
       o = {},
       fun = function () { called = true; };
-  subscribe(o, 'espresso:event', null, fun);
+  subscribe(o, 'espresso:event', fun);
   ok(!called, 'the callback should not have been called yet');
 
   publish(o, 'espresso:event');
@@ -34,7 +34,7 @@ test('callback functions will be passed all arguments passed to publish', functi
   var called = null,
       o = {},
       fun = function () { called = arguments; };
-  subscribe(o, 'espresso:event', null, fun);
+  subscribe(o, 'espresso:event', fun);
   ok(!called, 'the callback should not have been called yet');
 
   publish(o, 'espresso:event', 'hello', 'world', Espresso);
@@ -51,8 +51,8 @@ test('subscribing to the same event multiple times will not result in extra subs
   var called = 0,
       o = {},
       fun = function () { called++; };
-  subscribe(o, 'espresso:event', null, fun);
-  subscribe(o, 'espresso:event', null, fun);
+  subscribe(o, 'espresso:event', fun);
+  subscribe(o, 'espresso:event', fun);
 
   publish(o, 'espresso:event');
   equals(called, 1, 'the callback should not have been called only once');
@@ -62,8 +62,8 @@ test('subscribing to the same event with different targets and the same callback
   var called = {},
       o = {},
       fun = function () { called[this] = true; };
-  subscribe(o, 'espresso:event', 'target a', fun);
-  subscribe(o, 'espresso:event', 'target b', fun);
+  subscribe(o, 'espresso:event', fun, 'target a');
+  subscribe(o, 'espresso:event', fun, 'target b');
   equals(Object.keys(called).length, 0, 'the callback should not have been called yet');
 
   publish(o, 'espresso:event');
@@ -78,8 +78,8 @@ test('subscribing to different events will trigger only the subscribers for that
                  'property:change': 0 },
       o = {},
       fun = function (host, ev) { this[ev]++; };
-  subscribe(o, 'property:before', called, fun);
-  subscribe(o, 'property:change', called, fun);
+  subscribe(o, 'property:before', fun, called);
+  subscribe(o, 'property:change', fun, called);
 
   publish(o, 'property:before');
 
@@ -101,10 +101,10 @@ test('multiple subscriptions to the same event will all be triggered (in order o
       f4 = function () { called += 'd'; };
 
 
-  subscribe(o, 'espresso:event', o, f1);
-  subscribe(o, 'espresso:event', o, f2);
-  subscribe(o, 'espresso:event', o, f3);
-  subscribe(o, 'espresso:event', o, f4);
+  subscribe(o, 'espresso:event', f1, o);
+  subscribe(o, 'espresso:event', f2, o);
+  subscribe(o, 'espresso:event', f3, o);
+  subscribe(o, 'espresso:event', f4, o);
 
   publish(o, 'espresso:event');
 

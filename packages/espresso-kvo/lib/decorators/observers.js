@@ -37,7 +37,7 @@ Espresso.observes = Espresso.Decorator.create({
       }
 
       // Subscribe to the events.
-      Espresso.addObserver(o, dependant, target, value);
+      Espresso.addObserver(o, dependant, value, target);
     }
     return target;
   }
@@ -77,7 +77,7 @@ Espresso.observesBefore = Espresso.Decorator.create({
       }
 
       // Subscribe to the events.
-      Espresso.addBeforeObserver(o, dependant, target, value);
+      Espresso.addBeforeObserver(o, dependant, value, target);
     }
     return target;
   }

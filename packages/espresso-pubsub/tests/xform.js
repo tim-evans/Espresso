@@ -7,9 +7,9 @@ test('subscribing with an xform will deliver the event to the xform', function (
   var o = {},
       methodCalled = 0,
       xformCalled = 0;
-  subscribe(o, 'bang!', null, function () {
+  subscribe(o, 'bang!', function () {
     methodCalled++;
-  }, function () {
+  }, null, function () {
     xformCalled++;
   });
 
@@ -25,7 +25,7 @@ test('subscribing with an xform will deliver the event to the xform', function (
 test('xform arguments', function () {
   var o = {},
       wasCalled = false;
-  subscribe(o, 'bang!', 'target', Espresso.K, function (target, method, args) {
+  subscribe(o, 'bang!', Espresso.K, 'target', function (target, method, args) {
     equals(target, 'target', 'the target should match the subscribe target');
     equals(method, Espresso.K, 'the method should match the subscribe target');
     equals(args.length, 2, 'there should be 2 arguments');

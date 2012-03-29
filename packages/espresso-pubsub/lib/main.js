@@ -6,7 +6,7 @@ var isCallable = Espresso.isCallable,
     slice = Array.prototype.slice;
 
 /** @ignore */
-function subscribe(object, event, target, method, xform) {
+function subscribe(object, event, method, target, xform) {
   if (!isCallable(method)) {
     throw new TypeError(method + ' is not callable.');
   }
@@ -19,7 +19,7 @@ function subscribe(object, event, target, method, xform) {
 }
 
 /** @ignore */
-function unsubscribe(object, event, target, method) {
+function unsubscribe(object, event, method, target) {
   var m = metaPath(object, ['subscriptions', event, guidFor(target)]);
 
   if (m) {
@@ -72,8 +72,8 @@ mix(/** @scope Espresso */{
 
     @param {Object} object
     @param {String} event The event to subscribe to.
-    @param {Object} target The scope that the method should be called with.
     @param {Function} method The method that should be called on publishes.
+    @param {Object} [target] The scope that the method should be called with.
     @param {Function} [xform]
    */
   subscribe: subscribe,
@@ -81,8 +81,8 @@ mix(/** @scope Espresso */{
   /**
     @param {Object} object
     @param {String} event
-    @param {Object} target
     @param {Function} method
+    @param {Object} target
    */
   unsubscribe: unsubscribe,
 

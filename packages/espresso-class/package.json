@@ -23,7 +23,7 @@
       "modes": "*"
     },
 
-    "espresso-fsm/bpm_tests.js": {
+    "espresso-class/bpm_tests.js": {
       "files": ["tests"],
       "modes": ["debug"]
     }

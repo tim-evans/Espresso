@@ -1,0 +1,31 @@
+{
+  "name": "espresso-fsm",
+  "description" : "A simple Finite State Machine mixin",
+  "summary": "Finite State Machine mixin for dealing with a simple FSM in a modular way",
+  "version": "0.5.8",
+
+  "directories": {
+    "lib": "lib"
+  },
+
+  "dependencies": {
+    "spade": "~> 1.0.0",
+    "espresso-crema": "0.5.8"
+  },
+
+  "dependencies:development": {
+    "spade-qunit": "~> 1.0.0"
+  },
+
+  "bpm:build": {
+    "bpm_libs.js": {
+      "files": ["lib"],
+      "modes": "*"
+    },
+
+    "espresso-fsm/bpm_tests.js": {
+      "files": ["tests"],
+      "modes": ["debug"]
+    }
+  }
+}

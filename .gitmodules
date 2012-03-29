@@ -1,3 +1,0 @@
-[submodule "shoulda.js"]
-	path = frameworks/shoulda.js
-	url = git://github.com/philc/shoulda.js.git

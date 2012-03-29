@@ -1,4 +1,3 @@
-NOTE: This repo is in flux at the moment. When I find some spare time to clean up a reworking of this framework, I'll push up those changes. If you're curious, the intent is to make espresso smaller by breaking it up into packages (see the first package out, Formatter.js).
 
      ( ( (
       ) ) )

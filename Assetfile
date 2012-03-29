@@ -11,8 +11,20 @@ class EspressoProductionFilter < Rake::Pipeline::Filter
   end
 end
 
+class EspressoLicenseFilter < Rake::Pipeline::Filter
+  def generate_output(inputs, output)
+    license = File.read("generators/license.js")
+    inputs.each do |input|
+      file = File.read(input.fullpath)
+      output.write "#{license}\n#{file}"
+    end
+  end
+end
+
+
 distros = {
-  :crema => %w(espresso-crema)
+  :crema => %w(espresso-crema),
+  :full  => %w(espresso-crema espresso-pubsub espresso-promise espresso-shim espresso-kvo espresso-fsm)
 }
 
 output "dist"
@@ -52,7 +64,7 @@ input "packages" do
 end
 
 distros.each do |name, modules|
-  name = name == :full ? "espresso" : "espresso-#{name}"
+  name = "espresso" if name == :full
 
   input "dist/modules" do
     module_paths = modules.map{ |m| "#{m}.js" }
@@ -68,6 +80,7 @@ distros.each do |name, modules|
     # minify
     match "#{name}.min.js" do
       uglify{ "#{name}.min.js" }
+      filter EspressoLicenseFilter
     end
   end
 end

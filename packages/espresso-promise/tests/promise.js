@@ -66,3 +66,34 @@ test("multiple callbacks should be allowed", function () {
   equals(0, fulfilled, "0 success callbacks should have been called");
   equals(2, failed, "2 failure callbacks should have been called");
 });
+
+test("the callbacks should be called with the direct arguments passed into `fulfill` and `smash`", function () {
+  expect(13);
+
+  var fulfilled = 0,
+      failed = 0;
+  promise.then(function (a, b, c) {
+    equals('a', a);
+    equals('b', b);
+    equals('c', c);
+  }, function (d, e, f) {
+    equals('d', d);
+    equals('e', e);
+    equals('f', f);
+  }).then(function (a, b, c) {
+    equals('a', a);
+    equals('b', b);
+    equals('c', c);
+  }, function (d, e, f) {
+    equals('d', d);
+    equals('e', e);
+    equals('f', f);
+  });
+
+  promise.fulfill('a', 'b', 'c');
+
+  // Reset the promise to test failures too.
+  promise.reset();
+
+  promise.smash('d', 'e', 'f');
+});

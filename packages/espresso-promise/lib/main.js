@@ -25,7 +25,7 @@ var notify = function (promise, args) {
   }
 
   for (var i = 0, len = callbacks.length; i < len; i++) {
-    callbacks[i].apply(m.scope, arguments);
+    callbacks[i].apply(m.scope, args);
   }
   m.completed = true;
 };

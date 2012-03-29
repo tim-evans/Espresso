@@ -111,7 +111,9 @@ function nextDelimiterFor(path, idx) {
 var fullKey, idx,
     /** @ignore */
     fmt = function (idx, expected, actual) {
-      return 'Malformed property path:\n' + fullKey + '\n' + '-'.repeat(idx) + '^\nExpected ' + expected + " as the next token, but got '" + actual + "'.";
+      return 'Malformed property path:\n' + fullKey + '\n' +
+             new Array(idx + 1).join('-') + '^\n' +
+             'Expected ' + expected + " as the next token, but got '" + actual + "'.";
     };
 
 var VARIABLE = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;

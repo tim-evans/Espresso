@@ -1,0 +1,31 @@
+{
+  "name": "espresso-pubsub",
+  "description" : "The core of Espresso.",
+  "summary": "The core of Espresso",
+  "version": "0.5.8",
+
+  "directories": {
+    "lib": "lib"
+  },
+
+  "dependencies": {
+    "spade": "~> 1.0.0",
+    "espresso-crema": "0.5.8"
+  },
+
+  "dependencies:development": {
+    "spade-qunit": "~> 1.0.0"
+  },
+
+  "bpm:build": {
+    "bpm_libs.js": {
+      "files": ["lib"],
+      "modes": "*"
+    },
+
+    "espresso-pubsub/bpm_tests.js": {
+      "files": ["tests"],
+      "modes": ["debug"]
+    }
+  }
+}

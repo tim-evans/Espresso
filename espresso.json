@@ -1,0 +1,29 @@
+{
+  "name": "Espresso",
+  "bpm": "1.0.0",
+  "dependencies": {
+    "spade": "~> 1.0.0",
+    "espresso": "0.5.8",
+    "espresso-fsm": "0.5.8",
+    "espresso-class": "0.5.8",
+    "espresso-promise": "0.5.8"
+  },
+  "dependencies:development": {
+    "spade-qunit": "~> 1.0.0"
+  },
+  "bpm:build": {
+    "espresso.js": {
+      "minifier": "uglify-js",
+      "include": [
+        "spade",
+        "espresso-crema",
+        "espresso-pubsub",
+        "espresso-kvo",
+        "espresso-shim",
+        "espresso-fsm",
+        "espresso-class",
+        "espresso-promise"
+      ]
+    }
+  }
+}

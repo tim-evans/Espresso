@@ -1,0 +1,33 @@
+{
+  "name": "espresso-kvo",
+  "description" : "Key Value Coding and Observing support",
+  "summary": "KVC and KVO support a lá Cocoa and SproutCore (http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/KeyValueObserving/KeyValueObserving.html)",
+  "version": "0.5.8",
+
+  "directories": {
+    "lib": "lib"
+  },
+
+  "dependencies": {
+    "spade": "~> 1.0.0",
+    "espresso-crema": "0.5.8",
+    "espresso-pubsub": "0.5.8",
+    "espresso-shim": "0.5.8"
+  },
+
+  "dependencies:development": {
+    "spade-qunit": "~> 1.0.0"
+  },
+
+  "bpm:build": {
+    "bpm_libs.js": {
+      "files": ["lib"],
+      "modes": "*"
+    },
+
+    "espresso-kvo/bpm_tests.js": {
+      "files": ["tests"],
+      "modes": ["debug"]
+    }
+  }
+}

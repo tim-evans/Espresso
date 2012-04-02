@@ -24,6 +24,7 @@ end
 
 distros = {
   :crema => %w(espresso-crema),
+  :shim  => %w(espresso-crema espresso-shim),
   :full  => %w(espresso-crema espresso-pubsub espresso-promise espresso-shim espresso-kvo espresso-fsm)
 }
 

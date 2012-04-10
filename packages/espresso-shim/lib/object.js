@@ -1,4 +1,5 @@
 /*globals mix */
+var inferior = Espresso.inferior;
 
 mix(/** @scope Object */{
 
@@ -10,7 +11,7 @@ mix(/** @scope Object */{
     @returns {Array} A list of all keys on the object passed in.
     @throws {TypeError} When `O` is not an object.
    */
-  keys: Espresso.inferior(function (O) {
+  keys: inferior(function (O) {
     var array = [], key;
 
     // 1. If the Type(O) is not Object, throw a TypeError exception.
@@ -27,6 +28,24 @@ mix(/** @scope Object */{
 
     // 6. Return array.
     return array;
+  }),
+
+  /** @function
+    @desc
+    Returns whether two values are not observably distinguishable.
+
+    @param {Object} x
+    @param {Object} y
+    @returns {Boolean} Whether x and y are equivalent.
+   */
+  is: inferior(function (x, y) {
+    if (x === y) {
+      // 0 === -0, but they are not identical
+      return x !== 0 || 1 / x === 1 / y;
+    }
+
+    // NaN !== NaN, but they are identical.
+    return x !== x && y !== y;
   })
 
 }).into(Object);

@@ -36,3 +36,33 @@ test("throw an error if the argument isn't an object", function () {
     Object.keys('hello');
   }, TypeError);
 });
+
+
+module('Object/is');
+
+test('NaN should be egal to NaN', function () {
+  ok(Object.is(NaN, NaN));
+});
+
+test("0 shouldn't be egal to -0", function () {
+  ok(!Object.is(+0, -0));
+});
+
+test("normal circumstances should work as expected", function () {
+  var a = [],
+      o = {};
+
+  ok(Object.is(0, 0));
+  ok(Object.is('foo', 'foo'));
+  ok(Object.is(o, o));
+  ok(Object.is(a, a));
+  ok(Object.is(Object.is,
+               Object.is));
+
+  ok(!Object.is(1, 2));
+  ok(!Object.is('foo', 'bar'));
+  ok(!Object.is({}, {}));
+  ok(!Object.is([], []));
+  ok(!Object.is(function () {},
+                function () {}));
+});

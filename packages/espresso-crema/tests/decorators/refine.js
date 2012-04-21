@@ -6,12 +6,12 @@ test('provide `super` functionality via `refine`', function () {
       return "No, it's Superman!";
     }
   }, {
-    greet: Espresso.refine(function ($super) {
-      return "It's a plane!\n" + $super();
+    greet: Espresso.refine(function (original) {
+      return "It's a plane!\n" + original();
     })
   }, {
-    greet: Espresso.refine(function ($super) {
-      return "It's a bird!\n" + $super();
+    greet: Espresso.refine(function (original) {
+      return "It's a bird!\n" + original();
     })
   }).into({});
 

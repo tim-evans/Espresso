@@ -19,7 +19,7 @@ Espresso.Class = mix({
       }
 
       Class.prototype = prototype;
-      Class.constructor = Class;
+      Class.prototype.constructor = Class;
       Class.extend = arguments.callee;
       return Class;
     };

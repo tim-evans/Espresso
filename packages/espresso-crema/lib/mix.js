@@ -1,8 +1,12 @@
 require('espresso-crema/core');
 
 var metaPath = Espresso.metaPath,
-    nonEnumerables = ['hasOwnProperty', 'valueOf', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', 'toString'],
-    neLen = nonEnumerables.length;
+    nonEnumerables = ['hasOwnProperty',
+                      'valueOf',
+                      'isPrototypeOf',
+                      'propertyIsEnumerable',
+                      'toLocaleString',
+                      'toString'];
 
 /** @function
   @desc
@@ -64,7 +68,7 @@ var metaPath = Espresso.metaPath,
  */
 mix = function () {
   var mixins = arguments,
-      i = 0, len = mixins.length,
+      length = mixins.length,
       e, nonEnumerable;
 
   return {
@@ -75,7 +79,7 @@ mix = function () {
         throw new TypeError('Cannot mix into null or undefined values.');
       }
 
-      for (; i < len; i += 1) {
+      for (var i = 0; i < length; i += 1) {
         mixin = mixins[i];
         for (key in mixin) {
           value = mixin[key];
@@ -94,7 +98,7 @@ mix = function () {
 
         // Take care of IE ignoring non-enumerable properties
         if (mixin) {
-          for (e = 0; e < neLen; e++) {
+          for (e = 0; e < nonEmumerables.length; e++) {
             nonEnumerable = nonEnumerables[e];
             if (mixin[nonEnumerable] !== Object.prototype[nonEnumerable]) {
               target[nonEnumerable] = mixin[nonEnumerable];

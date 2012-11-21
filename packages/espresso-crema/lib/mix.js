@@ -98,7 +98,7 @@ mix = function () {
 
         // Take care of IE ignoring non-enumerable properties
         if (mixin) {
-          for (e = 0; e < nonEmumerables.length; e++) {
+          for (e = 0; e < nonEnumerables.length; e++) {
             nonEnumerable = nonEnumerables[e];
             if (mixin[nonEnumerable] !== Object.prototype[nonEnumerable]) {
               target[nonEnumerable] = mixin[nonEnumerable];

@@ -1,3 +1,9 @@
+/**
+  Espresso FSM
+
+  @module espresso
+  @submodule espresso-fsm
+ */
 require('espresso-crema');
 
 var slice = Array.prototype.slice,
@@ -42,7 +48,8 @@ function enter(fsm, stateName) {
     fsm.invokeForState('enter');
     applyStateProperties(fsm);
   } else {
-    throw new Error("<" + Espresso.get(fsm, 'name') + ":" + guidFor(fsm) + "> Cannot call `enter` on '" + stateName + "' because no corresponding state exists.");
+    throw new Error("<" + Espresso.get(fsm, 'name') + ":" + guidFor(fsm) + "> " +
+                    "Cannot call `enter` on '" + stateName + "' because no corresponding state exists.");
   }
 }
 
@@ -51,65 +58,73 @@ function exit(fsm) {
   if (state != null) {
     fsm.invokeForState('exit');
   } else {
-    throw new Error("<" + Espresso.get(fsm, 'name') + ":" + guidFor(fsm) + "> Cannot call `exit` after the FSM has been destroyed.");
+    throw new Error("<" + Espresso.get(fsm, 'name') + ":" + guidFor(fsm) + "> " +
+                    "Cannot call `exit` after the FSM has been destroyed.");
   }
 }
 
-/** @class
+/**
   A very small stand-alone mixin for hand-managed finite
   state machines that have minimal bloat.
 
+  This mixin provides a special property on each state
+  called `timeout` which will start a timer that will call
+  the `didTimeout` method on the state.
+
   For example, a door:
 
-     function Door () {
-       Espresso.init(this);
-     };
+      function Door () {
+        Espresso.init(this);
+      };
 
-     Door.states = {
-       opened: {
-         isOpened: true,
-         close: function (door) {
-           door.gotoState('closed');
-         }
-       },
+      Door.states = {
+        opened: {
+          isOpened: true,
+          close: function (door) {
+            door.gotoState('closed');
+          }
+        },
 
-       closed: {
-         isOpened: false,
-         open: function (door) {
-           door.gotoState('opened');
-         }
-       }
-     };
+        closed: {
+          isOpened: false,
+          open: function (door) {
+            door.gotoState('opened');
+          }
+        }
+      };
 
-     mix(Espresso.FSM, {
-       name: 'Door',
-       currentStateName: 'opened',
+      mix(Espresso.FSM, {
+        name: 'Door',
+        currentStateName: 'opened',
 
-       states: Door.states,
-       stateProperties: ['isOpened'],
-       stateActions: ['open', 'close'],
-     }).into(Door.prototype);
+        states: Door.states,
+        stateProperties: ['isOpened'],
+        stateActions: ['open', 'close']
+      }).into(Door.prototype);
 
-     door = new Door();
-     // door.currentStateName == 'opened'
+      door = new Door();
+      // door.currentStateName == 'opened'
 
-     door.open();
-     // door.currentStateName == 'opened'
+      door.open();
+      // door.currentStateName == 'opened'
 
-     door.close();
-     // door.currentStateName == 'closed'
+      door.close();
+      // door.currentStateName == 'closed'
 
-     door.open();
-     // door.currentStateName == 'opened'
+      door.open();
+      // door.currentStateName == 'opened'
 
-     door.destroyStates();
-     // door.currentStateName == null
+      door.destroyStates();
+      // door.currentStateName == null
 
+   @class FSM
+   @namespace Espresso
  */
 Espresso.FSM = {
 
   /**
     The name of the state machine for debugging purposes.
+    @property name
     @type String
     @default 'FSM'
    */
@@ -118,6 +133,7 @@ Espresso.FSM = {
   /**
     Whether tracing should be enabled.
     This will show debugging statements when set to `true`.
+    @property trace
     @type Boolean
     @default true
    */
@@ -127,6 +143,7 @@ Espresso.FSM = {
     A list of properties that should be set upon entering
     a new state. These properties are retrieved on the
     state that was entered and set on the parent state machine.
+    @property stateProperties
     @type String[]
     @default null
    */
@@ -137,6 +154,7 @@ Espresso.FSM = {
     These actions will be defined as functions on the state
     machine that invoke the action on the state, passing along
     all arguments.
+    @property stateActions
     @type String[]
     @default null
    */
@@ -146,6 +164,7 @@ Espresso.FSM = {
     This gets called right before the first state is entered.
     Do any setup / compute what the first state that should
     be entered here.
+    @method initStates
    */
   initStates: function () {},
 
@@ -153,6 +172,7 @@ Espresso.FSM = {
     Exits the currently entered state, cleaning up any
     potential observers. Also sets the `currentState` and
     `currentStateName` to `null`.
+    @method destroyStates
    */
   destroyStates: function () {
     var currentState = Espresso.get(this, 'currentStateName');
@@ -174,6 +194,8 @@ Espresso.FSM = {
     The currently active state.
     Set this value on initialization to set the inital state to
     enter the FSM.
+
+    @property currentStateName
     @type String
     @default null
    */
@@ -181,6 +203,8 @@ Espresso.FSM = {
 
   /**
     The currently active state.
+
+    @property currentState
     @type Object
     @default null
    */
@@ -198,6 +222,7 @@ Espresso.FSM = {
     This will exit the currently entered state, then enter
     the targeted state.
 
+    @method gotoState
     @param {String} state The state to enter.
    */
   gotoState: function (state) {
@@ -212,9 +237,10 @@ Espresso.FSM = {
   /**
     Invokes a method on the `currentState` with the given arguments.
 
+    @method invokeForState
     @param {String} method The method to invoke.
     @param {Array} args The arguments to call the method with.
-    @returns {Object} Whatever the method invoked returns.
+    @return {Object} Whatever the method invoked returns.
    */
   invokeForState: function (method, args) {
     args = slice.call(args || []);

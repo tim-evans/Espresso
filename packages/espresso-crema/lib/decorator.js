@@ -1,3 +1,7 @@
+/**
+  @module espresso
+  @submodule espresso-crema
+ */
 require('espresso-crema/core');
 
 var metaPath = Espresso.metaPath;
@@ -6,9 +10,11 @@ var metaPath = Espresso.metaPath;
   Tests to see whether the decorator with the given
   name has been applied to the target.
 
+  @method hasDecorator
+  @for Espresso
   @param {Object} target The target to test.
   @param {String} name The name of the decorator to test
-  @returns {Boolean} Whether the decorator with the given
+  @return {Boolean} Whether the decorator with the given
     name has been applied to the target.
  */
 Espresso.hasDecorator = function (target, name) {
@@ -16,7 +22,7 @@ Espresso.hasDecorator = function (target, name) {
          metaPath(target, ['init', name]);  
 };
 
-/** @namespace
+/**
   The decorator specification is as follows:
 
   - `name`        : the unique name of the decorator
@@ -46,6 +52,9 @@ Espresso.hasDecorator = function (target, name) {
                     will get passed the same arguments as
                     `process`, but will *not* alter the output
                     of the value. It is intended for setup tasks.
+
+  @class Decorator
+  @namespace Espresso
  */
 Espresso.Decorator = {
 
@@ -63,8 +72,10 @@ Espresso.Decorator = {
 
   /**
     Creates and registers a new decorator according to a specification.
+
+    @method create
     @param {Object} spec The decorator specification.
-    @returns {Function} A function that will properly decorate the first
+    @return {Function} A function that will properly decorate the first
       parameter passed into it.
    */
   create: function (spec) {

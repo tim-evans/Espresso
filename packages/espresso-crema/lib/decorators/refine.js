@@ -1,3 +1,7 @@
+/**
+  @module espresso
+  @submodule espresso-crema
+ */
 require('espresso-crema/decorator');
 
 var K = Espresso.K,
@@ -30,6 +34,8 @@ var K = Espresso.K,
   NOTE: If you try to rebind the property using
         {@link Function#bind}, it will _not_ work.
 
+  @method refine
+  @for Espresso
   @param {Function} target The target to apply this decorator to.
   @returns {Function} The reciever.
  */

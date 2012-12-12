@@ -1,3 +1,7 @@
+/**
+  @module espresso
+  @submodule espresso-crema
+ */
 require('espresso-crema/core');
 
 var metaPath = Espresso.metaPath,
@@ -8,9 +12,7 @@ var metaPath = Espresso.metaPath,
                       'toLocaleString',
                       'toString'];
 
-/** @function
-  @desc
-
+/**
   `mix` provides a way to combine arbritrary objects together.
 
   The combination can be as simple as adding the properties on
@@ -61,10 +63,13 @@ var metaPath = Espresso.metaPath,
         }())
       }).into(function () {});
 
-  @param {...} mixins Objects to mixin to the target provided on into.
-  @returns {Object} An object with `into` field, call into with the target
+  @method mix
+  @param {Object} mixins* Objects to mixin to the target provided on into.
+  @return {Object} An object with `into` field, call into with the target
                     to apply the mixins on. That will return the target
                     with the mixins on it.
+    @param {Object} target The object to put the mixins on
+    @return {Object} The target
  */
 mix = function () {
   var mixins = arguments,

@@ -1,3 +1,7 @@
+/**
+  @module espresso
+  @submodule espresso-crema
+ */
 require('espresso-crema/decorator');
 
 var metaPath = Espresso.metaPath,
@@ -9,10 +13,12 @@ var metaPath = Espresso.metaPath,
   inferior will **not** be mixed in. If the base
   object is inferior, it will be overriden.
 
+  @method inferior
+  @for Espresso
   @param {Object} target The target to apply the decorator to.
   @param {Object|Function} [condition] If it returns `true`,
     the function is inferior. Otherwise, it isn't.
-  @returns {Function} The reciever.
+  @return {Function} The reciever.
  */
 Espresso.inferior = Espresso.Decorator.create({
 

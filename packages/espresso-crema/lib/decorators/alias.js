@@ -1,3 +1,7 @@
+/**
+  @module espresso
+  @submodule espresso-crema
+ */
 require('espresso-crema/decorator');
 
 var meta = Espresso.meta,
@@ -14,9 +18,11 @@ var meta = Espresso.meta,
   that all of them will be indistinguishable and if
   one of them is altered in place, then all will be.
 
+  @method alias
+  @for Espresso
   @param {Object} target The target to apply this decorator to.
-  @param {...} aliases The aliases this object has.
-  @returns {Object} The reciever.
+  @param {String} aliases* The aliases this object has.
+  @return {Object} The reciever.
  */
 Espresso.alias = Espresso.Decorator.create({
 

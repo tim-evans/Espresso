@@ -1,3 +1,9 @@
+/**
+  Espresso PubSub
+
+  @module espresso
+  @submodule espresso-pubsub
+ */
 require('espresso-crema');
 
 var isCallable = Espresso.isCallable,
@@ -62,7 +68,7 @@ function publish(object, event) {
 mix(/** @scope Espresso */{
 
   /**
-    Subscribe to an events published to any object.
+    Subscribe to an event published to an object.
 
     To do any preprocessing of events, provide an `xform`
     which will be passed the `target`, `method`, and an
@@ -70,6 +76,8 @@ mix(/** @scope Espresso */{
     event should be delivered or rearrange the parameters
     to better suit the subscriber.
 
+    @method subscribe
+    @for Espresso
     @param {Object} object
     @param {String} event The event to subscribe to.
     @param {Function} method The method that should be called on publishes.
@@ -79,17 +87,27 @@ mix(/** @scope Espresso */{
   subscribe: subscribe,
 
   /**
+    Unsubscribe from an event attached by {{#crossLink "Espresso/subscribe"}}{{/crossLink}}.
+
+    @method unsubscribe
+    @for Espresso
     @param {Object} object
-    @param {String} event
-    @param {Function} method
-    @param {Object} target
+    @param {String} event The event name
+    @param {Function} method The method to call when the event was published
+    @param {Object} target The scope that the subscription was made to.
    */
   unsubscribe: unsubscribe,
 
 
   /**
-    @param {Object} object
-    @param {String} event
+    Publish an event to an object, notifying all subscribers
+    of the event.
+
+    @method publish
+    @for Espresso
+    @param {Object} object The object to publish the event on
+    @param {String} event The name of the event to publish
+    @param {Object} [args]* Any additional arguments to pass along to the subscriber
    */
   publish: publish
 

@@ -223,6 +223,24 @@ Espresso = {
       }
     }
     return object;
+  },
+
+  /**
+    Removes any private references to foreign objects
+    on the META_KEY property so this object can be
+    properly garbage collect.
+
+    Note that after destroying an object, things will
+    not work as expected.
+
+    @method destroy
+    @param {Object} object The object to destroy
+   */
+  destroy: function (object) {
+    var meta = object[META_KEY];
+    if (meta) {
+      object[META_KEY] = null;
+    }
   }
 };
 

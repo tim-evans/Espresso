@@ -114,3 +114,15 @@ test('decorators should be called on mixin time', function () {
 
   ok(called);
 });
+
+test('meta properties are deeply merged', function () {
+  var A = {}, B = {};
+
+  Espresso.metaPath(A, ['init', 'states'], 'A');
+  Espresso.metaPath(B, ['init', 'properties'], 'B');
+  debugger;
+
+  var C = mix(A, B).into({});
+  equal(Espresso.metaPath(C, ['init', 'states']), 'A');
+  equal(Espresso.metaPath(C, ['init', 'properties']), 'B');
+});

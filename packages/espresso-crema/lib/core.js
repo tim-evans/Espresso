@@ -257,10 +257,7 @@ var metaPath = Espresso.metaPath,
                       'toString'];
 
 var merge = function (source, targetRoot, key) {
-  if (targetRoot[key] == null) {
-    targetRoot[key] = {};
-  }
-  var target = targetRoot[key],
+  var target = targetRoot[key] = mix(targetRoot[key]).into({}),
       value;
 
   for (var property in source) {

@@ -120,9 +120,62 @@ test('meta properties are deeply merged', function () {
 
   Espresso.metaPath(A, ['init', 'states'], 'A');
   Espresso.metaPath(B, ['init', 'properties'], 'B');
-  debugger;
 
   var C = mix(A, B).into({});
   equal(Espresso.metaPath(C, ['init', 'states']), 'A');
   equal(Espresso.metaPath(C, ['init', 'properties']), 'B');
+});
+
+
+var Class = mix({
+  extend: (function () {
+    var initializing = false;
+
+    return function () {
+      initializing = true;
+      var prototype = new this();
+      initializing = false;
+
+      mix.apply(null, Espresso.A(arguments)).into(prototype);
+
+      function Class() {}
+
+      Class.prototype = prototype;
+      Class.prototype.constructor = Class;
+      Class.extend = arguments.callee;
+      return Class;
+    };
+  }())
+}).into(function () {});
+
+test("meta properties don't cross-pollute prototype chains", function () {
+  var Base = Class.extend(),
+      AMixin = {},
+      BMixin = {};
+
+  Espresso.metaPath(Base.prototype, ['init', 'all the things!'], 'Base');
+  Espresso.metaPath(AMixin, ['init', 'a things'], 'A');
+  Espresso.metaPath(BMixin, ['init', 'b things'], 'B');
+
+  var A = Base.extend(AMixin),
+      B = Base.extend(BMixin),
+      AB = Base.extend(AMixin, BMixin);
+
+  var a = new A();
+
+  ok(Espresso.metaPath(Base.prototype, ['init', 'all the things!']));
+  ok(!Espresso.metaPath(Base.prototype, ['init', 'a things']));
+  ok(!Espresso.metaPath(Base.prototype, ['init', 'b things']));
+
+  ok(Espresso.metaPath(A.prototype, ['init', 'all the things!']));
+  ok(Espresso.metaPath(A.prototype, ['init', 'a things']));
+  ok(!Espresso.metaPath(A.prototype, ['init', 'b things']));
+
+  ok(Espresso.metaPath(B.prototype, ['init', 'all the things!']));
+  ok(!Espresso.metaPath(B.prototype, ['init', 'a things']));
+  ok(Espresso.metaPath(B.prototype, ['init', 'b things']));
+
+  ok(Espresso.metaPath(AB.prototype, ['init', 'all the things!']));
+  ok(Espresso.metaPath(AB.prototype, ['init', 'a things']));
+  ok(Espresso.metaPath(AB.prototype, ['init', 'b things']));
 });
